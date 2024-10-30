@@ -26,13 +26,14 @@ const router = createRouter({
       path: '/fugletur',
       name: 'fugletur',
       component: () => import('../components/fugletur/fugletur.vue'),
+      redirect: {name: 'fugletur-obs'},
       meta: {
         title: 'Fugletur',
         showInNavBar: true
       },
       children: [
         {
-          path: '/fugletur/observationer/:id?',
+          path: '/fugletur/observationer',
           name: 'fugletur-obs',
           component: () => import('../components/fugletur/fugletur-obs.vue'),
           meta: {

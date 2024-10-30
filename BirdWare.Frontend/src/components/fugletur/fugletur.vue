@@ -6,11 +6,10 @@
 <script setup>
 import { useFugleturStore } from '@/stores/fugletur-store';
 import { onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const fugleturStore = useFugleturStore();
 const router = useRouter();
-const route = useRoute();
 
 onMounted(() => {
     if (fugleturStore.hasId) {

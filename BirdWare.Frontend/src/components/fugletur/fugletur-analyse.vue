@@ -17,11 +17,11 @@
 </template>
 
 <script setup>
+import api from '@/api';
 import fugleturTitel from '@/components/fugletur/fugletur-titel.vue';
 import fugleturNavigation from '@/components/fugletur/fugletur-navigation.vue';
 import fugleturAnalyseType from './fugletur-analyse-type.vue';
 import { reactive, watch, onMounted, computed } from 'vue';
-import api from '@/api';
 import { useFugleturStore } from '@/stores/fugletur-store';
 import { storeToRefs } from 'pinia';
 import { getNameOfMonth } from '@/js/dateandtime';

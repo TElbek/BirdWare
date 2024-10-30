@@ -19,6 +19,6 @@ const props = defineProps({
 
 function navigateToFugletur() {
     fugleturStore.setFugleturId(props.fugleturId);
-    router.push({path: '/fugletur/observationer/' + props.fugleturId});
+    router.push({path: '/fugletur/observationer'});
 }
 </script>
