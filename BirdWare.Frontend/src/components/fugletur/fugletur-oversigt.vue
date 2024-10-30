@@ -68,9 +68,3 @@ function getFugleture() {
     });
 }
 </script>
-
-<style scoped>
-a {
-    cursor: pointer;
-}
-</style>

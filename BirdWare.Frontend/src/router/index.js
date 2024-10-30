@@ -62,15 +62,6 @@ const router = createRouter({
       ]
     },
     {
-      path: '/art/:id/observation/',
-      name: 'art-observation-id',
-      component: () => import('../views/ObservationView.vue'),
-      meta: {
-        title: 'Observation',
-        showInNavBar: false
-      }
-    },
-    {
       path: '/art/observation/',
       name: 'art-observation',
       component: () => import('../views/ObservationView.vue'),

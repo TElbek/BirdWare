@@ -9,20 +9,22 @@ import { reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
+import { useObservationStore } from '@/stores/observation-store';
 
 import api from '@/api';
 
 const emit = defineEmits(['search'])
 const route = useRoute();
 const obsSelectionStore = useObsSelectionStore();
+const observationStore = useObservationStore();
 
 const state = reactive({
     tagList: []
 });
 
 onMounted(() => {
-    if(route.name == 'art-observation-id') {
-        api.get("tag/art/" + route.params.id).then(response => {
+    if(observationStore.hasId) {
+        api.get("tag/art/" + observationStore.chosenArtId).then(response => {
             obsSelectionStore.SetTag(response.data);
         });
     }

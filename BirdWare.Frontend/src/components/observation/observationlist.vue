@@ -111,9 +111,3 @@ watch(() => selectedTags.value, (newValue) => {
     getObservations();
 });
 </script>
-
-<style scoped>
-a {
-    cursor: pointer;
-}
-</style>
