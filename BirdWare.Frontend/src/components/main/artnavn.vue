@@ -5,10 +5,11 @@
 </template>
 
 <script setup>
+import api from '@/api';
 import { useRouter } from 'vue-router';
-import { useObservationStore } from '@/stores/observation-store';
+import { useObsSelectionStore } from '@/stores/obs-selection-store';
 
-const observationStore = useObservationStore();
+const obsSelectionStore = useObsSelectionStore();
 const router = useRouter();
 
 const props = defineProps({
@@ -18,7 +19,9 @@ const props = defineProps({
 });
 
 function navigateToObservation() {
-    observationStore.setArtId(props.artId);
-    router.push({path: '/art/observation'});
+    api.get("tag/art/" + props.artId).then(response => {
+        obsSelectionStore.SetTag(response.data);
+        router.push({ path: '/art/observation' });
+    });
 }
 </script>

@@ -5,29 +5,18 @@
 
 <script setup>
 import { Multiselect } from 'vue-multiselect';
-import { reactive, onMounted } from 'vue';
+import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
-import { useObservationStore } from '@/stores/observation-store';
-
 import api from '@/api';
 
 const emit = defineEmits(['search'])
 const route = useRoute();
 const obsSelectionStore = useObsSelectionStore();
-const observationStore = useObservationStore();
 
 const state = reactive({
     tagList: []
-});
-
-onMounted(() => {
-    if(observationStore.hasId) {
-        api.get("tag/art/" + observationStore.chosenArtId).then(response => {
-            obsSelectionStore.SetTag(response.data);
-        });
-    }
 });
 
 function getTagList(query) {
