@@ -54,6 +54,8 @@ namespace BirdWare.EF.Queries
             tagList.Add(new Tag {Id = 3, ParentId = 0, Name = "Efterår", TagType = TagTypes.SaesonEfteraar});
             tagList.Add(new Tag {Id = 4, ParentId = 0, Name = "Vinter", TagType = TagTypes.SaesonVinter});
 
+            tagList.Add(new Tag { Id = 1, ParentId = 0, Name = "Danmark", TagType = TagTypes.Land });
+
             return [.. tagList.OrderBy(r => r.Name)];
         }
 

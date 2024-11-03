@@ -3,10 +3,10 @@
         <div class="card h-100 w-100">
             <div class="card-header text-nowrap">
                 <div class="row">
-                    <div class="col">
+                    <div class="col d-inline-block text-truncate">
                         <span class="birdware fw-semibold">{{ props.analyseTypeTekst }}</span>
                     </div>
-                    <div class="col-auto me-1 birdware fw-semibold">
+                    <div class="col-auto birdware fw-semibold">
                         {{ props.analyseListe.length }}
                     </div>
                 </div>

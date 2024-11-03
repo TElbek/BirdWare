@@ -4,7 +4,7 @@
             <div class="col-auto birdware large-text">
                 Observation
             </div>
-            <div class="col">
+            <div class="col-12 col-lg">
                 <observation-selection></observation-selection>
             </div>
             <div class="col-auto">

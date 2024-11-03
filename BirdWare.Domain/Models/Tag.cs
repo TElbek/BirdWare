@@ -24,6 +24,7 @@ namespace BirdWare.Domain.Models
         SaesonVinter,
         Lokalitet,
         Region,
+        Land,
         Familie,
         Gruppe,
         Art

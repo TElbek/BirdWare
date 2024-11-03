@@ -7,12 +7,15 @@
             <fugleturNavigation></fugleturNavigation>
         </div>
     </div>
-    <div class="scroll mt-2">
-        <div class="row row-cols-12 g-2">
+    <div class="scroll mt-2" v-if="state.analyseListe.length > 0">
+        <div class="row row-cols-1 row-cols-md-3 row-cols-xl-6 g-2">
             <template v-for="[key, value] in groupedByAnalyseType">
                 <fugleturAnalyseType :analyseListe="value" :analyseTypeTekst="getAnalyseTypeTekst(key)"></fugleturAnalyseType>
             </template>
         </div>
+    </div>
+    <div v-else v-if="state.hasData">
+        <span class="h5">Ingen Analyse</span>
     </div>
 </template>
 
@@ -32,7 +35,8 @@ const { chosenFugleturId } = storeToRefs(fugleturStore)
 const state = reactive({
     analyseListe: [],
     analyseTyper: [],
-    fugletur: {}
+    fugletur: {},
+    hasData: false
 });
 
 const groupedByAnalyseType = computed(() => {
@@ -81,6 +85,7 @@ function getAnalyseTyper() {
 function getAnalyse() {
     api.get('fugletur/' + fugleturStore.chosenFugleturId + '/analyse').then((response => {
         state.analyseListe = response.data;
+        state.hasData = true;
     }));
 }
 
