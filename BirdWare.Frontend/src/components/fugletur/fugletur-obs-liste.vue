@@ -22,7 +22,6 @@
 <script setup>
 import { reactive, computed, watch, onMounted } from 'vue';
 import api from '@/api';
-import artNavn from '@/components/main/artnavn.vue';
 import { useFugleturStore } from '@/stores/fugletur-store';
 const fugleturStore = useFugleturStore();
 

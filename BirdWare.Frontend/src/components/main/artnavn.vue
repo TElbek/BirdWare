@@ -21,6 +21,7 @@ const props = defineProps({
 function navigateToObservation() {
     api.get("tag/art/" + props.artId).then(response => {
         obsSelectionStore.SetTag(response.data);
+        obsSelectionStore.SetGroupingId(0);
         router.push({ path: '/art/observation' });
     });
 }

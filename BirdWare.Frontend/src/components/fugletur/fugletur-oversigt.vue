@@ -35,7 +35,6 @@ import fugleturTitel from '@/components/fugletur/fugletur-titel.vue';
 import fugleturNavigation from '@/components/fugletur/fugletur-navigation.vue';
 import fugleturSelection from '@/components/fugletur/fugletur-selection.vue';
 import { useFugleturSelectionStore } from '@/stores/fugletur-selection-store';
-import fugleturDato from '../main/fugleturdato.vue';
 
 import api from '@/api';
 import { storeToRefs } from 'pinia'

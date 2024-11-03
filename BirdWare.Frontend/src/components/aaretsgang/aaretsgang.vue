@@ -28,7 +28,6 @@
 <script setup>
 import api from '@/api';
 import { reactive, computed, onMounted } from 'vue';
-import artNavn from '@/components/main/artnavn.vue';
 
 const state = reactive({
     aaretsgang: [],

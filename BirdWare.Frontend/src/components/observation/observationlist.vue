@@ -33,8 +33,6 @@ import api from '@/api';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import { storeToRefs } from 'pinia'
 
-import fugleturDato from '@/components/main/fugleturdato.vue';
-
 const obsSelectionStore = useObsSelectionStore();
 const { selectedTags } = storeToRefs(obsSelectionStore)
 
