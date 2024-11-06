@@ -16,17 +16,17 @@ namespace BirdWare.Domain.Models
    
     public enum TagTypes
     {
-        Aarstal,
-        Maaned,
-        SaesonForaar,
-        SaesonSommer,
-        SaesonEfteraar,
-        SaesonVinter,
-        Lokalitet,
-        Region,
-        Land,
-        Familie,
-        Gruppe,
-        Art
+        Aarstal = 1,
+        Maaned = 2,
+        SaesonForaar = 3,
+        SaesonSommer = 4,
+        SaesonEfteraar = 5,
+        SaesonVinter = 6,
+        Lokalitet = 7,
+        Region = 8,
+        Land = 9,
+        Familie = 10,
+        Gruppe = 11,
+        Art = 12
     }
 }

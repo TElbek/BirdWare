@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using System.Reflection;
 
 namespace BirdWare.EF.Queries
 {
@@ -9,92 +10,80 @@ namespace BirdWare.EF.Queries
         public List<VObs> GetObservationsByTags(List<Tag> tagList)
         {
             IQueryable<Observation> observations = birdWareContext.Observation;
+            var filterMethods = HentFilterMetoder();
 
-            if (tagList.Any(t => t.TagType == TagTypes.Aarstal))
+            foreach (var tagType in tagList.Select(r => r.TagType).Distinct())
             {
-                observations = FilterForYear(tagList, observations);
+                var method = FindFilterMetodeForTagType(tagType, filterMethods);
+                var result = method?.Invoke(this, [tagList, observations]);
+                if (result is IQueryable<Observation> obs)
+                {
+                    observations = obs;
+                }
             }
-
-            if (tagList.Any(t => t.TagType == TagTypes.Maaned))
-            {
-                observations = FilterForMonth(tagList, observations);
-            }
-
-            if (tagList.Any(q => ErSaesonTagType(q)))
-            {
-                observations = FilterForSeason(tagList, observations);
-            }
-
-            if (tagList.Any(t => t.TagType == TagTypes.Region))
-            {
-                observations = FilterForRegion(tagList, observations);
-            }
-
-            if (tagList.Any(t => t.TagType == TagTypes.Lokalitet))
-            {
-                observations = FilterForLocality(tagList, observations);
-            }
-
-            if (tagList.Any(t => t.TagType == TagTypes.Land))
-            {
-                observations = FilterForCountry(tagList, observations);
-            }
-
-            if (tagList.Any(t => t.TagType == TagTypes.Familie))
-            {
-                observations = FilterForFamily(tagList, observations);
-            }
-
-            if (tagList.Any(t => t.TagType == TagTypes.Gruppe))
-            {
-                observations = FilterForGroup(tagList, observations);
-            }
-
-            if (tagList.Any(t => t.TagType == TagTypes.Art))
-            {
-                observations = FilterForSpecies(tagList, observations);
-            }
-
             return MapToResult(observations.OrderByDescending(r => r.FugleturId).Take(200));
         }
 
+        private static MethodInfo? FindFilterMetodeForTagType(TagTypes tagType, MethodInfo[] methodInfoList)
+        {
+            var allMethodsWithAttribute = methodInfoList
+                            .Select(b => new {attr = b.GetCustomAttribute<ObservationTagFilterAttribute>(), method = b });
+
+            var methodAttribute = allMethodsWithAttribute
+               .FirstOrDefault(q => q.attr != null && (q.attr.TagType == tagType || q.attr.TagTypeList.Contains(tagType)));
+
+            return methodAttribute?.method;
+        }
+
+        private MethodInfo[] HentFilterMetoder()
+        {
+            return GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+        }
+
+        [ObservationTagFilter(TagType = TagTypes.Art)]
         private static IQueryable<Observation> FilterForSpecies(List<Tag> TagList, IQueryable<Observation> observations)
         {
             var list = TagList.Where(r => r.TagType == TagTypes.Art).Select(s => s.Id).Cast<long>().ToList();
             return observations.Where(g => list.Contains(g.ArtId));
         }
 
+        [ObservationTagFilter(TagType = TagTypes.Gruppe)]
         private static IQueryable<Observation> FilterForGroup(List<Tag> tagList, IQueryable<Observation> observations)
         {
             var list = tagList.Where(r => r.TagType == TagTypes.Gruppe).Select(s => s.Id).Cast<long>().ToList();
             return observations.Where(g => list.Contains(g.Art.GruppeId));
         }
 
+        [ObservationTagFilter(TagType = TagTypes.Familie)]
         private static IQueryable<Observation> FilterForFamily(List<Tag> tagList, IQueryable<Observation> observations)
         {
             var list = tagList.Where(r => r.TagType == TagTypes.Familie).Select(s => s.Id).Cast<long>().ToList();
             return observations.Where(g => list.Contains(g.Art.Gruppe.FamilieId));
         }
 
+        [ObservationTagFilter(TagType = TagTypes.Lokalitet)]
         private static IQueryable<Observation> FilterForLocality(List<Tag> tagList, IQueryable<Observation> observations)
         {
             var list = tagList.Where(r => r.TagType == TagTypes.Lokalitet).Select(s => s.Id).Cast<long>().ToList();
             return observations.Where(g => list.Contains(g.Fugletur.LokalitetId));
         }
 
+        [ObservationTagFilter(TagType = TagTypes.Region)]
         private static IQueryable<Observation> FilterForRegion(List<Tag> tagList, IQueryable<Observation> observations)
         {
             var list = tagList.Where(r => r.TagType == TagTypes.Region).Select(s => s.Id).Cast<long>().ToList();
             return observations.Where(g => list.Contains(g.Fugletur.Lokalitet.RegionId));
         }
 
-        private IQueryable<Observation> FilterForCountry(List<Tag> tagList, IQueryable<Observation> observations)
+        [ObservationTagFilter(TagType = TagTypes.Land)]
+        private static IQueryable<Observation> FilterForCountry(List<Tag> tagList, IQueryable<Observation> observations)
         {
             return tagList.Any(q => q.Name == "Danmark") ? 
                 observations.Where(g => g.Fugletur.Lokalitet.RegionId > 0) : 
                 observations;
         }
 
+        [ObservationTagFilter(TagTypeList = [TagTypes.SaesonEfteraar, TagTypes.SaesonForaar, TagTypes.SaesonSommer, TagTypes.SaesonVinter])]
         private IQueryable<Observation> FilterForSeason(List<Tag> tagList, IQueryable<Observation> observations)
         {
             var seasonTagTypes = tagList.Where(q => ErSaesonTagType(q)).Select(s => s.TagType).ToList();
@@ -103,6 +92,7 @@ namespace BirdWare.EF.Queries
             return observations.Where(o => withMaaned.Any(a => a.FugleturId == o.FugleturId));
         }
 
+        [ObservationTagFilter(TagType = TagTypes.Maaned)]
         private IQueryable<Observation> FilterForMonth(List<Tag> tagList, IQueryable<Observation> observations)
         {
             var list = tagList.Where(r => r.TagType == TagTypes.Maaned).Select(s => s.Id).Cast<long>().ToList();
@@ -110,6 +100,7 @@ namespace BirdWare.EF.Queries
             return observations.Where(o => withMaaned.Any(a => a.FugleturId == o.FugleturId));
         }
 
+        [ObservationTagFilter(TagType = TagTypes.Aarstal)]
         private IQueryable<Observation> FilterForYear(List<Tag> tagList, IQueryable<Observation> observations)
         {
             var list = tagList.Where(r => r.TagType == TagTypes.Aarstal).Select(s => s.Id).Cast<long>().ToList();
