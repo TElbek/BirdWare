@@ -39,6 +39,7 @@ namespace BirdWare.EF
                 .HasForeignKey(r => r.RegionId));
 
             modelBuilder.Entity<SpTripAnalysisResult>().HasNoKey();
+            modelBuilder.Entity<spLokaliteterByLatLongResult>().HasNoKey();
 
         }
 
@@ -50,5 +51,6 @@ namespace BirdWare.EF
         public DbSet<Lokalitet> Lokalitet {get; set;}
         public DbSet<Region> Region {get; set;}
         public DbSet<SpTripAnalysisResult> SpTripAnalysisResult {get; set;}
+        public DbSet<spLokaliteterByLatLongResult> SpLokaliteterByLatLongResult { get; set;}
     }
 }

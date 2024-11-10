@@ -10,7 +10,8 @@ const router = createRouter({
       component: HomeView,
       meta: {
         title: 'Hjem',
-        showInNavBar: true
+        showInNavBar: true,
+        requireSSL: false
       }
     },
     {
@@ -19,7 +20,8 @@ const router = createRouter({
       component: () => import('../views/ForskelView.vue'),
       meta: {
         title: 'Forskel',
-        showInNavBar: true
+        showInNavBar: true,
+        requireSSL: false
       }
     },
     {
@@ -29,7 +31,8 @@ const router = createRouter({
       redirect: {name: 'fugletur-obs'},
       meta: {
         title: 'Fugletur',
-        showInNavBar: true
+        showInNavBar: true,
+        requireSSL: false
       },
       children: [
         {
@@ -38,7 +41,8 @@ const router = createRouter({
           component: () => import('../components/fugletur/fugletur-obs.vue'),
           meta: {
             title: 'Observation',
-            showInNavBar: false
+            showInNavBar: false,
+            requireSSL: false
           },
         },
         {
@@ -47,7 +51,8 @@ const router = createRouter({
           component: () => import('../components/fugletur/fugletur-analyse.vue'),
           meta: {
             title: 'Analyse',
-            showInNavBar: false
+            showInNavBar: false,
+            requireSSL: false
           },
         },
         {
@@ -56,7 +61,8 @@ const router = createRouter({
           component: () => import('../components/fugletur/fugletur-oversigt.vue'),
           meta: {
             title: 'Fugleture - Oversigt',
-            showInNavBar: false
+            showInNavBar: false,
+            requireSSL: false
           },
         }
       ]
@@ -67,7 +73,18 @@ const router = createRouter({
       component: () => import('../views/ObservationView.vue'),
       meta: {
         title: 'Observation',
-        showInNavBar: true
+        showInNavBar: true,
+        requireSSL: false
+      }
+    },
+    {
+      path: '/add/addtrip',
+      name: 'addtrip',
+      component: () => import('../views/AddTripView.vue'),
+      meta: {
+        title: 'Tilføj Tur',
+        showInNavBar: true,
+        requireSSL: true
       }
     },
     {
@@ -76,7 +93,8 @@ const router = createRouter({
       component: () => import('../views/AaretsGangView.vue'),
       meta: {
         title: 'Årets Gang',
-        showInNavBar: true
+        showInNavBar: true,
+        requireSSL: false
       }
     }
   ]

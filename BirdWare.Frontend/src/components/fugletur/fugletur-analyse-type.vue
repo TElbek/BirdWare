@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <div class="art-flex">
+                <div class="art-flex ms-1">
                     <div v-for="art in arterSorteret(props.analyseListe)">
                         <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su"></artNavn>
                     </div>
