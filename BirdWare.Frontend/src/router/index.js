@@ -78,9 +78,9 @@ const router = createRouter({
       }
     },
     {
-      path: '/add/addtrip',
+      path: '/opret/oprettur',
       name: 'addtrip',
-      component: () => import('../views/AddTripView.vue'),
+      component: () => import('../views/OpretTurView.vue'),
       meta: {
         title: 'Tilføj Tur',
         showInNavBar: true,

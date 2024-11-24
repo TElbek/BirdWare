@@ -1,4 +1,5 @@
-﻿using BirdWare.EF.Interfaces;
+﻿using BirdWare.EF.Commands;
+using BirdWare.EF.Interfaces;
 using BirdWare.EF.Queries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +20,7 @@ namespace BirdWare.EF
             services.AddTransient<IFugleturObservationQuery, FugleturObservationQuery>();
             services.AddTransient<ILokaliteterByLatLongQuerySP, LokaliteterByLatLongQuerySP>();
             services.AddTransient<IObservationsByTagsQuery, ObservationsByTagsQuery>();
+            services.AddTransient<IOpretTurCommand, OpretTurCommand>();
             services.AddTransient<ITagQuery, TagQuery>();
             services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();
             return services;

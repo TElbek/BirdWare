@@ -17,6 +17,10 @@ body {
   font-size: 0.90rem;
 }
 
+.nav-link {
+  font-size: 1.1em;
+}
+
 .birdware {
   color: #048baf;
 }
@@ -129,5 +133,15 @@ a {
   .fw-small-bold {
     font-weight:  700;
   }
+}
+
+.router-link-exact-active
+{
+  border-bottom: 2px solid #048baf;
+}
+
+.router-link-active
+{
+  border-bottom: 2px solid #048baf;
 }
 </style>

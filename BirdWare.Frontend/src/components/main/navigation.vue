@@ -29,7 +29,8 @@ import { computed } from 'vue';
 const router = useRouter();
 
 const visibleRoutes = computed(() => {return router.options.routes.filter((route) => 
-    route.meta.showInNavBar == true && route.meta.requireSSL == (location.protocol == 'https:') || location.hostname == 'localhost')});
+    route.meta.showInNavBar == true && 
+    route.meta.requireSSL == (location.protocol == 'https:') || location.hostname == 'localhost')});
 </script>
 
 <style scoped>

@@ -14,7 +14,9 @@
                 <div class="card-body ms-1">
                     <div class="lokalitet-flex">
                         <div v-for="lokalitet in value">
-                            {{ lokalitet.navn }}
+                            <a @click="opretTur(lokalitet.id)">
+                                {{ lokalitet.navn }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -59,6 +61,10 @@ function setPosition(position) {
 function getLokaliteterForPosition() {
     api.get("lokalitet/" + state.position.coords.latitude + '/' + state.position.coords.longitude)
         .then((response) => { state.lokalitetListe = response.data });
+}
+
+function opretTur(lokalitetId) {
+    api.post("fugletur/oprettur/" + lokalitetId);
 }
 
 watch(() => state.position, (newValue) => {
