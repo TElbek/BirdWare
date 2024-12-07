@@ -10,7 +10,7 @@ export const formatDate = (date) => {
 
 export const getNameOfMonth = (month) => {
     var date = new Date();
-    date = new Date(date.getFullYear(), month, date.getDay());
+    date = new Date(date.getFullYear(), month -1, date.getDay());
     const options = {month: 'long'};
     var nameOfMonth = date.toLocaleString(date, options);
     return nameOfMonth.slice(0,1).toUpperCase() + nameOfMonth.slice(1);
