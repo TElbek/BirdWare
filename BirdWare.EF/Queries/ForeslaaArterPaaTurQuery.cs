@@ -27,15 +27,19 @@ namespace BirdWare.EF.Queries
 
             var artList = (from o in birdWareContext.Observation
                            join a in birdWareContext.Art on o.ArtId equals a.Id
+                           join g in birdWareContext.Gruppe on a.GruppeId equals g.Id
                            join f in birdWareContext.Fugletur on o.FugleturId equals f.Id
                            join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
                            where otherTrips.Contains(f.Id) &&
                                 !speciesOnTripAlready.Contains(a.Id) &&
                                  withMaaned.Any(s => s.FugleturId == f.Id) &&
                                  l.RegionId > 0
-                           group o by new { a.Id, a.Navn } into oGroup
+                           group o by new { a.Id, Artnavn = a.Navn, GruppeNavn = g.Navn } into oGroup
                            orderby oGroup.Count() descending
-                           select new ArtForslag { Id = oGroup.Key.Id, Navn = oGroup.Key.Navn, AntalObs = oGroup.Count() })
+                           select new ArtForslag { ArtId = oGroup.Key.Id, 
+                                                   ArtNavn = oGroup.Key.Artnavn, 
+                                                   GruppeNavn = oGroup.Key.GruppeNavn, 
+                                                   Indeks = (oGroup.Count() - oGroup.Count() % 10) })
                           .Take(20);
 
             return [.. artList];

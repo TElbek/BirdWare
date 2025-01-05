@@ -5,5 +5,6 @@ namespace BirdWare.EF.Interfaces
     public interface IFugleturQuery
     {
         VTur GetFugletur(long id);
+        long GetSenesteFugletur();
     }
 }

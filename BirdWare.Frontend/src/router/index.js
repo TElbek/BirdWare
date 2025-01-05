@@ -88,6 +88,39 @@ const router = createRouter({
       }
     },
     {
+      path: '/opret/opretobs',
+      name: 'addtrip',
+      component: () => import('../views/OpretObsView.vue'),
+      redirect: {name: 'addobs-forslag'},
+      meta: {
+        title: 'Tilføj Observation',
+        showInNavBar: false,
+        requireSSL: true
+      },
+      children: [
+        {
+          path: '/opret/opretobs/forslag',
+          name: 'addobs-forslag',
+          component: () => import('../components/opret/opretobs-forslag.vue'),
+          meta: {
+            title: 'Forslag',
+            showInNavBar: false,
+            requireSSL: true
+          }
+        },            
+        {
+          path: '/opret/opretobs/liste',
+          name: 'addobs-liste',
+          component: () => import('../components/opret/opretobs-liste.vue'),
+          meta: {
+            title: 'Liste',
+            showInNavBar: false,
+            requireSSL: true
+          }
+        },            
+      ]
+    },
+    {
       path: '/aaretsgang',
       name: 'aaretsgang',
       component: () => import('../views/AaretsGangView.vue'),

@@ -27,5 +27,10 @@ namespace BirdWare.EF.Queries
 
             return vtur.First();
         }
+
+        public long GetSenesteFugletur()
+        {
+            return birdWareContext.Fugletur.Max(f => f.Id);
+        }
     }
 }

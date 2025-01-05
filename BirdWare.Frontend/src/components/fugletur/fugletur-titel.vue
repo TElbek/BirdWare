@@ -1,8 +1,11 @@
 <template>
-    <div class="birdware large-text fw-semibold text-nowrap">
-        <span>{{ route.meta.title }}</span>
-        <span class="ms-2" v-if="state.fugletur != undefined">{{ formatDate(state.fugletur.dato) }} - {{
-            state.fugletur.lokalitetNavn }}</span>
+    <div class="birdware large-text fw-semibold">
+        <div class="row">
+            <div class="col-12 col-lg-auto">{{ route.meta.title }}</div>
+            <div class="col-12 col-lg-auto text-nowrap" v-if="state.fugletur != undefined">
+                {{ formatDate(state.fugletur.dato) }} - {{state.fugletur.lokalitetNavn }}
+            </div>
+        </div>
     </div>
 </template>
 
@@ -40,3 +43,9 @@ watch(() => props.fugleturId, (newValue) => {
     }
 });
 </script>
+
+<style scoped>
+.row > * {
+	padding-right: 0px;
+    
+}</style>

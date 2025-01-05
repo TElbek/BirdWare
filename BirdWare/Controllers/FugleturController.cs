@@ -13,5 +13,12 @@ namespace BirdWare.Controllers
         {
             return fugleturQuery.GetFugletur(id);
         }
+
+        [HttpGet]
+        [Route("api/fugletur/seneste/id")]
+        public long GetSenesteFugleturId()
+        {
+            return fugleturQuery.GetSenesteFugletur();
+        }
     }
 }
