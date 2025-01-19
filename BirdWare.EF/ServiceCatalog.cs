@@ -20,6 +20,7 @@ namespace BirdWare.EF
             services.AddTransient<IFugleturObservationQuery, FugleturObservationQuery>();
             services.AddTransient<ILokaliteterByLatLongQuerySP, LokaliteterByLatLongQuerySP>();
             services.AddTransient<IObservationsByTagsQuery, ObservationsByTagsQuery>();
+            services.AddTransient<IOpretObsCommand, OpretObsCommand>();
             services.AddTransient<IOpretTurCommand, OpretTurCommand>();
             services.AddTransient<ITagQuery, TagQuery>();
             services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();

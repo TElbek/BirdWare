@@ -130,9 +130,15 @@ a {
 }
 
 @media only screen and (max-width: 992px) {
-  .fw-small-bold {
-    font-weight:  700;
+  .row-space-below {
+    margin-bottom: 5px;
   }
+}
+
+.btn-birdware,
+.btn-birdware:hover {
+  background-color: #048baf;
+  color: white;
 }
 
 .router-link-exact-active

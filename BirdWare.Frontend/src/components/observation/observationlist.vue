@@ -1,27 +1,18 @@
 <template>
-    <div class="scroll">
-        <div class="mt-2 row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-2">
-            <div v-for="[key, value] in groupedData" class="mt-1">
-                <div class="card h-100 p-1">
-                    <div class="card-header birdware fw-semibold">
-                        <div class="row">
-                            <a class="col" @click="addTag(key)">
-                                <div v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</div>
-                                <div class="text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</div>
-                            </a>
-                            <div class="col-auto fw-semibold accelink">{{ value.length }}</div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div v-for="obs in obsSorted(value)" class="row">
-                            <fugleturDato class="col-auto" :fugleturId="obs.fugleturId" :dato="obs.dato"></fugleturDato>
-                            <span v-if="obsSelectionStore.showSpeciesNameInList" class="col-12 col-lg-4">{{ obs.artNavn }}</span>
-                            <span :class="[obsSelectionStore.showSpeciesNameInList ? 'col-lg-3' : 'col-lg-4']" class="col"> {{
-                                obs.lokalitetNavn }}</span>
-                            <span class="col-12 col-lg d-inline-block text-truncate"> {{ obs.bem }}</span>
-                        </div>
-                    </div>
-                </div>
+    <div class="scroll mt-3">
+        <div v-for="[key, value] in groupedData" class="border-bottom p-1 mb-1">
+            <div class="row fw-bold birdware border-bottom">
+                <a @click="addTag(key)" class="col">
+                    <div v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</div>
+                    <div class="text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</div>
+                </a>
+                <div class="col-auto text-start">{{ value.length }}</div>
+            </div>
+            <div v-for="obs in obsSorted(value)" class="row row-space-below">
+                <fugleturDato class="col-auto" :fugleturId="obs.fugleturId" :dato="obs.dato"></fugleturDato>
+                <div class="col-5 col-md-2 text-nowrap">{{ obs.artNavn }}</div>
+                <div class="col-3 col-md-3 text-nowrap">{{ obs.lokalitetNavn }}</div>
+                <div class="col-12 col-md-6">{{ obs.bem }}</div>
             </div>
         </div>
     </div>

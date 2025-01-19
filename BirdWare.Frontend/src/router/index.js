@@ -89,9 +89,9 @@ const router = createRouter({
     },
     {
       path: '/opret/opretobs',
-      name: 'addtrip',
+      name: 'addobs',
       component: () => import('../views/OpretObsView.vue'),
-      redirect: {name: 'addobs-forslag'},
+      redirect: {name: 'addobs-liste'},
       meta: {
         title: 'Tilføj Observation',
         showInNavBar: false,

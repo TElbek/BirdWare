@@ -9,7 +9,7 @@
                     <div class="card-body p-1">
                         <div class="art-flex">
                             <div v-for="art in artSorted(value)">
-                                <artNavn :artId="art.artId" :artNavn="art.artNavn"></artNavn>
+                                 <a @click="addObs(art.artId)">{{ art.artNavn }}</a>
                             </div>
                         </div>
                     </div>
@@ -30,7 +30,7 @@ const state = reactive({
 });
 
 const list = computed(() => { return (state.showByIndeks == true ? byIndeks.value : byGruppe.value)});
-const byIndeks = computed(() => { return Map.groupBy(state.forslag.sort((a, b) => a.index - b.index).reverse(), ({ indeks }) => indeks) });
+const byIndeks = computed(() => { return Map.groupBy(state.forslag.sort((a, b) => a.index - b.index), ({ indeks }) => indeks) });
 const byGruppe = computed(() => { return Map.groupBy(state.forslag.sort((a, b) => a.gruppeNavn.localeCompare(b.gruppeNavn)), ({ gruppeNavn }) => gruppeNavn) });
 
 onMounted(() => {
@@ -47,5 +47,11 @@ function getForslag() {
 
 function artSorted(value) {
     return value.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
+}
+
+function addObs(artId) {    
+    api.post("observation/opretobs/" + artId).then((response) => {
+        getForslag();            
+    });
 }
 </script>
