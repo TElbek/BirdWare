@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 export const useObsSelectionStore = defineStore('obs-selection', () => {
   const selectedTags = ref([]);
   const chosenGroupingId = ref(0);
+  const chosenViewMode = ref(0);
   const isGropingByMonth = computed(() => chosenGroupingId.value == 1);
   const showSpeciesNameInList = computed(() => selectedTags.value.filter((tag) => tag.tagType == 10 ).length != 1);
 
@@ -32,6 +33,10 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     chosenGroupingId.value = value;
   }
 
+  function SetViewMode(value) {
+    chosenViewMode.value = value;
+  }
+
   function FindTag(tag) {
     if(IsTagKnown(tag)) {
       return selectedTags.value.filter((item) => item.id == tag.id && tag.tagType == item.tagType)[0];
@@ -43,11 +48,13 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
   }
 
   return { chosenGroupingId,
+           chosenViewMode,
            selectedTags, 
            isGropingByMonth,
            showSpeciesNameInList,
            AddTag, 
            SetTag, 
            RemoveTag, 
-           SetGroupingId }
+           SetGroupingId,
+           SetViewMode }
 })

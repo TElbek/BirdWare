@@ -28,7 +28,7 @@ const router = createRouter({
       path: '/fugletur',
       name: 'fugletur',
       component: () => import('../components/fugletur/fugletur.vue'),
-      redirect: {name: 'fugletur-obs'},
+      redirect: { name: 'fugletur-obs' },
       meta: {
         title: 'Fugletur',
         showInNavBar: true,
@@ -71,11 +71,34 @@ const router = createRouter({
       path: '/art/observation/',
       name: 'art-observation',
       component: () => import('../views/ObservationView.vue'),
+      redirect: { name: 'art-observation-liste' },
       meta: {
         title: 'Observation',
         showInNavBar: true,
         requireSSL: false
-      }
+      },
+      children: [
+        {
+          path: '/art/observation/liste',
+          name: 'art-observation-liste',
+          component: () => import('../components/observation/observationlist.vue'),
+          meta: {
+            title: 'Observation - Liste',
+            showInNavBar: false,
+            requireSSL: false
+          },
+        },
+        {
+          path: '/art/observation/plot',
+          name: 'art-observation-plot',
+          component: () => import('../components/observation/observationplot.vue'),
+          meta: {
+            title: 'Observation - Plot',
+            showInNavBar: false,
+            requireSSL: false
+          },
+        }
+      ]
     },
     {
       path: '/opret/oprettur',
@@ -91,7 +114,7 @@ const router = createRouter({
       path: '/opret/opretobs',
       name: 'addobs',
       component: () => import('../views/OpretObsView.vue'),
-      redirect: {name: 'addobs-liste'},
+      redirect: { name: 'addobs-liste' },
       meta: {
         title: 'Tilføj Observation',
         showInNavBar: false,
@@ -107,7 +130,7 @@ const router = createRouter({
             showInNavBar: false,
             requireSSL: true
           }
-        },            
+        },
         {
           path: '/opret/opretobs/liste',
           name: 'addobs-liste',
@@ -117,7 +140,7 @@ const router = createRouter({
             showInNavBar: false,
             requireSSL: true
           }
-        },            
+        },
       ]
     },
     {
