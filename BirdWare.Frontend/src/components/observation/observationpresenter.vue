@@ -3,7 +3,7 @@
         <observationList :grouped-data="groupedData" @addtag="addTag"></observationList>    
     </div>
     <div v-else>
-        <observationPlot></observationPlot>
+        <observationPlot :groupedData="groupedData"></observationPlot>
     </div>
 </template>
 

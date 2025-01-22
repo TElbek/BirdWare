@@ -1,17 +1,57 @@
 <template>
-    <div class="h1">Hejsa</div>
+    <!-- <div v-for="[key, value] in groupedData">
+        <span>{{ key }}</span>
+        <span class="ms-2">{{ value.length }}</span>
+    </div> -->
+    <div id="plotDiv" class="mt-2"></div>
 </template>
 
 <script setup>
 import Plotly from 'plotly.js-dist-min';
 import { reactive, onMounted, computed, watch } from 'vue';
-import api from '@/api';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 
 const obsSelectionStore = useObsSelectionStore();
-// const { selectedTags } = storeToRefs(obsSelectionStore)
+
+const props = defineProps({
+    groupedData: {}
+});
 
 const state = reactive({
-    observationer: [],
+    data: [
+        {
+            x: [],
+            y: [],
+            type: 'bar',
+            orientation: 'v'
+        }
+    ],
+    layout: {
+        margin: {
+            l: 30,
+            r: 30,
+            b: 30,
+            t: 10,
+            pad: 5
+        }
+    }
+});
+
+onMounted(() => {
+    transferData();
+});
+
+function transferData() {
+    state.data[0].x = [];
+    state.data[0].y = [];
+    for(let [key, value] of props.groupedData) {
+        state.data[0].x.push(key);
+        state.data[0].y.push(value.length);
+    }
+    Plotly.newPlot('plotDiv', state.data, state.layout, {displayModeBar: false, responsive: true, scrollZoom: false});
+}
+
+watch(() => props.groupedData, (newValue) => {
+    transferData();
 });
 </script>

@@ -6,6 +6,7 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
   const chosenGroupingId = ref(0);
   const chosenViewMode = ref(0);
   const isGropingByMonth = computed(() => chosenGroupingId.value == 1);
+  const isGropingByLocality = computed(() => chosenGroupingId.value == 3);
   const showSpeciesNameInList = computed(() => selectedTags.value.filter((tag) => tag.tagType == 10 ).length != 1);
 
   function AddTag(value) {
@@ -51,6 +52,7 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
            chosenViewMode,
            selectedTags, 
            isGropingByMonth,
+           isGropingByLocality,
            showSpeciesNameInList,
            AddTag, 
            SetTag, 
