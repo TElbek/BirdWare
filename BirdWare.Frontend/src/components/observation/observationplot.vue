@@ -1,8 +1,4 @@
 <template>
-    <!-- <div v-for="[key, value] in groupedData">
-        <span>{{ key }}</span>
-        <span class="ms-2">{{ value.length }}</span>
-    </div> -->
     <div id="plotDiv" class="mt-2"></div>
 </template>
 
