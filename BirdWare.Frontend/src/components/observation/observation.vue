@@ -9,10 +9,10 @@
             </div>
             <div class="col-auto">
                 <div class="btn-group">
-                    <div class="btn btn-sm" @click="navigateList()" :class="[obsSelectionStore.chosenViewMode == 0 ? 'btn-birdware' : 'btn-off']">
+                    <div class="btn btn-sm" @click="setViewMode(0)" :class="[obsSelectionStore.chosenViewMode == 0 ? 'btn-birdware' : 'btn-off']">
                         Liste
                     </div>
-                    <div class="btn btn-sm" @click="navigatePlot()"  :class="[obsSelectionStore.chosenViewMode == 1 ? 'btn-birdware' : 'btn-off']">
+                    <div class="btn btn-sm" @click="setViewMode(1)"  :class="[obsSelectionStore.chosenViewMode == 1 ? 'btn-birdware' : 'btn-off']">
                         Plot
                     </div>
                 </div>
@@ -21,38 +21,22 @@
                 <observation-group-by></observation-group-by>
             </div>
         </div>
-        <router-view></router-view>
+        <observation-presenter></observation-presenter>
     </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
 import { defineAsyncComponent } from 'vue';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
-import { useRouter } from 'vue-router';
 
 const obsSelectionStore = useObsSelectionStore();
 const observationSelection = defineAsyncComponent(() => import('./observationselection.vue'));
 const observationGroupBy = defineAsyncComponent(() => import('./observationgrouping.vue'));
-const router = useRouter();
+const observationPresenter = defineAsyncComponent(() => import('./observationpresenter.vue'));
 
-onMounted(() => {
-    if(obsSelectionStore.chosenViewMode == 0) {
-        navigateList();
-    } else {
-        navigatePlot();
-    }
-});
-
-function navigateList() {
-    obsSelectionStore.SetViewMode(0);
-    router.push({name:'art-observation-liste'});
-};
-
-function navigatePlot() {
-    obsSelectionStore.SetViewMode(1);
-    router.push({name:'art-observation-plot'});
-};
+function setViewMode(mode) {
+    obsSelectionStore.SetViewMode(mode);
+}
 </script>
 
 <style scoped>

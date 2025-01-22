@@ -71,34 +71,11 @@ const router = createRouter({
       path: '/art/observation/',
       name: 'art-observation',
       component: () => import('../views/ObservationView.vue'),
-      redirect: { name: 'art-observation-liste' },
       meta: {
         title: 'Observation',
         showInNavBar: true,
         requireSSL: false
-      },
-      children: [
-        {
-          path: '/art/observation/liste',
-          name: 'art-observation-liste',
-          component: () => import('../components/observation/observationlist.vue'),
-          meta: {
-            title: 'Observation - Liste',
-            showInNavBar: false,
-            requireSSL: false
-          },
-        },
-        {
-          path: '/art/observation/plot',
-          name: 'art-observation-plot',
-          component: () => import('../components/observation/observationplot.vue'),
-          meta: {
-            title: 'Observation - Plot',
-            showInNavBar: false,
-            requireSSL: false
-          },
-        }
-      ]
+      },      
     },
     {
       path: '/opret/oprettur',
