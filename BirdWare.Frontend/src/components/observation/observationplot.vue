@@ -19,12 +19,21 @@ const state = reactive({
             x: [],
             y: [],
             type: 'bar',
-            orientation: 'v'
+            orientation: ''
         }
     ],
-    layout: {
+    layoutNumeric: {
         margin: {
             l: 30,
+            r: 30,
+            b: 30,
+            t: 10,
+            pad: 5
+        }
+    },
+    layoutText: {
+        margin: {
+            l: 130,
             r: 30,
             b: 30,
             t: 10,
@@ -38,13 +47,17 @@ onMounted(() => {
 });
 
 function transferData() {
+    state.data[0].orientation = (obsSelectionStore.isGropingByText ? 'h' : 'v');
+
     state.data[0].x = [];
     state.data[0].y = [];
-    for(let [key, value] of props.groupedData) {
-        state.data[0].x.push(key);
-        state.data[0].y.push(value.length);
+    for (let [key, value] of props.groupedData) {
+        state.data[0].x.push(obsSelectionStore.isGropingByText ? value.length : key);
+        state.data[0].y.push(obsSelectionStore.isGropingByText ? key : value.length);
     }
-    Plotly.newPlot('plotDiv', state.data, state.layout, {displayModeBar: false, responsive: true, scrollZoom: false});
+    Plotly.newPlot('plotDiv', state.data,
+        (obsSelectionStore.isGropingByText ? state.layoutText : state.layoutNumeric),
+        { displayModeBar: false, responsive: true, scrollZoom: false });
 }
 
 watch(() => props.groupedData, (newValue) => {

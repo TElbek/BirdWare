@@ -7,6 +7,8 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
   const chosenViewMode = ref(0);
   const isGropingByMonth = computed(() => chosenGroupingId.value == 1);
   const isGropingByLocality = computed(() => chosenGroupingId.value == 3);
+  const isGropingByNumber = computed(() => chosenGroupingId.value == 0 || chosenGroupingId.value == 1);
+  const isGropingByText = computed(() => chosenGroupingId.value == 2 || chosenGroupingId.value == 3 || chosenGroupingId.value == 4);
   const showSpeciesNameInList = computed(() => selectedTags.value.filter((tag) => tag.tagType == 10 ).length != 1);
 
   function AddTag(value) {
@@ -53,6 +55,8 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
            selectedTags, 
            isGropingByMonth,
            isGropingByLocality,
+           isGropingByNumber,
+           isGropingByText,
            showSpeciesNameInList,
            AddTag, 
            SetTag, 
