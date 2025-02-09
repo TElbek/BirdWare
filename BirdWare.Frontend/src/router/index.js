@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomeView,
       meta: {
         title: 'Hjem',
-        showInNavBar: true,
+        showInNavBar: false,
         requireSSL: false
       }
     },
@@ -94,7 +94,7 @@ const router = createRouter({
       redirect: { name: 'addobs-liste' },
       meta: {
         title: 'Tilføj Observation',
-        showInNavBar: false,
+        showInNavBar: true,
         requireSSL: true
       },
       children: [

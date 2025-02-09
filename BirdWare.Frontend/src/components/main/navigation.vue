@@ -1,11 +1,11 @@
 <template>
-    <nav class="navbar navbar-expand-lg fixed-top me-3 ms-3">
+    <nav class="navbar navbar-expand-lg fixed-top me-2 ms-2">
         <a class="navbar-brand birdware" href="#">BirdWare</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar"
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -32,6 +32,6 @@ const router = useRouter();
 const visibleRoutes = computed(() => {
     return router.options.routes.filter((route) =>
         route.meta.showInNavBar == true &&
-        route.meta.requireSSL == (location.protocol == 'https:') || location.hostname == 'localhost')
+       (route.meta.requireSSL == true && location.protocol == 'https:' || location.hostname == 'localhost'))
 });
 </script>

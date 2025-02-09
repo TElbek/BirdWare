@@ -1,13 +1,5 @@
 <template>
-    <div class="row" v-if="state.hasData">
-        <div class="col">
-            <div class="birdware large-text fw-semibold">{{ year }}: {{ state.forskel.length }}</div>
-        </div>
-        <div class="col-auto" v-if="!props.lastYear">
-            <slot></slot>
-        </div>
-    </div>
-    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-2">
+    <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-4 g-2">
         <div class="col" v-for="[key, value] in listOfItems">
             <div class="card h-100 p-1">
                 <div class="card-header">
@@ -35,6 +27,8 @@ const props = defineProps({
     isByTrip: true
 });
 
+const emit = defineEmits(['item-count'])
+
 const state = reactive({
     forskel: [],
     hasData: false
@@ -49,6 +43,7 @@ function getForskel() {
         .then(res => {
             state.forskel = res.data;
             state.hasData = true;
+            emit('item-count', state.forskel.length);
         })
 }
 
@@ -67,6 +62,4 @@ const byTrip = computed(() => {
 const byFamilie = computed(() => {
     return Map.groupBy(state.forskel.sort((a, b) => a.familieNavn.localeCompare(b.familieNavn)), ({ familieNavn }) => familieNavn);
 });
-
-const year = computed(() => { return props.lastYear ? (new Date().getFullYear() - 1) : (new Date().getFullYear()) });
 </script>
