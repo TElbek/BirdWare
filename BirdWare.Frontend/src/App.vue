@@ -6,7 +6,7 @@ import { RouterView } from 'vue-router'
 <template>
   <div class="container-fluid">
     <navigation></navigation>
-    <div class="mb-2">
+    <div class="mb-2 routerview">
       <RouterView />
     </div>
   </div>
@@ -126,12 +126,30 @@ a {
 }
 
 .scroll::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 @media only screen and (max-width: 992px) {
   .row-space-below {
     margin-bottom: 5px;
+  }
+
+  .router-link-exact-active {
+    font-weight: 800;
+  }
+
+  .router-link-active {
+    font-weight: 800;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .router-link-exact-active {
+    border-bottom: 2px solid #048baf;
+  }
+
+  .router-link-active {
+    border-bottom: 2px solid #048baf;
   }
 }
 
@@ -141,13 +159,35 @@ a {
   color: white;
 }
 
-.router-link-exact-active
-{
-  border-bottom: 2px solid #048baf;
+.navbar {
+  background-color: white;
 }
 
-.router-link-active
-{
-  border-bottom: 2px solid #048baf;
+.nav-link {
+  color: #048baf;
+}
+
+.navbar-brand {
+  padding-top: 0px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: .1rem;
+}
+
+.navbar-brand:hover {
+  color: #048baf;
+}
+
+.navbar-brand:focus {
+  color: #048baf;
+}
+
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.routerview {
+  margin-top: 60px;
 }
 </style>
