@@ -2,6 +2,7 @@
 {
     public class VObs
     {
+        public long ObservationId { get; set; }
         public string GruppeNavn { get; set; } = string.Empty;
 
         public long GruppeId { get; set; }

@@ -40,6 +40,19 @@ namespace BirdWare.Controllers
                 .FirstOrDefault() ?? new Tag();
         }
 
+        [Route("api/tags/arter")]
+        public List<Tag> GetTagsArter([FromQuery]string query)
+        {
+            var cacheEntry = GetCachedEntry(tagQuery, memoryCache);
+
+            var list = cacheEntry?
+                .Where(t => t.TagType == TagTypes.Art && 
+                       t.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1).ToList() ?? [];
+
+            return [.. list.OrderBy(o => o.Name)];
+        }
+
+
         [Route("api/tag/art/{Id}")]
         public Tag GetArtTagById(long Id)
         {

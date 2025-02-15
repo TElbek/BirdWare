@@ -1,7 +1,7 @@
 <template>
     <div class="birdware large-text fw-semibold">
         <div class="row">
-            <div class="col-12 col-lg-auto">{{ route.meta.title }}</div>
+            <div class="col-12 col-lg-auto" v-if="props.showTitle">{{ route.meta.title }}</div>
             <div class="col-12 col-lg-auto text-nowrap" v-if="state.fugletur != undefined">
                 {{ formatDate(state.fugletur.dato) }} - {{state.fugletur.lokalitetNavn }}
             </div>
@@ -18,7 +18,8 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 const props = defineProps({
-    fugleturId: 0
+    fugleturId: 0,
+    showTitle: {default: true}
 });
 
 const state = reactive({

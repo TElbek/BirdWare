@@ -159,6 +159,12 @@ a {
   color: white;
 }
 
+.btn-outline-birdware,
+.btn-outline-birdware:hover {
+  border: 1px solid #048baf;
+}
+
+
 .navbar {
   background-color: white;
 }

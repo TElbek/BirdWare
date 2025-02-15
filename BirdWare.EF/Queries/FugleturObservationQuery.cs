@@ -18,6 +18,7 @@ namespace BirdWare.EF.Queries
                        orderby f.Navn, a.Navn
                        select new VObs
                        {
+                           ObservationId = o.Id,
                            ArtId = a.Id,
                            ArtNavn = a.Navn ?? string.Empty,
                            Bem = o.Beskrivelse ?? string.Empty,
@@ -29,6 +30,18 @@ namespace BirdWare.EF.Queries
                        };
                             
             return [.. list];
+        }
+
+        public void SletObservation(long id)
+        {
+            var fugleturId = birdWareContext.Fugletur.Max(m => m.Id);
+
+            var obs = birdWareContext.Observation.SingleOrDefault(o => o.Id == id && o.FugleturId == fugleturId);
+            if (obs != null)
+            {
+                birdWareContext.Observation.Remove(obs);
+                birdWareContext.SaveChanges();
+            }
         }
     }
 }

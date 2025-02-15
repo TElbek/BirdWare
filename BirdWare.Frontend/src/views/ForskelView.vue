@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="row">
-            <div class="col">
-                <span class="large-text birdware fw-semibold">Forskel: {{ Math.abs(forskel) }} arter {{ foranBagud }}</span>
+            <div class="col" :class="[forskel >= 0 ? 'birdware' : 'text-danger']">
+                <span class="large-text fw-semibold">Forskel {{ forskel }}</span>
             </div>
             <div class="col-auto">
                 <div class="btn-group mb-2">
@@ -16,11 +16,11 @@
                 <div class="btn-group mb-2 ms-2">
                     <div class="btn btn-sm" :class="[state.isThisYear ? 'btn-on' : 'btn-off']"
                         @click="switchIsThisYear">
-                        <span>{{ new Date().getFullYear() }}</span>
+                        <span>{{ new Date().getFullYear() }}: {{ state.itemCountThisYear }}</span>
                     </div>
                     <div class="btn btn-sm" :class="[state.isThisYear ? 'btn-off' : 'btn-on']"
                         @click="switchIsThisYear">
-                        <span>{{ new Date().getFullYear() - 1 }}</span>
+                        <span>{{ new Date().getFullYear() - 1 }}: {{ state.itemCountLastYear }}</span>
                     </div>
                 </div>
             </div>
@@ -50,9 +50,7 @@ const state = reactive({
 });
 
 const isLastYear = computed(() => { return !state.isThisYear });
-
 const forskel = computed(() => {return state.itemCountThisYear - state.itemCountLastYear});
-const foranBagud = computed(() => {return forskel.value > 0 ? 'foran' : 'bagud'});
 
 function switchIsByTrip() {
     state.isByTrip = !state.isByTrip;

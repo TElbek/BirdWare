@@ -1,9 +1,12 @@
 <template>    
     <div>
         <div class="row">
-            <fugleturTitel class="col" :fugleturId="state.fugleturId"></fugleturTitel>
+            <fugleturTitel :showTitle="false" class="col" :fugleturId="state.fugleturId"></fugleturTitel>
             <div class="col-auto">
-                <button class="btn btn-sm" @click="setShowForslag" :class="state.showForslag ? 'btn-birdware' : ''">Forslag</button>
+                <button class="btn btn-sm" @click="setShowForslag" :class="state.showForslag ? 'btn-birdware' : 'btn-outline-birdware'">
+                    <span v-if="state.showForslag">Forslag</span>
+                    <span v-else>Liste</span>
+                </button>
             </div>
         </div>
         <RouterView></RouterView>

@@ -4,7 +4,7 @@
 
 <script setup>
 import Plotly from 'plotly.js-dist-min';
-import { reactive, onMounted, computed, watch } from 'vue';
+import { reactive, onMounted, watch } from 'vue';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 
 const obsSelectionStore = useObsSelectionStore();
@@ -43,8 +43,14 @@ const state = reactive({
 });
 
 onMounted(() => {
+    setLayoutHeight();
     transferData();
 });
+
+function setLayoutHeight() {
+    state.layoutText.height = window.innerHeight - 200;
+    state.layoutNumeric.height = window.innerHeight - 200;
+}
 
 function transferData() {
     state.data[0].orientation = (obsSelectionStore.isGropingByText ? 'h' : 'v');
