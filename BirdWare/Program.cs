@@ -18,8 +18,9 @@ namespace BirdWare
                 options.AddPolicy(name: corsPolicyName,
                         builder =>
                         {
-                            builder.WithOrigins(["http://localhost:8080"])
+                            builder.WithOrigins(["http://localhost:8080", "http://birdwareadm.home"])
                                     .AllowAnyHeader()
+                                    .SetIsOriginAllowed((host) => true)
                                     .AllowAnyMethod();
                         });
             });
