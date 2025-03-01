@@ -83,7 +83,7 @@ const router = createRouter({
       component: () => import('../views/OpretTurView.vue'),
       meta: {
         title: 'Tilføj Tur',
-        showInNavBar: true,
+        showInNavBar: false,
         requireSSL: true
       }
     },
@@ -94,7 +94,7 @@ const router = createRouter({
       redirect: { name: 'addobs-liste' },
       meta: {
         title: 'Tilføj Observation',
-        showInNavBar: true,
+        showInNavBar: false,
         requireSSL: true
       },
       children: [
@@ -103,7 +103,7 @@ const router = createRouter({
           name: 'addobs-forslag',
           component: () => import('../components/opret/opretobs-forslag.vue'),
           meta: {
-            title: 'Forslag',
+            title: 'Tilføj Observation',
             showInNavBar: false,
             requireSSL: true
           }
@@ -113,7 +113,7 @@ const router = createRouter({
           name: 'addobs-liste',
           component: () => import('../components/opret/opretobs-liste.vue'),
           meta: {
-            title: 'Liste',
+            title: 'Tilføj Observation',
             showInNavBar: false,
             requireSSL: true
           }
@@ -132,5 +132,15 @@ const router = createRouter({
     }
   ]
 })
+
+router.beforeEach(function (to, from, next) {
+  if (to.meta.title != undefined && to.meta.title.length > 0) {
+    document.title = to.meta.title + ' - Birdware.dk';
+  }
+  else {
+    document.title = 'Birdware.dk';
+  }
+  next();
+});
 
 export default router
