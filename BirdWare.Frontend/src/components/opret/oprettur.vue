@@ -5,7 +5,7 @@
             <input type="search" class="form-control form-control-sm" placeholder="Søg..." v-model="state.searchValue" />
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-2">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-6 g-2">
         <div class="col" v-for="[key, value] in byDistance">
             <div class="card h-100">
                 <div class="card-header ms-1 fw-semibold birdware">

@@ -1,7 +1,7 @@
 <template>
     <div class="scroll">
-        <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-2" v-if="state.hasData">
-            <div v-for="[key, value] in list">
+        <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-2" v-if="state.hasData">
+            <div v-for="[key, value] in byFamilie">
                 <div class="card h-100 w-100">
                     <div class="card-header">
                         <span class="birdware fw-semibold">{{ key }}</span>
@@ -25,13 +25,10 @@ import api from '@/api';
 
 const state = reactive({
     forslag: [],
-    showByIndeks: false,
     hasData: false
 });
 
-const list = computed(() => { return (state.showByIndeks == true ? byIndeks.value : byGruppe.value)});
-const byIndeks = computed(() => { return Map.groupBy(state.forslag.sort((a, b) => a.index - b.index), ({ indeks }) => indeks) });
-const byGruppe = computed(() => { return Map.groupBy(state.forslag.sort((a, b) => a.gruppeNavn.localeCompare(b.gruppeNavn)), ({ gruppeNavn }) => gruppeNavn) });
+const byFamilie = computed(() => { return Map.groupBy(state.forslag.sort((a, b) => a.familieNavn.localeCompare(b.familieNavn)), ({ familieNavn }) => familieNavn) });
 
 onMounted(() => {
     getForslag();

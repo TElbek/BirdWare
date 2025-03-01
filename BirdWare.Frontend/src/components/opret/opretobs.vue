@@ -17,9 +17,10 @@
 import { reactive, onMounted, watch, computed } from 'vue';
 import api from '@/api';
 import fugleturTitel from '@/components/fugletur/fugletur-titel.vue';
-import { useRouter}  from 'vue-router';
+import { useRoute, useRouter }  from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 
 const state = reactive({
     fugleturId: 0,
@@ -27,6 +28,7 @@ const state = reactive({
 });
 
 onMounted(() => {
+    state.showForslag = (route.name == 'addobs-forslag');
     getSenesteFugleturId();
 });
 
@@ -40,3 +42,9 @@ function getSenesteFugleturId() {
         .then((response) => { state.fugleturId = response.data });
 }
 </script>
+
+<style scoped>
+button {
+    width: 70px;
+}
+</style>

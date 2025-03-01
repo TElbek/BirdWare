@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col" :class="[forskel >= 0 ? 'birdware' : 'text-danger']">
-                <span class="large-text fw-semibold">Forskel {{ forskel }}</span>
+                <span class="large-text fw-semibold text-nowrap">Forskel {{ forskel }}</span>
             </div>
             <div class="col-auto">
                 <div class="btn-group mb-2">

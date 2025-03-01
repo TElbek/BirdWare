@@ -1,7 +1,7 @@
 <template>
     <multiselect v-model="state.selectedTags" :options="state.tagList" track-by="name" label="name"
         :multiple="false" :showLabels="false" :allow-empty="true" @search-change="getTagList"></multiselect>
-    <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-2 mt-2">
+    <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-2 mt-2">
         <div v-for=" [key, value] in groupByFamilie">
             <div class="card">
                 <div class="card-header birdware fw-semibold">
@@ -61,4 +61,10 @@ function getTagList(query) {
         });
     }
 }
+
+watch(() => state.selectedTags, (newValue) => {
+    api.post("observation/opretobs/" + newValue.id).then((response) => {
+        getObservationer();            
+    });
+});
 </script>
