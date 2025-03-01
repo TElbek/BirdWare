@@ -20,7 +20,7 @@ namespace BirdWare.EF.Commands
                     birdWareContext.SaveChanges();
                     return true;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return false;
                 }
