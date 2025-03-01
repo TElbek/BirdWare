@@ -11,13 +11,15 @@ namespace BirdWare.EF.Commands
 			try
 			{
                 using var transaction = birdWareContext.Database.BeginTransaction();
-                if (!birdWareContext.Fugletur.Any(r => r.Id == synchTrip.Fugletur.FugleturId))
+                if (!birdWareContext.Fugletur.Any(r => r.Id == synchTrip.Fugletur.FugleturId) &&
+                    birdWareContext.Lokalitet.Any(q => q.Id == synchTrip.Fugletur.LokalitetId))
                 {
                     var fugletur = new Fugletur()
                     {
                         Id = synchTrip.Fugletur.FugleturId,
                         Dato = synchTrip.Fugletur.Dato,
-                        LokalitetId = synchTrip.Fugletur.LokalitetId
+                        LokalitetId = synchTrip.Fugletur.LokalitetId,
+                        Lokalitet = birdWareContext.Lokalitet.First(q => q.Id == synchTrip.Fugletur.LokalitetId)
                     };
 
                     birdWareContext.Fugletur.Add(fugletur);
@@ -26,16 +28,23 @@ namespace BirdWare.EF.Commands
                 birdWareContext.Observation.RemoveRange(
                     birdWareContext.Observation.Where(t => t.FugleturId == synchTrip.Fugletur.FugleturId));
 
+                birdWareContext.SaveChanges();
+
                 foreach (var obs in synchTrip.Fugletur.Observation)
                 {
-                    var observation = new Observation()
+                    if (birdWareContext.Art.Any(q => q.Id == obs.ArtId))
                     {
-                        ArtId = obs.ArtId,
-                        Beskrivelse = obs.Beskrivelse,
-                        FugleturId = synchTrip.Fugletur.FugleturId
-                    };
+                        var observation = new Observation()
+                        {
+                            ArtId = obs.ArtId,
+                            Beskrivelse = obs.Beskrivelse,
+                            FugleturId = synchTrip.Fugletur.FugleturId,
+                            Art = birdWareContext.Art.First(q => q.Id == obs.ArtId),
+                            Fugletur = birdWareContext.Fugletur.First(q => q.Id == synchTrip.Fugletur.FugleturId)
+                        };
 
-                    birdWareContext.Observation.Add(observation);
+                        birdWareContext.Observation.Add(observation);
+                    }
                 }
 
                 birdWareContext.SaveChanges();
@@ -43,7 +52,7 @@ namespace BirdWare.EF.Commands
                 return true;
 
             }
-            catch (Exception)
+            catch (Exception ex)
 			{
                 return false;
 			}

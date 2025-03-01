@@ -26,6 +26,7 @@ namespace BirdWare.EF
             services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();
             services.AddTransient<ISynchTripQuery, SynchTripQuery>();
             services.AddTransient<ISynchTripCommand, SynchTripCommand>();
+            services.AddTransient<IOpdaterObsCommand, OpdaterObsCommand>();
             return services;
         }
     }

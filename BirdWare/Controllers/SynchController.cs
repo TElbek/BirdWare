@@ -19,8 +19,10 @@ namespace BirdWare.Controllers
         {
             if (synchTrip.Fugletur.FugleturId != 0)
             {
-                synchTripCommand.PostTrip(synchTrip);
-                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                if (synchTripCommand.PostTrip(synchTrip))
+                {
+                    return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+                }
             }
 
             return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
