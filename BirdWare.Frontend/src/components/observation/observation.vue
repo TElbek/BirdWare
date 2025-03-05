@@ -8,17 +8,14 @@
                 <observation-selection></observation-selection>
             </div>
             <div class="col-auto">
+                <observation-group-by></observation-group-by>
+            </div>
+            <div class="col-auto">
                 <div class="btn-group">
-                    <div class="btn btn-sm" @click="setViewMode(0)" :class="[obsSelectionStore.chosenViewMode == 0 ? 'btn-birdware' : 'btn-off']">
-                        Liste
-                    </div>
-                    <div class="btn btn-sm" @click="setViewMode(1)"  :class="[obsSelectionStore.chosenViewMode == 1 ? 'btn-birdware' : 'btn-off']">
+                    <div class="btn btn-sm" @click="obsSelectionStore.SetViewMode()"  :class="[obsSelectionStore.chosenViewMode == 1 ? 'btn-birdware' : 'btn-off']">
                         Plot
                     </div>
                 </div>
-            </div>
-            <div class="col-auto">
-                <observation-group-by></observation-group-by>
             </div>
         </div>
         <observation-presenter></observation-presenter>
@@ -33,10 +30,6 @@ const obsSelectionStore = useObsSelectionStore();
 const observationSelection = defineAsyncComponent(() => import('./observationselection.vue'));
 const observationGroupBy = defineAsyncComponent(() => import('./observationgrouping.vue'));
 const observationPresenter = defineAsyncComponent(() => import('./observationpresenter.vue'));
-
-function setViewMode(mode) {
-    obsSelectionStore.SetViewMode(mode);
-}
 </script>
 
 <style scoped>

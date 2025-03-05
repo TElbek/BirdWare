@@ -1,6 +1,12 @@
 <template>
-    <div class="btn-group">
+    <div class="btn-group d-none d-lg-block">
         <div v-for="item in groupByModes" class="btn btn-sm" @click="setGroupByMode(item.id)"
+            :class="[obsSelectionStore.chosenGroupingId == item.id ? 'btn-on' : 'btn-off']">
+            {{ item.caption }}
+        </div>
+    </div>
+    <div class="btn-group d-lg-none">
+        <div v-for="item in groupModesSmall" class="btn btn-sm" @click="setGroupByMode(item.id)"
             :class="[obsSelectionStore.chosenGroupingId == item.id ? 'btn-on' : 'btn-off']">
             {{ item.caption }}
         </div>
@@ -13,12 +19,14 @@ import { useObsSelectionStore } from '@/stores/obs-selection-store';
 const obsSelectionStore = useObsSelectionStore();
 
 const groupByModes = [
-    { caption: 'Årstal', id: 0 },
-    { caption: 'Måned', id: 1 },
-    { caption: 'Art', id: 2 },
-    { caption: 'Lokalitet', id: 3 },
-    { caption: 'Region', id: 4 },
+    { caption: 'Årstal', id: 0, onlyLarge: false },
+    { caption: 'Måned', id: 1, onlyLarge: false },
+    { caption: 'Art', id: 2, onlyLarge: true },
+    { caption: 'Lokalitet', id: 3, onlyLarge: false },
+    { caption: 'Region', id: 4, onlyLarge: true },
 ];
+
+const groupModesSmall = groupByModes.filter((mode) => mode.onlyLarge == false)
 
 function setGroupByMode(id) {
     obsSelectionStore.SetGroupingId(id);

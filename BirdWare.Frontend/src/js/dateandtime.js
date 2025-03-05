@@ -9,9 +9,16 @@ export const formatDate = (date) => {
 };
 
 export const getNameOfMonth = (month) => {
-    var date = new Date();
+    let date = new Date();
     date = new Date(date.getFullYear(), month - 1, 1);
     const options = {month: 'long'};
-    var nameOfMonth = date.toLocaleDateString(date, options);
+    let nameOfMonth = date.toLocaleDateString(date, options);
     return nameOfMonth.slice(0,1).toUpperCase() + nameOfMonth.slice(1);
+}
+
+export const getMonthNameFromNumber = (value) => {
+    const options = {
+        month: 'long',
+    };
+    return new Date('2025-' + value + '-01').toLocaleDateString('da-DK', options);
 }

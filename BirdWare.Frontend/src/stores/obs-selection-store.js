@@ -36,8 +36,8 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     chosenGroupingId.value = value;
   }
 
-  function SetViewMode(value) {
-    chosenViewMode.value = value;
+  function SetViewMode() {
+    chosenViewMode.value = (chosenViewMode.value == 0 ? 1 : 0);
   }
 
   function FindTag(tag) {

@@ -20,19 +20,13 @@
 
 <script setup>
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
+import { getMonthNameFromNumber } from '@/js/dateandtime';
 
 const obsSelectionStore = useObsSelectionStore();
 const props = defineProps({
     groupedData: {}
 });
 const emit = defineEmits(['addtag']);
-
-function getMonthNameFromNumber(value) {
-    const options = {
-        month: 'long',
-    };
-    return new Date('2025-' + value + '-01').toLocaleDateString('da-DK', options);
-}
 
 function addTag(text) {
     emit('addtag',text);

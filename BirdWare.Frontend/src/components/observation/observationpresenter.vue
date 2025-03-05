@@ -18,7 +18,9 @@ const observationPlot = defineAsyncComponent(() => import('./observationplot.vue
 const observationList = defineAsyncComponent(() => import('./observationlist.vue'));
 
 const obsSelectionStore = useObsSelectionStore();
-const { selectedTags } = storeToRefs(obsSelectionStore)
+const { selectedTags } = storeToRefs(obsSelectionStore);
+
+import { getMonthNameFromNumber } from '@/js/dateandtime';
 
 const state = reactive({
     observationer: [],
