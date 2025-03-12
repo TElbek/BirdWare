@@ -1,5 +1,5 @@
 <template>
-    <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-6 g-2">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2">
         <div class="col" v-for="[key, value] in listOfItems">
             <div class="card h-100 p-1">
                 <div class="card-header">
