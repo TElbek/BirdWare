@@ -42,12 +42,17 @@ const state = reactive({
         margin: {
             l: 30,
             r: 30,
-            b: 30,
+            b: 40,
             t: 10,
             pad: 5
         }
     },
     layoutText: {
+        xaxis: {
+            visible: false,
+            tickmode: 'linear',
+            dtick: 1.0,
+        },
         type: 'category',
         margin: {
             l: 130,
