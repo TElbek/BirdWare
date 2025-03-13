@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import Plotly from 'plotly.js-dist-min';
+import Plotly from 'plotly.js-basic-dist-min';
 import { reactive, onMounted, watch } from 'vue';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 
@@ -42,7 +42,7 @@ const state = reactive({
         margin: {
             l: 30,
             r: 30,
-            b: 40,
+            b: 45,
             t: 10,
             pad: 5
         }
@@ -70,8 +70,8 @@ onMounted(() => {
 });
 
 function setLayoutHeight() {
-    state.layoutText.height = window.innerHeight - 200;
-    state.layoutNumeric.height = window.innerHeight - 200;
+    state.layoutText.height = window.innerHeight - 250;
+    state.layoutNumeric.height = window.innerHeight - 250;
 }
 
 function transferData() {
