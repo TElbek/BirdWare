@@ -1,8 +1,9 @@
 <template>
     <div class="row" v-if="state.hasData">
-        <div class="col birdware large-text fw-semibold">{{ year }}: {{ state.aaretsgang.length }} Årsarter</div>
+        <div class="col birdware large-text ">{{ year }}: {{ state.aaretsgang.length }} Årsarter</div>
         <div class="col-auto btn-group mb-2">
-            <div class="btn btn-sm" :class="[state.isByTrip ? 'btn-on' : 'btn-off']" @click="switchIsByTrip">Tid & Sted</div>
+            <div class="btn btn-sm" :class="[state.isByTrip ? 'btn-on' : 'btn-off']" @click="switchIsByTrip">Tid & Sted
+            </div>
             <div class="btn btn-sm" :class="[state.isByTrip ? 'btn-off' : 'btn-on']" @click="switchIsByTrip">Arter</div>
         </div>
     </div>
@@ -10,12 +11,12 @@
         <div class="col" v-for="([key, value], index) in listOfItems">
             <div class="card h-100 p-1" v-if="index <= 30 && state.isByTrip || !state.isByTrip">
                 <div class="card-header">
-                    <span class="birdware fw-semibold">{{ key }}</span>
-                    <span class="float-end birdware fw-semibold">{{ value.length }}</span>
+                    <span class="birdware">{{ key }}</span>
+                    <span class="float-end birdware">{{ value.length }}</span>
                 </div>
                 <div class="card-body">
                     <div class="art-flex">
-                        <template v-for="art in arterSorteret(value)" >
+                        <template v-for="art in arterSorteret(value)">
                             <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su"></artNavn>
                         </template>
                     </div>
@@ -41,8 +42,8 @@ onMounted(() => {
 
 function getAaretsGang() {
     api.get('aaretsgang/').then(res => {
-            state.aaretsgang = res.data;
-            state.hasData = true;
+        state.aaretsgang = res.data;
+        state.hasData = true;
     });
 }
 
@@ -54,7 +55,7 @@ function switchIsByTrip() {
     state.isByTrip = !state.isByTrip;
 }
 
-const listOfItems = computed(() => { 
+const listOfItems = computed(() => {
     return state.isByTrip ? byTrip.value : byFamilie.value;
 });
 

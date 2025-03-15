@@ -4,7 +4,7 @@
     <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-2 mt-2">
         <div v-for=" [key, value] in groupByFamilie">
             <div class="card">
-                <div class="card-header birdware fw-semibold">
+                <div class="card-header birdware ">
                     {{ key }}
                 </div>
                 <div class="card-body">

@@ -3,9 +3,9 @@
         <div v-for="[key, value] in groupedData" class="border-bottom p-1 mb-1">
             <div class="border-bottom">
                 <a @click="addTag(key)">
-                    <span class="fw-bold birdware" v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</span>
-                    <span class="fw-bold birdware text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</span>
-                    <span class="ms-2">({{ value.length }})</span>
+                    <span class="birdware" v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</span>
+                    <span class="birdware text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</span>
+                    <span class="birdware ms-2">({{ value.length }})</span>
                 </a>
             </div>
             <div v-for="obs in obsSorted(value)" class="row row-space-below">

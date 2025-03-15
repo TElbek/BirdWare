@@ -1,5 +1,5 @@
 <template>
-    <div class="birdware large-text fw-semibold">
+    <div class="birdware large-text ">
         <div class="row">
             <div class="col-12 col-lg-auto" v-if="props.showTitle">{{ route.meta.title }}</div>
             <div class="col-12 col-lg-auto text-nowrap" v-if="state.fugletur != undefined">

@@ -4,8 +4,8 @@
             <div v-for="[key, value] in byFamilie">
                 <div class="card h-100 w-100">
                     <div class="card-header">
-                        <span class="birdware fw-semibold">{{ key }}</span>
-                        <span class="float-end fw-semibold birdware">{{ value.length }}</span>
+                        <span class="birdware ">{{ key }}</span>
+                        <span class="float-end  birdware">{{ value.length }}</span>
                     </div>
                     <div class="card-body p-1">
                         <div v-for="obs in obsSorted(value)" class="row">

@@ -14,7 +14,7 @@
         <div class="mt-2 row row-cols-1 row-cols-lg-2 row-cols-xl-6 g-2">
             <div v-for="[key, value] in groupedData">
                 <div class="card h-100 p-1">
-                    <div class="card-header birdware fw-semibold">
+                    <div class="card-header birdware ">
                         <span class="text-capitalize">{{ key }}</span>
                     </div>
                     <div class="card-body">

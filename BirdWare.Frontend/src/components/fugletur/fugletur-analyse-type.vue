@@ -4,9 +4,9 @@
             <div class="card-header text-nowrap">
                 <div class="row">
                     <div class="col d-inline-block text-truncate">
-                        <span class="birdware fw-semibold">{{ props.analyseTypeTekst }}</span>
+                        <span class="birdware ">{{ props.analyseTypeTekst }}</span>
                     </div>
-                    <div class="col-auto birdware fw-semibold">
+                    <div class="col-auto birdware ">
                         {{ props.analyseListe.length }}
                     </div>
                 </div>

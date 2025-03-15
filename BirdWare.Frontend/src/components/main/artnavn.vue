@@ -1,6 +1,6 @@
 <template>
     <a @click="navigateToObservation">
-        <span :class="[props.su ? 'text-danger fw-bold' : '']" class="text-nowrap">{{ props.artNavn }}</span>
+        <span class="text-nowrap" :class="[props.su ? 'border-bottom border-danger border-2' : '']">{{ props.artNavn }}</span>
     </a>
 </template>
 

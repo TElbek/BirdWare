@@ -12,9 +12,18 @@ import { RouterView } from 'vue-router'
   </div>
 </template>
 
-<style>
+<style lang="scss">
+$white: #fff;
+$birdwareColor: #048baf;
+$birdwareColor-light: #048baf50;
+$black-30: #00000030;
+$black-20: #00000020;
+$black-10: #00000010;
+$light-gray: #efefef20;
+
 body {
   font-size: 0.90rem;
+  background-color: $light-gray;
 }
 
 .nav-link {
@@ -22,26 +31,26 @@ body {
 }
 
 .birdware {
-  color: #048baf;
+  color: $birdwareColor;
 }
 
 .btn-on {
-  background-color: #048baf;
-  color: #fff;
+  background-color: $birdwareColor;
+  color: $white;
 }
 
 .btn-on:hover {
-  background-color: #048baf;
-  color: #fff;
+  background-color: $birdwareColor;
+  color: $white;
 }
 
 .btn-off {
-  border: 1px solid #00000030;
+  border: 1px solid $black-30;
 }
 
 .btn-off:hover {
-  color: #000;
-  border: 1px solid #00000050;
+  color: $birdwareColor;
+  border: 1px solid $black-30;
 }
 
 .art-flex {
@@ -51,15 +60,17 @@ body {
 }
 
 .card {
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid $black-20;
+  box-shadow: 0px 0px 5px $black-20;
   border-radius: 3px;
+  padding: 2px;
 }
 
 .card-header {
   padding: 3px;
   background-color: transparent;
-  border-width: 0px;
+  border-color: $birdwareColor-light;
+  font-weight: 500;
 }
 
 .card-body {
@@ -86,34 +97,34 @@ a {
 }
 
 .multiselect__option {
-  background: white;
+  background: $white;
   outline: none;
-  color: #6392b0;
+  color: $birdwareColor;
   font-weight: normal;
 }
 
 .multiselect__tag {
-  color: #6392b0;
-  font-weight: bold;
-  background: #fff;
-  border-radius: 0px;
-  border: 1px solid #ddd;
+  color: $birdwareColor;
+  font-weight: 600;
+  background: $white;
+  border-radius: 3px;
+  border: 1px solid $birdwareColor-light;
 }
 
 .multiselect__option--selected.multiselect__option--highlight {
-  background: white;
-  color: #6392b0;
+  background: $white;
+  color: $birdwareColor;
   font-weight: normal;
 }
 
 .multiselect__tag-icon::after {
-  color: #6392b0;
+  color: $birdwareColor;
 }
 
 .multiselect__tag-icon:focus,
 .multiselect__tag-icon:hover {
-  background: #fff;
-  color: #6392b0;
+  background: $white;
+  color: $birdwareColor;
 }
 
 .scroll {
@@ -145,32 +156,34 @@ a {
 
 @media only screen and (min-width: 992px) {
   .router-link-exact-active {
-    border-bottom: 2px solid #048baf;
+    border-bottom: 2px solid $birdwareColor;
   }
 
   .router-link-active {
-    border-bottom: 2px solid #048baf;
+    border-bottom: 2px solid $birdwareColor;
   }
 }
 
 .btn-birdware,
 .btn-birdware:hover {
-  background-color: #048baf;
-  color: white;
+  background-color: $birdwareColor;
+  color: $white;
 }
 
 .btn-outline-birdware,
 .btn-outline-birdware:hover {
-  border: 1px solid #048baf;
+  border: 1px solid $birdwareColor;
 }
 
 
 .navbar {
-  background-color: white;
+  background-color: transparent;
 }
 
-.nav-link, .nav-link:focus, .nav-link:hover {
-  color: #048baf;
+.nav-link,
+.nav-link:focus,
+.nav-link:hover {
+  color: $birdwareColor;
 }
 
 .navbar-brand {
@@ -181,11 +194,11 @@ a {
 }
 
 .navbar-brand:hover {
-  color: #048baf;
+  color: $birdwareColor;
 }
 
 .navbar-brand:focus {
-  color: #048baf;
+  color: $birdwareColor;
 }
 
 .navbar-toggler:focus {
