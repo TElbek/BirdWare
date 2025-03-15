@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="scroll mt-2" v-if="state.analyseListe.length > 0">
-        <div class="row row-cols-1 row-cols-md-3 row-cols-xl-6 g-2">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2">
             <template v-for="[key, value] in groupedByAnalyseType">
                 <fugleturAnalyseType :analyseListe="value" :analyseTypeTekst="getAnalyseTypeTekst(key)"></fugleturAnalyseType>
             </template>

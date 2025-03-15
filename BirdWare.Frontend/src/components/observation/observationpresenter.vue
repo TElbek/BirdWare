@@ -1,9 +1,9 @@
 <template>
     <div v-if="obsSelectionStore.chosenViewMode == 0">
-        <observationList :grouped-data="groupedData" @addtag="addTag"></observationList>    
+        <observationList class="mt-2" :grouped-data="groupedData" @addtag="addTag"></observationList>    
     </div>
     <div v-else>
-        <observationPlot :groupedData="groupedData"></observationPlot>
+        <observationPlot class="mt-2" :groupedData="groupedData"></observationPlot>
     </div>
 </template>
 
