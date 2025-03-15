@@ -135,11 +135,11 @@ a {
   }
 
   .router-link-exact-active {
-    font-weight: 800;
+    font-weight: 600;
   }
 
   .router-link-active {
-    font-weight: 800;
+    font-weight: 600;
   }
 }
 
