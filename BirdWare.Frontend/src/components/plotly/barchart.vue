@@ -44,7 +44,7 @@ const state = reactive({
             r: 0,
             b: 45,
             t: 10,
-            pad: 5
+            pad: 0
         }
     },
     layoutText: {
