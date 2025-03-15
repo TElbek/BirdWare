@@ -1,12 +1,12 @@
 <template>
     <div class="scroll mt-3">
         <div v-for="[key, value] in groupedData" class="border-bottom p-1 mb-1">
-            <div class="row fw-bold birdware border-bottom">
-                <a @click="addTag(key)" class="col">
-                    <div v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</div>
-                    <div class="text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</div>
+            <div class="border-bottom">
+                <a @click="addTag(key)">
+                    <span class="fw-bold birdware" v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</span>
+                    <span class="fw-bold birdware text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</span>
+                    <span class="ms-2">({{ value.length }})</span>
                 </a>
-                <div class="col-auto text-start">{{ value.length }}</div>
             </div>
             <div v-for="obs in obsSorted(value)" class="row row-space-below">
                 <fugleturDato class="col-auto" :fugleturId="obs.fugleturId" :dato="obs.dato"></fugleturDato>
