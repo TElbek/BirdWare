@@ -1,5 +1,5 @@
 <template>
-    <div class="scroll mt-3">
+    <div class="scroll">
         <div v-for="[key, value] in groupedData" class="border-bottom p-1 mb-1">
             <div class="border-bottom">
                 <a @click="addTag(key)">

@@ -52,8 +52,8 @@ body {
 
 .card {
   border: 1px solid rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
 }
 
 .card-header {
@@ -169,7 +169,7 @@ a {
   background-color: white;
 }
 
-.nav-link {
+.nav-link, .nav-link:focus, .nav-link:hover {
   color: #048baf;
 }
 
