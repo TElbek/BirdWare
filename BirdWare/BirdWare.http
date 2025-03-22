@@ -1,6 +1,15 @@
-@BirdWare_HostAddress = http://localhost:5171
+@BirdWare_HostAddress = http://birdwarevue3.home
 
 GET {{BirdWare_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+GET {{BirdWare_HostAddress}}/api/forskel/iaar
+Accept: application/json
+
+###
+GET {{BirdWare_HostAddress}}/api/forskel/sidsteaar
+Accept: application/json
+
+###
+GET {{BirdWare_HostAddress}}/api/fugletur/foreslaaArter

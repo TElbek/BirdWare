@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col h4 birdware">Tilføj Tur</div>
         <div class="col-auto">
-            <input type="search" class="form-control form-control-sm" placeholder="Søg..." v-model="state.searchValue" />
+            <input type="search" class="form-control form-control-sm" placeholder="Søg..."
+                v-model="state.searchValue" />
         </div>
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-xl-6 g-2">
@@ -28,6 +29,9 @@
 <script setup>
 import { reactive, onMounted, watch, computed } from 'vue';
 import api from '@/api';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const state = reactive({
     searchValue: '',
@@ -64,7 +68,10 @@ function getLokaliteterForPosition() {
 }
 
 function opretTur(lokalitetId) {
-    api.post("fugletur/oprettur/" + lokalitetId);
+    api.post("fugletur/oprettur/" + lokalitetId)
+        .then((response) => {
+            router.push({ name: 'addobs' });
+        });
 }
 
 watch(() => state.position, (newValue) => {
