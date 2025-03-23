@@ -7,18 +7,20 @@
             <div class="btn btn-sm" :class="[state.isByTrip ? 'btn-off' : 'btn-on']" @click="switchIsByTrip">Arter</div>
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2">
-        <div class="col" v-for="([key, value], index) in listOfItems">
-            <div class="card h-100 p-1" v-if="index <= 30 && state.isByTrip || !state.isByTrip">
-                <div class="card-header">
-                    <span class="birdware">{{ key }}</span>
-                    <span class="float-end birdware">{{ value.length }}</span>
-                </div>
-                <div class="card-body">
-                    <div class="art-flex">
-                        <template v-for="art in arterSorteret(value)">
-                            <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su"></artNavn>
-                        </template>
+    <div class="scroll">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2">
+            <div class="col" v-for="([key, value], index) in listOfItems">
+                <div class="card h-100 p-1" v-if="index <= 30 && state.isByTrip || !state.isByTrip">
+                    <div class="card-header">
+                        <span class="birdware">{{ key }}</span>
+                        <span class="float-end birdware">{{ value.length }}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="art-flex">
+                            <template v-for="art in arterSorteret(value)">
+                                <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su"></artNavn>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
