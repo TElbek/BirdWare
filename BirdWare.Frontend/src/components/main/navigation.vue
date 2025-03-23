@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg fixed-top me-2 ms-2">
+    <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand birdware" href="#">BirdWare</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -7,12 +7,11 @@
         </button>
         <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-body">
+                <a class="large-text birdware d-lg-none" href="#">Navigation</a>
                 <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
-                    <template v-for="route in visibleRoutes">
-                        <li class="nav-item">
-                            <router-link class="nav-link" :to="route.path">{{ route.meta.title }}</router-link>
-                        </li>
-                    </template>
+                    <li class="nav-item" data-bs-dismiss="offcanvas" v-for="route in visibleRoutes">
+                        <router-link class="nav-link" :to="route.path">{{ route.meta.title }}</router-link>
+                    </li>
                 </ul>
             </div>
         </div>

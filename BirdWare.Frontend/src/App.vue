@@ -6,7 +6,7 @@ import { RouterView } from 'vue-router'
 <template>
   <div class="container-fluid">
     <navigation></navigation>
-    <div class="mb-2 routerview">
+    <div class="mb-2">
       <RouterView />
     </div>
   </div>
@@ -206,9 +206,6 @@ a {
   box-shadow: none;
 }
 
-.routerview {
-  margin-top: 60px;
-}
 
 .btn-outline-birdware,
 .btn-outline-birdware:hover {
@@ -234,5 +231,9 @@ a {
 
 .dropdown-item:hover {
   color: $birdwareColor;
+}
+
+.offcanvas.offcanvas-end {
+    width:  calc(var(--bs-offcanvas-width) * 0.75);
 }
 </style>

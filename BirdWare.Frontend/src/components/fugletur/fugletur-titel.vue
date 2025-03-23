@@ -1,11 +1,7 @@
 <template>
-    <div class="birdware large-text ">
-        <div class="row">
-            <div class="col-12 col-lg-auto" v-if="props.showTitle">{{ route.meta.title }}</div>
-            <div class="col-12 col-lg-auto text-nowrap" v-if="state.fugletur != undefined">
-                {{ formatDate(state.fugletur.dato) }} - {{state.fugletur.lokalitetNavn }}
-            </div>
-        </div>
+    <div class="birdware large-text text-nowrap">
+        <span v-if="props.showTitle">{{ route.meta.title }}</span>
+        <span v-if="state.fugletur != undefined" class="ms-2">{{ formatDate(state.fugletur.dato) }} {{state.fugletur.lokalitetNavn }}</span>
     </div>
 </template>
 

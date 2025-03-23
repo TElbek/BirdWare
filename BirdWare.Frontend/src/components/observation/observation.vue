@@ -18,13 +18,12 @@
             <div class="col-auto birdware large-text">
                 Observation
             </div>
-        </div>
-        <div class="row mt-2">
             <div class="col">
                 <observation-selection></observation-selection>
             </div>
         </div>
         <div class="row mt-2">
+            <div class="col"></div>
             <div class="col-auto">
                 <observation-group-by></observation-group-by>
                 <observation-view-mode></observation-view-mode>

@@ -40,7 +40,7 @@ const router = createRouter({
           name: 'fugletur-obs',
           component: () => import('../components/fugletur/fugletur-obs.vue'),
           meta: {
-            title: 'Observation',
+            title: 'Fugletur',
             showInNavBar: false,
             requireSSL: false
           },
@@ -60,7 +60,7 @@ const router = createRouter({
           name: 'fugletur-oversigt',
           component: () => import('../components/fugletur/fugletur-oversigt.vue'),
           meta: {
-            title: 'Fugleture - Oversigt',
+            title: 'Oversigt',
             showInNavBar: false,
             requireSSL: false
           },

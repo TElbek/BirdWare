@@ -4,7 +4,7 @@
         {{ selectedGroupModeCaption }}
     </button>
     <ul class="dropdown-menu">
-        <li v-for="item in groupByModesSorted" :class="[obsSelectionStore.chosenGroupingId == item.id ? 'active' : '']">
+        <li v-for="item in groupByModesSorted">
             <a class="dropdown-item birdware" @click="setGroupByMode(item.id)">{{ item.caption }}</a>
         </li>
     </ul>
