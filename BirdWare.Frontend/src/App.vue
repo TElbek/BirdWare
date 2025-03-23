@@ -209,4 +209,30 @@ a {
 .routerview {
   margin-top: 60px;
 }
+
+.btn-outline-birdware,
+.btn-outline-birdware:hover {
+    color: $birdwareColor;
+    background-color: transparent;
+    border-color: $black-20;
+}
+
+.btn-birdware,
+.btn-birdware:hover {
+    background-color: $birdwareColor;
+    border-color: $black-20;
+    color: $white;
+}
+
+.btn.show {
+  color: $birdwareColor;
+}
+
+.dropdown-menu {
+  font-size: inherit;
+}
+
+.dropdown-item:hover {
+  color: $birdwareColor;
+}
 </style>

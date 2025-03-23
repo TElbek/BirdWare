@@ -1,58 +1,38 @@
 <template>
-    <div class="btn-group d-none d-lg-block">
-        <div v-for="item in groupByModes" class="btn btn-sm" @click="setGroupByMode(item.id)"
-            :class="[obsSelectionStore.chosenGroupingId == item.id ? 'btn-on' : 'btn-off']">
-            {{ item.caption }}
-        </div>
-    </div>
-    <div class="btn-group d-lg-none">
-        <div v-for="item in groupModesSmall" class="btn btn-sm" @click="setGroupByMode(item.id)"
-            :class="[obsSelectionStore.chosenGroupingId == item.id ? 'btn-on' : 'btn-off']">
-            {{ item.caption }}
-        </div>
-    </div>
+    <button class="btn btn-outline-birdware btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        {{ selectedGroupModeCaption }}
+    </button>
+    <ul class="dropdown-menu">
+        <li v-for="item in groupByModesSorted" :class="[obsSelectionStore.chosenGroupingId == item.id ? 'active' : '']">
+            <a class="dropdown-item birdware" @click="setGroupByMode(item.id)">{{ item.caption }}</a>
+        </li>
+    </ul>
 </template>
 
 <script setup>
 const emit = defineEmits(['groupby'])
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 const obsSelectionStore = useObsSelectionStore();
+import { computed } from 'vue';
 
 const groupByModes = [
-    { caption: 'Årstal', id: 0, onlyLarge: false },
-    { caption: 'Måned', id: 1, onlyLarge: false },
-    { caption: 'Art', id: 2, onlyLarge: true },
-    { caption: 'Lokalitet', id: 3, onlyLarge: false },
-    { caption: 'Region', id: 4, onlyLarge: true },
+    { caption: 'Årstal', id: 0 },
+    { caption: 'Måned', id: 1 },
+    { caption: 'Art', id: 2 },
+    { caption: 'Lokalitet', id: 3 },
+    { caption: 'Region', id: 4 },
 ];
 
-const groupModesSmall = groupByModes.filter((mode) => mode.onlyLarge == false)
+const selectedGroupModeCaption = computed(() => {
+    return groupByModes.filter((item) => item.id == obsSelectionStore.chosenGroupingId)[0].caption;
+});
+
+const groupByModesSorted = computed(() => {
+    return groupByModes.sort((a,b) => a.caption.localeCompare(b.caption));
+});
 
 function setGroupByMode(id) {
     obsSelectionStore.SetGroupingId(id);
 }
 </script>
-
-<style scoped>
-.btn-group {
-    position: relative;
-    top: 6px;
-}
-
-.btn-sm {
-    width: 70px;
-}
-
-.btn-secondary {
-    background-color: #6392b0;
-}
-
-.btn-outline-secondary {
-    border-color: #6392b050;
-}
-
-.btn-outline-secondary:hover {
-    background-color: #6392b030;
-    color: black;
-}
-</style>

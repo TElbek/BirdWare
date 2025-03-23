@@ -6,13 +6,11 @@
 <script setup>
 import { Multiselect } from 'vue-multiselect';
 import { reactive } from 'vue';
-import { useRoute } from 'vue-router';
 
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import api from '@/api';
 
 const emit = defineEmits(['search'])
-const route = useRoute();
 const obsSelectionStore = useObsSelectionStore();
 
 const state = reactive({
