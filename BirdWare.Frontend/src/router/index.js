@@ -15,16 +15,6 @@ const router = createRouter({
       }
     },
     {
-      path: '/forskel',
-      name: 'forskel',
-      component: () => import('../views/ForskelView.vue'),
-      meta: {
-        title: 'Forskel',
-        showInNavBar: true,
-        requireSSL: false
-      }
-    },
-    {
       path: '/fugletur',
       name: 'fugletur',
       component: () => import('../components/fugletur/fugletur.vue'),
@@ -76,6 +66,16 @@ const router = createRouter({
         showInNavBar: true,
         requireSSL: false
       },      
+    },
+    {
+      path: '/forskel',
+      name: 'forskel',
+      component: () => import('../views/ForskelView.vue'),
+      meta: {
+        title: 'Forskel',
+        showInNavBar: true,
+        requireSSL: false
+      }
     },
     {
         path: '/statistik/hvorkanjegfinde',
