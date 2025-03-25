@@ -1,8 +1,5 @@
 <template>
     <div class="row">
-        <div class="col-auto">
-            <fugleturTitel></fugleturTitel>
-        </div>
         <div class="col">
             <fugleturSelection></fugleturSelection>
         </div>
@@ -16,6 +13,7 @@
                 <div class="card h-100 p-1">
                     <div class="card-header birdware ">
                         <span class="text-capitalize">{{ key }}</span>
+                        <span class="float-end">{{ value.length }}</span>
                     </div>
                     <div class="card-body">
                         <div v-for="tur in value" class="row">
@@ -31,7 +29,6 @@
 
 <script setup>
 import { reactive, onMounted, computed, watch } from 'vue';
-import fugleturTitel from '@/components/fugletur/fugletur-titel.vue';
 import fugleturNavigation from '@/components/fugletur/fugletur-navigation.vue';
 import fugleturSelection from '@/components/fugletur/fugletur-selection.vue';
 import { useFugleturSelectionStore } from '@/stores/fugletur-selection-store';
@@ -52,7 +49,12 @@ const groupedData = computed(() => {
 });
 
 onMounted(() => {
-    if (fugleturSelectionStore.selectedTags.length > 0) {
+    if (fugleturSelectionStore.selectedTags.length == 0) {
+        api.get("tag/" + new Date().getFullYear())   .then(response => {
+            fugleturSelectionStore.AddTag(response.data);
+        });
+    }
+    else {
         getFugleture();
     }
 });

@@ -35,7 +35,7 @@ namespace BirdWare.EF.Queries
                 fugleture = FilterForLocality(TagList, fugleture);
             }
 
-            return MapToResult(fugleture.OrderByDescending(r => r.Id).Take(100));
+            return MapToResult(fugleture.OrderByDescending(r => r.Id).Take(50));
         }
 
         private static IQueryable<Fugletur> FilterForLocality(List<Tag> TagList, IQueryable<Fugletur> fugleture)
