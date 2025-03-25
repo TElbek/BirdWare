@@ -233,7 +233,7 @@ a {
   color: $birdwareColor;
 }
 
-.offcanvas.offcanvas-end {
-    width:  calc(var(--bs-offcanvas-width) * 0.75);
+.offcanvas {
+  --bs-offcanvas-width: 50%;
 }
 </style>

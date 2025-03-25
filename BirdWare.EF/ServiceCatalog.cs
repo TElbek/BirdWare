@@ -27,6 +27,7 @@ namespace BirdWare.EF
             services.AddTransient<ISynchTripQuery, SynchTripQuery>();
             services.AddTransient<ISynchTripCommand, SynchTripCommand>();
             services.AddTransient<IOpdaterObsCommand, OpdaterObsCommand>();
+            services.AddTransient<IHvorKanJegFindeQuery, HvorKanJegFindeQuery>();
             return services;
         }
     }

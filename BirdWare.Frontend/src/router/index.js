@@ -78,6 +78,16 @@ const router = createRouter({
       },      
     },
     {
+        path: '/statistik/hvorkanjegfinde',
+        name: 'hvorkanjegfinde',
+        component: () => import('../views/HvorKanJegFinde.vue'),
+        meta: {
+          title: 'Hvor kan Jeg finde',
+          showInNavBar: true,
+          requireSSL: false
+        },      
+      },
+    {
       path: '/opret/oprettur',
       name: 'addtrip',
       component: () => import('../views/OpretTurView.vue'),

@@ -40,6 +40,7 @@ namespace BirdWare.EF
 
             modelBuilder.Entity<SpTripAnalysisResult>().HasNoKey();
             modelBuilder.Entity<spLokaliteterByLatLongResult>().HasNoKey();
+            modelBuilder.Entity<spHvorKanJegFindeResult>().HasNoKey();
 
         }
 
@@ -52,5 +53,6 @@ namespace BirdWare.EF
         public DbSet<Region> Region {get; set;}
         public DbSet<SpTripAnalysisResult> SpTripAnalysisResult {get; set;}
         public DbSet<spLokaliteterByLatLongResult> SpLokaliteterByLatLongResult { get; set;}
+        public DbSet<spHvorKanJegFindeResult> SpHvorKanJegFindeResult { get; set;}
     }
 }
