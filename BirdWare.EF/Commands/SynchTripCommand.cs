@@ -52,7 +52,7 @@ namespace BirdWare.EF.Commands
                 return true;
 
             }
-            catch (Exception ex)
+            catch (Exception)
 			{
                 return false;
 			}
