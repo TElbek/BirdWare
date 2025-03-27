@@ -32,7 +32,8 @@ const router = createRouter({
           meta: {
             title: 'Fugletur',
             showInNavBar: false,
-            requireSSL: false
+            requireSSL: false,
+            requireId: true
           },
         },
         {
@@ -42,7 +43,8 @@ const router = createRouter({
           meta: {
             title: 'Analyse',
             showInNavBar: false,
-            requireSSL: false
+            requireSSL: false,
+            requireId: true
           },
         },
         {
@@ -52,7 +54,8 @@ const router = createRouter({
           meta: {
             title: 'Oversigt',
             showInNavBar: false,
-            requireSSL: false
+            requireSSL: false,
+            requireId: false
           },
         }
       ]
@@ -64,7 +67,7 @@ const router = createRouter({
       meta: {
         title: 'Observation',
         showInNavBar: true,
-        requireSSL: false
+        requireSSL: true
       },      
     },
     {

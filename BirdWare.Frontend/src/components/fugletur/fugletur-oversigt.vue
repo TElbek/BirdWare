@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="scroll">
-        <div class="mt-2 row row-cols-1 row-cols-lg-2 row-cols-xl-6 g-2">
+        <div class="mt-2 row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-2">
             <div v-for="[key, value] in groupedData">
                 <div class="card h-100 p-1">
                     <div class="card-header birdware ">
