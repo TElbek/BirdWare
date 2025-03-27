@@ -13,7 +13,8 @@
                     <fugleturDato class="col-auto" :fugleturId="obs.fugleturId" :dato="obs.dato"></fugleturDato>
                     <div class="col-5 col-md-2 text-nowrap">{{ obs.artNavn }}</div>
                     <div class="col-3 col-md-3 text-nowrap">{{ obs.lokalitetNavn }}</div>
-                    <div class="col-12 col-md-6">{{ obs.bem }}</div>
+                    <div class="d-none d-lg-block col-md">{{ obs.bem }}</div>
+                    <div class="col-12  d-lg-none">{{ obs.bem }}</div>
                 </div>
             </div>
         </div>
