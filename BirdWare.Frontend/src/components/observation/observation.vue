@@ -1,33 +1,22 @@
 <template>
-    <div class="d-none d-lg-block">
-        <div class="row">
-            <div class="col-auto birdware large-text">
-                Observation
-            </div>
-            <div class="col">
-                <observation-selection></observation-selection>
-            </div>
-            <div class="col-auto">
-                <observation-group-by></observation-group-by>
-                <observation-view-mode></observation-view-mode>
-            </div>
+    <div class="row">
+        <div class="col-auto birdware large-text d-none d-lg-block">
+            Observation
+        </div>
+        <div class="col birdware large-text d-lg-none">
+            Observation
+        </div>
+        <div class="col d-none d-lg-block">
+            <observation-selection></observation-selection>
+        </div>
+        <div class="col-auto d-flex gap-2">
+            <observation-group-by></observation-group-by>
+            <observation-view-mode></observation-view-mode>
         </div>
     </div>
-    <div class="d-lg-none">
-        <div class="row">
-            <div class="col-auto birdware large-text">
-                Observation
-            </div>
-            <div class="col">
-                <observation-selection></observation-selection>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col"></div>
-            <div class="col-auto">
-                <observation-group-by></observation-group-by>
-                <observation-view-mode></observation-view-mode>
-            </div>
+    <div class="row d-lg-none mt-2">
+        <div class="col">
+            <observation-selection></observation-selection>
         </div>
     </div>
     <observation-presenter></observation-presenter>

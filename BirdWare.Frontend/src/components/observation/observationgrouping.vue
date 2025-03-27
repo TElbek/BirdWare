@@ -1,20 +1,22 @@
 <template>
-    <button class="btn btn-outline-birdware btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-        aria-expanded="false">
-        {{ selectedGroupModeCaption }}
-    </button>
-    <ul class="dropdown-menu">
-        <li v-for="item in groupByModesSorted">
-            <a class="dropdown-item birdware" @click="setGroupByMode(item.id)">{{ item.caption }}</a>
-        </li>
-    </ul>
+    <div class="d-none d-lg-block">
+        <obsGrouping :groupByModes="groupByModes" :caption="selectedGroupModeCaption">
+        </obsGrouping>
+    </div>
+    <div class="d-lg-none">
+        <obsGroupingSmall :groupByModes="groupByModes" :caption="selectedGroupModeCaption">
+        </obsGroupingSmall>
+    </div>
 </template>
 
 <script setup>
-const emit = defineEmits(['groupby'])
-import { useObsSelectionStore } from '@/stores/obs-selection-store';
-const obsSelectionStore = useObsSelectionStore();
+import { defineAsyncComponent } from 'vue';
 import { computed } from 'vue';
+import { useObsSelectionStore } from '@/stores/obs-selection-store';
+
+const obsGrouping = defineAsyncComponent(() => import('./obsgrouping.vue'));
+const obsGroupingSmall = defineAsyncComponent(() => import('./obsgroupingsmall.vue'));
+const obsSelectionStore = useObsSelectionStore();
 
 const groupByModes = [
     { caption: 'Årstal', id: 0 },
@@ -27,12 +29,4 @@ const groupByModes = [
 const selectedGroupModeCaption = computed(() => {
     return groupByModes.filter((item) => item.id == obsSelectionStore.chosenGroupingId)[0].caption;
 });
-
-const groupByModesSorted = computed(() => {
-    return groupByModes.sort((a,b) => a.caption.localeCompare(b.caption));
-});
-
-function setGroupByMode(id) {
-    obsSelectionStore.SetGroupingId(id);
-}
 </script>
