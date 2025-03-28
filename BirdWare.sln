@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdWare", "BirdWare\BirdWare.csproj", "{23631006-1EC6-4232-9972-4FAB67241161}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirdWare", "BirdWare\BirdWare.csproj", "{23631006-1EC6-4232-9972-4FAB67241161}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdWare.Domain", "BirdWare.Domain\BirdWare.Domain.csproj", "{D439DD71-7C47-4CE7-940E-FA3A3EF8F53A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirdWare.Domain", "BirdWare.Domain\BirdWare.Domain.csproj", "{D439DD71-7C47-4CE7-940E-FA3A3EF8F53A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdWare.EF", "BirdWare.EF\BirdWare.EF.csproj", "{5982802D-C005-435B-A71E-947E4E8D16B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BirdWare.EF", "BirdWare.EF\BirdWare.EF.csproj", "{5982802D-C005-435B-A71E-947E4E8D16B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdWare.Test", "BirdWare.Test\BirdWare.Test.csproj", "{3F6BC5F0-53FB-4ABB-9575-8DF3FFD82FA4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{5982802D-C005-435B-A71E-947E4E8D16B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5982802D-C005-435B-A71E-947E4E8D16B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5982802D-C005-435B-A71E-947E4E8D16B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F6BC5F0-53FB-4ABB-9575-8DF3FFD82FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F6BC5F0-53FB-4ABB-9575-8DF3FFD82FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F6BC5F0-53FB-4ABB-9575-8DF3FFD82FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F6BC5F0-53FB-4ABB-9575-8DF3FFD82FA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
