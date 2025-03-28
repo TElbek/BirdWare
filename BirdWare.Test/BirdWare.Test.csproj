@@ -26,6 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BirdWare.Domain\BirdWare.Domain.csproj" />
+    <ProjectReference Include="..\BirdWare.EF\BirdWare.EF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 

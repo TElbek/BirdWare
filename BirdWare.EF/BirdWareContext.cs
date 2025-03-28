@@ -44,15 +44,15 @@ namespace BirdWare.EF
 
         }
 
-        public DbSet<Familie> Familie { get; set; }
-        public DbSet<Gruppe> Gruppe {get; set;}
-        public DbSet<Art> Art {get; set;}
-        public DbSet<Observation> Observation {get; set;}
-        public DbSet<Fugletur> Fugletur {get; set;}
-        public DbSet<Lokalitet> Lokalitet {get; set;}
-        public DbSet<Region> Region {get; set;}
-        public DbSet<SpTripAnalysisResult> SpTripAnalysisResult {get; set;}
-        public DbSet<spLokaliteterByLatLongResult> SpLokaliteterByLatLongResult { get; set;}
-        public DbSet<spHvorKanJegFindeResult> SpHvorKanJegFindeResult { get; set;}
+        public virtual DbSet<Familie> Familie { get; set; }
+        public virtual DbSet<Gruppe> Gruppe {get; set;}
+        public virtual DbSet<Art> Art {get; set;}
+        public virtual DbSet<Observation> Observation {get; set;}
+        public virtual DbSet<Fugletur> Fugletur {get; set;}
+        public virtual DbSet<Lokalitet> Lokalitet {get; set;}
+        public virtual DbSet<Region> Region {get; set;}
+        public virtual DbSet<SpTripAnalysisResult> SpTripAnalysisResult {get; set;}
+        public virtual DbSet<spLokaliteterByLatLongResult> SpLokaliteterByLatLongResult { get; set;}
+        public virtual DbSet<spHvorKanJegFindeResult> SpHvorKanJegFindeResult { get; set;}
     }
 }
