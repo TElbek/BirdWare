@@ -1,25 +1,16 @@
 using BirdWare.Domain.Entities;
-using BirdWare.EF;
 using BirdWare.EF.Queries;
-using Moq;
 
 namespace BirdWare.Test
 {
-    public class ArtQueriesTest
+    public class ArtQueriesTest : DbContextMock
     {
-        private readonly MockSetFactory<Art> artMockSet;
-        private readonly Mock<BirdWareContext> mockContext;
-
-        public ArtQueriesTest()
-        {
-            artMockSet = new MockSetFactory<Art>();
-            mockContext = new Mock<BirdWareContext>();
-        }
+        private readonly DbSetMock<Art> artMockSet = new();
 
         [Fact]
         public void GetArtTagByIdTest()
         {
-            var artQueries = Arrange();
+            var artQueries = GetArtQueries();
 
             var tag = artQueries.GetArtTagById(1);
             Assert.Equal(1, tag.Id);
@@ -27,25 +18,26 @@ namespace BirdWare.Test
         }
 
         [Fact]
-        public void GetArtTagByIdNotFoundReturnEmptyTagTest()
+        public void GetArtTagByUnknownIdGetEmptyTagTest()
         {
-            var artQueries = Arrange();
+            var artQueries = GetArtQueries();
 
-            var tag = artQueries.GetArtTagById(13);
+            var idNotExist = artMockSet.DbSet.Max(q => q.Id) + 1;
+            var tag = artQueries.GetArtTagById(idNotExist);
             Assert.Equal(0, tag.Id);
             Assert.Equal(string.Empty, tag.Name);
         }
 
 
-        private ArtQueries Arrange()
+        private ArtQueries GetArtQueries()
         {
-            artMockSet.SetData([
+            artMockSet.AddData([
                 new() { Id = 1, Navn = "Art1", GruppeId = 1 },
                 new() { Id = 2, Navn = "Art2", GruppeId = 2 },
                 new() { Id = 3, Navn = "Art3", GruppeId = 3 }]);
 
-            mockContext.Setup(c => c.Art).Returns(artMockSet.MockSet.Object);
-            return new ArtQueries(mockContext.Object);
+            MockContext.Setup(c => c.Art).Returns(artMockSet.DbSet);
+            return new ArtQueries(MockContext.Object);
         }
     }
 }

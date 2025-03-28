@@ -1,21 +1,21 @@
-﻿using BirdWare.EF;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 
 namespace BirdWare.Test
 {
-    public class MockSetFactory<T> where T : class
+    public class DbSetMock<T> where T : class
     {
         private IQueryable<T> data;
         public Mock<DbSet<T>> MockSet { get; private set; }
+        public DbSet<T> DbSet => MockSet.Object;
 
-        public MockSetFactory()
+        public DbSetMock()
         {
             data = new List<T>().AsQueryable();
             MockSet = new Mock<DbSet<T>>();
         }
 
-        public void SetData(List<T> data)
+        public void AddData(List<T> data)
         {
             this.data = data.AsQueryable();
             Mock();
