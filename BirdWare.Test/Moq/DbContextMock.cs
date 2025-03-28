@@ -1,7 +1,7 @@
 ﻿using BirdWare.EF;
 using Moq;
 
-namespace BirdWare.Test.Framework
+namespace BirdWare.Test.Moq
 {
     public class DbContextMock
     {

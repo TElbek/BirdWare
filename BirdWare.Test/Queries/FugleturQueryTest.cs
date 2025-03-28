@@ -1,7 +1,6 @@
 ﻿using BirdWare.Domain.Entities;
-using BirdWare.EF.Interfaces;
 using BirdWare.EF.Queries;
-using BirdWare.Test.Framework;
+using BirdWare.Test.Moq;
 
 namespace BirdWare.Test.Queries
 {

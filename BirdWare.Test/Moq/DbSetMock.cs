@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Moq;
 
-namespace BirdWare.Test.Framework
+namespace BirdWare.Test.Moq
 {
     public class DbSetMock<T> where T : class
     {
