@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BirdWare.Domain\BirdWare.Domain.csproj" />
     <ProjectReference Include="..\BirdWare.EF\BirdWare.EF.csproj" />
+    <ProjectReference Include="..\BirdWare\BirdWare.csproj" />
   </ItemGroup>
 
   <ItemGroup>
