@@ -4,7 +4,7 @@ using BirdWare.EF.Interfaces;
 using Moq;
 using System.Text.Json;
 
-namespace BirdWare.Test
+namespace BirdWare.Test.Controllers
 {
     public class FugleturSoegControllerTest
     {

@@ -2,7 +2,7 @@
 using BirdWare.EF.Interfaces;
 using Moq;
 
-namespace BirdWare.Test
+namespace BirdWare.Test.Controllers
 {
     public class ForskelControllerTest
     {
@@ -18,7 +18,7 @@ namespace BirdWare.Test
 
         [Fact]
         public void IAarTest()
-        { 
+        {
             forskelController.ForskelIAar();
             forskelQueriesMock.Verify(x => x.GetForskelIAar(), Times.Once);
             forskelQueriesMock.Verify(x => x.GetForskelSidsteAar(), Times.Never);

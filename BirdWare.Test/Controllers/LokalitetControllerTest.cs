@@ -2,7 +2,7 @@
 using BirdWare.EF.Interfaces;
 using Moq;
 
-namespace BirdWare.Test
+namespace BirdWare.Test.Controllers
 {
     public class LokalitetControllerTest
     {

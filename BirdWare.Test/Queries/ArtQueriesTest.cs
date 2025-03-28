@@ -1,7 +1,8 @@
 using BirdWare.Domain.Entities;
 using BirdWare.EF.Queries;
+using BirdWare.Test.Framework;
 
-namespace BirdWare.Test
+namespace BirdWare.Test.Queries
 {
     public class ArtQueriesTest : DbContextMock
     {
