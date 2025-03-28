@@ -8,7 +8,7 @@ namespace BirdWare.Test.Queries
     {
         private readonly DbSetMock<Art> artMockSet = new();
 
-        //[Fact]
+        [Fact]
         public void GetArtTagByIdTest()
         {
             var artQueries = GetArtQueries();
@@ -18,7 +18,7 @@ namespace BirdWare.Test.Queries
             Assert.Equal("Art1", tag.Name);
         }
 
-        //[Fact]
+        [Fact]
         public void GetArtTagByUnknownIdGetEmptyTagTest()
         {
             var artQueries = GetArtQueries();

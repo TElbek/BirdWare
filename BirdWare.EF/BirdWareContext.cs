@@ -4,8 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF
 {
-    public class BirdWareContext(DbContextOptions<BirdWareContext> options) : DbContext(options)
+    public class BirdWareContext : DbContext
     {
+        //Used by Unit Testing
+        public BirdWareContext()
+        {
+            
+        }
+
+        public BirdWareContext(DbContextOptions<BirdWareContext> options) : base(options)
+        {
+            
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Gruppe>(entity =>
