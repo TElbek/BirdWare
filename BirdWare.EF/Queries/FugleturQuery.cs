@@ -49,7 +49,7 @@ namespace BirdWare.EF.Queries
                            RegionNavn = r.Navn ?? string.Empty
                        };
 
-            return vtur.First();
+            return vtur.Any() ? vtur.First() : new VTur();
         }
 
         public long GetSenesteFugletur()
