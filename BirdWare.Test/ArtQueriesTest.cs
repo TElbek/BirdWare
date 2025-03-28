@@ -1,10 +1,21 @@
 using BirdWare.Domain.Entities;
+using BirdWare.EF;
 using BirdWare.EF.Queries;
+using Moq;
 
 namespace BirdWare.Test
 {
-    public class ArtQueriesTest : QueriesTestBase<Art>
+    public class ArtQueriesTest
     {
+        private readonly MockSetFactory<Art> artMockSet;
+        private readonly Mock<BirdWareContext> mockContext;
+
+        public ArtQueriesTest()
+        {
+            artMockSet = new MockSetFactory<Art>();
+            mockContext = new Mock<BirdWareContext>();
+        }
+
         [Fact]
         public void GetArtTagByIdTest()
         {
@@ -28,13 +39,13 @@ namespace BirdWare.Test
 
         private ArtQueries Arrange()
         {
-            AddData([
+            artMockSet.SetData([
                 new() { Id = 1, Navn = "Art1", GruppeId = 1 },
                 new() { Id = 2, Navn = "Art2", GruppeId = 2 },
                 new() { Id = 3, Navn = "Art3", GruppeId = 3 }]);
 
-            MockContext.Setup(c => c.Art).Returns(MockSet.Object);
-            return new ArtQueries(MockContext.Object);
+            mockContext.Setup(c => c.Art).Returns(artMockSet.MockSet.Object);
+            return new ArtQueries(mockContext.Object);
         }
     }
 }
