@@ -9,15 +9,15 @@ namespace BirdWare.EF.Queries
     {
         public List<Tag> GetTagList()
         {
-            return GetTagList(true);
+            return PopulateTagList(true);
         }
 
         public List<Tag> GetTagListFugletur()
         {
-            return GetTagList();
+            return PopulateTagList();
         }
 
-        private List<Tag> GetTagList(bool includeObservationTags = false)
+        private List<Tag> PopulateTagList(bool includeObservationTags = false)
         {
             var danishCulture = CultureInfo.GetCultureInfo("da-DK");
             var tagList = new List<Tag>();
@@ -57,12 +57,6 @@ namespace BirdWare.EF.Queries
             tagList.Add(new Tag { Id = 1, ParentId = 0, Name = "Danmark", TagType = TagTypes.Land });
 
             return [.. tagList.OrderBy(r => r.Name)];
-        }
-
-        public Tag GetArtTagById(short Id)
-        {
-            var art = birdWareContext.Art.FirstOrDefault(r => r.Id == Id);
-            return art != null ? new Tag { Id = art.Id, Name = art.Navn ?? string.Empty, TagType = TagTypes.Art } : new Tag();
         }
 
         private List<int> GetAarstal()

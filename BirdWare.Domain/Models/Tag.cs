@@ -16,6 +16,7 @@ namespace BirdWare.Domain.Models
    
     public enum TagTypes
     {
+        Ukendt  = 0,
         Aarstal = 1,
         Maaned = 2,
         SaesonForaar = 3,

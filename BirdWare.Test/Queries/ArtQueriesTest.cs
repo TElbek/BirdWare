@@ -1,4 +1,5 @@
 using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 using BirdWare.EF.Queries;
 using BirdWare.Test.Moq;
 
@@ -27,6 +28,7 @@ namespace BirdWare.Test.Queries
             var tag = artQueries.GetArtTagById(idNotExist);
             Assert.Equal(0, tag.Id);
             Assert.Equal(string.Empty, tag.Name);
+            Assert.Equal(TagTypes.Ukendt, tag.TagType);
         }
 
 
