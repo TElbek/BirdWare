@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.EF.Queries;
 using BirdWare.Test.Moq;
+using Moq;
 
 namespace BirdWare.Test.Queries
 {
@@ -52,15 +53,14 @@ namespace BirdWare.Test.Queries
         }
 
         [Fact]
-        //Fejler, da der ikke er nogen observationer med fugleturId = 3
         public void SletObservationTest()
         {
             var fugleturObservationQuery = GetFugleturObservationQuery();
 
             fugleturObservationQuery.SletObservation(3);
 
-            Assert.Equal(2, observationMockSet.DbSet.Count());
-            Assert.Null(observationMockSet.DbSet.SingleOrDefault(o => o.Id == 3));
+            MockContext.Verify(c => c.Observation.Remove(observationMockSet.DbSet.Single(o => o.Id == 3)), Times.Once);
+            MockContext.Verify(c => c.SaveChanges(), Times.Once);
         }
 
         private FugleturObservationQuery GetFugleturObservationQuery()
