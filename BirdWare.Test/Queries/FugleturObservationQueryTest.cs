@@ -63,6 +63,17 @@ namespace BirdWare.Test.Queries
             MockContext.Verify(c => c.SaveChanges(), Times.Once);
         }
 
+        [Fact]
+        public void SletObservationIkkeFundetTest()
+        {
+            var fugleturObservationQuery = GetFugleturObservationQuery();
+
+            fugleturObservationQuery.SletObservation(33);
+
+            MockContext.Verify(c => c.Observation.Remove(It.IsAny<Observation>()), Times.Never);
+            MockContext.Verify(c => c.SaveChanges(), Times.Never);
+        }
+
         private FugleturObservationQuery GetFugleturObservationQuery()
         {
             familieMockSet.AddData([
