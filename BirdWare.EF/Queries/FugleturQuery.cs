@@ -11,11 +11,9 @@ namespace BirdWare.EF.Queries
             var withMaaned = birdWareContext.Fugletur.GetAarMaaned()
                             .Where(q => q.Aarstal == aarstal && q.Maaned == maaned);
 
-            return [.. (from f in birdWareContext.Fugletur
-                    join
-                         l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
-                    join
-                         r in birdWareContext.Region on l.RegionId equals r.Id
+            return [.. (from f in birdWareContext.Fugletur join
+                             l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id join
+                             r in birdWareContext.Region on l.RegionId equals r.Id
                     where withMaaned.Any(s => s.FugleturId == f.Id)
                     select new VTur
                     {

@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.EF.Queries;
 using BirdWare.Test.Moq;
+using Moq;
 
 namespace BirdWare.Test.Queries
 {
@@ -32,7 +33,14 @@ namespace BirdWare.Test.Queries
             Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonSommer));
             Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonEfteraar));
             Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonVinter));
-            Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Ukendt));
+            Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Ukendt));     
+            
+            MockContext.Verify(c => c.Art, Times.Once);
+            MockContext.Verify(c => c.Gruppe, Times.Once);
+            MockContext.Verify(c => c.Familie, Times.Once);
+            MockContext.Verify(c => c.Lokalitet, Times.Once);
+            MockContext.Verify(c => c.Region, Times.Once);
+            MockContext.Verify(c => c.Fugletur, Times.Exactly(2));
         }
 
         [Fact]
@@ -55,6 +63,13 @@ namespace BirdWare.Test.Queries
             Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonEfteraar));
             Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonVinter));
             Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Ukendt));
+
+            MockContext.Verify(c => c.Art, Times.Never);
+            MockContext.Verify(c => c.Gruppe, Times.Never);
+            MockContext.Verify(c => c.Familie, Times.Never);
+            MockContext.Verify(c => c.Lokalitet, Times.Once);
+            MockContext.Verify(c => c.Region, Times.Once);
+            MockContext.Verify(c => c.Fugletur, Times.Exactly(2));
         }
 
         private TagQuery GetTagQueries()

@@ -2,40 +2,49 @@
 using BirdWare.EF.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BirdWare.Controllers
 {
     [ApiController]
     public class TagController(ITagQuery tagQuery, IArtQueries artQueries, IMemoryCache memoryCache) : ControllerBase
     {
+        private static bool enableCache = true;
+
+        [NonAction]
+        public void DisableCache()
+        {
+            enableCache = false;
+        }
+
         [HttpGet]
         [Route("api/tags")]
         public List<Tag> GetTagList([FromQuery] string query)
         {
-            var cacheEntry = GetCachedEntry(tagQuery, memoryCache);
+            var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
 
-            return cacheEntry?
+            return cacheEntry
                 .Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)
-                .ToList() ?? [];
+                .ToList();
         }
 
         [HttpGet]
         [Route("api/tags/fugletur")]
         public List<Tag> GetTagListFugletur([FromQuery] string query)
         {
-            var cacheEntry = GetCachedEntryFugletur(tagQuery, memoryCache);
+            var cacheEntry = GetOrCreate(tagQuery.GetTagListFugletur, memoryCache, "TagListFugletur");
 
-            return cacheEntry?
+            return cacheEntry
                 .Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)
-                .ToList() ?? [];
+                .ToList();
         }
 
         [Route("api/tag/{query}")]
         public Tag GetTag(string query)
         {
-            var cacheEntry = GetCachedEntry(tagQuery, memoryCache);
+            var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
 
-            return cacheEntry?
+            return cacheEntry
                 .Where(t => t.Name.ToLower().Equals(query, StringComparison.CurrentCultureIgnoreCase))
                 .FirstOrDefault() ?? new Tag();
         }
@@ -43,9 +52,9 @@ namespace BirdWare.Controllers
         [Route("api/tags/arter")]
         public List<Tag> GetTagsArter([FromQuery]string query)
         {
-            var cacheEntry = GetCachedEntry(tagQuery, memoryCache);
+            var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
 
-            var list = cacheEntry?
+            var list = cacheEntry
                 .Where(t => t.TagType == TagTypes.Art && 
                        t.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1).ToList() ?? [];
 
@@ -59,22 +68,14 @@ namespace BirdWare.Controllers
             return artQueries.GetArtTagById(Id);
         }
 
-        private static List<Tag>? GetCachedEntry(ITagQuery tagQuery, IMemoryCache memoryCache)
+        [ExcludeFromCodeCoverage]
+        private static List<Tag> GetOrCreate(Func<List<Tag>> getTagListMethod, IMemoryCache memoryCache, string cachedEntryName)
         {
-            return memoryCache.GetOrCreate("TagList", entry =>
+            return enableCache ? memoryCache.GetOrCreate(cachedEntryName, entry =>
             {
                 entry.SlidingExpiration = TimeSpan.FromMinutes(10);
-                return tagQuery.GetTagList();
-            });
-        }
-
-        private static List<Tag>? GetCachedEntryFugletur(ITagQuery tagQuery, IMemoryCache memoryCache)
-        {
-            return memoryCache.GetOrCreate("TagListFugletur", entry =>
-            {
-                entry.SlidingExpiration = TimeSpan.FromMinutes(10);
-                return tagQuery.GetTagListFugletur();
-            });
+                return getTagListMethod();
+            }) ?? [] : getTagListMethod();
         }
     }
 }

@@ -18,11 +18,10 @@ namespace BirdWare.EF.Queries
 
         private IQueryable<ArterAar> GetArterAar(long aarstal)
         {
-            return
-                  from o in birdWareContext.Observation
-                  join a in birdWareContext.Art on o.ArtId equals a.Id
-                  join f in birdWareContext.Fugletur on o.FugleturId equals f.Id
-                  join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
+            return from o in birdWareContext.Observation join 
+                        a in birdWareContext.Art on o.ArtId equals a.Id join
+                        f in birdWareContext.Fugletur on o.FugleturId equals f.Id join 
+                        l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
                   where f.Dato.HasValue && f.Dato.Value.Year == aarstal && l.RegionId > 0
                   group o by new { o.ArtId, a.GruppeId, a.Navn, a.SU } into ogroup
                   select new ArterAar

@@ -12,22 +12,29 @@ namespace BirdWare.EF
         {
             services.AddTransient<IArtQueries, ArtQueries>();
             services.AddTransient<IArterAarQueries, ArterAarQueries>();
+
             services.AddTransient<IForeslaaArterPaaTurQuery, ForeslaaArterPaaTurQuery>();
             services.AddTransient<IForskelQueries, ForskelQueries>();
             services.AddTransient<IFugleturAnalyseQuerySP, FugleturAnalyseQuerySP>();
             services.AddTransient<IFugletureByTagsQuery, FugletureByTagsQuery>();
             services.AddTransient<IFugleturQuery, FugleturQuery>();
             services.AddTransient<IFugleturObservationQuery, FugleturObservationQuery>();
+
+            services.AddTransient<IHvorKanJegFindeQuery, HvorKanJegFindeQuery>();
+
             services.AddTransient<ILokaliteterByLatLongQuerySP, LokaliteterByLatLongQuerySP>();
+
             services.AddTransient<IObservationsByTagsQuery, ObservationsByTagsQuery>();
+            services.AddTransient<IOpdaterObsCommand, OpdaterObsCommand>();
             services.AddTransient<IOpretObsCommand, OpretObsCommand>();
             services.AddTransient<IOpretTurCommand, OpretTurCommand>();
-            services.AddTransient<ITagQuery, TagQuery>();
-            services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();
-            services.AddTransient<ISynchTripQuery, SynchTripQuery>();
+
             services.AddTransient<ISynchTripCommand, SynchTripCommand>();
-            services.AddTransient<IOpdaterObsCommand, OpdaterObsCommand>();
-            services.AddTransient<IHvorKanJegFindeQuery, HvorKanJegFindeQuery>();
+            services.AddTransient<ISynchTripQuery, SynchTripQuery>();
+
+            services.AddTransient<ITagQuery, TagQuery>();
+
+            services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();
             return services;
         }
     }
