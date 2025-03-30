@@ -24,8 +24,9 @@ namespace BirdWare.Test.Controllers
             tagQueryQueryMock.Setup(x => x.GetTagListFugletur()).Returns([
                 new Tag {Id = 2, Name = "Vestamager", TagType = TagTypes.Lokalitet}
             ]);
-            
-            artQueriesMock.Setup(x => x.GetArtTagById(It.IsAny<long>())).Returns(new Tag());            
+
+            artQueriesMock.Setup(x => x.GetArtTagById(11)).Returns(new Tag {Id = 11, Name = "Drosselrørsanger", TagType = TagTypes.Art});
+            artQueriesMock.Setup(x => x.GetArtTagById(10)).Returns(new Tag ());
 
             tagController = new TagController(tagQueryQueryMock.Object, artQueriesMock.Object, memoryCacheMock.Object);
             tagController.DisableCache();
@@ -129,10 +130,10 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void GetArtTagByIdTestTagFound()
         {
-            var tag = tagController.GetArtTagById(1);
-            Assert.Equal(1, tag.Id);
+            var tag = tagController.GetArtTagById(11);
+            Assert.Equal(11, tag.Id);
             Assert.Equal(TagTypes.Art, tag.TagType);
-            Assert.Equal("Musvåge", tag.Name);
+            Assert.Equal("Drosselrørsanger", tag.Name);
         }
 
         [Fact]

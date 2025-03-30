@@ -12,26 +12,18 @@ namespace BirdWare.Controllers
         [HttpPost]
         public HttpResponseMessage OpretObs(long artId)
         {
-            if (artId > 0)
-            {
-                if (opretObsCommand.OpretObsPåFugletur(artId))
-                {
-                    return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-                }
-            }
-            return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+            return (artId > 0 && opretObsCommand.OpretObsPåFugletur(artId)) ?
+                new HttpResponseMessage(System.Net.HttpStatusCode.OK) : 
+                new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
         }
 
         [Route("api/observation/opdater/")]
         [HttpPost]
         public HttpResponseMessage OpdaterObs([FromBody] VObs vObs)
         {
-            if (opdaterObsCommand.OpdaterObservation(vObs))
-            {
-                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            }
-
-            return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+            return opdaterObsCommand.OpdaterObservation(vObs) ?
+                new HttpResponseMessage(System.Net.HttpStatusCode.OK) :
+                new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
         }
     }
 }

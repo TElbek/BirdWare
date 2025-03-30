@@ -17,15 +17,9 @@ namespace BirdWare.Controllers
         [HttpPost]
         public HttpResponseMessage AddTrip([FromBody] SynchTrip synchTrip)
         {
-            if (synchTrip.Fugletur.FugleturId != 0)
-            {
-                if (synchTripCommand.PostTrip(synchTrip))
-                {
-                    return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-                }
-            }
-
-            return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+            return synchTrip.Fugletur.FugleturId > 0 && synchTripCommand.PostTrip(synchTrip) ?
+                new HttpResponseMessage(System.Net.HttpStatusCode.OK) :
+                new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
         }
     }
 }

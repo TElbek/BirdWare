@@ -1,5 +1,6 @@
 ﻿using BirdWare.EF.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace BirdWare.Controllers
 {
@@ -10,14 +11,9 @@ namespace BirdWare.Controllers
         [HttpPost]
         public HttpResponseMessage OpretTur(long lokalitetId)
         {
-            if (lokalitetId > 0)
-            {
-                if (opretTurCommand.OpretTurPaaLokalitet(lokalitetId))
-                {
-                    return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-                }
-            }
-            return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+            return lokalitetId > 0 && opretTurCommand.OpretTurPaaLokalitet(lokalitetId) ?
+                new HttpResponseMessage(HttpStatusCode.OK) :
+                new HttpResponseMessage(HttpStatusCode.BadRequest);
         }
     }
 }
