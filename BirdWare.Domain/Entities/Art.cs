@@ -22,5 +22,10 @@ namespace BirdWare.Domain.Entities
             Gruppe = new Gruppe();
             Observationer = [];
         }
+
+        public override string ToString()
+        {
+            return Navn ?? string.Empty;
+        }
     }
 }
