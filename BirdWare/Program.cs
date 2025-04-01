@@ -1,9 +1,11 @@
 using BirdWare.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BirdWare
 {
+    [ExcludeFromCodeCoverage]
     public class Program
     {
         static readonly string corsPolicyName = "CorsPolicy";

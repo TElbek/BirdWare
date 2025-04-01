@@ -23,9 +23,7 @@ namespace BirdWare.Controllers
         {
             var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
 
-            return cacheEntry
-                .Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)
-                .ToList();
+            return [.. cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
         }
 
         [HttpGet]
@@ -34,9 +32,7 @@ namespace BirdWare.Controllers
         {
             var cacheEntry = GetOrCreate(tagQuery.GetTagListFugletur, memoryCache, "TagListFugletur");
 
-            return cacheEntry
-                .Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)
-                .ToList();
+            return [.. cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
         }
 
         [Route("api/tag/{query}")]
@@ -50,12 +46,12 @@ namespace BirdWare.Controllers
         }
 
         [Route("api/tags/arter")]
-        public List<Tag> GetTagsArter([FromQuery]string query)
+        public List<Tag> GetTagsArter([FromQuery] string query)
         {
             var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
 
             var list = cacheEntry
-                .Where(t => t.TagType == TagTypes.Art && 
+                .Where(t => t.TagType == TagTypes.Art &&
                        t.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1).ToList() ?? [];
 
             return [.. list.OrderBy(o => o.Name)];
@@ -68,7 +64,7 @@ namespace BirdWare.Controllers
             return artQueries.GetArtTagById(Id);
         }
 
-        [ExcludeFromCodeCoverage]
+        [ExcludeFromCodeCoverage(Justification = "IMemoryCache cannot be mocked, because it uses static extension methods")]
         private static List<Tag> GetOrCreate(Func<List<Tag>> getTagListMethod, IMemoryCache memoryCache, string cachedEntryName)
         {
             return enableCache ? memoryCache.GetOrCreate(cachedEntryName, entry =>
