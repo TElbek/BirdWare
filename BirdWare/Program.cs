@@ -1,4 +1,6 @@
+using BirdWare.Cache;
 using BirdWare.EF;
+using BirdWare.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics.CodeAnalysis;
@@ -30,6 +32,7 @@ namespace BirdWare
             builder.Services.AddControllers();
             builder.Services.AddDbContextFactory<BirdWareContext>(options => options.UseSqlServer(connString));
             builder.Services.AddTransient<IMemoryCache, MemoryCache>();
+            builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
             builder.Services.Register(builder.Configuration);
 
             var app = builder.Build();

@@ -1,27 +1,20 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using BirdWare.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Memory;
-using System.Diagnostics.CodeAnalysis;
 
 namespace BirdWare.Controllers
 {
     [ApiController]
-    public class TagController(ITagQuery tagQuery, IArtQueries artQueries, IMemoryCache memoryCache) : ControllerBase
+    public class TagController(ITagQuery tagQuery, 
+                               IArtQueries artQueries, 
+                               ITagMemoryCache tagMemoryCache) : ControllerBase
     {
-        private static bool enableCache = true;
-
-        [NonAction]
-        public void DisableCache()
-        {
-            enableCache = false;
-        }
-
         [HttpGet]
         [Route("api/tags")]
         public List<Tag> GetTagList([FromQuery] string query)
         {
-            var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
+            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
 
             return [.. cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
         }
@@ -30,7 +23,7 @@ namespace BirdWare.Controllers
         [Route("api/tags/fugletur")]
         public List<Tag> GetTagListFugletur([FromQuery] string query)
         {
-            var cacheEntry = GetOrCreate(tagQuery.GetTagListFugletur, memoryCache, "TagListFugletur");
+            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagListFugletur, "TagListFugletur");
 
             return [.. cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
         }
@@ -38,7 +31,7 @@ namespace BirdWare.Controllers
         [Route("api/tag/{query}")]
         public Tag GetTag(string query)
         {
-            var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
+            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
 
             return cacheEntry
                 .Where(t => t.Name.ToLower().Equals(query, StringComparison.CurrentCultureIgnoreCase))
@@ -48,7 +41,7 @@ namespace BirdWare.Controllers
         [Route("api/tags/arter")]
         public List<Tag> GetTagsArter([FromQuery] string query)
         {
-            var cacheEntry = GetOrCreate(tagQuery.GetTagList, memoryCache, "TagList");
+            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
 
             var list = cacheEntry
                 .Where(t => t.TagType == TagTypes.Art &&
@@ -62,16 +55,6 @@ namespace BirdWare.Controllers
         public Tag GetArtTagById(long Id)
         {
             return artQueries.GetArtTagById(Id);
-        }
-
-        [ExcludeFromCodeCoverage(Justification = "IMemoryCache cannot be mocked, because it uses static extension methods")]
-        private static List<Tag> GetOrCreate(Func<List<Tag>> getTagListMethod, IMemoryCache memoryCache, string cachedEntryName)
-        {
-            return enableCache ? memoryCache.GetOrCreate(cachedEntryName, entry =>
-            {
-                entry.SlidingExpiration = TimeSpan.FromMinutes(10);
-                return getTagListMethod();
-            }) ?? [] : getTagListMethod();
         }
     }
 }

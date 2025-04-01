@@ -1,7 +1,7 @@
-﻿using BirdWare.Controllers;
+﻿using BirdWare.Cache;
+using BirdWare.Controllers;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
 using Moq;
 
 namespace BirdWare.Test.Controllers
@@ -10,7 +10,7 @@ namespace BirdWare.Test.Controllers
     {
         private readonly Mock<ITagQuery> tagQueryQueryMock = new();
         private readonly Mock<IArtQueries> artQueriesMock = new();
-        private readonly Mock<IMemoryCache> memoryCacheMock = new();
+        private readonly Mock<TagMemoryCache> tagMemoryCacheMock = new();
 
         private readonly TagController tagController;
 
@@ -28,8 +28,10 @@ namespace BirdWare.Test.Controllers
             artQueriesMock.Setup(x => x.GetArtTagById(11)).Returns(new Tag {Id = 11, Name = "Drosselrørsanger", TagType = TagTypes.Art});
             artQueriesMock.Setup(x => x.GetArtTagById(10)).Returns(new Tag ());
 
-            tagController = new TagController(tagQueryQueryMock.Object, artQueriesMock.Object, memoryCacheMock.Object);
-            tagController.DisableCache();
+            tagController = new TagController(
+                                        tagQueryQueryMock.Object, 
+                                        artQueriesMock.Object, 
+                                        tagMemoryCacheMock.Object);
         }
 
         [Fact]
