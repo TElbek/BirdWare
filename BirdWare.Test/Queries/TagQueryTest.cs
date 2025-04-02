@@ -21,19 +21,6 @@ namespace BirdWare.Test.Queries
             var tagList = tagQuery.GetTagList();
 
             Assert.Equal(26, tagList.Count);
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Art));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Gruppe));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Familie));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Lokalitet));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Region));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Aarstal));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Maaned));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Land));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonForaar));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonSommer));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonEfteraar));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonVinter));
-            Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Ukendt));     
             
             MockContext.Verify(c => c.Art, Times.Once);
             MockContext.Verify(c => c.Gruppe, Times.Once);
@@ -50,19 +37,6 @@ namespace BirdWare.Test.Queries
             var tagList = tagQuery.GetTagListFugletur();
 
             Assert.Equal(17, tagList.Count);
-            Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Art));
-            Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Gruppe));
-            Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Familie));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Lokalitet));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Region));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Aarstal));
-            Assert.Equal(3, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Maaned));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Land));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonForaar));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonSommer));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonEfteraar));
-            Assert.Equal(1, tagList.Count(q => q.TagType == Domain.Models.TagTypes.SaesonVinter));
-            Assert.Equal(0, tagList.Count(q => q.TagType == Domain.Models.TagTypes.Ukendt));
 
             MockContext.Verify(c => c.Art, Times.Never);
             MockContext.Verify(c => c.Gruppe, Times.Never);

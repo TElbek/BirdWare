@@ -3,9 +3,11 @@ using BirdWare.EF.Interfaces;
 using BirdWare.EF.Queries;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BirdWare.EF
 {
+    [ExcludeFromCodeCoverage]
     public static class ServiceCatalog
     {
         public static IServiceCollection Register(this IServiceCollection services, IConfiguration configuration)

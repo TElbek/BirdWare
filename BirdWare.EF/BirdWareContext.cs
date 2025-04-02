@@ -1,9 +1,11 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace BirdWare.EF
 {
+    [ExcludeFromCodeCoverage]
     public class BirdWareContext : DbContext
     {
         //Used by Unit Testing
