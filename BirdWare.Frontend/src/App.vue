@@ -15,6 +15,7 @@ import { RouterView } from 'vue-router'
 <style lang="scss">
 $white: #fff;
 $birdwareColor: #048baf;
+$red: #ff0000;
 $birdwareColor-light: #048baf50;
 $black-30: #00000030;
 $black-20: #00000020;
@@ -235,5 +236,20 @@ a {
 
 .offcanvas {
   --bs-offcanvas-width: 50%;
+}
+
+.forskel-indikator {
+    border-radius: 50%;
+    color: white;
+    width: 20px;
+    font-weight: bold;
+}
+
+.forskel-success {
+    background-color: $birdwareColor;
+}
+
+.forskel-danger {
+    background-color: $red;
 }
 </style>

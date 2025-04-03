@@ -21,8 +21,7 @@
                         <span>{{ new Date().getFullYear() - 1 }}: {{ state.itemCountLastYear }}</span>
                     </div>
                     <div class="btn btn-sm btn-off">
-                        <div :class="[forskel >= 0 ? 'text-success' : 'text-danger']">{{
-                            forskel }} arter</div>
+                        <div class="forskel-indikator" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{Math.abs(forskel)}}</div>
                     </div>
                 </div>
             </div>
