@@ -1,6 +1,7 @@
 using BirdWare.Cache;
 using BirdWare.EF;
 using BirdWare.Interfaces;
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics.CodeAnalysis;
@@ -14,8 +15,17 @@ namespace BirdWare
 
         public static void Main(string[] args)
         {
+            Env.Load();
+
             var builder = WebApplication.CreateBuilder(args);
-            var connString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var connString = Environment.GetEnvironmentVariable("BirdWareConn");
+
+            if(string.IsNullOrEmpty(connString))
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Connection string is not set.");
+                Console.ResetColor();
+            }
 
             builder.Services.AddCors(options =>
             {
