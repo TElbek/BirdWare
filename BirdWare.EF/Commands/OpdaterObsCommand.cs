@@ -9,17 +9,10 @@ namespace BirdWare.EF.Commands
         {
             if (birdWareContext.Observation.Any(q => q.Id == vObs.ObservationId))
             {
-                try
-                {
-                    var observation = birdWareContext.Observation.First(q => q.Id == vObs.ObservationId);
-                    observation.Beskrivelse = vObs.Bem;
-                    birdWareContext.SaveChanges();
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
+                var observation = birdWareContext.Observation.First(q => q.Id == vObs.ObservationId);
+                observation.Beskrivelse = vObs.Bem;
+                birdWareContext.SaveChanges();
+                return true;
             }
             return false;
         }
