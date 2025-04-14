@@ -58,10 +58,6 @@ namespace BirdWare
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            //var passWordHelper = builder.Services.BuildServiceProvider().GetService<IPasswordHelper>();
-            //var hashesPasword = passWordHelper?.HashPassword(new ApplicationUser(), "Holte!406");
-            //Console.WriteLine($"Hashed password: {hashesPasword}");
-
             app.Run();
         }
     }
