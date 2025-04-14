@@ -142,6 +142,16 @@ const router = createRouter({
         showInNavBar: true,
         requireSSL: false
       }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/login.vue'),
+      meta: {
+        title: 'Login',
+        showInNavBar: true,
+        requireSSL: true
+      }
     }
   ]
 })

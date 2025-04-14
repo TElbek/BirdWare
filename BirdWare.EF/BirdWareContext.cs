@@ -67,5 +67,6 @@ namespace BirdWare.EF
         public virtual DbSet<SpTripAnalysisResult> SpTripAnalysisResult {get; set;}
         public virtual DbSet<spLokaliteterByLatLongResult> SpLokaliteterByLatLongResult { get; set;}
         public virtual DbSet<spHvorKanJegFindeResult> SpHvorKanJegFindeResult { get; set;}
+        public virtual DbSet<Bruger> Bruger { get; set; }
     }
 }

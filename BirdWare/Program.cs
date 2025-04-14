@@ -1,4 +1,8 @@
 using BirdWare.Cache;
+using BirdWare.Domain;
+using BirdWare.Domain.Interfaces;
+using BirdWare.Domain.Models;
+using BirdWare.Domain.Security;
 using BirdWare.EF;
 using BirdWare.Interfaces;
 using DotNetEnv;
@@ -43,7 +47,8 @@ namespace BirdWare
             builder.Services.AddDbContextFactory<BirdWareContext>(options => options.UseSqlServer(connString));
             builder.Services.AddTransient<IMemoryCache, MemoryCache>();
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
-            builder.Services.Register(builder.Configuration);
+            builder.Services.RegisterEF(builder.Configuration);
+            builder.Services.RegisterDomain(builder.Configuration);
 
             var app = builder.Build();
             app.UseAuthorization();
@@ -52,6 +57,11 @@ namespace BirdWare
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            //var passWordHelper = builder.Services.BuildServiceProvider().GetService<IPasswordHelper>();
+            //var hashesPasword = passWordHelper?.HashPassword(new ApplicationUser(), "Holte!406");
+            //Console.WriteLine($"Hashed password: {hashesPasword}");
+
             app.Run();
         }
     }

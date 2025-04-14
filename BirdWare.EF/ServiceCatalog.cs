@@ -1,6 +1,7 @@
 ﻿using BirdWare.EF.Commands;
 using BirdWare.EF.Interfaces;
 using BirdWare.EF.Queries;
+using BirdWare.EF.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -10,7 +11,7 @@ namespace BirdWare.EF
     [ExcludeFromCodeCoverage]
     public static class ServiceCatalog
     {
-        public static IServiceCollection Register(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection RegisterEF(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IArtQueries, ArtQueries>();
             services.AddTransient<IArterAarQueries, ArterAarQueries>();
@@ -37,6 +38,10 @@ namespace BirdWare.EF
             services.AddTransient<ITagQuery, TagQuery>();
 
             services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();
+
+            services.AddTransient<IBrugerQuery, BrugerQuery>();
+            services.AddTransient<ILoginHelper, LoginHelper>();
+
             return services;
         }
     }
