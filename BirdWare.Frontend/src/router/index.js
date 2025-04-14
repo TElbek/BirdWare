@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { useAuthenticateStore } from '@/stores/authenticate.js';
 import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
@@ -97,6 +98,7 @@ const router = createRouter({
       meta: {
         title: 'Tilføj Tur',
         showInNavBar: false,
+        requiresAuth: true,
         requireSSL: true
       }
     },
@@ -108,6 +110,7 @@ const router = createRouter({
       meta: {
         title: 'Tilføj Observation',
         showInNavBar: false,
+        requiresAuth: true,
         requireSSL: true
       },
       children: [
@@ -118,6 +121,7 @@ const router = createRouter({
           meta: {
             title: 'Tilføj Observation',
             showInNavBar: false,
+            requiresAuth: true,
             requireSSL: true
           }
         },
@@ -128,6 +132,7 @@ const router = createRouter({
           meta: {
             title: 'Tilføj Observation',
             showInNavBar: false,
+            requiresAuth: true,
             requireSSL: true
           }
         },
@@ -146,7 +151,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/login.vue'),
+      component: () => import('../views/Login.vue'),
       meta: {
         title: 'Login',
         showInNavBar: true,
@@ -156,14 +161,29 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(function (to, from, next) {
+router.beforeEach((to, from, next) => {
   if (to.meta.title != undefined && to.meta.title.length > 0) {
     document.title = to.meta.title + ' - Birdware.dk';
   }
   else {
     document.title = 'Birdware.dk';
   }
-  next();
+
+  const authenticate = useAuthenticateStore();
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let authenticated = authenticate.isLoggedIn;
+    if (!authenticated) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+        next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router

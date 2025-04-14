@@ -18,7 +18,14 @@
 
 <script setup>
 import api from '@/api';
+import { useAuthenticateStore } from '@/stores/authenticate.js';
 import { reactive, computed } from 'vue';
+import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+
+const authenticate = useAuthenticateStore();
+const router = useRouter();
+const route = useRoute();
 
 const state = reactive({
     username: '',
@@ -33,11 +40,10 @@ function login() {
     const auth = { username: state.username, password: state.password };
     api.post('auth/login', auth)
         .then(function (response) {
-            console.log('Login OK')
-            // authenticate.setJwtToken(response.data.accessToken);
+            authenticate.setJwtToken(response.data.accessToken);
         })
         .finally(() => {
-            // router.replace(route.query.redirect);
+            router.replace(route.query.redirect);
         });
 }
 </script>

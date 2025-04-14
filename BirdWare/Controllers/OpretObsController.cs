@@ -1,10 +1,12 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
 {
     [ApiController]
+    [Authorize]
     public class OpretObsController(IOpretObsCommand opretObsCommand,
                                     IOpdaterObsCommand opdaterObsCommand) : ControllerBase
     {

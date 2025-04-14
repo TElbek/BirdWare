@@ -3,9 +3,12 @@ using BirdWare.Domain;
 using BirdWare.EF;
 using BirdWare.Interfaces;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace BirdWare
 {
@@ -19,14 +22,6 @@ namespace BirdWare
             Env.Load();
 
             var builder = WebApplication.CreateBuilder(args);
-            var connString = Environment.GetEnvironmentVariable("BirdWareConn");
-
-            if(string.IsNullOrEmpty(connString))
-            {
-                Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("Connection string is not set.");
-                Console.ResetColor();
-            }
 
             builder.Services.AddCors(options =>
             {
@@ -40,8 +35,23 @@ namespace BirdWare
                         });
             });
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer =   "birdware.dk",
+                    ValidAudience = "birdware.dk",
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("appSecret") ?? string.Empty))
+                };
+            });
+
+            builder.Services.AddAuthorization();
             builder.Services.AddControllers();
-            builder.Services.AddDbContextFactory<BirdWareContext>(options => options.UseSqlServer(connString));
+            builder.Services.AddDbContextFactory<BirdWareContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn")));
             builder.Services.AddTransient<IMemoryCache, MemoryCache>();
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
             builder.Services.RegisterEF(builder.Configuration);
