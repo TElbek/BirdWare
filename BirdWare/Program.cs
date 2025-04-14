@@ -1,8 +1,5 @@
 using BirdWare.Cache;
 using BirdWare.Domain;
-using BirdWare.Domain.Interfaces;
-using BirdWare.Domain.Models;
-using BirdWare.Domain.Security;
 using BirdWare.EF;
 using BirdWare.Interfaces;
 using DotNetEnv;
