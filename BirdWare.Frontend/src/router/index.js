@@ -154,7 +154,7 @@ const router = createRouter({
       component: () => import('../views/Login.vue'),
       meta: {
         title: 'Login',
-        showInNavBar: true,
+        showInNavBar: false,
         requireSSL: true
       }
     }
