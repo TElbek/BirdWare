@@ -5,7 +5,7 @@
 namespace BirdWare.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class bruger : Migration
+    public partial class Bruger : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

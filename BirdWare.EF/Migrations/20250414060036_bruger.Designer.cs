@@ -13,7 +13,7 @@ namespace BirdWare.EF.Migrations
 {
     [DbContext(typeof(BirdWareContext))]
     [Migration("20250414060036_bruger")]
-    partial class bruger
+    partial class Bruger
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
