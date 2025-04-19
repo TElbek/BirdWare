@@ -14,6 +14,7 @@ namespace BirdWare.Domain
         public static IServiceCollection RegisterDomain(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IPasswordHelper, PasswordHelper>();
+            services.AddTransient<ITokenHelper, TokenHelper>();
             services.AddTransient<IPasswordHasher<Bruger>, PasswordHasher<Bruger>>();
             return services;
         }

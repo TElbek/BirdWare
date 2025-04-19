@@ -14,7 +14,9 @@ namespace BirdWare.Test.Controllers
         {
             var tokenHelperMock = TokenHelperMockFactory();
             var loginHelperMock = LoginHelperMockFactory(false);
-            var loginController = ControllerFactory(loginHelperMock, tokenHelperMock);
+            var brugerQueriesMock = BrugerQueriesFactory();
+
+            var loginController = ControllerFactory(brugerQueriesMock, loginHelperMock, tokenHelperMock);
 
             var loginModel = new LoginModel
             {
@@ -24,7 +26,7 @@ namespace BirdWare.Test.Controllers
             var result = loginController.Login(loginModel);
             Assert.IsType<UnauthorizedResult>(result);
             loginHelperMock.Verify(x => x.DoLogin(loginModel), Times.Once);
-            tokenHelperMock.Verify(x => x.GenerateJwtToken(It.IsAny<string>()), Times.Never);
+            tokenHelperMock.Verify(x => x.GenerateJwtToken(It.IsAny<Bruger>()), Times.Never);
         }
 
         [Fact]
@@ -32,7 +34,9 @@ namespace BirdWare.Test.Controllers
         {
             var tokenHelperMock = TokenHelperMockFactory();
             var loginHelperMock = LoginHelperMockFactory(true);
-            var loginController = ControllerFactory(loginHelperMock, tokenHelperMock);
+            var brugerQueriesMock = BrugerQueriesFactory();
+
+            var loginController = ControllerFactory(brugerQueriesMock, loginHelperMock, tokenHelperMock);
 
             var loginModel = new LoginModel
             {
@@ -42,16 +46,31 @@ namespace BirdWare.Test.Controllers
             var result = loginController.Login(loginModel);
             Assert.IsType<OkObjectResult>(result);
             loginHelperMock.Verify(x => x.DoLogin(loginModel), Times.Once);
-            tokenHelperMock.Verify(x => x.GenerateJwtToken(It.IsAny<string>()), Times.Once);
+            tokenHelperMock.Verify(x => x.GenerateJwtToken(It.IsAny<Bruger>()), Times.Once);
         }
 
         private static LoginController ControllerFactory(
+            Mock<IBrugerQuery> brugerQueriesMock,
             Mock<ILoginHelper> loginHelperMock,
             Mock<ITokenHelper> tokenHelperMock)
         {
             LoginController loginController;
-            loginController = new LoginController(loginHelperMock.Object, tokenHelperMock.Object);
+            loginController = new LoginController(loginHelperMock.Object, tokenHelperMock.Object, brugerQueriesMock.Object);
             return loginController;
+        }
+
+        private static Mock<IBrugerQuery> BrugerQueriesFactory()
+        {
+            var brugerQueriesMock = new Mock<IBrugerQuery>();
+            brugerQueriesMock.Setup(x => x.GetBrugerByName(It.IsAny<string>()))
+                .Returns(new Bruger
+                {
+                    Id = 12,
+                    UserName = "testUser",
+                    PasswordHash = "hashedPassword"
+                });
+
+            return brugerQueriesMock;
         }
 
         private static Mock<ILoginHelper> LoginHelperMockFactory(bool mockValue)
@@ -64,7 +83,7 @@ namespace BirdWare.Test.Controllers
         private static Mock<ITokenHelper> TokenHelperMockFactory()
         {
             var tokenHelperMock = new Mock<ITokenHelper>();
-            tokenHelperMock.Setup(x => x.GenerateJwtToken(It.IsAny<string>())).Returns("123aaa");
+            tokenHelperMock.Setup(x => x.GenerateJwtToken(It.IsAny<Bruger>())).Returns("123aaa");
             return tokenHelperMock;
         }
     }

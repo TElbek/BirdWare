@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
 {
-    public class LoginController(ILoginHelper loginHelper, ITokenHelper tokenHelper) : ControllerBase
+    public class LoginController(ILoginHelper loginHelper, 
+                                 ITokenHelper tokenHelper,
+                                 IBrugerQuery brugerQuery) : ControllerBase
     {
         [HttpPost]
         [Route("api/auth/login")]
@@ -13,7 +15,8 @@ namespace BirdWare.Controllers
         {
             if (loginHelper.DoLogin(loginModel))
             {
-                var token = tokenHelper.GenerateJwtToken(loginModel.Username);
+                var bruger = brugerQuery.GetBrugerByName(loginModel.Username);
+                var token = tokenHelper.GenerateJwtToken(bruger);
                 return Ok(new { AccessToken = token });
             }
             else 
