@@ -4,13 +4,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BirdWare.Domain.Security
 {
-    public class PasswordHelper : IPasswordHelper
+    public class PasswordHelper(IPasswordHasher<Bruger> passwordHasher) : IPasswordHelper
     {
-        private readonly IPasswordHasher<Bruger> passwordHasher;
-        public PasswordHelper(IPasswordHasher<Bruger> passwordHasher)
-        {
-            this.passwordHasher = passwordHasher;
-        }
+        private readonly IPasswordHasher<Bruger> passwordHasher = passwordHasher;
 
         public string HashPassword(Bruger user, string password)
         {

@@ -1,6 +1,7 @@
 ﻿using BirdWare.Controllers;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Moq;
 using System.Net;
 
@@ -17,6 +18,24 @@ namespace BirdWare.Test.Controllers
             opretObsCommandMock.Setup(x => x.OpretObsPåFugletur(It.IsAny<long>())).Returns(true);
             opdaterObsCommandMock.Setup(x => x.OpdaterObservation(It.IsAny<VObs>())).Returns(true);
             opretObsController = new OpretObsController(opretObsCommandMock.Object, opdaterObsCommandMock.Object);
+        }
+
+        [Fact]
+        public void OpretObs_VerifyAuthorizeAttributeClassLevel()
+        {
+            var type = opretObsController.GetType();
+            var attributes = type.GetCustomAttributes(typeof(AuthorizeAttribute), true);
+            Assert.Empty(attributes);
+        }
+
+        [Fact]
+        public void OpretObs_VerifyAuthorizeAttribute()
+        {
+            var type = opretObsController.GetType();
+            var methodInfo = type.GetMethod("OpretObs", [typeof(long)]);
+            var attributes = methodInfo?.GetCustomAttributes(typeof(AuthorizeAttribute), true);
+            Assert.NotNull(attributes);
+            Assert.NotEmpty(attributes);
         }
 
         [Fact]

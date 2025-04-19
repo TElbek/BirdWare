@@ -1,5 +1,6 @@
 ﻿using BirdWare.Controllers;
 using BirdWare.EF.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Moq;
 using System.Net;
 
@@ -14,6 +15,14 @@ namespace BirdWare.Test.Controllers
         {
             opretTurCommandMock.Setup(x => x.OpretTurPaaLokalitet(It.IsAny<long>())).Returns(true);
             opretTurController = new OpretTurController(opretTurCommandMock.Object);
+        }
+
+        [Fact]
+        public void OpretTur_VerifyAuthorizeAttribute()
+        {
+            var type = opretTurController.GetType();
+            var attributes = type.GetCustomAttributes(typeof(AuthorizeAttribute), true);
+            Assert.NotEmpty(attributes);
         }
 
         [Fact]
