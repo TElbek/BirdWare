@@ -68,7 +68,7 @@ const router = createRouter({
       meta: {
         title: 'Observation',
         showInNavBar: true,
-        requireSSL: true
+        requireSSL: false
       },      
     },
     {

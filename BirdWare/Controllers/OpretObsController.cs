@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace BirdWare.Controllers
 {
     [ApiController]
-    [Authorize]
     public class OpretObsController(IOpretObsCommand opretObsCommand,
                                     IOpdaterObsCommand opdaterObsCommand) : ControllerBase
     {
+        [Authorize]
         [Route("api/observation/opretobs/{artId}")]
         [HttpPost]
         public HttpResponseMessage OpretObs(long artId)
