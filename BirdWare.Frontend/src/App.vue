@@ -82,10 +82,6 @@ body {
   width: 100px;
 }
 
-.large-text {
-  font-size: 1.4rem;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -153,6 +149,10 @@ a {
   .router-link-active {
     font-weight: 600;
   }
+
+  .large-text {
+    font-size: 1.2rem;
+  }
 }
 
 @media only screen and (min-width: 992px) {
@@ -162,6 +162,10 @@ a {
 
   .router-link-active {
     border-bottom: 2px solid $birdwareColor;
+  }
+
+  .large-text {
+    font-size: 1.4rem;
   }
 }
 
@@ -210,16 +214,16 @@ a {
 
 .btn-outline-birdware,
 .btn-outline-birdware:hover {
-    color: $birdwareColor;
-    background-color: transparent;
-    border-color: $black-20;
+  color: $birdwareColor;
+  background-color: transparent;
+  border-color: $black-20;
 }
 
 .btn-birdware,
 .btn-birdware:hover {
-    background-color: $birdwareColor;
-    border-color: $black-20;
-    color: $white;
+  background-color: $birdwareColor;
+  border-color: $black-20;
+  color: $white;
 }
 
 .btn.show {
@@ -239,17 +243,17 @@ a {
 }
 
 .forskel-indikator {
-    border-radius: 50%;
-    color: white;
-    width: 20px;
-    font-weight: bold;
+  border-radius: 50%;
+  color: white;
+  width: 20px;
+  font-weight: bold;
 }
 
 .forskel-success {
-    background-color: $birdwareColor;
+  background-color: $birdwareColor;
 }
 
 .forskel-danger {
-    background-color: $red;
+  background-color: $red;
 }
 </style>

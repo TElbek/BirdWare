@@ -35,7 +35,7 @@ namespace BirdWare.Test.Controllers
         }
 
         [Fact]
-        public void OpretTur_LokalitetIdNotGreaterThanZero_ReturnsOk()
+        public void OpretTur_LokalitetIdNotGreaterThanZero_ReturnsBadRequest()
         {
             var result = opretTurController.OpretTur(-1);
             Assert.IsType<HttpResponseMessage>(result);

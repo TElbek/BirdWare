@@ -1,9 +1,11 @@
 <template>
-    <multiselect v-model="state.selectedTags" :options="state.tagList" track-by="name" label="name"
+    <div class="mt-1">
+        <multiselect v-model="state.selectedTags" :options="state.tagList" track-by="name" label="name"
         :multiple="false" :showLabels="false" :allow-empty="true" @search-change="getTagList"></multiselect>
-    <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-2 mt-2">
+    </div>
+    <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-2 mt-1">
         <div v-for=" [key, value] in groupByFamilie">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-header birdware ">
                     {{ key }}
                 </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="birdware large-text text-nowrap">
+    <div class="birdware large-text d-inline-block text-truncate">
         <span v-if="state.fugletur != undefined">{{ formatDate(state.fugletur.dato) }} {{state.fugletur.lokalitetNavn }}</span>
     </div>
 </template>

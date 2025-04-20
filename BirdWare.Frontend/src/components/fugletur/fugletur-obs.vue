@@ -1,8 +1,6 @@
 <template>    
     <div class="row">
-        <div class="col">
-            <fugleturTitel :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
-        </div>
+        <fugleturTitel class="col" :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
         <div class="col-auto">
             <fugleturNavigation></fugleturNavigation>
         </div>
