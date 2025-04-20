@@ -16,7 +16,7 @@ namespace BirdWare.Controllers
             if (loginHelper.DoLogin(loginModel))
             {
                 var bruger = brugerQuery.GetBrugerByName(loginModel.Username);
-                var token = tokenHelper.GenerateJwtToken(bruger);
+                var token = tokenHelper.GenerateJWTToken(bruger);
                 return Ok(new { AccessToken = token });
             }
             else 

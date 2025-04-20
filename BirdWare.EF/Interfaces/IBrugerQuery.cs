@@ -1,4 +1,4 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
 
 namespace BirdWare.EF.Interfaces
 {

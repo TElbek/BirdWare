@@ -1,5 +1,5 @@
-﻿using BirdWare.Domain.Interfaces;
-using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,7 +9,7 @@ namespace BirdWare.Domain.Security
 {
     public class TokenHelper : ITokenHelper
     {
-        public string GenerateJwtToken(Bruger bruger)
+        public string GenerateJWTToken(Bruger bruger)
         {
             var claims = new[]
             {
@@ -17,17 +17,37 @@ namespace BirdWare.Domain.Security
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("appSecret") ?? string.Empty));
-            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+            var symmetricSecurityKey = GetSymmetricSecurityKey();
+            var signingCredentials = GetSigningCredentials(symmetricSecurityKey);
+            var token = GetJwtSecurityToken(claims, signingCredentials);
 
-            var token = new JwtSecurityToken(
+            return WriteToken(token);
+        }
+
+        private static string WriteToken(JwtSecurityToken token)
+        {
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private static JwtSecurityToken GetJwtSecurityToken(Claim[] claims, SigningCredentials signingCredentials)
+        {
+            return new JwtSecurityToken(
                 issuer: "birdware.dk",
                 audience: "birdware.dk",
                 claims: claims,
                 expires: DateTime.Now.AddHours(8),
                 signingCredentials: signingCredentials);
+        }
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+        private static SigningCredentials GetSigningCredentials(SymmetricSecurityKey symmetricSecurityKey)
+        {
+            return new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+        }
+
+        private static SymmetricSecurityKey GetSymmetricSecurityKey()
+        {
+            return new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("appSecret") ?? string.Empty));
         }
     }
 }

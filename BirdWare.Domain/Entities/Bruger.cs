@@ -1,4 +1,4 @@
-﻿namespace BirdWare.Domain.Models
+﻿namespace BirdWare.Domain.Entities
 {
     public class Bruger
     {

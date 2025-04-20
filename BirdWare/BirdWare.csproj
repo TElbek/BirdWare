@@ -24,4 +24,8 @@
     <ProjectReference Include="..\BirdWare.EF\BirdWare.EF.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
 </Project>

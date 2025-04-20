@@ -1,6 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 
-namespace BirdWare.Interfaces
+namespace BirdWare.Domain.Interfaces
 {
     public interface ITagMemoryCache
     {

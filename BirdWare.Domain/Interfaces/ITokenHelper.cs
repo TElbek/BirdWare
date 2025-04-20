@@ -1,9 +1,9 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
 
 namespace BirdWare.Domain.Interfaces
 {
     public interface ITokenHelper
     {
-        string GenerateJwtToken(Bruger bruger);
+        string GenerateJWTToken(Bruger bruger);
     }
 }

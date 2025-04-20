@@ -1,4 +1,4 @@
-﻿using BirdWare.Cache;
+﻿using BirdWare.Domain.Cache;
 using BirdWare.Controllers;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;

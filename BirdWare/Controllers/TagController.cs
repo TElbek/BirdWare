@@ -1,6 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
-using BirdWare.Interfaces;
+using BirdWare.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers

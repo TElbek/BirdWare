@@ -1,5 +1,5 @@
-﻿using BirdWare.Domain.Interfaces;
-using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
 namespace BirdWare.Domain.Security

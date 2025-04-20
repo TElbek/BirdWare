@@ -1,7 +1,7 @@
-using BirdWare.Cache;
+using BirdWare.Domain.Cache;
 using BirdWare.Domain;
 using BirdWare.EF;
-using BirdWare.Interfaces;
+using BirdWare.Domain.Interfaces;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;

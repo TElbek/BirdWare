@@ -1,9 +1,9 @@
 ﻿using BirdWare.Domain.Models;
-using BirdWare.Interfaces;
+using BirdWare.Domain.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
 using System.Diagnostics.CodeAnalysis;
 
-namespace BirdWare.Cache
+namespace BirdWare.Domain.Cache
 {
     [ExcludeFromCodeCoverage(Justification = "IMemoryCache cannot be mocked, because it uses static extension methods")]
     public class TagMemoryCache : ITagMemoryCache

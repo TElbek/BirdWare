@@ -1,4 +1,5 @@
 ﻿using BirdWare.Controllers;
+using BirdWare.Domain.Entities;
 using BirdWare.Domain.Interfaces;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
@@ -26,7 +27,7 @@ namespace BirdWare.Test.Controllers
             var result = loginController.Login(loginModel);
             Assert.IsType<UnauthorizedResult>(result);
             loginHelperMock.Verify(x => x.DoLogin(loginModel), Times.Once);
-            tokenHelperMock.Verify(x => x.GenerateJwtToken(It.IsAny<Bruger>()), Times.Never);
+            tokenHelperMock.Verify(x => x.GenerateJWTToken(It.IsAny<Bruger>()), Times.Never);
         }
 
         [Fact]
@@ -46,7 +47,7 @@ namespace BirdWare.Test.Controllers
             var result = loginController.Login(loginModel);
             Assert.IsType<OkObjectResult>(result);
             loginHelperMock.Verify(x => x.DoLogin(loginModel), Times.Once);
-            tokenHelperMock.Verify(x => x.GenerateJwtToken(It.IsAny<Bruger>()), Times.Once);
+            tokenHelperMock.Verify(x => x.GenerateJWTToken(It.IsAny<Bruger>()), Times.Once);
         }
 
         private static LoginController ControllerFactory(
@@ -83,7 +84,7 @@ namespace BirdWare.Test.Controllers
         private static Mock<ITokenHelper> TokenHelperMockFactory()
         {
             var tokenHelperMock = new Mock<ITokenHelper>();
-            tokenHelperMock.Setup(x => x.GenerateJwtToken(It.IsAny<Bruger>())).Returns("123aaa");
+            tokenHelperMock.Setup(x => x.GenerateJWTToken(It.IsAny<Bruger>())).Returns("123aaa");
             return tokenHelperMock;
         }
     }
