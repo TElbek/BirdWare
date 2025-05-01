@@ -44,7 +44,11 @@ namespace BirdWare.EF.Queries
                            LokalitetId = l.Id,
                            LokalitetNavn = l.Navn ?? string.Empty,
                            RegionId = r.Id,
-                           RegionNavn = r.Navn ?? string.Empty
+                           RegionNavn = r.Navn ?? string.Empty,
+                           AntalArter = birdWareContext.Observation
+                                 .Where(o => o.FugleturId == f.Id)
+                                 .Select(o => o.ArtId)
+                                 .Count()
                        };
 
             return vtur.Any() ? vtur.First() : new VTur();
