@@ -1,20 +1,23 @@
 <template>
     <div class="scroll">
-        <div v-for="[key, value] in groupedData" class="card mb-2">
-            <div class="card-header">
-                <a @click="addTag(key)">
-                    <span class="birdware" v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</span>
-                    <span class="birdware text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</span>
-                    <span class="birdware ms-1">({{ value.length }})</span>
-                </a>
-            </div>
-            <div class="card-body">
-                <div v-for="obs in obsSorted(value)" class="row row-space-below">
-                    <fugleturDato class="col-auto" :fugleturId="obs.fugleturId" :dato="obs.dato"></fugleturDato>
-                    <div class="col-4 col-md-2 text-truncate">{{ obs.artNavn }}</div>
-                    <div class="col-4 col-md-3 text-nowrap">{{ obs.lokalitetNavn }}</div>
-                    <div class="d-none d-lg-block col-md">{{ obs.bem }}</div>
-                    <div class="col-12  d-lg-none">{{ obs.bem }}</div>
+        <div class="row row-cols-1 row-cols-xl-2 g-2">
+            <div v-for="[key, value] in groupedData" class="col">
+                <div class="card h-100 mb-2">
+                    <div class="card-header">
+                        <a @click="addTag(key)">
+                            <span class="birdware" v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</span>
+                            <span class="birdware text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</span>
+                            <span class="birdware ms-1">({{ value.length }})</span>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div v-for="obs in obsSorted(value)" class="row">
+                            <fugleturDato class="col-auto" :fugleturId="obs.fugleturId" :dato="obs.dato"></fugleturDato>
+                            <div class="col-4 col-md-3 d-none d-lg-block  text-nowrap">{{ obs.artNavn }}</div>
+                            <div class="col-4 col-md-3  text-nowrap text-truncate">{{ obs.lokalitetNavn }}</div>
+                            <div class="col-4 col-md-4 text-truncate text-nowrap">{{ obs.bem }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

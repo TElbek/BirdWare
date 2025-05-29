@@ -8,6 +8,7 @@ namespace BirdWare.Test.Queries
     {
         private readonly DbSetMock<Fugletur> fugleturMockSet = new();
         private readonly DbSetMock<Lokalitet> lokalitetMockSet = new();
+        private readonly DbSetMock<Observation> observationMockSet = new();
         private readonly DbSetMock<Region> regionMockSet = new();
 
         [Fact]
@@ -18,6 +19,7 @@ namespace BirdWare.Test.Queries
             var fugletur = fugleturQuery.GetFugletur(1);
             Assert.Equal(1, fugletur.Id);
             Assert.Equal(1, fugletur.LokalitetId);
+            Assert.Equal(1, fugletur.AntalArter = 1);
         }
 
         [Fact]
@@ -75,9 +77,14 @@ namespace BirdWare.Test.Queries
                 new() { Id = 2, Navn = "Region2"},
                 new() { Id = 3, Navn = "Region3"}]);
 
+            observationMockSet.AddData([
+                new () {Id = 1, FugleturId = 1, ArtId = 2 },
+                new () {Id = 1, FugleturId = 2, ArtId = 3 }]);
+
             MockContext.Setup(c => c.Fugletur).Returns(fugleturMockSet.DbSet);
             MockContext.Setup(c => c.Lokalitet).Returns(lokalitetMockSet.DbSet);
             MockContext.Setup(c => c.Region).Returns(regionMockSet.DbSet);
+            MockContext.Setup(c => c.Observation).Returns(observationMockSet.DbSet);
 
             return new FugleturQuery(MockContext.Object);
         }
