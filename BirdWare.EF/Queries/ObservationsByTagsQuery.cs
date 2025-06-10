@@ -112,6 +112,7 @@ namespace BirdWare.EF.Queries
         {
             return [.. observations.Select(m => new VObs()
             {
+                ObservationId = m.Id,
                 Dato = m.Fugletur.Dato,
                 ArtId = m.Art.Id,
                 FamilieId = m.Art.Gruppe.FamilieId,
@@ -123,6 +124,8 @@ namespace BirdWare.EF.Queries
                 SU = m.Art.SU,
                 LokalitetNavn = m.Fugletur.Lokalitet.Navn ?? string.Empty,
                 LokalitetId = m.Fugletur.Lokalitet.Id,
+                Latitude = m.Fugletur.Lokalitet.Latitude,
+                Longitude = m.Fugletur.Lokalitet.Longitude,
                 Bem = m.Beskrivelse ?? string.Empty,
                 RegionId = m.Fugletur.Lokalitet.RegionId,
                 RegionNavn = m.Fugletur.Lokalitet.Region.Navn ?? string.Empty,

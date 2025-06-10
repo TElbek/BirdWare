@@ -21,6 +21,9 @@
 
         public string LokalitetNavn { get; set; } = string.Empty;
 
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+
         public long FugleturId { get; set; }
 
         public long FamilieId { get; set; }
