@@ -9,6 +9,7 @@
         public long FugleturId { get; set; }
         public string? LokalitetNavn { get; set; }
         public bool SU { get; set; }
+        public bool Speciel { get; set; }
 
         public string Titel =>
             (Dato.HasValue ? Dato.Value.ToString("dd-MM-yyyy") : string.Empty) + " " + LokalitetNavn;

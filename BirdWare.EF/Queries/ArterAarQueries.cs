@@ -27,16 +27,17 @@ namespace BirdWare.EF.Queries
                         f in birdWareContext.Fugletur on o.FugleturId equals f.Id join 
                         l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
                   where f.Dato.HasValue && f.Dato.Value.Year == aarstal && l.RegionId > 0
-                  select new { o.ArtId, a.GruppeId, a.Navn, a.SU, f.Dato, FugleturId = f.Id };
+                  select new { o.ArtId, a.GruppeId, a.Navn, a.SU, a.Speciel, f.Dato, FugleturId = f.Id };
 
                  return from o in arterAar
-                  group o by new { o.ArtId, o.GruppeId, o.Navn, o.SU } into ogroup
+                  group o by new { o.ArtId, o.GruppeId, o.Navn, o.SU, o.Speciel } into ogroup
                   select new ArterAar
                   {
                       ArtNavn = ogroup.Key.Navn,
                       ArtId = ogroup.Key.ArtId,
                       GruppeId = ogroup.Key.GruppeId,
                       SU = ogroup.Key.SU,
+                      Speciel = ogroup.Key.Speciel,
                       FugleturId = ogroup.Min(item => item.FugleturId),
                       Dato = ogroup.Min(item => item.Dato)
                   };

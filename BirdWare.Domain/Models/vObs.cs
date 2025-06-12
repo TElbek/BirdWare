@@ -35,6 +35,7 @@
         public string RegionNavn { get; set; } = string.Empty;
 
         public bool SU { get; set; }
+        public bool Speciel { get; set; }
 
         public long Aarstal {  get; set; }
         public long Maaned {  get; set; }

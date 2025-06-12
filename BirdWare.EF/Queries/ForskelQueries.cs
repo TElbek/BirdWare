@@ -24,6 +24,7 @@ namespace BirdWare.EF.Queries
                         Dato = sty.Dato,
                         RegionId = lty.RegionId,
                         SU = sty.SU,
+                        Speciel = sty.Speciel,
                         LokalitetId = lty.Id,
                         LokalitetNavn = lty.Navn
                     }).OrderByDescending(o => o.Dato)];
@@ -48,6 +49,7 @@ namespace BirdWare.EF.Queries
                         Dato = sly.Dato,
                         RegionId = lly.RegionId,
                         SU = sly.SU,
+                        Speciel = sly.Speciel,
                         LokalitetId = lly.Id,
                         LokalitetNavn = lly.Navn
                     }).OrderByDescending(o => o.Dato)];

@@ -32,6 +32,7 @@ namespace BirdWare.Domain.Models
         public string ArtNavn { get; set; } = string.Empty;
         public long LokalitetId { get; set; }
         public bool SU { get; set; }
+        public bool Speciel { get; set; }
     }
 
     public static class AnalyseExtensions

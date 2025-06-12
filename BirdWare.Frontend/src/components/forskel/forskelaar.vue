@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <div class="art-flex">
                             <div v-for="art in arterSorteret(value)">
-                                <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su"></artNavn>
+                                <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su" :speciel="art.speciel"></artNavn>
                             </div>
                         </div>
                     </div>

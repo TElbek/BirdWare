@@ -12,6 +12,7 @@ namespace BirdWare.Domain.Entities
         [StringLength(30)]
         public string? Navn { get; set; }
         public bool SU { get; set; }
+        public bool Speciel { get; set; }
         public bool SetIDK { get; set; }
 
         public virtual Gruppe Gruppe { get; set; }

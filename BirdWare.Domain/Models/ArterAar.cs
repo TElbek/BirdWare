@@ -7,6 +7,7 @@
         public long ArtId { get; set; }
         public DateTime? Dato { get; set; }
         public bool SU { get; set; }
+        public bool Speciel { get; set; }
         public long GruppeId { get; set; }
     }
 }

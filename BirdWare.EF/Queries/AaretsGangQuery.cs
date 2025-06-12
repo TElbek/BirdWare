@@ -22,7 +22,8 @@ namespace BirdWare.EF.Queries
                     FamilieNavn = familie.Navn,
                     FugleturId = fugletur.Id,
                     LokalitetNavn = lokalitet.Navn,
-                    SU = art.SU
+                    SU = art.SU,
+                    Speciel = art.Speciel
                 };
 
             return [.. aaretsGangList.OrderByDescending(o => o.Dato)];

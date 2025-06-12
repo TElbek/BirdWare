@@ -7,6 +7,7 @@
         public DateTime? Dato { get; set; }
         public long RegionId { get; set; }
         public bool SU { get; set; }
+        public bool Speciel { get; set; }
         public long LokalitetId { get; set; }
         public string? LokalitetNavn { get; set; }
         public string Titel => 

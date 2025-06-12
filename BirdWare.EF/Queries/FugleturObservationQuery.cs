@@ -23,7 +23,8 @@ namespace BirdWare.EF.Queries
                            FamilieNavn = f.Navn ?? string.Empty,
                            FugleturId = o.FugleturId,
                            GruppeId = g.Id,
-                           SU = a.SU
+                           SU = a.SU,
+                           Speciel = a.Speciel
                        };
                             
             return [.. list];

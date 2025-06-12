@@ -122,6 +122,7 @@ namespace BirdWare.EF.Queries
                 GruppeNavn = m.Art.Gruppe.Navn ?? string.Empty,
                 GruppeId = m.Art.GruppeId,
                 SU = m.Art.SU,
+                Speciel = m.Art.Speciel,
                 LokalitetNavn = m.Fugletur.Lokalitet.Navn ?? string.Empty,
                 LokalitetId = m.Fugletur.Lokalitet.Id,
                 Latitude = m.Fugletur.Lokalitet.Latitude,

@@ -256,4 +256,17 @@ a {
 .forskel-danger {
   background-color: $red;
 }
+
+.forekomst {
+  border-width: 0px 0px 2px 0px;
+  border-style: solid;
+}
+
+.forekomst-su {
+  border-color: tomato;
+}
+
+.forekomst-speciel {
+  border-color: lightgreen;
+}
 </style>

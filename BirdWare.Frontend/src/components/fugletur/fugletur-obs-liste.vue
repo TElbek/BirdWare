@@ -9,7 +9,7 @@
                     </div>
                     <div class="card-body p-1">
                         <div v-for="obs in obsSorted(value)" class="row">
-                            <artNavn class="col-6" :artId="obs.artId" :artNavn="obs.artNavn" :su="obs.su"></artNavn>
+                            <artNavn class="col-6" :artId="obs.artId" :artNavn="obs.artNavn" :su="obs.su" :speciel="obs.speciel"></artNavn>
                             <div class="col-6 d-inline-block text-truncate">{{ obs.bem }}</div>
                         </div>
                     </div>
