@@ -21,6 +21,8 @@ $black-30: #00000030;
 $black-20: #00000020;
 $black-10: #00000010;
 $light-gray: #efefef20;
+$sucolor: #ff6347;
+$specielcolor: #90ee90;
 
 body {
   font-size: 0.90rem;
@@ -263,10 +265,10 @@ a {
 }
 
 .forekomst-su {
-  border-color: tomato;
+  border-color: $sucolor;
 }
 
 .forekomst-speciel {
-  border-color: lightgreen;
+  border-color: $specielcolor;
 }
 </style>

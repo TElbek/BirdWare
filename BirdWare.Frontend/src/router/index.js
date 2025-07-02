@@ -149,6 +149,16 @@ const router = createRouter({
       }
     },
     {
+      path: '/observation/handler/:id',
+      name:'observation-handler',
+      component: () => import('../components/handlers/artHandler.vue'),
+      meta: {
+        title: '',
+        showInNavBar: false,
+        requireSSL: false
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('../views/Login.vue'),
