@@ -16,9 +16,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import api from '@/api';
-import { useAuthenticateStore } from '@/stores/authenticate.js';
+import { useAuthenticateStore } from '@/stores/authenticate.ts';
 import { reactive, computed } from 'vue';
 import { useRouter } from 'vue-router'
 import { useRoute } from 'vue-router'
@@ -43,7 +43,7 @@ function login() {
             authenticate.setJwtToken(response.data.accessToken);
         })
         .finally(() => {
-            router.replace(route.query.redirect);
+            router.replace({ path: (route.query.redirect as string) || 'home' });
         });
 }
 </script>

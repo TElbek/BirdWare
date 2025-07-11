@@ -12,9 +12,9 @@ import navigation from '@/components/main/navigation.vue';
 
 <style lang="scss">
 $white: #fff;
-$birdwareColor: #00aa00;
+$birdwareColor: #048baf;
 $red: #ff0000;
-$birdwareColor-light: #00aa0050;
+$birdwareColor-light: #048baf50;
 $black-30: #00000030;
 $black-20: #00000020;
 $black-10: #00000010;

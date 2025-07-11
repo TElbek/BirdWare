@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { useAuthenticateStore } from '@/stores/authenticate.js';
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -100,7 +101,7 @@ const router = createRouter({
         requireSSL: false
       }
     },
-     {
+    {
       path: '/opret/oprettur',
       name: 'addtrip',
       component: () => import('../views/OpretTurView.vue'),
@@ -147,7 +148,37 @@ const router = createRouter({
         },
       ]
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/Login.vue'),
+      meta: {
+        title: 'Login',
+        showInNavBar: false,
+        requireSSL: true
+      }
+    }
   ],
 })
+
+router.beforeEach((to, from, next) => {
+  document.title = (to.meta.title ? to.meta.title + ' - ' : '') + 'Birdware.dk'
+
+  const authenticate = useAuthenticateStore();
+
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    let authenticated = authenticate.isLoggedIn;
+    if (!authenticated) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
