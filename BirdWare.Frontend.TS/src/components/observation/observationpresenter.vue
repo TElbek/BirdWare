@@ -1,0 +1,86 @@
+<template>
+    <observationList class="mt-2" :grouped-data="groupedData" @addtag="addTag"></observationList>
+</template>
+
+<script setup lang="ts">
+import api from '@/api';
+import { reactive, onMounted, computed, watch } from 'vue';
+import { storeToRefs } from 'pinia'
+
+import { type observationType, type observationListe } from '@/types/observationType';
+import { useObsSelectionStore } from '@/stores/obs-selection-store';
+
+// const observationPlot = defineAsyncComponent(() => import('./observationplot.vue'));
+import observationList from './observationlist.vue';
+
+const obsSelectionStore = useObsSelectionStore();
+const { selectedTags } = storeToRefs(obsSelectionStore);
+
+import { getMonthNameFromNumber } from '@/ts/dateandtime.ts';
+
+const state = reactive<observationListe>({
+    observationer: []
+});
+
+const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
+
+const groupedData = computed(() => {
+    switch (obsSelectionStore.chosenGroupingId) {
+        case 0: return groupByFunctions['byAaarstal']();
+        case 1: return groupByFunctions['byMaaned']();
+        case 2: return groupByFunctions['byArt']();
+        case 3: return groupByFunctions['byLokalitet']();
+        case 4: return groupByFunctions['byRegion']();
+    }
+});
+
+const groupByFunctions = {
+    byAaarstal: function () {
+        return Map.groupBy(state.observationer.sort((a, b) => a.aarstal - b.aarstal).reverse(), ( one: observationType ) => one.aarstal);
+    },
+
+    byMaaned: function () {
+        return Map.groupBy(state.observationer.sort((a, b) => a.maaned - b.maaned), (  one: observationType  ) => one.maaned);
+    },
+
+    byArt: function () {
+        return Map.groupBy(state.observationer.sort((a, b) => a.artNavn.localeCompare(b.artNavn)), (  one: observationType  ) => one.artNavn);
+    },
+
+    byLokalitet: function () {
+        return Map.groupBy(state.observationer.sort((a, b) => a.lokalitetNavn.localeCompare(b.lokalitetNavn)), (  one: observationType  ) => one.lokalitetNavn);
+    },
+
+    byRegion: function () {
+        return Map.groupBy(state.observationer.sort((a, b) => a.regionNavn.localeCompare(b.regionNavn)), (  one: observationType  ) => one.regionNavn);
+    }
+}
+
+onMounted(() => {
+    if (obsSelectionStore.selectedTags.length > 0) {
+        getObservations();
+    }
+});
+
+function getObservations() {
+    api.get("observationer/get/tags?tagListAsJson=" + queryString.value).then(response => {
+        state.observationer = response.data;
+    });
+}
+
+function addTag(text: string) {
+
+    let tagText = text;
+    if(obsSelectionStore.isGropingByMonth && !isNaN(+text)) {
+        tagText = getMonthNameFromNumber(+text);
+    }
+
+    api.get("tag/" + tagText).then(response => {
+        obsSelectionStore.AddTag(response.data);
+    });
+}
+
+watch(() => selectedTags.value, (newValue) => {
+    getObservations();
+});
+</script>
