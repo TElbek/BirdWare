@@ -2,8 +2,8 @@
     <img :src="requireImg('BirdWare_logo_farve_RGB.svg')" />
 </template>
 
-<script setup>
-function requireImg(imgName) {
+<script setup lang="ts">
+function requireImg(imgName: string): string {
     return new URL(`../assets/${imgName}`, import.meta.url).href
 }
 </script>
