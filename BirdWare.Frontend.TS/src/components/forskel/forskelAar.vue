@@ -23,7 +23,7 @@
 import api from '@/api';
 import { reactive, computed, onMounted } from 'vue';
 import artNavn from '@/components/main/artNavn.vue';
-import { type forskelType, type forskelListe } from '@/types/forskelType.ts';
+import { type forskelType} from '@/types/forskelType.ts';
 
 interface forskelAarInterface {
     isThisYear: boolean,
@@ -32,8 +32,8 @@ interface forskelAarInterface {
 
 const props = defineProps<forskelAarInterface>();
 
-const state = reactive<forskelListe>({
-    forskelAar: []
+const state = reactive({
+    forskelAar: [] as forskelType[]
 });
 
 const emit = defineEmits(['item-count']);

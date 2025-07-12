@@ -10,7 +10,3 @@ export type forskelType = {
     titel: string;
     familieNavn: string;
 }
-
-export interface forskelListe {
-    forskelAar: forskelType[]
-}
