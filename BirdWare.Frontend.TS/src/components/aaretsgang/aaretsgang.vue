@@ -32,10 +32,10 @@
 import api from '@/api';
 import { reactive, ref, computed, onMounted } from 'vue';
 import artNavn from '@/components/main/artNavn.vue';
-import { type aaretsGangType, type aaretsGangListe } from '@/types/aaretsGangType.ts';
+import { type aaretsGangType } from '@/types/aaretsGangType.ts';
 
-const state = reactive<aaretsGangListe>({
-    aaretsGang: [],
+const state = reactive({
+    aaretsGang: [] as aaretsGangType[],
 });
 
 const isByTrip = ref(true);

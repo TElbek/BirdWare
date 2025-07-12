@@ -9,7 +9,3 @@ export type aaretsGangType = {
     speciel: boolean
     titel: string
 }
-
-export interface aaretsGangListe {
-    aaretsGang: aaretsGangType[]
-}
