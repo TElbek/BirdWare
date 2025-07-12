@@ -30,37 +30,14 @@
 import { reactive, onMounted, watch, computed } from 'vue';
 import api from '@/api';
 import { useRouter } from 'vue-router';
-import type { lokalitetDistanceType } from '@/types/lokalitetDistanceType';
+import { type lokalitetDistanceType } from '@/types/lokalitetDistanceType';
 
 const router = useRouter();
 
-interface opretTurStateInterface {
-    searchValue: string,
-    position: GeolocationPosition,
-    lokalitetListe: lokalitetDistanceType[]
-}
-
-const state = reactive<opretTurStateInterface>({
-    lokalitetListe: [],
-    position: {
-        coords: {
-            accuracy: 0,
-            altitude: null,
-            altitudeAccuracy: null,
-            heading: null,
-            latitude: 0,
-            longitude: 0,
-            speed: null,
-            toJSON: function () {
-                throw new Error('Function not implemented.');
-            }
-        },
-        timestamp: 0,
-        toJSON: function () {
-            throw new Error('Function not implemented.');
-        }
-    },
-    searchValue: ''
+const state = reactive({
+    lokalitetListe: [] as lokalitetDistanceType[],
+    position: {} as GeolocationPosition,
+    searchValue: '' as string
 });
 
 onMounted(() => {
@@ -89,12 +66,12 @@ function setPosition(position: GeolocationPosition) {
 
 function getLokaliteterForPosition() {
     api.get("lokalitet/" + state.position.coords.latitude + '/' + state.position.coords.longitude)
-        .then((response) => { state.lokalitetListe = response.data });
+        .then((response) => { state.lokalitetListe = response.data; });
 }
 
 function opretTur(lokalitetId: number) {
     api.post("fugletur/oprettur/" + lokalitetId)
-        .then((response) => {
+        .then(() => {
             router.push({ name: 'addobs' });
         });
 }

@@ -23,14 +23,9 @@ import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 
-interface opretObsStateInterface {
-    fugleturId: number,
-    isForslagMode: boolean
-}
-
-const state = reactive<opretObsStateInterface>({
-    fugleturId: 0,
-    isForslagMode: false
+const state = reactive({
+    fugleturId: 0 as number,
+    isForslagMode: false as boolean
 });
 
 onMounted(() => {

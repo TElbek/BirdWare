@@ -25,12 +25,12 @@ import { reactive, computed, onMounted } from 'vue';
 import artNavn from '@/components/main/artNavn.vue';
 import { type forskelType} from '@/types/forskelType.ts';
 
-interface forskelAarInterface {
+interface forskelAarProps {
     isThisYear: boolean,
     isByTrip: boolean
 }
 
-const props = defineProps<forskelAarInterface>();
+const props = defineProps<forskelAarProps>();
 
 const state = reactive({
     forskelAar: [] as forskelType[]

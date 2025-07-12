@@ -27,24 +27,13 @@
 import { reactive, ref, onMounted, watch, computed } from 'vue';
 import api from '@/api';
 import { Multiselect } from 'vue-multiselect';
-import type { opretObsListeType } from '@/types/opretObsListeType';
-import type { tagType } from '@/types/tagType';
+import { type opretObsListeType } from '@/types/opretObsListeType';
+import { type tagType } from '@/types/tagType';
 
-interface opretObsListeStateInterface {
-    observationer: opretObsListeType[],
-    tagList: tagType[],
-    selectedTag: tagType,
-}
-
-const state = reactive<opretObsListeStateInterface>({
-    observationer: [],
-    tagList: [],
-    selectedTag: {
-        tagType: 0,
-        id: 0,
-        parentId: 0,
-        name: ''
-    },
+const state = reactive({
+    observationer: [] as opretObsListeType[],
+    tagList: [] as tagType[],
+    selectedTag: {} as tagType,
 });
 
 const hasData = ref(false as boolean);
@@ -64,7 +53,7 @@ function getObservationer() {
 
 function removeObservation(id: number) {
     api.post("fugletur/observation/" + id + "/slet")
-        .then((response) => {
+        .then(() => {
             getObservationer();
         })
 }

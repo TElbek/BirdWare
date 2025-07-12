@@ -24,12 +24,8 @@ import { reactive, ref, onMounted, computed } from 'vue';
 import api from '@/api';
 import type { opretObsForslagType } from '@/types/opretObsForslagType';
 
-interface opretObsListeStateInterface {
-    forslag: opretObsForslagType[]
-}
-
-const state = reactive<opretObsListeStateInterface>({
-    forslag: [],
+const state = reactive({
+    forslag: [] as opretObsForslagType[],
 });
 
 const hasData = ref(false);
