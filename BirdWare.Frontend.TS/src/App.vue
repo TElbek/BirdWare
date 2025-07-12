@@ -29,6 +29,7 @@ body {
 
 .nav-link {
   font-size: 1.1em;
+  border-bottom: 2px solid transparent;
 }
 
 .birdware {
@@ -152,14 +153,6 @@ a {
     margin-bottom: 5px;
   }
 
-  .router-link-exact-active {
-    font-weight: 600;
-  }
-
-  .router-link-active {
-    font-weight: 600;
-  }
-
   .large-text {
     font-size: 1.2rem;
   }
@@ -202,10 +195,7 @@ a {
 }
 
 .navbar-brand {
-  padding-top: 0px;
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: .1rem;
+  margin-bottom: 4px;
 }
 
 .navbar-brand:hover {

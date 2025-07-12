@@ -6,13 +6,13 @@ namespace BirdWare.Controllers
 {
 
     [ApiController]
-    public class FugleturAnalyseController(IFugleturAnalyseQuerySP fugleturAnalyseQuerySP) : ControllerBase
+    public class FugleturAnalyseController(IFugleturAnalyseQuery fugleturAnalyseQuery) : ControllerBase
     {
         [HttpGet]
         [Route("api/fugletur/{fugleturId}/analyse/")]
-        public List<SpTripAnalysisResult> AnalyserFugletur(long fugleturId)
+        public List<TripAnalysisResult> AnalyserFugletur(long fugleturId)
         { 
-            return fugleturAnalyseQuerySP.Analyser(fugleturId);
+            return fugleturAnalyseQuery.Analyser(fugleturId).Result;
         }
 
         [HttpGet]

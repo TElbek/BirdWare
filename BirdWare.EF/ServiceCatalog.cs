@@ -19,6 +19,7 @@ namespace BirdWare.EF
             services.AddTransient<IForeslaaArterPaaTurQuery, ForeslaaArterPaaTurQuery>();
             services.AddTransient<IForskelQueries, ForskelQueries>();
             services.AddTransient<IFugleturAnalyseQuerySP, FugleturAnalyseQuerySP>();
+            services.AddTransient<IFugleturAnalyseQuery, FugleturAnalyseQuery>();
             services.AddTransient<IFugletureByTagsQuery, FugletureByTagsQuery>();
             services.AddTransient<IFugleturQuery, FugleturQuery>();
             services.AddTransient<IFugleturObservationQuery, FugleturObservationQuery>();
