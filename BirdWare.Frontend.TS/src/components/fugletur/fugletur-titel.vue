@@ -1,9 +1,8 @@
 <template>
     <div class="birdware large-text d-inline-block text-truncate">
         <span class="me-2">{{ route.meta.title }}</span>
-        <span v-if="state.fugletur != undefined">{{ formatDate(state.fugletur.dato) }} {{ state.fugletur.lokalitetNavn
-            }}
-            #{{ state.fugletur.antalArter }}</span>
+        <span>{{ formatDate(state.fugletur.dato) }} {{ state.fugletur.lokalitetNavn }} #{{ state.fugletur.antalArter
+            }}</span>
     </div>
 </template>
 
@@ -12,30 +11,20 @@ import api from '@/api';
 import { formatDate } from '@/ts/dateandtime';
 import { onMounted, watch, reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import { type enFugletur } from '@/types/fugleturType.ts';
+import { type fugleturType } from '@/types/fugleturType.ts';
 
 const route = useRoute();
 
-interface fugleturDatoInterface {
+interface fugleturProps {
     fugleturId: number
 }
 
-const props = defineProps<fugleturDatoInterface>();
+const props = defineProps<fugleturProps>();
 
-const state = reactive<enFugletur>({
-    fugletur: {
-        id: 0,
-        dato: '',
-        lokalitetId: 0,
-        lokalitetNavn: '',
-        regionId: 0,
-        regionNavn: '',
-        aarstal: 0,
-        maaned: 0,
-        antalArter: 0,
-        fugleturAarMaaned: ''
-    }
+const state = reactive({
+    fugletur: {} as fugleturType
 });
+
 
 onMounted(() => {
     if (props.fugleturId > 0) {

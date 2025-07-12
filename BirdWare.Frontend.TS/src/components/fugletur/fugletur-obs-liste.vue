@@ -28,17 +28,17 @@ import artNavn from '../main/artNavn.vue';
 
 const fugleturStore = useFugleturStore();
 
-interface fugleturObsInterface {
+interface fugleturObsProps {
     fugleturId: number
 }
 
-const props = defineProps<fugleturObsInterface>();
+const props = defineProps<fugleturObsProps>();
 
 const state = reactive({
-    obsListe: [],
+    obsListe: [] as observationType[],
 });
 
-const byFamilie = computed(() => { return Map.groupBy(state.obsListe, ({ familieNavn }) => familieNavn) });
+const byFamilie = computed(() => { return Map.groupBy(state.obsListe, (one: observationType) => one.familieNavn) });
 
 onMounted(() => {
     if (fugleturStore.hasId) {

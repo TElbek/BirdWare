@@ -5,11 +5,3 @@ export type analyseType = {
     speciel: boolean
     artNavn: string
 }
-
-export interface analyseListe {
-    analyser: analyseType[]
-}
-
-export interface enAnalyse {
-    analyse: analyseType
-}

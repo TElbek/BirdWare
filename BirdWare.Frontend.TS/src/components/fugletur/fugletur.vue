@@ -12,12 +12,9 @@ const fugleturStore = useFugleturStore();
 const router = useRouter();
 
 onMounted(() => {
-    if (fugleturStore.hasId) {
-        navigateFugleturObservationer();
-    }
-    else {
+    fugleturStore.hasId ? 
+        navigateFugleturObservationer() : 
         navigateFugleturOversigt();
-    }
 });
 
 function navigateFugleturObservationer() {

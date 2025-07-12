@@ -36,14 +36,14 @@ import { useFugleturSelectionStore } from '@/stores/fugletur-selection-store';
 
 import api from '@/api';
 import { storeToRefs } from 'pinia'
-import { type fugleturListe, type fugleturType } from '@/types/fugleturType';
+import { type fugleturType } from '@/types/fugleturType';
 
 const fugleturSelectionStore = useFugleturSelectionStore();
 const { selectedTags } = storeToRefs(fugleturSelectionStore);
 const queryString = computed(() => { return JSON.stringify(fugleturSelectionStore.selectedTags) });
 
-const state = reactive<fugleturListe>({
-    fugleture: [],
+const state = reactive({
+    fugleture: [] as fugleturType[]
 });
 
 const groupedData = computed(() => {
@@ -61,7 +61,7 @@ onMounted(() => {
     }
 });
 
-watch(() => selectedTags.value, (newValue) => {
+watch(() => selectedTags.value, () => {
     getFugleture();
 });
 

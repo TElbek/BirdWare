@@ -4,7 +4,3 @@ export type tagType = {
     parentId: number
     name: string
 }
-
-export interface tagListe {
-    tagList: tagType[]
-}

@@ -10,11 +10,3 @@ export type fugleturType = {
     antalArter: number
     fugleturAarMaaned: string
 }
-
-export interface enFugletur {
-    fugletur: fugleturType
-}
-
-export interface fugleturListe {
-    fugleture: fugleturType[]
-}

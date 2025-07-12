@@ -5,7 +5,7 @@ export const formatDate = (date: string) => {
         year: 'numeric'
     };
 
-    return new Date(date).toLocaleDateString('da-DK', options);
+    return date ? new Date(date).toLocaleDateString('da-DK', options) : '';    
 };
 
 export const getNameOfMonth = (month: number) => {

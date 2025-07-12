@@ -8,13 +8,13 @@ import api from '@/api';
 import { Multiselect } from 'vue-multiselect';
 import { reactive } from 'vue';
 import { useFugleturSelectionStore } from '@/stores/fugletur-selection-store';
-import { type tagListe } from '@/types/tagType';
+import { type tagType } from '@/types/tagType';
 
 const fugleturSelectionStore = useFugleturSelectionStore();
 
 const emit = defineEmits(['search']);
-const state = reactive<tagListe>({
-    tagList: []
+const state = reactive({
+    tagList: [] as tagType[]
 });
 
 function getTagList(query: string) {

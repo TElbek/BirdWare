@@ -36,28 +36,10 @@ import type { analyseType } from '@/types/analyseType';
 const fugleturStore = useFugleturStore();
 const { chosenFugleturId } = storeToRefs(fugleturStore)
 
-interface xInterface {
-    fugletur: fugleturType,
-    hasData: boolean,
-    analyseTyper: analyseTypeType[],
-    analyseListe: analyseType[]
-}
-
-const state = reactive<xInterface>({
-    analyseListe: [],
-    analyseTyper: [],
-    fugletur: {
-        id: 0,
-        dato: '',
-        lokalitetId: 0,
-        lokalitetNavn: '',
-        regionId: 0,
-        regionNavn: '',
-        aarstal: 0,
-        maaned: 0,
-        antalArter: 0,
-        fugleturAarMaaned: ''
-    },
+const state = reactive({
+    analyseListe: [] as analyseType[],
+    analyseTyper: [] as analyseTypeType[],
+    fugletur: {} as fugleturType,
     hasData: false
 });
 

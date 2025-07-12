@@ -27,12 +27,12 @@
 import artNavn from '@/components/main/artNavn.vue';
 import type { analyseType } from '@/types/analyseType';
 
-interface fugleturAnalyseTypeInterface {
+interface fugleturAnalyseProps {
     analyseListe: analyseType[],
     analyseTypeTekst: string
 }
 
-const props = defineProps<fugleturAnalyseTypeInterface>();
+const props = defineProps<fugleturAnalyseProps>();
 
 function arterSorteret(value: analyseType[]) {
     return value.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
