@@ -6,7 +6,3 @@ export type hvorKanJegFindeType = {
     longitude: number
     distance: number
 }
-
-export interface hvorKanJegFindeListe {
-    hvorKanJegFinde: hvorKanJegFindeType[]
-}

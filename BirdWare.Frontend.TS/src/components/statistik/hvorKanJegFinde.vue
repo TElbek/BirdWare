@@ -23,10 +23,10 @@
 import api from '@/api';
 import { reactive, computed, onMounted } from 'vue';
 import artNavn from '@/components/main/artNavn.vue';
-import { type hvorKanJegFindeType, type hvorKanJegFindeListe } from '@/types/hvorKanJegFindeType.ts';
+import { type hvorKanJegFindeType } from '@/types/hvorKanJegFindeType.ts';
 
-const state = reactive<hvorKanJegFindeListe>({
-    hvorKanJegFinde: [],
+const state = reactive({
+    hvorKanJegFinde: [] as hvorKanJegFindeType[],
 });
 
 const byLokalitet = computed(() => {
