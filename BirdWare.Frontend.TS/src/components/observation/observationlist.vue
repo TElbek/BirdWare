@@ -5,8 +5,9 @@
                 <div class="card h-100 mb-2">
                     <div class="card-header">
                         <a @click="addTag(key)">
-                            <span class="birdware" v-if="!obsSelectionStore.isGropingByMonth">{{ key }}</span>
-                            <span class="birdware text-capitalize" v-else>{{ getMonthNameFromNumber(key) }}</span>
+                            <span class="birdware" v-if="obsSelectionStore.isGropingByMonth && valueIsNumber(key)">{{
+                                getMonthNameFromNumber(+key) }}</span>
+                            <span class="birdware text-capitalize" v-else>{{ key }}</span>
                             <span class="birdware ms-1">({{ value.length }})</span>
                         </a>
                     </div>
@@ -27,18 +28,20 @@
 <script setup lang="ts">
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import { getMonthNameFromNumber } from '@/ts/dateandtime';
-import type { observationType } from '@/types/observationType';
+import { type observationType } from '@/types/observationType';
+import { valueIsNumber } from '@/ts/typechecks';
 import fugleturDato from '../main/fugleturdato.vue';
 
 const obsSelectionStore = useObsSelectionStore();
 
 const props = defineProps({
-    groupedData: Map<any, observationType[]>
+    groupedData: Map<string | number, observationType[]>
 });
+
 const emit = defineEmits(['addtag']);
 
-function addTag(text: string) {
-    emit('addtag', text);
+function addTag(value: string | number) {
+    emit('addtag', value);
 }
 
 function obsSorted(value: observationType[]) {

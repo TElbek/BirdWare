@@ -6,20 +6,18 @@
 import api from '@/api';
 import { reactive, onMounted, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia'
-
-import { type observationType, type observationListe } from '@/types/observationType';
+import { type observationType } from '@/types/observationType';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
-
-// const observationPlot = defineAsyncComponent(() => import('./observationplot.vue'));
 import observationList from './observationlist.vue';
 
 const obsSelectionStore = useObsSelectionStore();
 const { selectedTags } = storeToRefs(obsSelectionStore);
 
 import { getMonthNameFromNumber } from '@/ts/dateandtime.ts';
+import { valueIsNumber } from '@/ts/typechecks';
 
-const state = reactive<observationListe>({
-    observationer: []
+const state = reactive({
+    observationer: [] as observationType[]
 });
 
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
@@ -71,7 +69,7 @@ function getObservations() {
 function addTag(text: string) {
 
     let tagText = text;
-    if(obsSelectionStore.isGropingByMonth && !isNaN(+text)) {
+    if(obsSelectionStore.isGropingByMonth && valueIsNumber(text)) {
         tagText = getMonthNameFromNumber(+text);
     }
 

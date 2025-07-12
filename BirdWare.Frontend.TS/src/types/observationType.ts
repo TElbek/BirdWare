@@ -21,7 +21,3 @@ export type observationType = {
     aarstal: number
     maaned: number
 }
-
-export interface observationListe {
-    observationer: observationType[]
-}

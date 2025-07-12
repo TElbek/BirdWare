@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import api from '@/api';
 import { reactive } from 'vue';
-import { type tagListe } from '@/types/tagType.ts'
+import { type tagType } from '@/types/tagType.ts'
 
 import { Multiselect } from 'vue-multiselect';
 import { useObsSelectionStore } from '@/stores/obs-selection-store.ts';
@@ -14,8 +14,8 @@ import { useObsSelectionStore } from '@/stores/obs-selection-store.ts';
 const emit = defineEmits(['search'])
 const obsSelectionStore = useObsSelectionStore();
 
-const state = reactive<tagListe>({
-    tagList: []
+const state = reactive({
+    tagList: [] as tagType[]
 });
 
 function getTagList(query: string) {

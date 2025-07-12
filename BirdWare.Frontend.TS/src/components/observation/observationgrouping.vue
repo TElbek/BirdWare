@@ -24,11 +24,11 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
-import { type groupByMode } from '@/types/obsGroupingType.ts';
+import { type groupByModeType } from '@/types/obsGroupingType.ts';
 
 const obsSelectionStore = useObsSelectionStore();
 
-const groupByModeList: groupByMode[] = [
+const groupByModeList: groupByModeType[] = [
     { caption: 'Årstal', id: 0 },
     { caption: 'Måned', id: 1 },
     { caption: 'Art', id: 2 },

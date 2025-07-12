@@ -13,14 +13,14 @@ import { useRouter } from 'vue-router';
 const obsSelectionStore = useObsSelectionStore();
 const router = useRouter();
 
-interface artNavnInterface {
+interface artNavnProps {
     artId: number,
     artNavn: string,
     speciel?: boolean,
     su?: boolean
 }
 
-const props = defineProps<artNavnInterface>();
+const props = defineProps<artNavnProps>();
 
 const forekomst = computed(() => {
     if (props.speciel == true) return 'forekomst forekomst-speciel';

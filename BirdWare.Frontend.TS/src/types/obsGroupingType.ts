@@ -1,4 +1,4 @@
-export type groupByMode = {
+export type groupByModeType = {
     caption: string,
     id: number
 }

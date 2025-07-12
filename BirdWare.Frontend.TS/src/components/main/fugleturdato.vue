@@ -12,12 +12,12 @@ import { useRouter } from 'vue-router';
 const fugleturStore = useFugleturStore();
 const router = useRouter();
 
-interface fugleturDatoInterface {
+interface fugleturDatoProps {
     fugleturId: number,
     dato: string
 }
 
-const props = defineProps<fugleturDatoInterface>();
+const props = defineProps<fugleturDatoProps>();
 
 function navigateToFugletur() {
     fugleturStore.setFugleturId(props.fugleturId);
