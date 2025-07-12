@@ -3,11 +3,18 @@
     public class SpTripAnalysisResult
     {
         public AnalyseTyper AnalyseType { get; set; }
-        public long ArtId { get; set; }
+        public int ArtId { get; set; }
         public bool SU { get; set; }
         public bool Speciel { get; set; }
         public string ArtNavn { get; set; } = string.Empty;
     }
 
-    public class TripAnalysisResult : SpTripAnalysisResult;
+    public class TripAnalysisResult
+    {
+        public AnalyseTyper AnalyseType { get; set; }
+        public long ArtId { get; set; }
+        public bool SU { get; set; }
+        public bool Speciel { get; set; }
+        public string ArtNavn { get; set; } = string.Empty;
+    }
 }

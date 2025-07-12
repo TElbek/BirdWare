@@ -7,12 +7,12 @@ namespace BirdWare.Test.Controllers
 {
     public class FugleturAnalyseControllerTest
     {
-        private readonly Mock<IFugleturAnalyseQuery> fugleturAnalyseQuery = new();
+        private readonly Mock<IFugleturAnalyseQuerySP> fugleturAnalyseQuery = new();
         private readonly FugleturAnalyseController fugleturAnalyseController;
 
         public FugleturAnalyseControllerTest()
         {
-            fugleturAnalyseQuery.Setup(x => x.Analyser(It.IsAny<long>())).ReturnsAsync([]);
+            fugleturAnalyseQuery.Setup(x => x.Analyser(It.IsAny<long>())).Returns([]);
             fugleturAnalyseController = new FugleturAnalyseController(fugleturAnalyseQuery.Object);
         }
 
