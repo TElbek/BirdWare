@@ -6,7 +6,7 @@ namespace BirdWare.EF.Queries
 {
     public class FugleturAnalyseQuery(BirdWareContext birdWareContext, IFugleturQuery fugleturQuery) : IFugleturAnalyseQuery
     {
-        public async Task<List<TripAnalysisResult>> Analyser(long fugleturId)
+        public List<TripAnalysisResult> Analyser(long fugleturId, AnalyseTyper analyseType)
         {
             var vTur = fugleturQuery.GetFugletur(fugleturId);
 
@@ -16,37 +16,29 @@ namespace BirdWare.EF.Queries
                             select a).ToList();
 
             var artIdList = artListe.Select(x => x.Id).ToList();
-
-            var FoersteObsIDatabasenTask = GetFoersteObsIDatabasen(artIdList, fugleturId);
-            var FoersteObsIDKTask = GetFoersteObsIDK(artIdList, fugleturId);
-            var FoersteObsIRegionTask = GetFoersteObsIRegion(artIdList, fugleturId, vTur.RegionId);
-            var FoersteObsForLokalitetTask = GetFoersteObsForLokalitet(artIdList, fugleturId, vTur.LokalitetId);
-            var FoersteObsIAarTask = GetFoersteObsIAar(artIdList, fugleturId, vTur.Aarstal);
-            var FoersteObsIMaanedTask = GetFoersteObsIMaaned(artIdList, fugleturId, vTur.Maaned);
-
-            await Task.WhenAll(
-                FoersteObsIDatabasenTask,
-                FoersteObsIDKTask,
-                FoersteObsIRegionTask,
-                FoersteObsForLokalitetTask,
-                FoersteObsIAarTask,
-                FoersteObsIMaanedTask
-            );
-
-            var FoersteObsIDatabasen = await FoersteObsIDatabasenTask;
-            var FoersteObsIDK = await FoersteObsIDKTask;
-            var FoersteObsIRegion = await FoersteObsIRegionTask;
-            var FoersteObsForLokalitet = await FoersteObsForLokalitetTask;
-            var FoersteObsIAar = await FoersteObsIAarTask;
-            var FoersteObsIMaaned = await FoersteObsIMaanedTask;
-
             var list = new List<TripAnalysisResult>();
-            list.AddRange(FoersteObsIDatabasen);
-            list.AddRange(FoersteObsIDK);
-            list.AddRange(FoersteObsIRegion);
-            list.AddRange(FoersteObsForLokalitet);
-            list.AddRange(FoersteObsIAar);
-            list.AddRange(FoersteObsIMaaned);
+
+            switch (analyseType)
+            { 
+                case AnalyseTyper.FoersteObsIDatabasen:
+                    list = GetFoersteObsIDatabasen(artIdList, fugleturId);
+                    break;
+                case AnalyseTyper.FoersteObsIDK:
+                    list = GetFoersteObsIDK(artIdList, fugleturId);
+                    break;
+                case AnalyseTyper.FoersteObsIRegion:
+                    list = GetFoersteObsIRegion(artIdList, fugleturId, vTur.RegionId);
+                    break;
+                case AnalyseTyper.FoersteObsForLokalitet:
+                    list = GetFoersteObsForLokalitet(artIdList, fugleturId, vTur.LokalitetId);
+                    break;
+                case AnalyseTyper.FoersteObsIAar:
+                    list = GetFoersteObsIAar(artIdList, fugleturId, vTur.Aarstal);
+                    break;
+                case AnalyseTyper.FoersteObsIMaaned:
+                    list = GetFoersteObsIMaaned(artIdList, fugleturId, vTur.Maaned);
+                    break;
+            }
 
             Parallel.ForEach(list, item =>
             {
@@ -60,7 +52,7 @@ namespace BirdWare.EF.Queries
             return list;
         }
 
-        private Task<List<TripAnalysisResult>> GetFoersteObsIDatabasen(List<long> artIdList, long fugleturId)
+        private List<TripAnalysisResult> GetFoersteObsIDatabasen(List<long> artIdList, long fugleturId)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
@@ -72,10 +64,10 @@ namespace BirdWare.EF.Queries
                     ArtId = artId
                 });
 
-            return Task.FromResult(result.ToList());
+            return [.. result];
         }
 
-        private Task<List<TripAnalysisResult>> GetFoersteObsIDK(List<long> artIdList, long fugleturId)
+        private List<TripAnalysisResult> GetFoersteObsIDK(List<long> artIdList, long fugleturId)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
@@ -88,10 +80,10 @@ namespace BirdWare.EF.Queries
                     ArtId = artId
                 });
 
-            return Task.FromResult(result.ToList());
+            return [.. result];
         }
 
-        private Task<List<TripAnalysisResult>> GetFoersteObsIRegion(List<long> artIdList, long fugleturId, long regionId)
+        private List<TripAnalysisResult> GetFoersteObsIRegion(List<long> artIdList, long fugleturId, long regionId)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
@@ -104,10 +96,10 @@ namespace BirdWare.EF.Queries
                     ArtId = artId
                 });
 
-            return Task.FromResult(result.ToList());
+            return [.. result];
         }
 
-        private Task<List<TripAnalysisResult>> GetFoersteObsForLokalitet(List<long> artIdList, long fugleturId, long lokalitetId)
+        private List<TripAnalysisResult> GetFoersteObsForLokalitet(List<long> artIdList, long fugleturId, long lokalitetId)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
@@ -120,10 +112,10 @@ namespace BirdWare.EF.Queries
                     ArtId = artId
                 });
 
-            return Task.FromResult(result.ToList());
+            return [.. result];
         }
 
-        private Task<List<TripAnalysisResult>> GetFoersteObsIAar(List<long> artIdList, long fugleturId, long aarstal)
+        private List<TripAnalysisResult> GetFoersteObsIAar(List<long> artIdList, long fugleturId, long aarstal)
         {
             var withAarstal = birdWareContext.Fugletur.GetAarMaaned().Where(q => q.Aarstal == aarstal);
 
@@ -139,10 +131,10 @@ namespace BirdWare.EF.Queries
                     ArtId = artId
                 });
 
-            return Task.FromResult(result.ToList());
+            return [.. result];
         }
 
-        private Task<List<TripAnalysisResult>> GetFoersteObsIMaaned(List<long> artIdList, long fugleturId, long maaned)
+        private List<TripAnalysisResult> GetFoersteObsIMaaned(List<long> artIdList, long fugleturId, long maaned)
         {
             var withMaaned = birdWareContext.Fugletur.GetAarMaaned()
                                                      .Where(q => q.Maaned == maaned);
@@ -159,7 +151,7 @@ namespace BirdWare.EF.Queries
                     ArtId = artId
                 });
 
-            return Task.FromResult(result.ToList());
+            return [.. result];
         }
     }
 }
