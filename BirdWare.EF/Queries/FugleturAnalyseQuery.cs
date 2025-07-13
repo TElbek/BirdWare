@@ -1,63 +1,77 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using System.Reflection;
 
 namespace BirdWare.EF.Queries
 {
-    public class FugleturAnalyseQuery(BirdWareContext birdWareContext, IFugleturQuery fugleturQuery) : IFugleturAnalyseQuery
+    public class FugleturAnalyseQuery(BirdWareContext birdWareContext) : IFugleturAnalyseQuery
     {
         public List<TripAnalysisResult> Analyser(long fugleturId, AnalyseTyper analyseType)
         {
-            var vTur = fugleturQuery.GetFugletur(fugleturId);
+            if (!birdWareContext.Fugletur.Any(f => f.Id == fugleturId)) return [];
 
-            var artListe = (from o in birdWareContext.Observation
-                            join a in birdWareContext.Art on o.ArtId equals a.Id
-                            where o.FugleturId == fugleturId
-                            select a).ToList();
-
+            var vTur = FindFugletur(fugleturId);
+            var artListe = HentArtListe(fugleturId);
             var artIdList = artListe.Select(x => x.Id).ToList();
-            var list = new List<TripAnalysisResult>();
 
-            switch (analyseType)
-            { 
-                case AnalyseTyper.FoersteObsIDatabasen:
-                    list = GetFoersteObsIDatabasen(artIdList, fugleturId);
-                    break;
-                case AnalyseTyper.FoersteObsIDK:
-                    list = GetFoersteObsIDK(artIdList, fugleturId);
-                    break;
-                case AnalyseTyper.FoersteObsIRegion:
-                    list = GetFoersteObsIRegion(artIdList, fugleturId, vTur.RegionId);
-                    break;
-                case AnalyseTyper.FoersteObsForLokalitet:
-                    list = GetFoersteObsForLokalitet(artIdList, fugleturId, vTur.LokalitetId);
-                    break;
-                case AnalyseTyper.FoersteObsIAar:
-                    list = GetFoersteObsIAar(artIdList, fugleturId, vTur.Aarstal);
-                    break;
-                case AnalyseTyper.FoersteObsIMaaned:
-                    list = GetFoersteObsIMaaned(artIdList, fugleturId, vTur.Maaned);
-                    break;
-            }
+            var analyseMetode = FindAnalyseMetodeForAnalyseType(analyseType);
+            var analyseResultatListe = UdfoerAnalyse(vTur, artIdList, analyseMetode);
 
-            Parallel.ForEach(list, item =>
+            Parallel.ForEach(analyseResultatListe, analyseResultat =>
             {
-                var art = artListe.FirstOrDefault(a => a.Id == item.ArtId);
+                var art = artListe.FirstOrDefault(a => a.Id == analyseResultat.ArtId);
 
-                item.ArtNavn = art?.Navn ?? string.Empty;
-                item.Speciel = art?.Speciel ?? false;
-                item.SU = art?.SU ?? false;
+                analyseResultat.ArtNavn = art?.Navn ?? string.Empty;
+                analyseResultat.Speciel = art?.Speciel ?? false;
+                analyseResultat.SU = art?.SU ?? false;
             });
 
-            return list;
+            return analyseResultatListe;
         }
 
-        private List<TripAnalysisResult> GetFoersteObsIDatabasen(List<long> artIdList, long fugleturId)
+        private List<Art> HentArtListe(long fugleturId)
+        {
+            return [.. (from o in birdWareContext.Observation
+                    join a in birdWareContext.Art on o.ArtId equals a.Id
+                    where o.FugleturId == fugleturId
+                    select a)];
+        }
+
+        private VTur FindFugletur(long fugleturId)
+        {
+            return (from f in birdWareContext.Fugletur
+                    join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
+                    where f.Id == fugleturId
+                    select new VTur
+                    {
+                        Aarstal = f.Aarstal,
+                        Maaned = f.Maaned,
+                        Dato = f.Dato,
+                        Id = f.Id,
+                        LokalitetId = l.Id,
+                        RegionId = l.RegionId,
+                    }).First();
+        }
+
+        private List<TripAnalysisResult> UdfoerAnalyse(VTur vTur, List<long> artIdList, MethodInfo? method)
+        {
+            return method?.Invoke(this, [artIdList, vTur]) as List<TripAnalysisResult> ?? [];
+        }
+
+        private MethodInfo? FindAnalyseMetodeForAnalyseType(AnalyseTyper analyseType)
+        {
+            return GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+                        .FirstOrDefault(m => m.GetCustomAttribute<AnalyseTypeAttribute>()?.AnalyseType == analyseType);
+        }
+
+        [AnalyseType(AnalyseTyper.FoersteObsIDatabasen)]
+        private List<TripAnalysisResult> GetFoersteObsIDatabasen(List<long> artIdList, VTur vTur)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
                                 .Any(s => s.ArtId == q && 
-                                          s.FugleturId < fugleturId))
+                                          s.FugleturId < vTur.Id))
                 .Select(artId => new TripAnalysisResult
                 {
                     AnalyseType = AnalyseTyper.FoersteObsIDatabasen,
@@ -67,12 +81,13 @@ namespace BirdWare.EF.Queries
             return [.. result];
         }
 
-        private List<TripAnalysisResult> GetFoersteObsIDK(List<long> artIdList, long fugleturId)
+        [AnalyseType(AnalyseTyper.FoersteObsIDK)]
+        private List<TripAnalysisResult> GetFoersteObsIDK(List<long> artIdList, VTur vTur)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
                                 .Any(s => s.ArtId == q && 
-                                     s.FugleturId < fugleturId && 
+                                     s.FugleturId < vTur.Id && 
                                      s.Fugletur.Lokalitet.RegionId > 0))
                 .Select(artId => new TripAnalysisResult
                 {
@@ -83,13 +98,14 @@ namespace BirdWare.EF.Queries
             return [.. result];
         }
 
-        private List<TripAnalysisResult> GetFoersteObsIRegion(List<long> artIdList, long fugleturId, long regionId)
+        [AnalyseType(AnalyseTyper.FoersteObsIRegion)]
+        private List<TripAnalysisResult> GetFoersteObsIRegion(List<long> artIdList, VTur vTur)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
                                 .Any(s => s.ArtId == q &&
-                                     s.FugleturId < fugleturId &&
-                                     s.Fugletur.Lokalitet.RegionId == regionId))
+                                     s.FugleturId < vTur.Id &&
+                                     s.Fugletur.Lokalitet.RegionId == vTur.RegionId))
                 .Select(artId => new TripAnalysisResult
                 {
                     AnalyseType = AnalyseTyper.FoersteObsIRegion,
@@ -99,13 +115,14 @@ namespace BirdWare.EF.Queries
             return [.. result];
         }
 
-        private List<TripAnalysisResult> GetFoersteObsForLokalitet(List<long> artIdList, long fugleturId, long lokalitetId)
+        [AnalyseType(AnalyseTyper.FoersteObsForLokalitet)]
+        private List<TripAnalysisResult> GetFoersteObsForLokalitet(List<long> artIdList, VTur vTur)
         {
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
                                 .Any(s => s.ArtId == q &&
-                                     s.FugleturId < fugleturId &&
-                                     s.Fugletur.LokalitetId == lokalitetId))
+                                     s.FugleturId < vTur.Id &&
+                                     s.Fugletur.LokalitetId == vTur.LokalitetId))
                 .Select(artId => new TripAnalysisResult
                 {
                     AnalyseType = AnalyseTyper.FoersteObsForLokalitet,
@@ -115,14 +132,15 @@ namespace BirdWare.EF.Queries
             return [.. result];
         }
 
-        private List<TripAnalysisResult> GetFoersteObsIAar(List<long> artIdList, long fugleturId, long aarstal)
+        [AnalyseType(AnalyseTyper.FoersteObsIAar)]
+        private List<TripAnalysisResult> GetFoersteObsIAar(List<long> artIdList, VTur vTur)
         {
-            var withAarstal = birdWareContext.Fugletur.GetAarMaaned().Where(q => q.Aarstal == aarstal);
+            var withAarstal = birdWareContext.Fugletur.GetAarMaaned().Where(q => q.Aarstal == vTur.Aarstal);
 
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
                                 .Any(s => s.ArtId == q &&
-                                     s.FugleturId < fugleturId && 
+                                     s.FugleturId < vTur.Id && 
                                      s.Fugletur.Lokalitet.RegionId > 0 &&
                                      withAarstal.Any(r => r.FugleturId == s.FugleturId)))
                 .Select(artId => new TripAnalysisResult
@@ -134,15 +152,16 @@ namespace BirdWare.EF.Queries
             return [.. result];
         }
 
-        private List<TripAnalysisResult> GetFoersteObsIMaaned(List<long> artIdList, long fugleturId, long maaned)
+        [AnalyseType(AnalyseTyper.FoersteObsIMaaned)]
+        private List<TripAnalysisResult> GetFoersteObsIMaaned(List<long> artIdList, VTur vTur)
         {
             var withMaaned = birdWareContext.Fugletur.GetAarMaaned()
-                                                     .Where(q => q.Maaned == maaned);
+                                                     .Where(q => q.Maaned == vTur.Maaned);
 
             var result = artIdList
                 .Where(q => !birdWareContext.Observation
                                 .Any(s => s.ArtId == q &&
-                                     s.FugleturId < fugleturId &&
+                                     s.FugleturId < vTur.Id &&
                                      s.Fugletur.Lokalitet.RegionId > 0 &&
                                      withMaaned.Any(r => r.FugleturId == s.FugleturId)))
                 .Select(artId => new TripAnalysisResult
