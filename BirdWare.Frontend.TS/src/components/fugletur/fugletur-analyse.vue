@@ -38,9 +38,7 @@ onMounted(() => {
 });
 
 function getFugletur() {
-    console.log("Her 1");
     api.get('fugletur/' + fugleturStore.chosenFugleturId).then((response) => {
-        console.log("Her 2");
         state.fugletur = response.data;
         state.hasData = true;
     });
