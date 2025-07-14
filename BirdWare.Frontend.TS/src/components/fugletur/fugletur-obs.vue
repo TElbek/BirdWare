@@ -1,10 +1,9 @@
-<template>    
-    <div class="row">
-        <fugleturTitel class="col" :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
-        <div class="col-auto">
-            <fugleturNavigation></fugleturNavigation>
-        </div>
+<template>
+    <div class="d-flex justify-content-between">
+        <fugleturTitel :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
+        <fugleturNavigation></fugleturNavigation>
     </div>
+
     <div class="scroll mt-2">
         <fugleturObsListe :fugleturId="fugleturStore.chosenFugleturId"></fugleturObsListe>
     </div>

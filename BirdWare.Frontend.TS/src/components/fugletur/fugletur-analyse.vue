@@ -1,16 +1,13 @@
 <template>
-    <div class="row">
-        <div class="col">
-            <fugleturTitel :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
-        </div>
-        <div class="col-auto">
-            <fugleturNavigation></fugleturNavigation>
-        </div>
+    <div class="d-flex justify-content-between mb-2">
+        <fugleturTitel class="col" :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
+        <fugleturNavigation class="col-auto"></fugleturNavigation>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2" v-if="state.hasData">
         <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
-            <fugleturAnalyseType :fugleturId="fugleturStore.chosenFugleturId" :analysetype="analyseType"></fugleturAnalyseType>
-        </template>        
+            <fugleturAnalyseType :fugleturId="fugleturStore.chosenFugleturId" :analysetype="analyseType"
+                :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)"></fugleturAnalyseType>
+        </template>
     </div>
 </template>
 
@@ -25,7 +22,6 @@ import { storeToRefs } from 'pinia';
 import { getNameOfMonth } from '@/ts/dateandtime';
 import { type fugleturType } from '@/types/fugleturType';
 import type { analyseTypeType } from '@/types/analyseTypeType';
-import type { analyseType } from '@/types/analyseType';
 
 const fugleturStore = useFugleturStore();
 const { chosenFugleturId } = storeToRefs(fugleturStore)
@@ -38,11 +34,15 @@ const state = reactive({
 
 onMounted(() => {
     getAnalyseTyper();
+    getFugletur();
 });
 
 function getFugletur() {
+    console.log("Her 1");
     api.get('fugletur/' + fugleturStore.chosenFugleturId).then((response) => {
+        console.log("Her 2");
         state.fugletur = response.data;
+        state.hasData = true;
     });
 }
 
@@ -51,6 +51,24 @@ function getAnalyseTyper() {
         state.analyseTyper = response.data;
     });
 }
+
+function getAnalyseTypeTekst(analyseType: number) {
+    var analyseTypeTekst = state.analyseTyper.filter((item) => item.analyseType == analyseType)[0].analyseTypeTekst;
+    if (analyseType == 3) {
+        return analyseTypeTekst.replaceAll('[Region]', state.fugletur.regionNavn);
+    }
+    if (analyseType == 4) {
+        return analyseTypeTekst.replaceAll('[Lokalitet]', state.fugletur.lokalitetNavn);
+    }
+    if (analyseType == 5) {
+        return analyseTypeTekst.replaceAll('[Aar]', state.fugletur.aarstal.toString());
+    }
+    if (analyseType == 6) {
+        return analyseTypeTekst.replaceAll('[Maaned]', getNameOfMonth(state.fugletur.maaned));
+    }
+    return analyseTypeTekst;
+}
+
 
 watch(() => chosenFugleturId.value, (newValue) => {
     getFugletur();

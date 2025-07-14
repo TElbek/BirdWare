@@ -4,7 +4,7 @@
             <div class="card-header text-nowrap">
                 <div class="row">
                     <div class="col d-inline-block text-truncate">
-                        <span class="birdware ">{{ props.analysetype.analyseTypeTekst }}</span>
+                        <span class="birdware ">{{ props.analyseTypeTekst }}</span>
                     </div>
                     <div class="col-auto birdware ">
                         {{ state.analyseListe.length }}
@@ -37,7 +37,8 @@ import { reactive, watch, onMounted, computed } from 'vue';
 
 interface fugleturAnalyseProps {
     analysetype: analyseTypeType,
-    fugleturId: number
+    fugleturId: number,
+    analyseTypeTekst: string
 }
 
 const props = defineProps<fugleturAnalyseProps>();

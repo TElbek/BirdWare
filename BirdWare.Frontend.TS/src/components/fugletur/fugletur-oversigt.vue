@@ -3,12 +3,12 @@
         <div class="col">
             <fugleturSelection></fugleturSelection>
         </div>
-        <div class="col-auto mt-1">
+        <div class="col-auto">
             <fugleturNavigation></fugleturNavigation>
         </div>
     </div>
     <div class="scroll">
-        <div class="mt-2 row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-2">
+        <div class="mt-1 row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-2">
             <div v-for="[key, value] in groupedData">
                 <div class="card h-100 p-1">
                     <div class="card-header birdware ">
@@ -21,7 +21,7 @@
                             <div class="col">{{ tur.lokalitetNavn }}</div>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
         </div>
     </div>
@@ -47,12 +47,12 @@ const state = reactive({
 });
 
 const groupedData = computed(() => {
-    return Map.groupBy(state.fugleture.slice(0,30), (one: fugleturType) => one.fugleturAarMaaned);
+    return Map.groupBy(state.fugleture.slice(0, 30), (one: fugleturType) => one.fugleturAarMaaned);
 });
 
 onMounted(() => {
     if (fugleturSelectionStore.selectedTags.length == 0) {
-        api.get("tag/" + new Date().getFullYear())   .then(response => {
+        api.get("tag/" + new Date().getFullYear()).then(response => {
             fugleturSelectionStore.AddTag(response.data);
         });
     }
