@@ -5,7 +5,7 @@
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2" v-if="state.hasData">
         <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
-            <fugleturAnalyseType :fugleturId="fugleturStore.chosenFugleturId" :analysetype="analyseType"
+            <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)" :analysetype="analyseType"
                 :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)"></fugleturAnalyseType>
         </template>
     </div>
@@ -22,18 +22,21 @@ import { storeToRefs } from 'pinia';
 import { getNameOfMonth } from '@/ts/dateandtime';
 import { type fugleturType } from '@/types/fugleturType';
 import type { analyseTypeType } from '@/types/analyseTypeType';
+import type { analyseType } from '@/types/analyseType';
 
 const fugleturStore = useFugleturStore();
 const { chosenFugleturId } = storeToRefs(fugleturStore)
 
 const state = reactive({
     analyseTyper: [] as analyseTypeType[],
+    analyseListe: [] as analyseType[],
     fugletur: {} as fugleturType,
     hasData: false
 });
 
 onMounted(() => {
     getAnalyseTyper();
+    getAnalyseListe();
     getFugletur();
 });
 
@@ -48,6 +51,16 @@ function getAnalyseTyper() {
     api.get('analyse/typer').then((response) => {
         state.analyseTyper = response.data;
     });
+}
+
+function getAnalyseListe() {
+    api.get('fugletur/' + fugleturStore.chosenFugleturId + '/analyse').then((response) => {
+        state.analyseListe = response.data;
+    });
+}
+
+function getAnalyseListeForType(analyseType: number) {
+    return state.analyseListe.filter((item) => item.analyseType == analyseType);
 }
 
 function getAnalyseTypeTekst(analyseType: number) {

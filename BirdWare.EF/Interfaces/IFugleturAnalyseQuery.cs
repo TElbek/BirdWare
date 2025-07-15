@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IFugleturAnalyseQuery
     {
-        List<TripAnalysisResult> Analyser(long fugleturId, AnalyseTyper analyseType);
+        List<TripAnalysisResult> Analyser(long fugleturId);
     }
 }

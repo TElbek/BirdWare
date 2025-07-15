@@ -9,19 +9,17 @@ namespace BirdWare.Controllers
     public class FugleturAnalyseController(IFugleturAnalyseQuery fugleturAnalyseQuery) : ControllerBase
     {
         [HttpGet]
-        [Route("api/fugletur/{fugleturId}/analyse/{analyseType}")]
-        public List<TripAnalysisResult> AnalyserFugletur(long fugleturId, AnalyseTyper analyseType)
-        { 
-            return fugleturAnalyseQuery.Analyser(fugleturId, analyseType);
+        [Route("api/fugletur/{fugleturId}/analyse")]
+        public List<TripAnalysisResult> AnalyserFugletur(long fugleturId)
+        {
+            return fugleturAnalyseQuery.Analyser(fugleturId);
         }
 
         [HttpGet]
         [Route("api/analyse/typer")]
         public List<AnalyseTypeModel> GetAnalyseTypeListe()
         { 
-            return Enum.GetValues<AnalyseTyper>()
-                        .Select(s => new AnalyseTypeModel {AnalyseType = s})
-                        .ToList();
+            return [.. Enum.GetValues<AnalyseTyper>().Select(s => new AnalyseTypeModel {AnalyseType = s})];
         }
     }
 }
