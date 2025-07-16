@@ -3,7 +3,7 @@
         <fugleturTitel class="col" :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
         <fugleturNavigation class="col-auto"></fugleturNavigation>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2" v-if="state.hasData">
+    <div class="row g-2" :class="getRowColClasses(analyseTyperCount)" v-if="state.hasData">
         <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
             <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)" :analysetype="analyseType"
                 :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)"></fugleturAnalyseType>
@@ -23,6 +23,7 @@ import { getNameOfMonth } from '@/ts/dateandtime';
 import { type fugleturType } from '@/types/fugleturType';
 import type { analyseTypeType } from '@/types/analyseTypeType';
 import type { analyseType } from '@/types/analyseType';
+import { getRowColClasses } from '@/ts/rowcols';
 
 const fugleturStore = useFugleturStore();
 const { chosenFugleturId } = storeToRefs(fugleturStore)
@@ -39,6 +40,8 @@ onMounted(() => {
     getAnalyseListe();
     getFugletur();
 });
+
+const analyseTyperCount = computed(() => [...new Set(state.analyseListe.map(item => item.analyseType))].length);
 
 function getFugletur() {
     api.get('fugletur/' + fugleturStore.chosenFugleturId).then((response) => {

@@ -1,6 +1,6 @@
 <template>
     <div class="scroll">
-        <div class="row row-cols-1 row-cols-xl-2 g-2">
+        <div class="row g-2" :class="getRowColClassesTwo(props.groupedData?.size ?? 0)">
             <div v-for="[key, value] in props.groupedData" class="col">
                 <div class="card h-100 mb-2">
                     <div class="card-header">
@@ -31,6 +31,7 @@ import { getMonthNameFromNumber } from '@/ts/dateandtime';
 import { type observationType } from '@/types/observationType';
 import { valueIsNumber } from '@/ts/typechecks';
 import fugleturDato from '../main/fugleturdato.vue';
+import { getRowColClassesTwo } from '@/ts/rowcols';
 
 const obsSelectionStore = useObsSelectionStore();
 

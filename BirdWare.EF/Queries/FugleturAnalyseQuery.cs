@@ -21,20 +21,23 @@ namespace BirdWare.EF.Queries
                 if (FoersteObsIDatabasen(vObsList, artId)) 
                     analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIDatabasen));
 
-                if (FoersteObsIDK(vObsList, artId)) 
-                    analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIDK));
-
                 if (FoersteObsIRegion(vTur, vObsList, artId)) 
                     analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIRegion));
 
                 if (FoersteObsForLokalitet(vTur, vObsList, artId)) 
                     analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsForLokalitet));
 
-                if (FoersteObsIAar(vTur, vObsList, artId)) 
-                    analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIAar));
+                if (vTur.RegionId > 0)
+                {
+                    if (FoersteObsIDK(vObsList, artId))
+                        analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIDK));
 
-                if (FoersteObsIMaaned(vTur, vObsList, artId)) 
-                    analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIMaaned));
+                    if (FoersteObsIAar(vTur, vObsList, artId))
+                        analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIAar));
+
+                    if (FoersteObsIMaaned(vTur, vObsList, artId))
+                        analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIMaaned));
+                }
             }
 
             Parallel.ForEach(analyseResultatListe, analyseResultat =>
