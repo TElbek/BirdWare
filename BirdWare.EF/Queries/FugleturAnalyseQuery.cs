@@ -10,33 +10,32 @@ namespace BirdWare.EF.Queries
         {
             var vTur = FindFugletur(fugleturId);
             var artListe = HentArtListe(fugleturId);
-            var artIdList = artListe.Select(x => x.Id).ToList();
 
             var analyseResultatListe = new List<TripAnalysisResult>();
 
-            var vObsList = FindAnalyseData(vTur, artIdList);
+            var vObsList = FindAnalyseData(vTur, artListe);
 
-            foreach(var artId in artIdList)
+            foreach(var art in artListe)
             {
-                if (FoersteObsIDatabasen(vObsList, artId)) 
-                    analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIDatabasen));
+                if (FoersteObsIDatabasen(vObsList, art)) 
+                    analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDatabasen));
 
-                if (FoersteObsIRegion(vTur, vObsList, artId)) 
-                    analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIRegion));
+                if (FoersteObsIRegion(vTur, vObsList, art)) 
+                    analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIRegion));
 
-                if (FoersteObsForLokalitet(vTur, vObsList, artId)) 
-                    analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsForLokalitet));
+                if (FoersteObsForLokalitet(vTur, vObsList, art)) 
+                    analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForLokalitet));
 
                 if (vTur.RegionId > 0)
                 {
-                    if (FoersteObsIDK(vObsList, artId))
-                        analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIDK));
+                    if (FoersteObsIDK(vObsList, art))
+                        analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDK));
 
-                    if (FoersteObsIAar(vTur, vObsList, artId))
-                        analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIAar));
+                    if (FoersteObsIAar(vTur, vObsList, art))
+                        analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIAar));
 
-                    if (FoersteObsIMaaned(vTur, vObsList, artId))
-                        analyseResultatListe.Add(TripAnalysisResultFactory(artId, AnalyseTyper.FoersteObsIMaaned));
+                    if (FoersteObsIMaaned(vTur, vObsList, art))
+                        analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIMaaned));
                 }
             }
 
@@ -49,7 +48,9 @@ namespace BirdWare.EF.Queries
                 analyseResultat.SU = art?.SU ?? false;
             });
 
-            return [.. analyseResultatListe.OrderBy(o => o.AnalyseType)];
+            return [.. analyseResultatListe
+                            .OrderBy(o => o.AnalyseType)
+                            .ThenBy(o => o.ArtNavn)];
         }
 
         private List<Art> HentArtListe(long fugleturId)
@@ -76,13 +77,13 @@ namespace BirdWare.EF.Queries
                     }).First();
         }
 
-        private List<VObs> FindAnalyseData(VTur vTur, List<long> artIdList)
+        private List<VObs> FindAnalyseData(VTur vTur, List<Art> artList)
         {
             return [.. (from f in birdWareContext.Fugletur
                        join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
                        join o in birdWareContext.Observation on f.Id equals o.FugleturId
                        join a in birdWareContext.Art on o.ArtId equals a.Id
-                       where f.Id < vTur.Id && artIdList.Contains(a.Id)
+                       where f.Id < vTur.Id && artList.Select(s => s.Id).Contains(a.Id)
                        select new VObs
                        {
                            ArtId = a.Id,
@@ -93,27 +94,27 @@ namespace BirdWare.EF.Queries
                        }).Distinct()];
         }
 
-        private static bool FoersteObsIDatabasen(List<VObs> vObsList, long artId) => 
-            !vObsList.Any(q => q.ArtId == artId);
+        private static bool FoersteObsIDatabasen(List<VObs> vObsList, Art art) => 
+            !vObsList.Any(q => q.ArtId == art.Id);
 
-        private static bool FoersteObsIDK(List<VObs> vObsList, long artId) => 
-            !vObsList.Any(q => q.ArtId == artId && q.RegionId > 0);
+        private static bool FoersteObsIDK(List<VObs> vObsList, Art art) => 
+            !vObsList.Any(q => q.ArtId == art.Id && q.RegionId > 0);
 
-        private static bool FoersteObsIRegion(VTur vTur, List<VObs> vObsList, long artId) => 
-            !vObsList.Any(q => q.ArtId == artId && q.RegionId == vTur.RegionId);
+        private static bool FoersteObsIRegion(VTur vTur, List<VObs> vObsList, Art art) => 
+            !vObsList.Any(q => q.ArtId == art.Id && q.RegionId == vTur.RegionId);
 
-        private static bool FoersteObsForLokalitet(VTur vTur, List<VObs> vObsList, long artId) =>
-            !vObsList.Any(q => q.ArtId == artId && q.LokalitetId == vTur.LokalitetId);
+        private static bool FoersteObsForLokalitet(VTur vTur, List<VObs> vObsList, Art art) =>
+            !vObsList.Any(q => q.ArtId == art.Id && q.LokalitetId == vTur.LokalitetId);
 
-        private static bool FoersteObsIAar(VTur vTur, List<VObs> vObsList, long artId) =>
-            !vObsList.Any(q => q.ArtId == artId && q.Aarstal == vTur.Aarstal && q.RegionId > 0);
+        private static bool FoersteObsIAar(VTur vTur, List<VObs> vObsList, Art art) =>
+            !vObsList.Any(q => q.ArtId == art.Id && q.Aarstal == vTur.Aarstal && q.RegionId > 0);
 
-        private static bool FoersteObsIMaaned(VTur vTur, List<VObs> vObsList, long artId) =>
-            !vObsList.Any(q => q.ArtId == artId && q.Maaned == vTur.Maaned && q.RegionId > 0);
+        private static bool FoersteObsIMaaned(VTur vTur, List<VObs> vObsList, Art art) =>
+            !vObsList.Any(q => q.ArtId == art.Id && q.Maaned == vTur.Maaned && q.RegionId > 0);
 
-        private static TripAnalysisResult TripAnalysisResultFactory(long artId, AnalyseTyper analyseType)
+        private static TripAnalysisResult TripAnalysisResultFactory(Art art, AnalyseTyper analyseType)
         {
-            return new TripAnalysisResult { AnalyseType = analyseType, ArtId = artId };
+            return new TripAnalysisResult { AnalyseType = analyseType, ArtId = art.Id };
         }
     }
 }
