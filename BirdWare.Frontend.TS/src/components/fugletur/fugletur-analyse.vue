@@ -3,11 +3,19 @@
         <fugleturTitel class="col" :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
         <fugleturNavigation class="col-auto"></fugleturNavigation>
     </div>
-    <div class="row g-2" :class="getRowColClasses(analyseTyperCount)" v-if="state.hasData">
-        <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
-            <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)" :analysetype="analyseType"
-                :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)"></fugleturAnalyseType>
-        </template>
+    <div v-if="state.hasData">
+        <div class="row g-2" :class="getRowColClasses(analyseTyperCount)" v-if="state.analyseListe.length > 0">
+            <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
+                <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
+                    :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
+                </fugleturAnalyseType>
+            </template>
+        </div>
+        <div v-else class="card">
+            <div class="card-header birdware">
+                <span>Ingen analyse</span>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -46,7 +54,6 @@ const analyseTyperCount = computed(() => [...new Set(state.analyseListe.map(item
 function getFugletur() {
     api.get('fugletur/' + fugleturStore.chosenFugleturId).then((response) => {
         state.fugletur = response.data;
-        state.hasData = true;
     });
 }
 
@@ -59,6 +66,7 @@ function getAnalyseTyper() {
 function getAnalyseListe() {
     api.get('fugletur/' + fugleturStore.chosenFugleturId + '/analyse').then((response) => {
         state.analyseListe = response.data;
+        state.hasData = true;
     });
 }
 
