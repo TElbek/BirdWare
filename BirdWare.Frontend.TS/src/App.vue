@@ -245,15 +245,14 @@ a {
   border-radius: 50%;
   color: white;
   width: 20px;
-  font-weight: bold;
 }
 
 .forskel-success {
-  background-color: $birdwareColor;
+  color: $birdwareColor;
 }
 
 .forskel-danger {
-  background-color: $red;
+  color: $red;
 }
 
 .forekomst {
