@@ -1,27 +1,27 @@
 <template>
     <div class="row mb-1">
         <div class="col birdware large-text">Forskel</div>
-        <forskelSelection class="col-auto" v-if="hasData" :forskel="forskel" :is-by-trip="state.isByTrip"
+        <forskel-selection class="col-auto" v-if="hasData" :forskel="forskel" :is-by-trip="state.isByTrip"
             :is-this-year="state.isThisYear" :item-count-last-year="state.itemCountLastYear"
             :item-count-this-year="state.itemCountThisYear" @switch-is-by-trip="switchIsByTrip"
             @switch-is-this-year="switchIsThisYear">
-        </forskelSelection>
+        </forskel-selection>
     </div>
     <div class="row">
         <div :class="[state.isThisYear ? '' : 'd-none']">
-            <forskelAar :is-this-year="true" :is-by-trip="state.isByTrip" @item-count="setItemCountThisYear">
-            </forskelAar>
+            <forskel-aar :is-this-year="true" :is-by-trip="state.isByTrip" @item-count="setItemCountThisYear">
+            </forskel-aar>
         </div>
         <div :class="[state.isThisYear ? 'd-none' : '']">
-            <forskelAar :is-this-year="false" :is-by-trip="state.isByTrip" @item-count="setItemCountLastYear">
-            </forskelAar>
+            <forskel-aar :is-this-year="false" :is-by-trip="state.isByTrip" @item-count="setItemCountLastYear">
+            </forskel-aar>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import forskelAar from '@/components/forskel/forskelAar.vue';
-import forskelSelection from '@/components/forskel/forskelSelection.vue';
+import forskelAar from '@/components/forskel/forskelaar.vue';
+import forskelSelection from '@/components/forskel/forskelselection.vue';
 import { reactive, computed } from 'vue';
 
 const forskel = computed(() => { return state.itemCountThisYear - state.itemCountLastYear });
