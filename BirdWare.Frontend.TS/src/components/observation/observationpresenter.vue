@@ -79,6 +79,10 @@ function addTag(text: string) {
 }
 
 watch(() => selectedTags.value, (newValue) => {
-    getObservations();
+    if( newValue.length > 0) {
+        getObservations();
+    } else {
+        state.observationer = [];
+    }
 });
 </script>
