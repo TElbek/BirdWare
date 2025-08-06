@@ -18,15 +18,17 @@ const state = reactive({
     fugletur: {} as fugleturType
 });
 
+const hasData = computed(() => props.fugleturId > 0);
 
 onMounted(() => {
-    if (props.fugleturId > 0) {
+    if (hasData.value) {
         getFugletur();
     }
 });
 
 const title = computed(() => {
-    return formatDate(state.fugletur.dato) + ' ' + state.fugletur.lokalitetNavn + ' #' + state.fugletur.antalArter;
+    return hasData.value ?
+        formatDate(state.fugletur.dato) + ' ' + state.fugletur.lokalitetNavn + ' #' + state.fugletur.antalArter : '';
 });
 
 function getFugletur() {

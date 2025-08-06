@@ -1,10 +1,7 @@
 $white: #fff;
 $birdwareColor: #048baf;
-$red: #ff0000;
-$birdwareColor-light: #048baf50;
-$black-30: #00000030;
+$birdwareColor-light: rgba($birdwareColor,0.5);
 $black-20: #00000020;
-$black-10: #00000010;
 $light-gray: #efefef20;
 $sucolor: #ff6347;
 $specielcolor: #90ee90;
@@ -19,10 +16,6 @@ $specielcolor: #90ee90;
   flex-wrap: wrap;
 }
 
-@mixin birdware-border($color: $birdwareColor) {
-  border: 1px solid $color;
-}
-
 @mixin color-birdware() {
   color: $birdwareColor;
 }
@@ -35,6 +28,10 @@ $specielcolor: #90ee90;
   border-bottom: $border-width solid $birdwareColor;
 }
 
+@mixin birdware-border($border-width: 1px, $color: $birdwareColor) {
+  border: $border-width solid $color;
+}
+
 body {
   font-size: 0.90rem;
   background-color: $light-gray;
@@ -42,7 +39,7 @@ body {
 
 .nav-link {
   font-size: 1.1em;
-  border-bottom: 2px solid transparent;
+  @include birdware-border($border-width: 2px, $color: transparent);
 }
 
 .birdware {
@@ -60,11 +57,10 @@ body {
 }
 
 .btn-off {
-  border: 1px solid $black-30;
-
+  @include birdware-border($color: $black-20);
   &:hover {
     @include color-birdware();
-    border: 1px solid $black-30;
+    @include birdware-border($color: $black-20);
   }
 }
 
@@ -83,7 +79,7 @@ body {
 }
 
 .card {
-  border: 1px solid $black-20;
+  @include birdware-border($color: $black-20);
   box-shadow: 0px 0px 5px $black-20;
   border-radius: 3px;
   padding: 2px;
@@ -123,7 +119,7 @@ a {
 }
 
 .multiselect__tag {
-  @include birdware-border($birdwareColor-light);
+  @include birdware-border($color: $birdwareColor-light);
   @include color-birdware();
   font-weight: 600;
   background: $white;
