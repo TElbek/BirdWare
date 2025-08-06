@@ -6,9 +6,10 @@ $light-gray: #efefef20;
 $sucolor: #ff6347;
 $specielcolor: #90ee90;
 
-@mixin forekomst-border {
+@mixin forekomst-border($bordercolor) {
   border-width: 0px 0px 2px 0px;
   border-style: solid;
+  border-color: $bordercolor;
 }
 
 @mixin flex() {
@@ -30,6 +31,14 @@ $specielcolor: #90ee90;
 
 @mixin birdware-border($border-width: 1px, $color: $birdwareColor) {
   border: $border-width solid $color;
+}
+
+@mixin display($display) {
+  display: $display;
+}
+
+@mixin border-radius() {
+  border-radius: 3px;
 }
 
 body {
@@ -80,8 +89,8 @@ body {
 
 .card {
   @include birdware-border($color: $black-20);
+  @include border-radius();
   box-shadow: 0px 0px 5px $black-20;
-  border-radius: 3px;
   padding: 2px;
 }
 
@@ -121,9 +130,9 @@ a {
 .multiselect__tag {
   @include birdware-border($color: $birdwareColor-light);
   @include color-birdware();
+  @include border-radius();
   font-weight: 600;
   background: $white;
-  border-radius: 3px;
 }
 
 .multiselect__option--selected.multiselect__option--highlight {
@@ -272,26 +281,24 @@ a {
 }
 
 .forekomst-su {
-  @include forekomst-border();
-  border-color: $sucolor;
+  @include forekomst-border($sucolor);
 }
 
 .forekomst-speciel {
-  @include forekomst-border();
-  border-color: $specielcolor;
+  @include forekomst-border($specielcolor);
 }
 
 .table-birdware {
-  display: table;
+  @include display(table);
   border-collapse: separate;
   border-spacing: 15px 0px;
   margin-left: -15px;
 }
 
 .table-row-birdware {
-  display: table-row;
+  @include display(table-row);
 }
 
 .table-cell-birdware {
-  display: table-cell;
+  @include display(table-cell);
 }
