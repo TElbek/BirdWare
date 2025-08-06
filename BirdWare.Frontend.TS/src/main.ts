@@ -2,6 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 
 import 'vue-multiselect/dist/vue-multiselect.css';
+import '@/assets/scss/base.scss';
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

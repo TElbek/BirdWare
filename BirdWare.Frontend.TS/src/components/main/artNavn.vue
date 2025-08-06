@@ -23,8 +23,8 @@ interface artNavnProps {
 const props = defineProps<artNavnProps>();
 
 const forekomst = computed(() => {
-    if (props.speciel == true) return 'forekomst forekomst-speciel';
-    if (props.su == true) return 'forekomst forekomst-su';
+    if (props.speciel == true) return 'forekomst-speciel';
+    if (props.su == true) return 'forekomst-su';
     return '';
 });
 
