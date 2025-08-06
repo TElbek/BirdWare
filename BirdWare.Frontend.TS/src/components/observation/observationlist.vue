@@ -1,25 +1,32 @@
 <template>
     <div class="scroll">
-        <div class="row g-2" :class="getRowColClassesTwo(props.groupedData?.size ?? 0)">
+        <div class="row g-2" :class="getRowColClassesThree(props.groupedData?.size ?? 0)">
             <div v-for="[key, value] in props.groupedData" class="col">
-                <div class="card h-100 mb-2">
-                    <div class="card-header">
+                <bs-card>
+                    <bs-card-header>
                         <a @click="addTag(key)">
                             <span class="birdware" v-if="obsSelectionStore.isGropingByMonth && valueIsNumber(key)">{{
                                 getMonthNameFromNumber(+key) }}</span>
                             <span class="birdware text-capitalize" v-else>{{ key }}</span>
                             <span class="birdware ms-1">({{ value.length }})</span>
                         </a>
-                    </div>
-                    <div class="card-body">
-                        <div v-for="obs in obsSorted(value)" class="row">
-                            <fugleturDato class="col-auto" :fugleturId="obs.fugleturId" :dato="obs.dato"></fugleturDato>
-                            <div class="col-4 col-md-3 d-none d-lg-block  text-nowrap">{{ obs.artNavn }}</div>
-                            <div class="col-4 col-md-3  text-nowrap text-truncate">{{ obs.lokalitetNavn }}</div>
-                            <div class="col-4 col-md-4 text-truncate text-nowrap">{{ obs.bem }}</div>
-                        </div>
-                    </div>
-                </div>
+                    </bs-card-header>
+                    <bs-card-body>
+                        <table-birdware>
+                            <template v-for="obs in obsSorted(value)" :key="obs.observationId">
+                                <table-row-birdware>
+                                    <table-cell-birdware>
+                                        <fugleturDato :fugleturId="obs.fugleturId" :dato="obs.dato" />
+                                    </table-cell-birdware>
+                                    <table-cell-birdware class="text-nowrap">{{ obs.artNavn }}</table-cell-birdware>
+                                    <table-cell-birdware class="text-nowrap">{{
+                                        obs.lokalitetNavn}}</table-cell-birdware>
+                                    <table-cell-birdware>{{ obs.bem }}</table-cell-birdware>
+                                </table-row-birdware>
+                            </template>
+                        </table-birdware>
+                    </bs-card-body>
+                </bs-card>
             </div>
         </div>
     </div>
@@ -31,7 +38,7 @@ import { getMonthNameFromNumber } from '@/ts/dateandtime';
 import { type observationType } from '@/types/observationType';
 import { valueIsNumber } from '@/ts/typechecks';
 import fugleturDato from '../main/fugleturdato.vue';
-import { getRowColClassesTwo } from '@/ts/rowcols';
+import { getRowColClassesThree } from '@/ts/rowcols';
 
 const obsSelectionStore = useObsSelectionStore();
 

@@ -280,3 +280,18 @@ a {
   @include forekomst-border();
   border-color: $specielcolor;
 }
+
+.table-birdware {
+  display: table;
+  border-collapse: separate;
+  border-spacing: 15px 0px;
+  margin-left: -15px;
+}
+
+.table-row-birdware {
+  display: table-row;
+}
+
+.table-cell-birdware {
+  display: table-cell;
+}
