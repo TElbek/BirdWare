@@ -18,7 +18,7 @@
                                     <table-cell-birdware>
                                         <fugleturDato :fugleturId="obs.fugleturId" :dato="obs.dato" />
                                     </table-cell-birdware>
-                                    <table-cell-birdware class="text-nowrap">{{ obs.artNavn }}</table-cell-birdware>
+                                    <table-cell-birdware class="text-nowrap d-none d-lg-block">{{ obs.artNavn }}</table-cell-birdware>
                                     <table-cell-birdware class="text-nowrap">{{
                                         obs.lokalitetNavn}}</table-cell-birdware>
                                     <table-cell-birdware>{{ obs.bem }}</table-cell-birdware>
