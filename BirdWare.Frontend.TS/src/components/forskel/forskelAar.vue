@@ -1,22 +1,22 @@
 <template>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2">
+    <bs-row-cols :count="listOfItems.size">
         <div v-for="[key, value] in listOfItems">
-            <div class="card h-100">
-                <div class="card-header">
+            <bs-card>
+                <bs-card-header>
                     <span class="birdware">{{ key }}</span>
-                    <span class="float-end  birdware">{{ value.length }}</span>
-                </div>
-                <div class="card-body">
-                    <div class="art-flex">
+                    <span class="float-end  birdware">{{ value.length }}</span> 
+                </bs-card-header>
+                <bs-card-body>
+                    <bs-flex :hasWrap="true">
                         <div v-for="art in arterSorteret(value)">
                             <art-navn :artId="art.artId" :artNavn="art.artNavn" :su="art.su"
                                 :speciel="art.speciel"></art-navn>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </bs-flex>
+                </bs-card-body>
+            </bs-card>
         </div>
-    </div>
+    </bs-row-cols>
 </template>
 
 <script setup lang="ts">

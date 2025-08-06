@@ -1,26 +1,9 @@
 export const getRowColClasses = (itemCount: number) => {
-    if(itemCount == 1) {
-        return 'row-cols-1';
-    }
-    else if (itemCount == 2) {
-        return 'row-cols-1 row-cols-md-2';
-    }
-    else if (itemCount == 3) {
-        return 'row-cols-1 row-cols-md-2 row-cols-lg-3';
-    }
-    else if (itemCount >= 4) {
-        return 'row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4';
-    }
+    const classesFour = ['row-cols-1', 'row-cols-md-2', 'row-cols-lg-3', 'row-cols-xl-4'];
+    return classesFour.slice(0, Math.min(4, itemCount)).join(' ');
 }
 
 export const getRowColClassesThree = (itemCount: number) => {
-    if(itemCount == 1) {
-        return 'row-cols-1';
-    }
-    else if (itemCount == 2) {
-        return 'row-cols-1 row-cols-md-2';
-    }
-    else {
-        return 'row-cols-1 row-cols-md-2 row-cols-xl-3';
-    }
+    const classesThree = ['row-cols-1', 'row-cols-md-2', 'row-cols-xl-3'];
+    return classesThree.slice(0, Math.min(3, itemCount)).join(' ');
 }

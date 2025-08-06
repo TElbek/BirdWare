@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex gap-1" :class="{ 'flex-wrap': props.hasWrap }">
+    <div class="d-flex gap-2" :class="{ 'flex-wrap': props.hasWrap }">
         <slot></slot>
     </div>
 </template>
