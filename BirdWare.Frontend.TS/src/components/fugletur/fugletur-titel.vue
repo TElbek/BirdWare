@@ -1,5 +1,7 @@
 <template>
-    <span v-if="state.hasdata" class="birdware large-text d-inline-block text-truncate">{{ title }}</span>
+     <div>
+        <span v-if="state.hasdata" class="birdware large-text d-inline-block text-truncate">{{ title }}</span>
+     </div>
 </template>
 
 <script setup lang="ts">
