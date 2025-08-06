@@ -1,5 +1,5 @@
 <template>
-    <span class="birdware large-text d-inline-block text-truncate">{{ title }}</span>
+    <span v-if="state.hasdata" class="birdware large-text d-inline-block text-truncate">{{ title }}</span>
 </template>
 
 <script setup lang="ts">
@@ -15,30 +15,30 @@ interface fugleturProps {
 const props = defineProps<fugleturProps>();
 
 const state = reactive({
-    fugletur: {} as fugleturType
+    fugletur: {} as fugleturType,
+    hasdata: false
 });
 
-const hasData = computed(() => props.fugleturId > 0);
-
 onMounted(() => {
-    if (hasData.value) {
+    if (props.fugleturId > 0) {
         getFugletur();
     }
 });
 
 const title = computed(() => {
-    return hasData.value ?
-        formatDate(state.fugletur.dato) + ' ' + state.fugletur.lokalitetNavn + ' #' + state.fugletur.antalArter : '';
+    return formatDate(state.fugletur.dato) + ' ' + state.fugletur.lokalitetNavn + ' #' + state.fugletur.antalArter;
 });
 
 function getFugletur() {
     api.get('fugletur/' + props.fugleturId).then((response => {
         state.fugletur = response.data;
+        state.hasdata = true;
     }));
 }
 
 watch(() => props.fugleturId, (newValue) => {
     if (newValue != 0) {
+        state.hasdata = false;
         getFugletur();
     }
 });
