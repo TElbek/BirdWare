@@ -4,18 +4,18 @@
         <fugleturNavigation class="col-auto"></fugleturNavigation>
     </div>
     <div v-if="state.hasData">
-        <div class="row g-2" :class="getRowColClasses(analyseTyperCount)" v-if="state.analyseListe.length > 0">
+        <bs-row-cols v-if="state.analyseListe.length > 0" :count="analyseTyperCount">
             <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
                 <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
                     :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
                 </fugleturAnalyseType>
             </template>
-        </div>
-        <div v-else class="card">
-            <div class="card-header birdware">
+        </bs-row-cols>
+        <bs-card v-else>
+            <bs-card-header>
                 <span>Ingen analyse</span>
-            </div>
-        </div>
+            </bs-card-header>
+        </bs-card>
     </div>
 </template>
 
