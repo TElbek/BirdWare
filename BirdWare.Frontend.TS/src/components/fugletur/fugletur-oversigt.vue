@@ -8,22 +8,30 @@
         </div>
     </div>
     <div class="scroll">
-        <div class="mt-1 row row-cols-1 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-2">
+        <bs-row-cols :count="groupedData.size">
             <div v-for="[key, value] in groupedData">
-                <div class="card h-100 p-1">
-                    <div class="card-header birdware ">
-                        <span class="text-capitalize">{{ key }}</span>
-                        <span class="float-end">{{ value.length }}</span>
-                    </div>
-                    <div class="card-body">
-                        <div v-for="tur in value" class="row">
-                            <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" class="col-auto"></fugletur-dato>
-                            <div class="col">{{ tur.lokalitetNavn }}</div>
-                        </div>
-                    </div>
-                </div>
+                <bs-card>
+                    <bs-card-header>
+                        <span class="birdware text-capitalize">{{ key }}</span>
+                        <span class="birdware float-end">{{ value.length }}</span>
+                    </bs-card-header>
+                    <bs-card-body>
+                        <table-birdware>
+                            <template v-for="tur in value">
+                                <table-row-birdware>
+                                    <table-cell-birdware>
+                                        <fugletur-dato :fugleturId="tur.id" :dato="tur.dato"></fugletur-dato>
+                                    </table-cell-birdware>
+                                    <table-cell-birdware>
+                                        {{ tur.lokalitetNavn }}
+                                    </table-cell-birdware>
+                                </table-row-birdware>
+                            </template>
+                        </table-birdware>
+                    </bs-card-body>
+                </bs-card>
             </div>
-        </div>
+        </bs-row-cols>
     </div>
 </template>
 
