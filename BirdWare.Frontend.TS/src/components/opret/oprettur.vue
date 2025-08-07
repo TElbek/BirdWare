@@ -6,24 +6,22 @@
                 v-model="state.searchValue" />
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-6 g-2">
-        <div class="col" v-for="[key, value] in byDistance">
-            <div class="card h-100">
-                <div class="card-header ms-1  birdware">
-                    <span>{{ key }} km.</span>
-                </div>
-                <div class="card-body ms-1">
-                    <div class="lokalitet-flex">
+    <bs-row-cols :count="byDistance.size">
+        <div v-for="[key, value] in byDistance">
+            <bs-card>
+                <bs-card-header>
+                    <span class="birdware">{{ key }} km.</span>
+                </bs-card-header>
+                <bs-card-body>
+                    <bs-flex hasWrap="true">
                         <div v-for="lokalitet in value">
-                            <a @click="opretTur(lokalitet.id)">
-                                {{ lokalitet.navn }}
-                            </a>
+                            <a @click="opretTur(lokalitet.id)">{{ lokalitet.navn }}</a>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </bs-flex>
+                </bs-card-body>
+            </bs-card>
         </div>
-    </div>
+    </bs-row-cols>    
 </template>
 
 <script setup lang="ts">
@@ -50,7 +48,7 @@ const byDistance = computed(() => {
 
 const filteredLokalitetListe = computed(() => {
     return state.searchValue.length > 0 ?
-        state.lokalitetListe.filter((lok) => lok.navn.toLowerCase().indexOf(state.searchValue.toLowerCase()) > -1) : 
+        state.lokalitetListe.filter((lok) => lok.navn.toLowerCase().indexOf(state.searchValue.toLowerCase()) > -1) :
         state.lokalitetListe;
 });
 

@@ -1,6 +1,6 @@
 export const getRowColClasses = (itemCount: number) => {
-    const classesFour = ['row-cols-1', 'row-cols-md-2', 'row-cols-lg-3', 'row-cols-xl-4'];
-    return classesFour.slice(0, Math.min(4, itemCount)).join(' ');
+    const classesFour = ['row-cols-1', 'row-cols-md-2', 'row-cols-lg-3', 'row-cols-xl-4', 'row-cols-xxl-5'];
+    return classesFour.slice(0, Math.min(5, itemCount)).join(' ');
 }
 
 export const getRowColClassesThree = (itemCount: number) => {
