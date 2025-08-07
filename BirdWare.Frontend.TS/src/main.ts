@@ -32,4 +32,6 @@ function registerBootstrapComponents() {
     app.component('bsCardBody', defineAsyncComponent(() => import('@/components/main/bootstrap/bscardbody.vue')));
     app.component('bsRowCols', defineAsyncComponent(() => import('@/components/main/bootstrap/bsrowcols.vue')));
     app.component('bsFlex', defineAsyncComponent(() => import('@/components/main/bootstrap/bsflex.vue')));
+    app.component('bsButtonGroup', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbuttongroup.vue')));
+    app.component('bsButton', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbutton.vue')));
 }

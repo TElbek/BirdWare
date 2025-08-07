@@ -8,12 +8,13 @@
             <a class="dropdown-item birdware" @click="navigate(route.name)">{{ route.meta?.title }}</a>
         </li>
     </ul>
-    <div class="btn-group d-none d-lg-block">
-        <div class="btn btn-sm btn-equal-width" v-for="item in availableRoutes"
-            :class="[item.name == route.name ? 'btn-on' : 'btn-off']" @click="navigate(item.name)">
-            {{ item.meta?.title }}
-        </div>
-    </div>
+    <bs-button-group class="d-none d-lg-block">
+        <template v-for="item in availableRoutes">
+            <bs-button :isOn="item.name == route.name" class="btn-equal-width" @click="navigate(item.name)">
+                {{ item.meta?.title }}
+            </bs-button>
+        </template>
+    </bs-button-group>
 </template>
 
 <script setup lang="ts">

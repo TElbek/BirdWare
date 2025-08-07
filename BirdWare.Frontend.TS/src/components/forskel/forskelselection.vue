@@ -1,22 +1,15 @@
 <template>
     <div>
         <div class="d-none d-lg-block">
-            <div class="btn-group mb-2">
-                <div class="btn btn-sm" :class="[props.isByTrip ? 'btn-on' : 'btn-off']" @click="switchIsByTrip">{{ tidCaption }}</div>
-                <div class="btn btn-sm" :class="[props.isByTrip ? 'btn-off' : 'btn-on']" @click="switchIsByTrip">{{ artCaption }}</div>
-            </div>
-            <div class="btn-group mb-2 ms-2">
-                <div class="btn btn-sm" :class="[props.isThisYear ? 'btn-on' : 'btn-off']" @click="switchIsThisYear">
-                    <span>{{ thisYearCaption }}</span>
-                </div>
-                <div class="btn btn-sm" :class="[props.isThisYear ? 'btn-off' : 'btn-on']" @click="switchIsThisYear">
-                    <span>{{ lastYearCaption }}</span>
-                </div>
-                <div class="btn btn-sm btn-off">
-                    <div class="forskel-indikator" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">
-                        {{ Math.abs(forskel) }}</div>
-                </div>
-            </div>
+            <bs-button-group>
+                <bs-button :isOn="props.isByTrip" @click="switchIsByTrip">{{ tidCaption }}</bs-button>
+                <bs-button :isOn="!props.isByTrip" @click="switchIsByTrip">{{ artCaption }}</bs-button>
+            </bs-button-group> 
+            <bs-button-group class="ms-2">
+                <bs-button :isOn="props.isThisYear" @click="switchIsThisYear">{{ thisYearCaption }}</bs-button>
+                <bs-button :isOn="!props.isThisYear" @click="switchIsThisYear">{{ lastYearCaption }}</bs-button>
+                <bs-button :isOn="false" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{ Math.abs(forskel) }}</bs-button>
+            </bs-button-group>
         </div>
         <div class="d-lg-none d-flex gap-2">
             <button class="btn btn-outline-birdware btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"

@@ -1,10 +1,11 @@
 <template>
-    <div class="row" v-if="hasData">
+    <div class="row mb-2" v-if="hasData">
         <div class="col birdware large-text ">{{ year }}: {{ state.aaretsGang.length }} Årsarter</div>
-        <div class="col-auto btn-group mb-2">
-            <div class="btn btn-sm" :class="[isByTrip ? 'btn-on' : 'btn-off']" @click="switchIsByTrip">Tid & Sted
-            </div>
-            <div class="btn btn-sm" :class="[isByTrip ? 'btn-off' : 'btn-on']" @click="switchIsByTrip">Arter</div>
+        <div class="col-auto">
+            <bs-button-group>
+                <bs-button :isOn="isByTrip" @clicked="switchIsByTrip">Tid & Sted</bs-button>
+                <bs-button :isOn="!isByTrip" @clicked="switchIsByTrip">Arter</bs-button>
+            </bs-button-group>
         </div>
     </div>
     <div class="scroll">
@@ -16,7 +17,7 @@
                         <span class="float-end birdware">{{ value.length }}</span>
                     </bs-card-header>
                     <bs-card-body>
-                        <bs-flex hasWrap="true">
+                        <bs-flex :hasWrap="true">
                             <template v-for="art in arterSorteret(value)">
                                 <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su" :speciel="art.speciel"></artNavn>
                             </template>

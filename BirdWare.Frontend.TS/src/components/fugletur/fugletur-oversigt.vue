@@ -7,7 +7,7 @@
             <fugleturNavigation></fugleturNavigation>
         </div>
     </div>
-    <div class="scroll">
+    <div class="scroll mt-2">
         <bs-row-cols :count="groupedData.size">
             <div v-for="[key, value] in groupedData">
                 <bs-card>

@@ -5,7 +5,7 @@
                 <bs-card>
                     <bs-card-header>
                         <a @click="addTag(key)">
-                            <span class="birdware" v-if="obsSelectionStore.isGropingByMonth && valueIsNumber(key)">{{
+                            <span class="birdware text-capitalize" v-if="obsSelectionStore.isGropingByMonth && valueIsNumber(key)">{{
                                 getMonthNameFromNumber(+key) }}</span>
                             <span class="birdware text-capitalize" v-else>{{ key }}</span>
                             <span class="birdware ms-1">({{ value.length }})</span>

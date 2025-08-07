@@ -1,12 +1,15 @@
 <template>
     <div class="d-none d-lg-block">
-        <div class="btn-group">
-            <div v-for="mode in groupByModeList" class="btn btn-sm birdware btn-equal-width"
-                :class="[mode.id == obsSelectionStore.chosenGroupingId ? 'btn-on' : 'btn-off']"
-                @click="setGroupByMode(mode.id)">
-                {{ mode.caption }}
-            </div>
-        </div>
+        <bs-button-group>
+            <template v-for="mode in groupByModeList">
+                <bs-button 
+                    class="btn-equal-width"
+                    :isOn="mode.id == obsSelectionStore.chosenGroupingId"
+                    @click="setGroupByMode(mode.id)">
+                    {{ mode.caption }}
+                </bs-button>
+            </template>
+        </bs-button-group>
     </div>
     <div class="d-lg-none">
         <button class="btn btn-outline-birdware btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
