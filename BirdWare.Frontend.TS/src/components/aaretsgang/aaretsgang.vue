@@ -8,23 +8,23 @@
         </div>
     </div>
     <div class="scroll">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-2">
-            <div class="col" v-for="([key, value], index) in listOfItems">
-                <div class="card h-100 p-1" v-if="index < 30 && isByTrip || !isByTrip">
-                    <div class="card-header">
+        <bs-row-cols :count="listOfItems.size">
+            <div v-for="([key, value], index) in listOfItems">
+                <bs-card v-if="index < 30 && isByTrip || !isByTrip">
+                    <bs-card-header>
                         <span class="birdware">{{ key }}</span>
                         <span class="float-end birdware">{{ value.length }}</span>
-                    </div>
-                    <div class="card-body">
-                        <div class="art-flex">
+                    </bs-card-header>
+                    <bs-card-body>
+                        <bs-flex hasWrap="true">
                             <template v-for="art in arterSorteret(value)">
                                 <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su" :speciel="art.speciel"></artNavn>
                             </template>
-                        </div>
-                    </div>
-                </div>
+                        </bs-flex>
+                    </bs-card-body>
+                </bs-card>
             </div>
-        </div>
+        </bs-row-cols>
     </div>
 </template>
 
