@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { type tagType} from '@/types/tagType.ts'
+import { type tagType } from '@/types/tagType.ts'
 
 export const useObsSelectionStore = defineStore('obs-selection', () => {
   const selectedTags = ref([] as tagType[]);
@@ -10,11 +10,10 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
   const isGropingByLocality = computed(() => chosenGroupingId.value == 3);
   const isGropingByNumber = computed(() => chosenGroupingId.value == 0 || chosenGroupingId.value == 1);
   const isGropingByText = computed(() => chosenGroupingId.value == 2 || chosenGroupingId.value == 3 || chosenGroupingId.value == 4);
-  const showSpeciesNameInList = computed(() => selectedTags.value.filter((tag: tagType) => tag.tagType == 10 ).length != 1);
-
+  
   function addTag(value: tagType) {
-    if(!isTagKnown(value)) {
-      selectedTags.value = [...selectedTags.value,value];  
+    if (!isTagKnown(value)) {
+      selectedTags.value = [...selectedTags.value, value];
     }
     else {
       removeTag(value);
@@ -29,7 +28,7 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
   function removeTag(value: tagType) {
     if (isTagKnown(value)) {
       selectedTags.value.splice(selectedTags.value.indexOf(findTag(value)), 1);
-      selectedTags.value = [...selectedTags.value];  
+      selectedTags.value = [...selectedTags.value];
     }
   }
 
@@ -49,17 +48,18 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     return selectedTags.value.filter((item) => item.id == tag.id && tag.tagType == item.tagType).length > 0;
   }
 
-  return { chosenGroupingId,
-           chosenViewMode,
-           selectedTags, 
-           isGropingByMonth,
-           isGropingByLocality,
-           isGropingByNumber,
-           isGropingByText,
-           showSpeciesNameInList,
-           AddTag: addTag, 
-           SetTag: setTag, 
-           RemoveTag: removeTag, 
-           SetGroupingId: setGroupingId,
-           SetViewMode: setViewMode }
+  return {
+    chosenGroupingId,
+    chosenViewMode,
+    selectedTags,
+    isGropingByMonth,
+    isGropingByLocality,
+    isGropingByNumber,
+    isGropingByText,
+    AddTag: addTag,
+    SetTag: setTag,
+    RemoveTag: removeTag,
+    SetGroupingId: setGroupingId,
+    SetViewMode: setViewMode
+  }
 })

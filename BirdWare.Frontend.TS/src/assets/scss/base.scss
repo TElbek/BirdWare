@@ -1,6 +1,6 @@
 $white: #fff;
 $birdwareColor: #048baf;
-$birdwareColor-light: rgba($birdwareColor,0.5);
+$birdwareColor-light: rgba($birdwareColor, 0.5);
 $black-20: #00000020;
 $light-gray: #efefef20;
 $sucolor: #ff6347;
@@ -67,6 +67,7 @@ body {
 
 .btn-off {
   @include birdware-border($color: $black-20);
+
   &:hover {
     @include color-birdware();
     @include birdware-border($color: $black-20);

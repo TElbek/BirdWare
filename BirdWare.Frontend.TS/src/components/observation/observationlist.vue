@@ -18,10 +18,14 @@
                                     <table-cell-birdware>
                                         <fugleturDato :fugleturId="obs.fugleturId" :dato="obs.dato" />
                                     </table-cell-birdware>
-                                    <table-cell-birdware class="text-nowrap d-none d-lg-block">{{ obs.artNavn }}</table-cell-birdware>
+                                    <table-cell-birdware class="text-nowrap" v-if="showSpeciesNameInList">
+                                        {{ obs.artNavn }}
+                                    </table-cell-birdware>
                                     <table-cell-birdware class="text-nowrap">{{
                                         obs.lokalitetNavn}}</table-cell-birdware>
-                                    <table-cell-birdware>{{ obs.bem }}</table-cell-birdware>
+                                    <table-cell-birdware>
+                                        <div class="truncate">{{ obs.bem }}</div>
+                                    </table-cell-birdware>
                                 </table-row-birdware>
                             </template>
                         </table-birdware>
@@ -38,13 +42,17 @@ import { getMonthNameFromNumber } from '@/ts/dateandtime';
 import { type observationType } from '@/types/observationType';
 import { valueIsNumber } from '@/ts/typechecks';
 import fugleturDato from '../main/fugleturdato.vue';
-import { getRowColClassesThree } from '@/ts/rowcols';
+import { getRowColClassesThree, getRowColClassesTwo } from '@/ts/rowcols';
+import type { tagType } from '@/types/tagType';
+import { computed } from 'vue';
 
 const obsSelectionStore = useObsSelectionStore();
 
 const props = defineProps({
     groupedData: Map<string | number, observationType[]>
 });
+
+const showSpeciesNameInList = computed(() => obsSelectionStore.selectedTags.filter((tag: tagType) => tag.tagType == 12).length != 1);
 
 const emit = defineEmits(['addtag']);
 

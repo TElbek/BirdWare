@@ -7,3 +7,8 @@ export const getRowColClassesThree = (itemCount: number) => {
     const classesThree = ['row-cols-1', 'row-cols-md-2', 'row-cols-xl-3'];
     return classesThree.slice(0, Math.min(3, itemCount)).join(' ');
 }
+
+export const getRowColClassesTwo = (itemCount: number) => {
+    const classesThree = ['row-cols-1', 'row-cols-md-2'];
+    return classesThree.slice(0, Math.min(2, itemCount)).join(' ');
+}

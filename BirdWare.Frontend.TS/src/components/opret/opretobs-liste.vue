@@ -3,24 +3,24 @@
         <multiselect v-model="state.selectedTag" :options="state.tagList" track-by="name" label="name"
         :multiple="false" :showLabels="false" :allow-empty="true" @search-change="getTagList"></multiselect>
     </div>
-    <div class="row row-cols-12 row-cols-md-2 row-cols-lg-3 row-cols-xl-6 g-2 mt-1">
+    <bs-row-cols :count="groupByFamilie.size" class="mt-2">
         <div v-for=" [key, value] in groupByFamilie">
-            <div class="card h-100">
-                <div class="card-header birdware ">
-                    {{ key }}
-                </div>
-                <div class="card-body">
-                    <div class="d-flex flex-wrap">
+            <bs-card>
+                <bs-card-header>
+                    <span class="birdware">{{ key }}</span>
+                </bs-card-header>
+                <bs-card-body>
+                    <bs-flex hasWrap=""true>
                         <template v-for="obs in value">
                             <a @click="removeObservation(obs.observationId)">
                                 <span class="me-2">{{ obs.artNavn }}</span>
                             </a>
                         </template>
-                    </div>
-                </div>
-            </div>
+                    </bs-flex>
+                </bs-card-body>
+            </bs-card>
         </div>
-    </div>
+    </bs-row-cols>
 </template>
 
 <script setup lang="ts">

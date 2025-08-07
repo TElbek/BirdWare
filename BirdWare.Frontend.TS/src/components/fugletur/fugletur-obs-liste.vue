@@ -1,21 +1,29 @@
 <template>
     <div class="scroll">
-        <div class="row g-2" :class="getRowColClasses(byFamilie.size)">
+        <bs-row-cols class="row g2" :count="byFamilie.size">
             <div v-for="[key, value] in byFamilie">
-                <div class="card h-100 w-100">
-                    <div class="card-header">
+                <bs-card>
+                    <bs-card-header>
                         <span class="birdware ">{{ key }}</span>
                         <span class="float-end  birdware">{{ value.length }}</span>
-                    </div>
-                    <div class="card-body p-1">
-                        <div v-for="obs in obsSorted(value)" class="row">
-                            <artNavn class="col-6" :artId="obs.artId" :artNavn="obs.artNavn" :su="obs.su" :speciel="obs.speciel"></artNavn>
-                            <div class="col-6 d-inline-block text-truncate">{{ obs.bem }}</div>
-                        </div>
-                    </div>
-                </div>
+                    </bs-card-header>
+                    <bs-card-body>
+                        <table-birdware>
+                            <template v-for="obs in obsSorted(value)">
+                                <table-row-birdware>
+                                    <table-cell-birdware>
+                                        <artNavn :artId="obs.artId" :artNavn="obs.artNavn" :su="obs.su" :speciel="obs.speciel"></artNavn>
+                                    </table-cell-birdware>
+                                    <table-cell-birdware>
+                                        <div>{{ obs.bem }}</div>
+                                    </table-cell-birdware>
+                                </table-row-birdware>
+                            </template>
+                        </table-birdware>
+                    </bs-card-body> 
+                </bs-card>
             </div>
-        </div>
+        </bs-row-cols>
     </div>
 </template>
 
