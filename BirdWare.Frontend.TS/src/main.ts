@@ -34,4 +34,8 @@ function registerBootstrapComponents() {
     app.component('bsFlex', defineAsyncComponent(() => import('@/components/main/bootstrap/bsflex.vue')));
     app.component('bsButtonGroup', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbuttongroup.vue')));
     app.component('bsButton', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbutton.vue')));
+    app.component('bsButtonDropdown', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbuttondropdown.vue')));
+
+    app.component('bs-show-lg', defineAsyncComponent(() => import('@/components/main/bootstrap/bs-show-lg.vue')));
+    app.component('bs-show-md', defineAsyncComponent(() => import('@/components/main/bootstrap/bs-show-md.vue')));
 }

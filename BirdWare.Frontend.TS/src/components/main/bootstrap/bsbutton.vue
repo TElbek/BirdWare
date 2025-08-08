@@ -6,11 +6,14 @@
 
 <script setup lang="ts">
 interface bsbuttonProps {
-    isOn: boolean;
+    isOn?: boolean;
 }
 
+const props = withDefaults(defineProps<bsbuttonProps>(), {
+  isOn: false
+});
+
 const emit = defineEmits(['clicked']);
-const props = defineProps<bsbuttonProps>();
 
 function sendClickEvent() {
     emit('clicked');

@@ -7,15 +7,13 @@
             @switch-is-this-year="switchIsThisYear">
         </forskel-selection>
     </div>
-    <div class="row">
-        <div :class="[state.isThisYear ? '' : 'd-none']">
-            <forskel-aar :is-this-year="true" :is-by-trip="state.isByTrip" @item-count="setItemCountThisYear">
-            </forskel-aar>
-        </div>
-        <div :class="[state.isThisYear ? 'd-none' : '']">
-            <forskel-aar :is-this-year="false" :is-by-trip="state.isByTrip" @item-count="setItemCountLastYear">
-            </forskel-aar>
-        </div>
+    <div :class="[state.isThisYear ? '' : 'd-none']">
+        <forskel-aar :is-this-year="true" :is-by-trip="state.isByTrip" @item-count="setItemCountThisYear">
+        </forskel-aar>
+    </div>
+    <div :class="[state.isThisYear ? 'd-none' : '']">
+        <forskel-aar :is-this-year="false" :is-by-trip="state.isByTrip" @item-count="setItemCountLastYear">
+        </forskel-aar>
     </div>
 </template>
 

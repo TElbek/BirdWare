@@ -3,11 +3,11 @@
         <div class="row">
             <fugleturTitel :showTitle="false" class="col" :fugleturId="state.fugleturId"></fugleturTitel>
             <div class="col-auto">
-                <button class="btn btn-sm" @click="setShowForslag"
+                <bs-button @click="setShowForslag"
                     :class="state.isForslagMode ? 'btn-birdware' : 'btn-outline-birdware'">
                     <span v-if="state.isForslagMode">Forslag</span>
                     <span v-else>Liste</span>
-                </button>
+                </bs-button>
             </div>
         </div>
         <RouterView></RouterView>

@@ -1,23 +1,23 @@
 <template>
     <div class="row">
-        <div class="col-auto birdware large-text d-none d-lg-block">
+        <bs-show-lg class="col-auto birdware large-text">
             Observation
-        </div>
-        <div class="col birdware large-text d-lg-none">
+        </bs-show-lg>
+        <bs-show-md class="col birdware large-text">
             Observation
-        </div>
-        <div class="col d-none d-lg-block">
+        </bs-show-md>
+        <bs-show-lg class="col">
             <observation-selection></observation-selection>
-        </div>
+        </bs-show-lg>
         <div class="col-auto d-flex gap-2">
             <observation-group-by></observation-group-by>
         </div>
     </div>
-    <div class="row d-lg-none mt-2">
+    <bs-show-md class="row mt-2">
         <div class="col">
             <observation-selection></observation-selection>
         </div>
-    </div>
+    </bs-show-md>
     <observation-presenter></observation-presenter>
 </template>
 

@@ -1,27 +1,23 @@
 <template>
-    <div class="d-none d-lg-block">
+    <bs-show-lg>
         <bs-button-group>
             <template v-for="mode in groupByModeList">
-                <bs-button 
-                    class="btn-equal-width"
-                    :isOn="mode.id == obsSelectionStore.chosenGroupingId"
+                <bs-button class="btn-equal-width" :isOn="mode.id == obsSelectionStore.chosenGroupingId"
                     @click="setGroupByMode(mode.id)">
                     {{ mode.caption }}
                 </bs-button>
             </template>
         </bs-button-group>
-    </div>
-    <div class="d-lg-none">
-        <button class="btn btn-outline-birdware btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            {{ selectedGroupModeCaption }}
-        </button>
-        <ul class="dropdown-menu">
-            <li v-for="item in groupByModeList">
-                <a class="dropdown-item birdware" @click="setGroupByMode(item.id)">{{ item.caption }}</a>
-            </li>
-        </ul>
-    </div>
+    </bs-show-lg>
+    <bs-show-md>
+        <bs-button-dropdown :caption="selectedGroupModeCaption">
+            <ul class="dropdown-menu">
+                <li v-for="item in groupByModeList">
+                    <a class="dropdown-item birdware" @click="setGroupByMode(item.id)">{{ item.caption }}</a>
+                </li>
+            </ul>
+        </bs-button-dropdown>
+    </bs-show-md>
 </template>
 
 <script setup lang="ts">

@@ -8,7 +8,7 @@
                     <span class="birdware float-end">{{ value.length }}</span>
                 </bs-card-header>
                 <bs-card-body>
-                    <bs-flex hasWrap="true">
+                    <bs-flex :hasWrap="true">
                         <div v-for="art in arterSorteret(value)">
                             <art-navn :artId="art.artId" :artNavn="art.artNavn"></art-navn>
                         </div>

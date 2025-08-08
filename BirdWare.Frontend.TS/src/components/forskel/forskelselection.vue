@@ -1,39 +1,37 @@
 <template>
     <div>
-        <div class="d-none d-lg-block">
+        <bs-show-lg>
             <bs-button-group>
                 <bs-button :isOn="props.isByTrip" @click="switchIsByTrip">{{ tidCaption }}</bs-button>
                 <bs-button :isOn="!props.isByTrip" @click="switchIsByTrip">{{ artCaption }}</bs-button>
-            </bs-button-group> 
+            </bs-button-group>
             <bs-button-group class="ms-2">
                 <bs-button :isOn="props.isThisYear" @click="switchIsThisYear">{{ thisYearCaption }}</bs-button>
                 <bs-button :isOn="!props.isThisYear" @click="switchIsThisYear">{{ lastYearCaption }}</bs-button>
-                <bs-button :isOn="false" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{ Math.abs(forskel) }}</bs-button>
+                <bs-button :isOn="false" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{
+                    Math.abs(forskel) }}</bs-button>
             </bs-button-group>
-        </div>
-        <div class="d-lg-none d-flex gap-2">
-            <button class="btn btn-outline-birdware btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <span>{{ tidArtCaption }}</span>
-            </button>
-            <ul class="dropdown-menu">
-                <a class="dropdown-item birdware" @click="switchIsByTrip">{{ tidCaption }}</a>
-                <a class="dropdown-item birdware" @click="switchIsByTrip">{{ artCaption }}</a>
-            </ul>
-            <button class="btn btn-outline-birdware btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <span>{{ aarstalCaption }}</span>
-            </button>
-            <ul class="dropdown-menu">
-                <a class="dropdown-item birdware" @click="switchIsThisYear">{{ thisYearCaption }}</a>
-                <a class="dropdown-item birdware" @click="switchIsThisYear">{{ lastYearCaption }}</a>
-            </ul>
-                <div class="btn btn-sm btn-off">
+        </bs-show-lg>
+        <bs-show-md>
+            <bs-flex>
+                <bs-button-dropdown :caption="tidArtCaption">
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item birdware" @click="switchIsByTrip">{{ tidCaption }}</a>
+                        <a class="dropdown-item birdware" @click="switchIsByTrip">{{ artCaption }}</a>
+                    </ul>
+                </bs-button-dropdown>
+                <bs-button-dropdown :caption="aarstalCaption">
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item birdware" @click="switchIsThisYear">{{ thisYearCaption }}</a>
+                        <a class="dropdown-item birdware" @click="switchIsThisYear">{{ lastYearCaption }}</a>
+                    </ul>
+                </bs-button-dropdown>
+                <bs-button>
                     <div class="forskel-indikator" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">
                         {{ Math.abs(forskel) }}</div>
-                </div>
-
-        </div>
+                </bs-button>
+            </bs-flex>
+        </bs-show-md>
     </div>
 </template>
 
@@ -52,16 +50,11 @@ const aarstalCaption = computed(() => {
     return props.isThisYear ? thisYearCaption.value : lastYearCaption.value;
 });
 
+const tidCaption = "Tid & Sted";
+const artCaption = "Arter";
+
 const tidArtCaption = computed(() => {
-    return props.isByTrip ? tidCaption.value : artCaption.value;
-});
-
-const tidCaption = computed(() => {
-    return "Tid & Sted";
-});
-
-const artCaption = computed(() => {
-    return "Arter";
+    return props.isByTrip ? tidCaption : artCaption;
 });
 
 const thisYearCaption = computed(() => {

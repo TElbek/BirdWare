@@ -78,6 +78,10 @@ body {
   width: 70px;
 }
 
+.btn-sm { 
+  min-width: 70px;
+}
+
 .art-flex {
   @include flex();
   gap: 2px 8px;
