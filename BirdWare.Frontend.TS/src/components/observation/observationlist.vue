@@ -1,6 +1,6 @@
 <template>
-    <div class="scroll">
-        <div class="row g-2" :class="getRowColClassesThree(props.groupedData?.size ?? 0)">
+    <div class="scroll mt-2">
+        <div :class="getRowColClassesThree(props.groupedData?.size ?? 0)">
             <div v-for="[key, value] in props.groupedData" class="col">
                 <bs-card>
                     <bs-card-header>
@@ -8,7 +8,7 @@
                             <span class="birdware text-capitalize" v-if="obsSelectionStore.isGropingByMonth && valueIsNumber(key)">{{
                                 getMonthNameFromNumber(+key) }}</span>
                             <span class="birdware text-capitalize" v-else>{{ key }}</span>
-                            <span class="birdware ms-1">({{ value.length }})</span>
+                            <span class="birdware float-end">{{ value.length }}</span>
                         </a>
                     </bs-card-header>
                     <bs-card-body>

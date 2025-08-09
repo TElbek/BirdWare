@@ -1,5 +1,5 @@
 <template>
-    <div :class="getRowColClasses(props.count)" class="row g-2">
+    <div :class="getRowColClasses(props.count)">
         <slot></slot>
     </div>
 </template>
