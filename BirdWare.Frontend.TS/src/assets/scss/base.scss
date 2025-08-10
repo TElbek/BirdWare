@@ -2,9 +2,10 @@ $white: #fff;
 $birdwareColor: #048baf;
 $birdwareColor-light: rgba($birdwareColor, 0.5);
 $black-20: #00000020;
-$light-gray: #efefef20;
+$black: #000000;
 $sucolor: #ff6347;
 $specielcolor: #90ee90;
+$lightgray: #00000004;
 
 @mixin forekomst-border($bordercolor) {
   border-width: 0px 0px 2px 0px;
@@ -42,8 +43,8 @@ $specielcolor: #90ee90;
 }
 
 body {
-  font-size: 0.91rem;
-  background-color: $light-gray;
+  font-size: 0.9rem;
+  background-color: $lightgray;
 }
 
 .nav-link {
@@ -55,8 +56,21 @@ body {
   @include color-birdware();
 }
 
+.btn-group>.btn-group:not(:first-child)>.btn,
+.btn-group>.btn:nth-child(n+3),
+.btn-group> :not(.btn-check)+.btn {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
 .btn-on {
   @include background-color-birdware();
+
   color: $white;
 
   &:hover {
@@ -66,11 +80,9 @@ body {
 }
 
 .btn-off {
-  @include birdware-border($color: $black-20);
 
   &:hover {
     @include color-birdware();
-    @include birdware-border($color: $black-20);
   }
 }
 
@@ -78,7 +90,7 @@ body {
   width: 70px;
 }
 
-.btn-sm { 
+.btn-sm {
   min-width: 70px;
 }
 
@@ -93,10 +105,12 @@ body {
 }
 
 .card {
-  @include birdware-border($color: $black-20);
+  @include birdware-border($color: $white);
   @include border-radius();
-  box-shadow: 0px 0px 1px $black-20;
-  padding: 4px;
+  background-color: $white;
+  box-shadow: 0px 0px 1px $birdwareColor-light;
+  padding: 2px;
+  margin: 1px;
 }
 
 .card-header {
@@ -200,7 +214,9 @@ a {
 }
 
 .btn-outline-birdware {
-  @include birdware-border();
+  @include birdware-border($color: $white);
+  box-shadow: 0px 0px 1px $birdwareColor-light;
+  background-color: $white;
 
   &:hover {
     @include birdware-border();
@@ -242,12 +258,12 @@ a {
   box-shadow: none;
 }
 
-.btn-outline-birdware,
-.btn-outline-birdware:hover {
-  @include color-birdware();
-  background-color: transparent;
-  border-color: $black-20;
-}
+// .btn-outline-birdware,
+// .btn-outline-birdware:hover {
+//   @include color-birdware();
+//   background-color: transparent;
+//   border-color: $black-20;
+// }
 
 .btn-birdware,
 .btn-birdware:hover {
@@ -312,4 +328,11 @@ a {
 .g-2 {
   --bs-gutter-y: 0.7rem;
   --bs-gutter-x: 0.7rem;
+}
+
+.btn-group {
+  padding: 5px;
+  @include birdware-border($color: $white);
+  box-shadow: 0px 0px 1px $birdwareColor-light;
+  background-color: $white;
 }

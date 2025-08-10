@@ -13,10 +13,8 @@
             <observation-group-by></observation-group-by>
         </div>
     </div>
-    <bs-show-md class="row mt-2">
-        <div class="col">
+    <bs-show-md class="mt-2">
             <observation-selection></observation-selection>
-        </div>
     </bs-show-md>
     <observation-presenter></observation-presenter>
 </template>
