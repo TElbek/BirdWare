@@ -1,4 +1,6 @@
-﻿namespace BirdWare.Domain.Models
+﻿using BirdWare.Domain.Utilities;
+
+namespace BirdWare.Domain.Models
 {
     public class AaretsGang
     {
@@ -10,6 +12,8 @@
         public string? LokalitetNavn { get; set; }
         public bool SU { get; set; }
         public bool Speciel { get; set; }
+        public string? Maaned => 
+            StringOperations.ToTitleCase((Dato.HasValue ? Dato.Value.ToString("MMMM") : string.Empty));
 
         public string Titel =>
             (Dato.HasValue ? Dato.Value.ToString("dd-MM-yyyy") : string.Empty) + " " + LokalitetNavn;

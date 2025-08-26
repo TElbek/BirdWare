@@ -3,15 +3,16 @@
         <div class="col birdware large-text ">{{ year }}: {{ state.aaretsGang.length }} Årsarter</div>
         <div class="col-auto">
             <bs-button-group>
-                <bs-button :isOn="isByTrip" @clicked="switchIsByTrip">Tid & Sted</bs-button>
-                <bs-button :isOn="!isByTrip" @clicked="switchIsByTrip">Arter</bs-button>
+                <bs-button :isOn="isByTrip" @clicked="setIsByTrip">Tid & Sted</bs-button>
+                <bs-button :isOn="isByFamilie" @clicked="setIsByFamilie">Arter</bs-button>
+                <bs-button :isOn="isByMaaned" @clicked="setIsByMaaned">Maaned</bs-button>
             </bs-button-group>
         </div>
     </div>
-    <div class="scroll">
+    <div class="scroll mb-2">
         <bs-row-cols :count="listOfItems.size">
             <div v-for="([key, value], index) in listOfItems">
-                <bs-card v-if="index < 30 && isByTrip || !isByTrip">
+                <bs-card v-if="index < 30 && isByTrip || index < 5 && isByMaaned || isByFamilie">
                     <bs-card-header>
                         <span class="birdware">{{ key }}</span>
                         <span class="float-end birdware">{{ value.length }}</span>
@@ -39,10 +40,13 @@ const state = reactive({
     aaretsGang: [] as aaretsGangType[],
 });
 
-const isByTrip = ref(true);
+const isByTrip = ref(false);
+const isByFamilie = ref(false);
+const isByMaaned = ref(false);
 const hasData = ref(false);
 
 onMounted(() => {
+    setIsByTrip();
     getAaretsGang();
 });
 
@@ -57,12 +61,29 @@ function arterSorteret(trip: aaretsGangType[]) {
     return trip.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
 }
 
-function switchIsByTrip() {
-    isByTrip.value = !isByTrip.value;
+function setIsByTrip() {
+    setIsByNone();
+    isByTrip.value = true;    
+}
+
+function setIsByFamilie() {
+    setIsByNone();
+    isByFamilie.value = true;    
+}
+
+function setIsByMaaned() {
+    setIsByNone();
+    isByMaaned.value = true;    
+}
+
+function setIsByNone() {
+    isByTrip.value = false;
+    isByFamilie.value = false;
+    isByMaaned.value = false
 }
 
 const listOfItems = computed(() => {
-    return isByTrip.value ? byTrip.value : byFamilie.value;
+    return isByTrip.value ? byTrip.value : isByFamilie.value ? byFamilie.value : byMaaned.value;
 });
 
 const byFamilie = computed(() => {
@@ -71,6 +92,10 @@ const byFamilie = computed(() => {
 
 const byTrip = computed(() => {
     return Map.groupBy(state.aaretsGang.sort((a, b) => a.dato.localeCompare(b.dato)).reverse(), (one: aaretsGangType) => one.titel);
+});
+
+const byMaaned = computed(() => {
+    return Map.groupBy(state.aaretsGang.sort((a, b) => a.dato.localeCompare(b.dato)).reverse(), (one: aaretsGangType) => one.maaned);
 });
 
 const year = computed(() => { return new Date().getFullYear() });

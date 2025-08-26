@@ -8,4 +8,5 @@ export type aaretsGangType = {
     su: boolean
     speciel: boolean
     titel: string
+    maaned: string
 }

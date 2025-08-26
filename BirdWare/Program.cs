@@ -32,8 +32,11 @@ namespace BirdWare
             app.MapControllers();
             app.UseCors(corsPolicyName);
 
-            app.UseDefaultFiles();
-            app.UseStaticFiles();
+            if (Directory.Exists("wwwroot"))
+            {
+                app.UseDefaultFiles();
+                app.UseStaticFiles();
+            }
 
             app.Run();
         }
