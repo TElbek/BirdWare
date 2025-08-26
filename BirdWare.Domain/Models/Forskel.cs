@@ -1,4 +1,6 @@
-﻿namespace BirdWare.Domain.Models
+﻿using BirdWare.Domain.Utilities;
+
+namespace BirdWare.Domain.Models
 {
     public class Forskel
     {
@@ -11,7 +13,7 @@
         public long LokalitetId { get; set; }
         public string? LokalitetNavn { get; set; }
         public string Titel => 
-            (Dato.HasValue ? Dato.Value.ToString("dd-MM-yyyy") : string.Empty) + " " + LokalitetNavn;
+            (Dato.HasValue ? DateFormatting.GetDatoFormateret(Dato.Value) : string.Empty) + " " + LokalitetNavn;
 
         public string? FamilieNavn { get; set; }
     }

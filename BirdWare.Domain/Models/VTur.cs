@@ -1,4 +1,4 @@
-﻿using System.Globalization;
+﻿using BirdWare.Domain.Utilities;
 
 namespace BirdWare.Domain.Models
 {
@@ -16,7 +16,7 @@ namespace BirdWare.Domain.Models
 
         public string FugleturAarMaaned =>
             Dato.HasValue ?
-            Aarstal.ToString() + " " + Dato.Value.ToString("MMMM", CultureInfo.GetCultureInfo("da-DK")) :
+            Aarstal.ToString() + " " + DateFormatting.GetMonthName(Dato.Value) :
             string.Empty;
     }
 }

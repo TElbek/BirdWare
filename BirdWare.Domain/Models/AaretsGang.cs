@@ -13,9 +13,9 @@ namespace BirdWare.Domain.Models
         public bool SU { get; set; }
         public bool Speciel { get; set; }
         public string? Maaned => 
-            StringOperations.ToTitleCase((Dato.HasValue ? Dato.Value.ToString("MMMM") : string.Empty));
+            StringOperations.ToTitleCase((Dato.HasValue ? DateFormatting.GetMonthName(Dato.Value) : string.Empty));
 
         public string Titel =>
-            (Dato.HasValue ? Dato.Value.ToString("dd-MM-yyyy") : string.Empty) + " " + LokalitetNavn;
+            (Dato.HasValue ? DateFormatting.GetDatoFormateret(Dato.Value) : string.Empty) + " " + LokalitetNavn;
     }
 }
