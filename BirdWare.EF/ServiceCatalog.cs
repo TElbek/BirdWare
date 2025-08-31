@@ -11,7 +11,7 @@ namespace BirdWare.EF
     [ExcludeFromCodeCoverage]
     public static class ServiceCatalog
     {
-        public static IServiceCollection RegisterEF(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection RegisterEF(this IServiceCollection services)
         {
             services.AddTransient<IArtQueries, ArtQueries>();
             services.AddTransient<IArterAarQueries, ArterAarQueries>();

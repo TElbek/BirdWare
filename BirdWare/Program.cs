@@ -48,8 +48,8 @@ namespace BirdWare
             builder.Services.AddDbContextFactory<BirdWareContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn")));
             builder.Services.AddTransient<IMemoryCache, MemoryCache>();
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
-            builder.Services.RegisterEF(builder.Configuration);
-            builder.Services.RegisterDomain(builder.Configuration);
+            builder.Services.RegisterEF();
+            builder.Services.RegisterDomain();
         }
 
         private static void AddAuthentication(WebApplicationBuilder builder)
