@@ -301,8 +301,16 @@ a {
   width: 20px;
 }
 
+.forskel-success::before {
+  content: "+";
+}
+
 .forskel-success {
   @include color-birdware();
+}
+
+.forskel-danger::before {
+  content: "-";
 }
 
 .forskel-danger {

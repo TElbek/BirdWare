@@ -8,7 +8,7 @@
             <bs-button-group class="ms-2">
                 <bs-button :isOn="props.isThisYear" @click="switchIsThisYear">{{ thisYearCaption }}</bs-button>
                 <bs-button :isOn="!props.isThisYear" @click="switchIsThisYear">{{ lastYearCaption }}</bs-button>
-                <bs-button :isOn="false" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{
+                <bs-button :isOn="false" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']" class="float-end">{{
                     Math.abs(forskel) }}</bs-button>
             </bs-button-group>
         </bs-show-lg>
@@ -26,8 +26,8 @@
                         <a class="dropdown-item birdware" @click="switchIsThisYear">{{ lastYearCaption }}</a>
                     </ul>
                 </bs-button-dropdown>
-                <bs-button>
-                    <div class="forskel-indikator" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">
+                <bs-button class="btn-outline-birdware">
+                    <div class="forskel-indikator float-end" :class="[forskel >= 0 ? 'forskel-success' : 'forskel-danger']">
                         {{ Math.abs(forskel) }}</div>
                 </bs-button>
             </bs-flex>
