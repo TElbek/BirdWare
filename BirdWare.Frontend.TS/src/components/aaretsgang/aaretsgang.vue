@@ -1,13 +1,22 @@
 <template>
     <div class="row mb-2" v-if="hasData">
         <div class="col birdware large-text ">{{ year }}: {{ state.aaretsGang.length }} Årsarter</div>
-        <div class="col-auto">
+        <bs-show-lg class="col-auto">
             <bs-button-group>
                 <bs-button :isOn="isByTrip" @clicked="setIsByTrip">Tid & Sted</bs-button>
                 <bs-button :isOn="isByFamilie" @clicked="setIsByFamilie">Arter</bs-button>
                 <bs-button :isOn="isByMaaned" @clicked="setIsByMaaned">Maaned</bs-button>
             </bs-button-group>
-        </div>
+        </bs-show-lg>
+        <bs-show-md class="col-auto">
+            <bs-button-dropdown :caption="isByTrip ? 'Tid & Sted' : isByFamilie ? 'Arter' : 'Maaned'">
+                <ul class="dropdown-menu">
+                    <a class="dropdown-item birdware" @click="setIsByTrip">Tid & Sted</a>
+                    <a class="dropdown-item birdware" @click="setIsByFamilie">Arter</a>
+                    <a class="dropdown-item birdware" @click="setIsByMaaned">Maaned</a>
+                </ul>
+            </bs-button-dropdown>
+        </bs-show-md>
     </div>
     <div class="scroll mb-2">
         <bs-row-cols :count="listOfItems.size">
@@ -20,7 +29,8 @@
                     <bs-card-body>
                         <bs-flex :hasWrap="true">
                             <template v-for="art in arterSorteret(value)">
-                                <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su" :speciel="art.speciel"></artNavn>
+                                <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su" :speciel="art.speciel">
+                                </artNavn>
                             </template>
                         </bs-flex>
                     </bs-card-body>
@@ -63,17 +73,17 @@ function arterSorteret(trip: aaretsGangType[]) {
 
 function setIsByTrip() {
     setIsByNone();
-    isByTrip.value = true;    
+    isByTrip.value = true;
 }
 
 function setIsByFamilie() {
     setIsByNone();
-    isByFamilie.value = true;    
+    isByFamilie.value = true;
 }
 
 function setIsByMaaned() {
     setIsByNone();
-    isByMaaned.value = true;    
+    isByMaaned.value = true;
 }
 
 function setIsByNone() {
