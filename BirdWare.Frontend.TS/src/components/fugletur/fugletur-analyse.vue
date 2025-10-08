@@ -45,7 +45,6 @@ const state = reactive({
 
 onMounted(() => {
     getAnalyseTyper();
-    getAnalyseListe();
     getFugletur();
 });
 
@@ -54,6 +53,7 @@ const analyseTyperCount = computed(() => [...new Set(state.analyseListe.map(item
 function getFugletur() {
     api.get('fugletur/' + fugleturStore.chosenFugleturId).then((response) => {
         state.fugletur = response.data;
+        getAnalyseListe();
     });
 }
 

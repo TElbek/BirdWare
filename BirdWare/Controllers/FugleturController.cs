@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 
 namespace BirdWare.Controllers
 {
@@ -8,6 +9,7 @@ namespace BirdWare.Controllers
     public class FugleturController(IFugleturQuery fugleturQuery) : ControllerBase
     {
         [HttpGet]
+        [OutputCache]
         [Route("api/fugletur/{id}")]
         public VTur GetFugletur(long id)
         {

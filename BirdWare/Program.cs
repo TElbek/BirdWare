@@ -38,6 +38,7 @@ namespace BirdWare
                 app.UseStaticFiles();
             }
 
+            app.UseOutputCache();
             app.Run();
         }
 
@@ -50,6 +51,11 @@ namespace BirdWare
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
             builder.Services.RegisterEF();
             builder.Services.RegisterDomain();
+
+            builder.Services.AddOutputCache(options =>
+            {
+                options.AddBasePolicy(builder => builder.Expire(TimeSpan.FromMinutes(5)));
+            });
         }
 
         private static void AddAuthentication(WebApplicationBuilder builder)

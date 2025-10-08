@@ -63,18 +63,22 @@ namespace BirdWare.EF.Queries
 
         private VTur FindFugletur(long fugleturId)
         {
-            return (from f in birdWareContext.Fugletur
-                    join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
-                    where f.Id == fugleturId
-                    select new VTur
-                    {
-                        Aarstal = f.Aarstal,
-                        Maaned = f.Maaned,
-                        Dato = f.Dato,
-                        Id = f.Id,
-                        LokalitetId = l.Id,
-                        RegionId = l.RegionId,
-                    }).First();
+            if (birdWareContext.Fugletur.Any(q => q.Id == fugleturId))
+            {
+                return (from f in birdWareContext.Fugletur
+                        join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
+                        where f.Id == fugleturId
+                        select new VTur
+                        {
+                            Aarstal = f.Aarstal,
+                            Maaned = f.Maaned,
+                            Dato = f.Dato,
+                            Id = f.Id,
+                            LokalitetId = l.Id,
+                            RegionId = l.RegionId,
+                        }).First();
+            }
+            return new VTur();
         }
 
         private ILookup<long, VObs> FindAnalyseData(VTur vTur, List<Art> artList)
