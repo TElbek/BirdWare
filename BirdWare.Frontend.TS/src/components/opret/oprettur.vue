@@ -1,27 +1,20 @@
 <template>
-    <div class="row">
-        <div class="col h4 birdware">Tilføj Tur</div>
-        <div class="col-auto">
-            <input type="search" class="form-control form-control-sm" placeholder="Søg..."
-                v-model="state.searchValue" />
-        </div>
+    <div class="grid grid-cols-[auto_160px]">
+        <tw-text-scaleable>Tilføj Tur</tw-text-scaleable>
+        <input class="p-2 border border-gray-200 rounded dark:text-white" type="search" placeholder="Søg..." v-model="state.searchValue" />
     </div>
-    <bs-row-cols :count="byDistance.size">
+    <tw-grid-cols-five :count="byDistance.size" class="mt-4 max-h-160 xl:max-h-180 overflow-auto">
         <div v-for="[key, value] in byDistance">
-            <bs-card>
-                <bs-card-header>
-                    <span class="birdware">{{ key }} km.</span>
-                </bs-card-header>
-                <bs-card-body>
-                    <bs-flex hasWrap="true">
-                        <div v-for="lokalitet in value">
-                            <a @click="opretTur(lokalitet.id)">{{ lokalitet.navn }}</a>
-                        </div>
-                    </bs-flex>
-                </bs-card-body>
-            </bs-card>
+            <tw-card>
+                <tw-card-header :caption="key + ' km.'" :show-count="false"></tw-card-header>
+                <tw-flex>
+                    <a v-for="lokalitet in value" @click="opretTur(lokalitet.id)" >
+                        <span class="dark:text-white">{{ lokalitet.navn }}</span>
+                    </a>
+                </tw-flex>
+            </tw-card>
         </div>
-    </bs-row-cols>    
+    </tw-grid-cols-five>
 </template>
 
 <script setup lang="ts">
