@@ -19,6 +19,8 @@ namespace BirdWare.EF.Queries
             PopulateArter(tagList);
             PopulateSaeson(tagList);
             PopulateLand(tagList);
+
+            tagList.ForEach(tag => tag.TagTypeTitle = TagTypeInfo.GetTagTypeTitle(tag.TagType));
             return SortByName(tagList);
         }
 
@@ -31,6 +33,8 @@ namespace BirdWare.EF.Queries
             PopulateRegioner(tagList);
             PopulateSaeson(tagList);
             PopulateLand(tagList);
+
+            tagList.ForEach(tag => tag.TagTypeTitle = TagTypeInfo.GetTagTypeTitle(tag.TagType));
             return SortByName(tagList);
         }
 
