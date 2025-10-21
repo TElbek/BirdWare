@@ -3,5 +3,5 @@
 </template>
 
 <script setup lang="ts">
-import hvorKanJegFinde from '@/components/statistik/hvorKanJegFinde.vue';
+import hvorKanJegFinde from '@/components/statistik/hvorkanjegfinde.vue';
 </script>

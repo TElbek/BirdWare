@@ -1,11 +1,17 @@
 @import 'tailwindcss';
+
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme { --color-birdware: #048baf;}
-@theme { --color-birdware-bright: #05bef0;}
+@theme {
+  --color-birdware: #048baf;
+}
+
+@theme {
+  --color-birdware-bright: #05bef0;
+}
 
 body {
-    font-size: 0.9rem;
+  font-size: 0.9rem;
 }
 
 .multiselect__input,
@@ -22,7 +28,7 @@ body {
   color: var(--color-black);
   outline: none;
   font-weight: normal;
-
+  
   @variant dark {
     background: var(--color-gray-800);
     color: var(--color-white);
@@ -33,7 +39,7 @@ body {
   background: var(--color-white);
   color: var(--color-black);
   font-weight: var(--text-normal);
-
+  
   @variant dark {
     background: var(--color-gray-800);
     color: var(--color-white);
@@ -46,48 +52,47 @@ body {
 
 .multiselect__tags,
 .multiselect__tag {
-    background: var(--color-white);
-    color: var(--color-birdware);
-    border: 1px solid var(--color-gray-300);
-
-    @variant dark {
-        border: 1px solid var(--color-birdware-bright);
-        background: var(--color-gray-800);
-        color: var(--color-birdware-bright);
-    }
-}
+  background: var(--color-white);
+  color: var(--color-birdware);
+  border: 1px solid var(--color-gray-300);
+  
+  @variant dark {
+    border: 1px solid var(--color-birdware-bright);
+    background: var(--color-gray-800);
+    color: var(--color-birdware-bright);
+  }
+} 
 
 .multiselect__tag-icon::after {
-    color: var(--color-birdware);
-    @variant dark {
-        color: var(--color-birdware-bright);
-    }
+  color: var(--color-birdware);
+  
+  @variant dark {
+    color: var(--color-birdware-bright);
+  }
 }
 
 .multiselect__tag-icon:focus::after,
-.multiselect__tag-icon:hover::after {
-  color: var(--color-birdware)
+  .multiselect__tag-icon:hover::after {
+  color: var(--color-birdware);
 }
 
 .multiselect__content-wrapper {
-    @variant dark {
-        background: var(--color-gray-800);
-        color: var(--color-white);
-    }
+  @variant dark {
+    background: var(--color-gray-800);
+    color: var(--color-white);
+  }
 }
 
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width:992px) {
   .router-link-exact-active {
     border-bottom: 1px solid var(--color-birdware);
-
     @variant dark {
       border-bottom: 1px solid var(--color-birdware-bright);
     }
   }
-
+  
   .router-link-active {
     border-bottom: 1px solid var(--color-birdware);
- 
     @variant dark {
       border-bottom: 1px solid var(--color-birdware-bright);
     }
@@ -108,19 +113,19 @@ body {
 }
 
 .forskel-success {
-    color: var(--color-green-400);
+  color: var(--color-green-400);
 }
 
 .forskel-danger {
-    color: var(--color-red-500);
+  color: var(--color-red-500);
 }
 
 .forskel-success::before {
-    content: '+';
+  content: ' + ';
 }
 
 .forskel-danger::before {
-    content: '-';
+  content: '-';
 }
 
 .table-birdware {
