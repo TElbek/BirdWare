@@ -1,26 +1,22 @@
 <template>
-    <div class="mt-1">
+    <div>
         <multiselect v-model="state.selectedTag" :options="state.tagList" track-by="name" label="name"
         :multiple="false" :showLabels="false" :allow-empty="true" @search-change="getTagList"></multiselect>
     </div>
-    <bs-row-cols :count="groupByFamilie.size" class="mt-2">
-        <div v-for=" [key, value] in groupByFamilie">
-            <bs-card>
-                <bs-card-header>
-                    <span class="birdware">{{ key }}</span>
-                </bs-card-header>
-                <bs-card-body>
-                    <bs-flex hasWrap=""true>
-                        <template v-for="obs in value">
-                            <a @click="removeObservation(obs.observationId)">
-                                <span class="me-2">{{ obs.artNavn }}</span>
-                            </a>
-                        </template>
-                    </bs-flex>
-                </bs-card-body>
-            </bs-card>
+    <tw-grid-cols-five :count="groupByFamilie.size" class="mt-2">
+        <div v-for="[key, value] in groupByFamilie">
+            <tw-card>
+                <tw-card-header :caption="key"  :count="value.length" :showCount="true"></tw-card-header>
+                <tw-flex>
+                    <template v-for="obs in value">
+                        <a @click="removeObservation(obs.observationId)">
+                            <span class="me-2 dark:text-white">{{ obs.artNavn }}</span>
+                        </a>
+                    </template>
+                </tw-flex>
+            </tw-card>
         </div>
-    </bs-row-cols>
+    </tw-grid-cols-five>
 </template>
 
 <script setup lang="ts">

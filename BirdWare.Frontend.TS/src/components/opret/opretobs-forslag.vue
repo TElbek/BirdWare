@@ -1,22 +1,18 @@
 <template>
-    <div class="scroll mt-1">
-        <bs-row-cols :count="byFamilie.size" v-if="hasData">
-            <div v-for="[key, value] in byFamilie">
-                <bs-card>
-                    <bs-card-header>
-                        <span class="birdware ">{{ key }}</span>
-                    </bs-card-header>
-                    <bs-card-body>
-                        <div class="art-flex">
-                            <div v-for="art in artSorted(value)">
-                                 <a @click="addObs(art.artId)">{{ art.artNavn }}</a>
-                            </div>
-                        </div>
-                    </bs-card-body>
-                </bs-card>
-            </div>
-        </bs-row-cols>
-    </div>
+    <tw-grid-cols-five :count="byFamilie.size" v-if="hasData">
+        <div v-for="[key, value] in byFamilie">
+            <tw-card>
+                <tw-card-header :caption="key" :count="value.length" :showCount="true"></tw-card-header>                
+                <tw-flex>
+                    <template v-for="art in artSorted(value)">
+                        <a @click="addObs(art.artId)">
+                            <span class="dark:text-white">{{ art.artNavn }}</span>
+                        </a>
+                    </template>
+                </tw-flex>
+            </tw-card>
+        </div>
+    </tw-grid-cols-five>
 </template>
 
 <script setup lang="ts">
@@ -37,7 +33,7 @@ onMounted(() => {
 
 function getForslag() {
     api.get("fugletur/foreslaaArter/")
-        .then((response) => { 
+        .then((response) => {
             state.forslag = response.data;
             hasData.value = true;
         });
@@ -47,9 +43,9 @@ function artSorted(value: opretObsForslagType[]) {
     return value.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
 }
 
-function addObs(artId: number) {    
+function addObs(artId: number) {
     api.post("observation/opretobs/" + artId).then((response) => {
-        getForslag();            
+        getForslag();
     });
 }
 </script>
