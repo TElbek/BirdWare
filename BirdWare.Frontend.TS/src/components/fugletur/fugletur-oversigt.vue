@@ -1,50 +1,46 @@
 <template>
-    <div class="row">
-        <div class="col">
-            <fugleturSelection></fugleturSelection>
-        </div>
-        <div class="col-auto">
-            <fugleturNavigation></fugleturNavigation>
-        </div>
+    <div class="grid grid-cols-[auto_110px] mb-2">
+        <tw-text-scaleable class="relative bottom-1">{{ route.meta.title }}</tw-text-scaleable>
+        <fugletur-navigation class="z-50"></fugletur-navigation>        
     </div>
-    <div class="scroll mt-2">
-        <bs-row-cols :count="groupedData.size">
-            <div v-for="[key, value] in groupedData">
-                <bs-card>
-                    <bs-card-header>
-                        <span class="birdware text-capitalize">{{ key }}</span>
-                        <span class="birdware float-end">{{ value.length }}</span>
-                    </bs-card-header>
-                    <bs-card-body>
-                        <table-birdware>
-                            <template v-for="tur in value">
-                                <table-row-birdware>
-                                    <table-cell-birdware>
-                                        <fugletur-dato :fugleturId="tur.id" :dato="tur.dato"></fugletur-dato>
-                                    </table-cell-birdware>
-                                    <table-cell-birdware>
-                                        {{ tur.lokalitetNavn }}
-                                    </table-cell-birdware>
-                                </table-row-birdware>
-                            </template>
-                        </table-birdware>
-                    </bs-card-body>
-                </bs-card>
-            </div>
-        </bs-row-cols>
-    </div>
+    <fugletur-selection></fugletur-selection>
+    <tw-grid-cols-five :count="groupedData?.size" class="mt-3">
+        <div v-for="[key, value] in groupedData">
+            <tw-card>
+                <span class="text-base font-semibold text-birdware dark:text-birdware-bright capitalize">{{ key
+                    }}</span>
+                <span class="text-base font-semibold text-birdware dark:text-birdware-bright float-end">{{ value.length
+                    }}</span>
+                <table-birdware>
+                    <template v-for="tur in value">
+                        <table-row-birdware>
+                            <table-cell-birdware>
+                                <fugleturDato :fugleturId="tur.id" :dato="tur.dato" />
+                            </table-cell-birdware>
+                            <table-cell-birdware>
+                                <span>{{ tur.lokalitetNavn }}</span>
+                            </table-cell-birdware>
+                        </table-row-birdware>
+                    </template>
+                </table-birdware>
+            </tw-card>
+        </div>
+    </tw-grid-cols-five>
 </template>
 
 <script setup lang="ts">
 import { reactive, onMounted, computed, watch } from 'vue';
 import fugleturNavigation from '@/components/fugletur/fugletur-navigation.vue';
 import fugleturSelection from '@/components/fugletur/fugletur-selection.vue';
-import fugleturDato from '../main/fugleturdato.vue';
-import { useFugleturSelectionStore } from '@/stores/fugletur-selection-store';
+import fugleturDato from '@/components/main/fugleturdato.vue';
+import { useFugleturSelectionStore } from '@/stores/fugletur-selection-store.ts';
 
 import api from '@/api';
 import { storeToRefs } from 'pinia'
-import { type fugleturType } from '@/types/fugleturType';
+import { type fugleturType } from '@/types/fugleturType.ts';
+
+import { useRoute } from 'vue-router';
+const route = useRoute();
 
 const fugleturSelectionStore = useFugleturSelectionStore();
 const { selectedTags } = storeToRefs(fugleturSelectionStore);

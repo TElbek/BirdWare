@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { useFugleturStore } from '@/stores/fugletur-store';
+import { useFugleturStore } from '@/stores/fugletur-store.ts';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 

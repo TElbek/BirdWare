@@ -1,29 +1,24 @@
 <template>
-    <bs-row-cols :count="listOfItems.size">
+    <tw-grid-cols-five :count="listOfItems.size">
         <div v-for="[key, value] in listOfItems">
-            <bs-card>
-                <bs-card-header>
-                    <span class="birdware">{{ key }}</span>
-                    <span class="float-end  birdware">{{ value.length }}</span> 
-                </bs-card-header>
-                <bs-card-body>
-                    <bs-flex :hasWrap="true">
-                        <div v-for="art in arterSorteret(value)">
-                            <art-navn :artId="art.artId" :artNavn="art.artNavn" :su="art.su"
-                                :speciel="art.speciel"></art-navn>
-                        </div>
-                    </bs-flex>
-                </bs-card-body>
-            </bs-card>
+            <tw-card>
+                <tw-card-header :caption="key" :count="value.length" :show-count="true"></tw-card-header>
+                <tw-flex>
+                    <template v-for="item in arterSorteret(value)">
+                        <art-navn :art-navn="item.artNavn" :art-id="item.artId" :speciel="item.speciel"
+                            :su="item.su"></art-navn>
+                    </template>
+                </tw-flex>
+            </tw-card>
         </div>
-    </bs-row-cols>
+    </tw-grid-cols-five>
 </template>
 
 <script setup lang="ts">
 import api from '@/api';
 import { reactive, computed, onMounted } from 'vue';
-import artNavn from '@/components/main/artNavn.vue';
-import { type forskelType} from '@/types/forskelType.ts';
+import { type forskelType } from '@/types/forskelType.ts';
+import ArtNavn from '../main/artNavn.vue';
 
 interface forskelAarProps {
     isThisYear: boolean,
@@ -31,16 +26,8 @@ interface forskelAarProps {
 }
 
 const props = defineProps<forskelAarProps>();
-
-const state = reactive({
-    forskelAar: [] as forskelType[]
-});
-
+const apiPath = computed(() => { return props.isThisYear ? 'iaar' : 'sidsteaar' });
 const emit = defineEmits(['item-count']);
-
-onMounted(() => {
-    getForskelIAar();
-});
 
 const listOfItems = computed(() => {
     return props.isByTrip ? byTrip.value : byFamilie.value;
@@ -56,7 +43,13 @@ const byFamilie = computed(() => {
     return Map.groupBy(listSorted, (one: forskelType) => one.familieNavn);
 });
 
-const apiPath = computed(() => { return props.isThisYear ? 'iaar' : 'sidsteaar' });
+onMounted(() => {
+    getForskelIAar();
+});
+
+const state = reactive({
+    forskelAar: [] as forskelType[]
+});
 
 function arterSorteret(trip: forskelType[]) {
     return trip.sort((a, b) => a.artNavn.localeCompare(b.artNavn));

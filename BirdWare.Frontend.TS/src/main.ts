@@ -1,8 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
-
 import 'vue-multiselect/dist/vue-multiselect.css';
-import '@/assets/scss/base.scss';
+import '@/assets/css/main.css';
 
 import { createApp, defineAsyncComponent } from 'vue'
 import { createPinia } from 'pinia'
@@ -13,7 +10,7 @@ import router from './router'
 const app = createApp(App)
 
 registerComponents();
-registerBootstrapComponents();
+registerTailWindComponents();
 
 app.use(createPinia())
 app.use(router)
@@ -21,21 +18,23 @@ app.use(router)
 app.mount('#app');
 
 function registerComponents() {
-    app.component('tableBirdware', defineAsyncComponent(() => import('@/components/main/table/table.vue')));
-    app.component('tableRowBirdware', defineAsyncComponent(() => import('@/components/main/table/tablerow.vue')));
-    app.component('tableCellBirdware', defineAsyncComponent(() => import('@/components/main/table/tablecell.vue')));
+    app.component('art-navn', defineAsyncComponent(() => import('./components/main/artNavn.vue')));
+    app.component('show-more-ui', defineAsyncComponent(() => import('./components/main/show-more-ui.vue')));
+    app.component('table-birdware', defineAsyncComponent(() => import('./components/main/table/table.vue')));
+    app.component('table-row-birdware', defineAsyncComponent(() => import('./components/main/table/table-row.vue')));
+    app.component('table-cell-birdware', defineAsyncComponent(() => import('./components/main/table/table-cell.vue')));
 }
 
-function registerBootstrapComponents() {
-    app.component('bsCard', defineAsyncComponent(() => import('@/components/main/bootstrap/bscard.vue')));
-    app.component('bsCardHeader', defineAsyncComponent(() => import('@/components/main/bootstrap/bscardheader.vue')));
-    app.component('bsCardBody', defineAsyncComponent(() => import('@/components/main/bootstrap/bscardbody.vue')));
-    app.component('bsRowCols', defineAsyncComponent(() => import('@/components/main/bootstrap/bsrowcols.vue')));
-    app.component('bsFlex', defineAsyncComponent(() => import('@/components/main/bootstrap/bsflex.vue')));
-    app.component('bsButtonGroup', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbuttongroup.vue')));
-    app.component('bsButton', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbutton.vue')));
-    app.component('bsButtonDropdown', defineAsyncComponent(() => import('@/components/main/bootstrap/bsbuttondropdown.vue')));
-
-    app.component('bs-show-lg', defineAsyncComponent(() => import('@/components/main/bootstrap/bs-show-lg.vue')));
-    app.component('bs-show-md', defineAsyncComponent(() => import('@/components/main/bootstrap/bs-show-md.vue')));
+function registerTailWindComponents() {
+    app.component('tw-button', defineAsyncComponent(() => import('./components/main/tailwind/tw-button.vue')));
+    app.component('tw-button-dropdown', defineAsyncComponent(() => import('./components/main/tailwind/tw-button-dropdown.vue')));
+    app.component('tw-button-group', defineAsyncComponent(() => import('./components/main/tailwind/tw-button-group.vue')));
+    app.component('tw-card', defineAsyncComponent(() => import('./components/main/tailwind/tw-card.vue')));
+    app.component('tw-card-header', defineAsyncComponent(() => import('./components/main/tailwind/tw-card-header.vue')));
+    app.component('tw-flex', defineAsyncComponent(() => import('./components/main/tailwind/tw-flex.vue')));
+    app.component('tw-grid-cols-five', defineAsyncComponent(() => import('./components/main/tailwind/tw-grid-cols-five.vue')));
+    app.component('tw-grid-cols-three', defineAsyncComponent(() => import('./components/main/tailwind/tw-grid-cols-three.vue')));
+    app.component('tw-show-lg', defineAsyncComponent(() => import('./components/main/tailwind/tw-show-lg.vue')));
+    app.component('tw-show-md', defineAsyncComponent(() => import('./components/main/tailwind/tw-show-md.vue')));
+    app.component('tw-text-scaleable', defineAsyncComponent(() => import('./components/main/tailwind/tw-text-sizeable.vue')));
 }

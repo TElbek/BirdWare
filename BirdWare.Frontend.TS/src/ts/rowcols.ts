@@ -1,14 +1,14 @@
 export const getRowColClasses = (itemCount: number) => {
-    const classesFour = ['row-cols-1', 'row-cols-md-2', 'row-cols-lg-3', 'row-cols-xl-4', 'row-cols-xxl-5'];
-    return 'row g-2 ' + classesFour.slice(0, Math.min(5, itemCount)).join(' ');
+    const classList = ['sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3', 'xl:grid-cols-4', '2xl:grid-cols-5'];
+    return 'grid gap-3 ' + classList.slice(0, Math.min(5, itemCount)).join(' ');
 }
 
 export const getRowColClassesThree = (itemCount: number) => {
-    const classesThree = ['row-cols-1', 'row-cols-md-2', 'row-cols-xl-3'];
-    return 'row g-2 ' + classesThree.slice(0, Math.min(3, itemCount)).join(' ');
+    const classesThree = ['sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3'];
+    return 'grid gap-3 ' + classesThree.slice(0, Math.min(3, itemCount)).join(' ');
 }
 
 export const getRowColClassesTwo = (itemCount: number) => {
-    const classesThree = ['row-cols-1', 'row-cols-md-2'];
-    return 'row g-2 ' + classesThree.slice(0, Math.min(2, itemCount)).join(' ');
+    const classesThree = ['sm:grid-cols-2', 'md:grid-cols-3'];
+    return 'grid gap-3 ' + classesThree.slice(0, Math.min(2, itemCount)).join(' ');
 }

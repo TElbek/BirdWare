@@ -1,20 +1,20 @@
 <template>
-    <observationList :grouped-data="groupedData" @addtag="addTag"></observationList>
+    <observationList class="mt-3 mb-3" :grouped-data="groupedData" @addtag="addTag"></observationList>
 </template>
 
 <script setup lang="ts">
 import api from '@/api';
 import { reactive, onMounted, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia'
-import { type observationType } from '@/types/observationType';
+import { type observationType } from '@/types/observationType.ts';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
-import observationList from './observationlist.vue';
+import observationList from './observation-list.vue';
 
 const obsSelectionStore = useObsSelectionStore();
 const { selectedTags } = storeToRefs(obsSelectionStore);
 
 import { getMonthNameFromNumber } from '@/ts/dateandtime.ts';
-import { valueIsNumber } from '@/ts/typechecks';
+import { valueIsNumber } from '@/ts/typechecks.ts';
 
 const state = reactive({
     observationer: [] as observationType[]

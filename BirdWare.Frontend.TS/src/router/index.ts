@@ -10,16 +10,26 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: {
+        title: '',
         showInNavBar: false,
-        title: 'Hjem',
-        requireSSL: false
+        requireSSL: false,
+      }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/Login.vue'),
+      meta: {
+        title: 'Login',
+        showInNavBar: false,
+        requireSSL: true,
       }
     },
     {
       path: '/fugletur',
       name: 'fugletur',
       component: () => import('../components/fugletur/fugletur.vue'),
-      redirect: { name: 'fugletur-obs' },
+      redirect: { name: 'fugletur-oversigt' },
       meta: {
         title: 'Fugletur',
         showInNavBar: true,
@@ -62,23 +72,23 @@ const router = createRouter({
       ]
     },
     {
-      path: '/art/observation/',
-      name: 'art-observation',
+      path: '/art/observation',
+      name: 'observation',
       component: () => import('../views/ObservationView.vue'),
       meta: {
         title: 'Observation',
         showInNavBar: true,
-        requireSSL: false
-      },
+        requireSSL: false,
+      }
     },
     {
       path: '/forskel',
       name: 'forskel',
       component: () => import('../views/ForskelView.vue'),
       meta: {
-        showInNavBar: true,
         title: 'Forskel',
-        requireSSL: false
+        showInNavBar: true,
+        requireSSL: false,
       }
     },
     {
@@ -86,9 +96,9 @@ const router = createRouter({
       name: 'hvorkanjegfinde',
       component: () => import('../views/HvorKanJegFindeView.vue'),
       meta: {
-        showInNavBar: true,
         title: 'Hvor kan jeg finde',
-        requireSSL: false
+        showInNavBar: true,
+        requireSSL: false,
       }
     },
     {
@@ -96,12 +106,12 @@ const router = createRouter({
       name: 'aaretsgang',
       component: () => import('../views/AaretsGangView.vue'),
       meta: {
+        title: 'Årets Gang',
         showInNavBar: true,
-        title: 'Årets gang',
-        requireSSL: false
+        requireSSL: false,
       }
     },
-    {
+{
       path: '/opret/oprettur',
       name: 'addtrip',
       component: () => import('../views/OpretTurView.vue'),
@@ -147,17 +157,7 @@ const router = createRouter({
           }
         },
       ]
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('../views/Login.vue'),
-      meta: {
-        title: 'Login',
-        showInNavBar: false,
-        requireSSL: true
-      }
-    }
+    },    
   ],
 })
 

@@ -1,22 +1,9 @@
 <template>
-    <bs-show-md>
-        <bs-button-dropdown :caption="route.meta.title">
-            <ul class="dropdown-menu">
-                <li v-for="route in availableRoutes">
-                    <a class="dropdown-item birdware" @click="navigate(route.name)">{{ route.meta?.title }}</a>
-                </li>
-            </ul>
-        </bs-button-dropdown>
-    </bs-show-md>
-    <bs-show-lg>
-        <bs-button-group>
-            <template v-for="item in availableRoutes">
-                <bs-button :isOn="item.name == route.name" class="btn-equal-width" @click="navigate(item.name)">
-                    {{ item.meta?.title }}
-                </bs-button>
-            </template>
-        </bs-button-group>
-    </bs-show-lg>
+    <tw-button-dropdown :caption="route.meta?.title">
+        <button class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright" v-for="route in availableRoutes" @click="navigate(route.name)">
+            {{ route.meta?.title }}
+        </button>
+    </tw-button-dropdown>
 </template>
 
 <script setup lang="ts">

@@ -1,19 +1,23 @@
 <template>
     <div class="center-container">
-        <form class="border rounded" @submit.prevent="login">
-            <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Brugernavn" name="uname" v-model="state.username"
-                    ref="username" v-focus />
-            </div>
-            <div class="mb-3">
-                <input type="password" class="form-control" placeholder="Kodeord" name="pwd" v-model="state.password"
-                    ref="pwd" />
-            </div>
-            <div class="mb-2">
-                <button type="submit" class="btn btn-sm btn-success" :disabled="!canLogin">Log ind</button>
-            </div>
-        </form>
+        <div class="text-black dark:text-birdware-bright">
+            <form class="border border-gray-400 p-4 rounded" @submit.prevent="login">
+                <div class="mb-3">
+                    <input type="text" class="p-2 w-80 border border-gray-200 rounded" placeholder="Brugernavn"
+                        name="uname" ref="username" v-focus v-model="state.username" />
+                </div>
+                <div class="mb-3">
+                    <input class="p-2 w-80 border border-gray-200 rounded" type="password" placeholder="Kodeord"
+                        name="pwd" ref="pwd" v-model="state.password" />
+                </div>
+                <div class="mb-2">
+                    <button type="submit" class="cursor-pointer p-2 w-80 border border-gray-400 rounded text-gray-800 dark:text-white"
+                        :disabled="!canLogin">Log ind</button>
+                </div>
+            </form>
+        </div>
     </div>
+
 </template>
 
 <script setup lang="ts">

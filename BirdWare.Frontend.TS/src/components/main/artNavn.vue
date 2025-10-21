@@ -1,6 +1,6 @@
 <template>
     <a @click="navigateToObservation">
-        <span class="text-nowrap" :class="[forekomst]">{{ props.artNavn }}</span>
+        <span class="text-nowrap text-gray-900 dark:text-white cursor-pointer" :class="[forekomst]">{{ props.artNavn }}</span>
     </a>
 </template>
 
@@ -23,8 +23,8 @@ interface artNavnProps {
 const props = defineProps<artNavnProps>();
 
 const forekomst = computed(() => {
-    if (props.speciel == true) return 'forekomst-speciel';
-    if (props.su == true) return 'forekomst-su';
+    if (props.speciel == true) return 'forekomst forekomst-speciel';
+    if (props.su == true) return 'forekomst forekomst-su';
     return '';
 });
 

@@ -4,8 +4,8 @@ import navigation from '@/components/main/navigation.vue';
 </script>
 
 <template>
-  <div class="container-fluid">
-    <navigation></navigation>
+  <div class="max-w-full-xl mx-auto ps-4 pe-4 pt-2 ">
+    <navigation />
     <RouterView />
   </div>
 </template>

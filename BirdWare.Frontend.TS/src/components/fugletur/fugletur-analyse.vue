@@ -1,21 +1,16 @@
 <template>
-    <div class="d-flex justify-content-between mb-2">
-        <fugleturTitel class="col" :fugleturId="fugleturStore.chosenFugleturId"></fugleturTitel>
-        <fugleturNavigation class="col-auto"></fugleturNavigation>
+    <div class="grid grid-cols-[auto_110px]">
+        <fugletur-titel class="relative top-3" :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+        <fugletur-navigation class="mb-3"></fugletur-navigation>        
     </div>
     <div v-if="state.hasData">
-        <bs-row-cols v-if="state.analyseListe.length > 0" :count="analyseTyperCount">
+        <tw-grid-cols-five :count="analyseTyperCount">
             <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
                 <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
                     :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
                 </fugleturAnalyseType>
             </template>
-        </bs-row-cols>
-        <bs-card v-else>
-            <bs-card-header>
-                <span>Ingen analyse</span>
-            </bs-card-header>
-        </bs-card>
+        </tw-grid-cols-five>
     </div>
 </template>
 
@@ -29,9 +24,8 @@ import { useFugleturStore } from '@/stores/fugletur-store';
 import { storeToRefs } from 'pinia';
 import { getNameOfMonth } from '@/ts/dateandtime';
 import { type fugleturType } from '@/types/fugleturType';
-import type { analyseTypeType } from '@/types/analyseTypeType';
-import type { analyseType } from '@/types/analyseType';
-import { getRowColClasses } from '@/ts/rowcols';
+import type { analyseTypeType } from '@/types/analyseTypeType.ts';
+import type { analyseType } from '@/types/analyseType.ts';
 
 const fugleturStore = useFugleturStore();
 const { chosenFugleturId } = storeToRefs(fugleturStore)

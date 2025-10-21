@@ -1,26 +1,18 @@
 <template>
-    <div class="row">
-        <bs-show-lg class="col-auto birdware large-text">
-            Observation
-        </bs-show-lg>
-        <bs-show-md class="col birdware large-text">
-            Observation
-        </bs-show-md>
-        <bs-show-lg class="col">
-            <observation-selection></observation-selection>
-        </bs-show-lg>
-        <div class="col-auto d-flex gap-2">
-            <observation-group-by></observation-group-by>
-        </div>
-    </div>
-    <bs-show-md class="mt-2">
-            <observation-selection></observation-selection>
-    </bs-show-md>
-    <observation-presenter></observation-presenter>
+  <div class="grid grid-cols-[auto_110px] mb-2">
+    <tw-text-scaleable class="mt-4">{{ route.meta.title }}</tw-text-scaleable>
+    <observation-grouping class="z-50" />
+  </div>
+  <observation-selection />
+  <!-- apply a fixed height and allow scrolling -->
+  <observation-presenter class="max-h-160 xl:max-h-175 overflow-auto" />
 </template>
 
 <script setup lang="ts">
-import observationSelection from './observationselection.vue';
-import observationGroupBy from './observationgrouping.vue';
-import observationPresenter from './observationpresenter.vue';
+import observationGrouping from './observation-grouping.vue';
+import observationPresenter from './observation-presenter.vue';
+import observationSelection from './observation-selection.vue';
+
+import { useRoute } from 'vue-router';
+const route = useRoute();
 </script>

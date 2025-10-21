@@ -11,10 +11,12 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.15",
+    "@vueuse/core": "^13.9.0",
     "axios": "^1.10.0",
-    "bootstrap": "^5.3.7",
     "pinia": "^3.0.3",
     "sass": "^1.89.2",
+    "tailwindcss": "^4.1.15",
     "vue": "^3.5.17",
     "vue-multiselect": "^3.2.0",
     "vue-router": "^4.5.1"

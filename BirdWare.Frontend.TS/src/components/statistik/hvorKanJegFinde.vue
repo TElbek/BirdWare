@@ -1,36 +1,33 @@
 <template>
-    <div class="birdware large-text">Hvor kan jeg finde</div>
-    <bs-row-cols :count="byLokalitet.size">
-        <div v-for="[key, value] in byLokalitet">
-            <bs-card>
-                <bs-card-header>
-                    <span class="birdware">{{ key }} {{ Math.round(value[0].distance) }} km.</span>
-                    <span class="birdware float-end">{{ value.length }}</span>
-                </bs-card-header>
-                <bs-card-body>
-                    <bs-flex :hasWrap="true">
-                        <div v-for="art in arterSorteret(value)">
-                            <art-navn :artId="art.artId" :artNavn="art.artNavn"></art-navn>
-                        </div>
-                    </bs-flex>
-                </bs-card-body>
-            </bs-card>
-        </div>
-    </bs-row-cols>
+    <div class="pt-2">
+        <tw-text-scaleable>{{route.meta.title}}</tw-text-scaleable>        
+        <tw-grid-cols-five :count="byLokalitet.size" class="mt-2">
+            <div v-for="[key, value] in byLokalitet">
+                <tw-card>
+                    <tw-card-header :caption="`${key} ${Math.round(value[0].distance)} km`" :count="value.length" :show-count="true"></tw-card-header>
+                    <tw-flex>
+                        <template v-for="item in arterSorteret(value)">
+                            <art-navn :art-navn="item.artNavn" :art-id="item.artId" :speciel="false"
+                                :su="false"></art-navn>
+                        </template>
+                    </tw-flex>
+                </tw-card>
+            </div>
+        </tw-grid-cols-five>
+    </div>
 </template>
 
 <script setup lang="ts">
 import api from '@/api';
 import { reactive, computed, onMounted } from 'vue';
-import artNavn from '@/components/main/artNavn.vue';
-import { type hvorKanJegFindeType } from '@/types/hvorKanJegFindeType.ts';
+import { type hvorKanJegFindeType } from '@/types/hvorKanJegFindeType';
+import ArtNavn from '../main/artNavn.vue';
+import {useRoute} from 'vue-router';
+
+const route = useRoute();
 
 const state = reactive({
-    hvorKanJegFinde: [] as hvorKanJegFindeType[],
-});
-
-const byLokalitet = computed(() => {
-    return Map.groupBy(state.hvorKanJegFinde, (one: hvorKanJegFindeType) => one.lokalitetNavn);
+    hvorKanJegFinde: [] as hvorKanJegFindeType[]
 });
 
 onMounted(() => {
@@ -42,6 +39,10 @@ function getHvorKanJegFinde() {
         state.hvorKanJegFinde = res.data;
     });
 }
+
+const byLokalitet = computed(() => {
+    return Map.groupBy(state.hvorKanJegFinde, (one: hvorKanJegFindeType) => one.lokalitetNavn);
+});
 
 function arterSorteret(trip: hvorKanJegFindeType[]) {
     return trip.sort((a, b) => a.artNavn.localeCompare(b.artNavn));

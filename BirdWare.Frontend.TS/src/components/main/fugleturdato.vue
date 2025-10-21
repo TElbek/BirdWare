@@ -1,5 +1,5 @@
 <template>
-    <a @click="navigateToFugletur">
+    <a @click="navigateToFugletur" class="cursor-pointer">
         <span class="fw-small-bold">{{ formatDate(props.dato) }}</span>
     </a>
 </template>

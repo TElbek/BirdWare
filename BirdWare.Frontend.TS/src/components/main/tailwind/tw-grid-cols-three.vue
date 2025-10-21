@@ -1,11 +1,11 @@
 <template>
-    <div :class="getRowColClasses(props.count)">
+    <div :class="getRowColClassesThree(props.count)">
         <slot></slot>
     </div>
-</template>
-
+</template> 
+ 
 <script setup lang="ts">
-import { getRowColClasses } from '@/ts/rowcols';
+import { getRowColClassesThree } from '@/ts/rowcols';
 interface rowcolsProps {
     count: number;
 }

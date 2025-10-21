@@ -1,32 +1,23 @@
 <template>
-    <div class="col" v-if="props.analyseListe.length > 0">
-        <bs-card>
-            <bs-card-header>
-                <div class="row">
-                    <div class="col d-inline-block text-truncate">
-                        <span class="birdware ">{{ props.analyseTypeTekst }}</span>
-                    </div>
-                    <div class="col-auto birdware ">
-                        {{ props.analyseListe.length }}
-                    </div>
-                </div>
-            </bs-card-header>
-            <bs-card-body>
-                <bs-flex :hasWrap="true">
-                    <div v-for="art in arterSorteret(props.analyseListe)">
-                        <artNavn :artId="art.artId" :artNavn="art.artNavn" :su="art.su" :speciel="art.speciel">
-                        </artNavn>
-                    </div>
-                </bs-flex>
-            </bs-card-body>
-        </bs-card>
+    <div v-if="props.analyseListe.length > 0">
+        <tw-card>
+            <span class="text-base font-semibold text-birdware dark:text-birdware-bright capitalize">{{
+                props.analyseTypeTekst }}</span>
+            <span class="text-base font-semibold text-birdware dark:text-birdware-bright float-end">{{
+                props.analyseListe.length }}</span>
+            <tw-flex>
+                <template v-for="item in arterSorteret(props.analyseListe)">
+                    <art-navn :art-navn="item.artNavn" :art-id="item.artId" :speciel="item.speciel" :su="item.su"></art-navn>
+                </template>
+            </tw-flex>
+        </tw-card>
     </div>
 </template>
 
 <script setup lang="ts">
 import artNavn from '@/components/main/artNavn.vue';
-import type { analyseType } from '@/types/analyseType';
-import type { analyseTypeType } from '@/types/analyseTypeType';
+import type { analyseType } from '@/types/analyseType.ts';
+import type { analyseTypeType } from '@/types/analyseTypeType.ts';
 
 interface fugleturAnalyseProps {
     analysetype: analyseTypeType,

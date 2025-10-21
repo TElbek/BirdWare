@@ -1,30 +1,24 @@
 <template>
-    <div class="scroll">
-        <bs-row-cols class="row g2" :count="byFamilie.size">
-            <div v-for="[key, value] in byFamilie">
-                <bs-card>
-                    <bs-card-header>
-                        <span class="birdware ">{{ key }}</span>
-                        <span class="float-end  birdware">{{ value.length }}</span>
-                    </bs-card-header>
-                    <bs-card-body>
-                        <table-birdware>
-                            <template v-for="obs in obsSorted(value)">
-                                <table-row-birdware>
-                                    <table-cell-birdware>
-                                        <artNavn :artId="obs.artId" :artNavn="obs.artNavn" :su="obs.su" :speciel="obs.speciel"></artNavn>
-                                    </table-cell-birdware>
-                                    <table-cell-birdware>
-                                        <div>{{ obs.bem }}</div>
-                                    </table-cell-birdware>
-                                </table-row-birdware>
-                            </template>
-                        </table-birdware>
-                    </bs-card-body> 
-                </bs-card>
-            </div>
-        </bs-row-cols>
-    </div>
+    <tw-grid-cols-five :count="byFamilie.size">
+        <div v-for="[key, value] in byFamilie">
+            <tw-card>
+                <span class="text-base font-semibold text-birdware dark:text-birdware-bright capitalize">{{ key}}</span>
+                <span class="text-base font-semibold text-birdware dark:text-birdware-bright float-end">{{ value.length }}</span>
+                <table-birdware>
+                    <template v-for="obs in value">
+                        <table-row-birdware>
+                            <table-cell-birdware>
+                                <art-navn :art-id="obs.artId" :art-navn="obs.artNavn" :speciel="obs.speciel" :su="obs.su"></art-navn>
+                            </table-cell-birdware>
+                            <table-cell-birdware>
+                                {{ obs.bem }}
+                            </table-cell-birdware>  
+                        </table-row-birdware>
+                    </template>
+                </table-birdware>
+            </tw-card>
+        </div>
+    </tw-grid-cols-five>
 </template>
 
 <script setup lang="ts">
@@ -33,15 +27,11 @@ import api from '@/api';
 import { useFugleturStore } from '@/stores/fugletur-store';
 import type { observationType } from '@/types/observationType';
 import artNavn from '../main/artNavn.vue';
-import { getRowColClasses } from '@/ts/rowcols';
 
+import { storeToRefs } from 'pinia'
 const fugleturStore = useFugleturStore();
 
-interface fugleturObsProps {
-    fugleturId: number
-}
-
-const props = defineProps<fugleturObsProps>();
+const { chosenFugleturId } = storeToRefs(fugleturStore);
 
 const state = reactive({
     obsListe: [] as observationType[],
@@ -57,7 +47,7 @@ onMounted(() => {
 });
 
 function getObservationer() {
-    api.get('fugletur/' + props.fugleturId + '/observationer').then((response => {
+    api.get('fugletur/' + fugleturStore.chosenFugleturId + '/observationer').then((response => {
         state.obsListe = response.data;
     }));
 }
@@ -66,7 +56,7 @@ function obsSorted(value: observationType[]) {
     return value.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
 }
 
-watch(() => props.fugleturId, (newValue) => {
+watch(() => chosenFugleturId, (newValue) => {
     getObservationer();
 });
 </script>

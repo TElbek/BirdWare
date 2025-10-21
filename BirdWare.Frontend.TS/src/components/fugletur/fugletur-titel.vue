@@ -1,7 +1,11 @@
 <template>
-     <div>
-        <span v-if="state.hasdata" class="birdware large-text d-inline-block text-truncate">{{ title }}</span>
-     </div>
+    <div v-if="state.hasdata">
+        <div class="flex flex-wrap gap-x-2 mb-4 me-2">
+            <tw-text-scaleable>{{ formatDate(state.fugletur.dato) }}</tw-text-scaleable>
+            <tw-text-scaleable>{{ state.fugletur.lokalitetNavn }}</tw-text-scaleable>
+            <tw-text-scaleable>#{{ state.fugletur.antalArter }}</tw-text-scaleable>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -25,10 +29,6 @@ onMounted(() => {
     if (props.fugleturId > 0) {
         getFugletur();
     }
-});
-
-const title = computed(() => {
-    return formatDate(state.fugletur.dato) + ' ' + state.fugletur.lokalitetNavn + ' #' + state.fugletur.antalArter;
 });
 
 function getFugletur() {
