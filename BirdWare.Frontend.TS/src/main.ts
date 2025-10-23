@@ -36,5 +36,5 @@ function registerTailWindComponents() {
     app.component('tw-grid-cols-three', defineAsyncComponent(() => import('./components/main/tailwind/tw-grid-cols-three.vue')));
     app.component('tw-show-lg', defineAsyncComponent(() => import('./components/main/tailwind/tw-show-lg.vue')));
     app.component('tw-show-md', defineAsyncComponent(() => import('./components/main/tailwind/tw-show-md.vue')));
-    app.component('tw-text-scaleable', defineAsyncComponent(() => import('./components/main/tailwind/tw-text-sizeable.vue')));
+    app.component('tw-text-sizeable', defineAsyncComponent(() => import('./components/main/tailwind/tw-text-sizeable.vue')));
 }

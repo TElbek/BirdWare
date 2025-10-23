@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-[auto_160px]">
-        <tw-text-scaleable>Tilføj Tur</tw-text-scaleable>
+        <tw-text-sizeable>Tilføj Tur</tw-text-sizeable>
         <input class="p-2 border border-gray-200 rounded dark:text-white" type="search" placeholder="Søg..." v-model="state.searchValue" />
     </div>
     <tw-grid-cols-five :count="byDistance.size" class="mt-4 max-h-160 xl:max-h-180 overflow-auto">

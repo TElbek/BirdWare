@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="grid grid-cols-[auto_130px] mb-2">
-            <tw-text-scaleable class="mt-4">{{ route.meta.title }}: {{ state.aaretsGang.length }} Arter</tw-text-scaleable>
+            <tw-text-sizeable class="mt-4">{{ route.meta.title }}: {{ state.aaretsGang.length }} Arter</tw-text-sizeable>
             <aaretsgang-selection :is-by-trip="isByTrip" @switch-is-by-trip="swtichIsByTrip"></aaretsgang-selection>
         </div>
         <tw-grid-cols-five :count="listOfItems.size"  class="max-h-160 xl:max-h-175 overflow-auto">

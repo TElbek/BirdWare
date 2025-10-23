@@ -1,6 +1,6 @@
 <template>
   <div class="grid grid-cols-[auto_110px] mb-2">
-    <tw-text-scaleable class="mt-4">{{ route.meta.title }}</tw-text-scaleable>
+    <tw-text-sizeable class="mt-4">{{ route.meta.title }}</tw-text-sizeable>
     <observation-grouping class="z-50" />
   </div>
   <observation-selection />

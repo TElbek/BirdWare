@@ -1,5 +1,5 @@
 <template>
-    <div :class="getRowColClassesThree(props.count)">
+    <div :class="getRowColClassesThree(props.count)" class="scrollbar-hide">
         <slot></slot>
     </div>
 </template> 

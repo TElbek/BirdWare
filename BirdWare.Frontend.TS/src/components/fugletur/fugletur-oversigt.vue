@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-[auto_110px] mb-2">
-        <tw-text-scaleable class="relative bottom-1">{{ route.meta.title }}</tw-text-scaleable>
+        <tw-text-sizeable class="relative bottom-1">{{ route.meta.title }}</tw-text-sizeable>
         <fugletur-navigation class="z-50"></fugletur-navigation>        
     </div>
     <fugletur-selection></fugletur-selection>

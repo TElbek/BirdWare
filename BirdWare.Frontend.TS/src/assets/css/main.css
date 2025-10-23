@@ -14,6 +14,15 @@ body {
   font-size: 0.9rem;
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .multiselect__input,
 .multiselect__single {
   min-height: 25px;
@@ -28,7 +37,6 @@ body {
   color: var(--color-black);
   outline: none;
   font-weight: normal;
-  
   @variant dark {
     background: var(--color-gray-800);
     color: var(--color-white);
@@ -39,7 +47,6 @@ body {
   background: var(--color-white);
   color: var(--color-black);
   font-weight: var(--text-normal);
-  
   @variant dark {
     background: var(--color-gray-800);
     color: var(--color-white);
@@ -55,17 +62,15 @@ body {
   background: var(--color-white);
   color: var(--color-birdware);
   border: 1px solid var(--color-gray-300);
-  
   @variant dark {
     border: 1px solid var(--color-birdware-bright);
     background: var(--color-gray-800);
     color: var(--color-birdware-bright);
   }
-} 
+}
 
 .multiselect__tag-icon::after {
   color: var(--color-birdware);
-  
   @variant dark {
     color: var(--color-birdware-bright);
   }

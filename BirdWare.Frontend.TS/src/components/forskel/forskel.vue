@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-[auto_130px]">
-        <tw-text-scaleable class="mt-4">{{ route.meta.title }}</tw-text-scaleable>
+        <tw-text-sizeable class="mt-4">{{ route.meta.title }}</tw-text-sizeable>
         <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
             :forskel="state.itemCountThisYear - state.itemCountLastYear" :item-count-last-year="state.itemCountLastYear"
             :item-count-this-year="state.itemCountThisYear" @switch-is-by-trip="switchIsByTrip"

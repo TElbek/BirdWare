@@ -1,6 +1,6 @@
 <template>
     <div class="pt-2">
-        <tw-text-scaleable>{{route.meta.title}}</tw-text-scaleable>        
+        <tw-text-sizeable>{{route.meta.title}}</tw-text-sizeable>        
         <tw-grid-cols-five :count="byLokalitet.size" class="mt-2">
             <div v-for="[key, value] in byLokalitet">
                 <tw-card>
