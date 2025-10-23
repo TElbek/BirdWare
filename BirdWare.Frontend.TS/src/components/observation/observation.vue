@@ -4,8 +4,7 @@
     <observation-grouping class="z-50" />
   </div>
   <observation-selection />
-  <!-- apply a fixed height and allow scrolling -->
-  <observation-presenter class="max-h-160 xl:max-h-175 overflow-auto" />
+  <observation-presenter class="max-h-140 xl:max-h-175 overflow-auto" />
 </template>
 
 <script setup lang="ts">

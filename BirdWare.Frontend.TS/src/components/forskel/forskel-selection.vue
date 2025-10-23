@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-end gap-2">
+    <div class="flex justify-end gap-2 mb-2">
         <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
         <tw-button-dropdown
             :caption="isThisYear ? `${thisYear}: ${itemCountThisYear}` : `${lastYear}: ${itemCountLastYear}`">
