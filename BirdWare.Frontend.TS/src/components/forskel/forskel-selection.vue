@@ -12,7 +12,7 @@
                 {{ lastYear }}: {{ itemCountLastYear }}
             </button>
         </tw-button-dropdown>
-        <tw-button class="shadow-sm h-8 rounded mt-2 font-bold" :isSelected="false"
+        <tw-button class="shadow-sm h-8 rounded mt-2 font-bold text-nowrap" :isSelected="false"
             :caption="Math.abs(props.forskel).toString()"
             :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']"></tw-button>
     </div>
