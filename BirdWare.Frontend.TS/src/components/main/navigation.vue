@@ -26,12 +26,12 @@
                 ></div>
 
                 <aside
-                    class="border border-gray-200"
-                    :class="['fixed top-0 left-0 h-full z-50 w-64 bg-white dark:bg-gray-800 p-4 transform transition-transform duration-300', isOpen ? 'translate-x-0' : '-translate-x-full']"
+                    @click="closeMenu"
+                    :class="['fixed top-0 left-0 h-full z-50 w-64 bg-white dark:bg-gray-800 p-4 transform transition-transform duration-300', isOpen ? 'translate-x-0 rounded shadow-xl shadow-gray-400 dark:shadow-gray-100' : '-translate-x-full']"
                 >
                     <ul class="flex flex-col gap-4">
                         <li v-for="route in visibleRoutes" :key="route.path" class="text-base cursor-pointer">
-                            <router-link :to="route.path" @click="closeMenu">
+                            <router-link :to="route.path">
                                 <span class="nav-item">{{ route.meta?.title }}</span>
                             </router-link>
                         </li>
