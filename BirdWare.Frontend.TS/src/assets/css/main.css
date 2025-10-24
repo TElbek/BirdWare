@@ -71,9 +71,10 @@ body {
 
 .multiselect__tag-icon::after {
   color: var(--color-birdware);
-  @variant dark {
-    color: var(--color-birdware-bright);
-  }
+}
+
+.dark .multiselect__tag-icon::after {
+  color: var(--color-birdware-bright);
 }
 
 .multiselect__tag-icon:focus::after,
