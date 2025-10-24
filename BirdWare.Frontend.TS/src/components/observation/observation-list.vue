@@ -22,7 +22,7 @@
                             <table-cell-birdware class="text-nowrap">{{
                                 obs.lokalitetNavn }}</table-cell-birdware>
                             <table-cell-birdware>
-                                <div class="line-clamp-1">{{ obs.bem }}</div>
+                                <div>{{ obs.bem }}</div>
                             </table-cell-birdware>
                         </table-row-birdware>
                     </template>

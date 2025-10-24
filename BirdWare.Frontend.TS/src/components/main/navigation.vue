@@ -1,11 +1,9 @@
 <template>
     <nav class="mb-1">
-        <div class="grid grid-cols-[125px_auto] text-birdware dark:text-birdware-bright">
-            <a href="#" class="mr-4 cursor-pointer text-xl relative top-[2px]">
-                <span>Birdware</span>
-            </a>
-            <button @click="isOpen = !isOpen"
-                class="relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hidden p-4 border border-gray-300 rounded"
+        <div class="grid grid-cols-[45px_auto] text-birdware dark:text-birdware-bright">
+
+            <button @click="toggleIsOpen"
+                class="relative mr-auto h-6 max-h-10 w-6 max-w-10 select-none text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none p-4 border border-gray-300 rounded"
                 type="button">
                 <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" stroke="currentColor"
@@ -15,37 +13,55 @@
                 </span>
             </button>
 
-            <div :class="['w-full md:w-auto', isOpen ? '' : 'hidden', 'lg:block']" @click="toggleIsOpen">
-                <ul class="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-                    <li class="flex items-center text-sm gap-x-2 lg:text-base" v-for="route in visibleRoutes"
-                        :key="route.path">
-                        <router-link :to="route.path" class="text-nowrap pb-2" >
-                            <span class="nav-item">{{ route.meta?.title }}</span>
-                        </router-link>
-                    </li>
-                    <li>
-                        <tw-toggle-dark></tw-toggle-dark>
-                    </li>
-                </ul>
+            <a href="#" class="mr-4 cursor-pointer text-xl relative top-0.5">
+                <span>Birdware</span>
+            </a>
+
+            <div>
+                <div
+                    v-show="isOpen"
+                    class="fixed inset-0 z-40 transition-opacity duration-200"
+                    @click="closeMenu"
+                    aria-hidden="true"
+                ></div>
+
+                <aside
+                    class="border border-gray-200"
+                    :class="['fixed top-0 left-0 h-full z-50 w-64 bg-white dark:bg-gray-800 p-4 transform transition-transform duration-300', isOpen ? 'translate-x-0' : '-translate-x-full']"
+                >
+                    <ul class="flex flex-col gap-4">
+                        <li v-for="route in visibleRoutes" :key="route.path" class="text-base cursor-pointer">
+                            <router-link :to="route.path" @click="closeMenu">
+                                <span class="nav-item">{{ route.meta?.title }}</span>
+                            </router-link>
+                        </li>
+                        <li>
+                            <tw-toggle-dark></tw-toggle-dark>
+                        </li>
+                    </ul>
+                </aside>
             </div>
         </div>
     </nav>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import TwToggleDark from '@/components/main/tailwind/tw-toggle-dark.vue';
 
 const router = useRouter();
 const isOpen = ref(false);
 
-const matchLG = window.matchMedia('(min-width: 1024px)');
+onMounted(() => {
+});
 
 function toggleIsOpen() {
-    if (!matchLG.matches) {
-        isOpen.value = !isOpen.value;
-    }
+    isOpen.value = !isOpen.value;
+}
+
+function closeMenu() {
+    isOpen.value = false;
 }
 
 const visibleRoutes = computed(() => {
@@ -57,10 +73,3 @@ const visibleRoutes = computed(() => {
             route.meta.requireSSL == false))
 });
 </script>
-
-<style scoped>
-.nav-item {
-    position: relative;
-    top: 4px;
-}
-</style>

@@ -4,9 +4,6 @@
 
 @theme {
   --color-birdware: #048baf;
-}
-
-@theme {
   --color-birdware-bright: #05bef0;
 }
 
@@ -89,20 +86,12 @@ body {
   }
 }
 
-@media only screen and (min-width:992px) {
-  .router-link-exact-active {
-    border-bottom: 1px solid var(--color-birdware);
-    @variant dark {
-      border-bottom: 1px solid var(--color-birdware-bright);
-    }
-  }
-  
-  .router-link-active {
-    border-bottom: 1px solid var(--color-birdware);
-    @variant dark {
-      border-bottom: 1px solid var(--color-birdware-bright);
-    }
-  }
+.router-link-exact-active {
+  font-weight: bold;
+}
+
+.router-link-active {
+  font-weight: bold;
 }
 
 .forekomst {
