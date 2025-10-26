@@ -1,6 +1,6 @@
 <template>
     <div class="max-lg:hidden text-birdware dark:text-birdware-bright">
-        <ul class="flex gap-x-8 text-lg cursor-pointer tracking-wide">
+        <ul class="flex gap-x-8 text-base cursor-pointer tracking-wide">
             <li>
                 <router-link v-if="homeRoute != undefined" :to="homeRoute.path">
                     <span>{{ homeRoute?.meta?.title }}</span>
