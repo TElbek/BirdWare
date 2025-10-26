@@ -2,13 +2,14 @@
     <tw-grid-cols-three :count="props.groupedData?.size">
         <div v-for="[key, value] in props.groupedData">
             <tw-card>
-                <div class="grid grid-cols-[auto_15px] mb-1">
+                <div class="grid grid-cols-[auto_15px] mb-1 font-medium tracking-wide">
                     <a @click="addTag(key)" class="cursor-pointer">
-                        <span class="text-base font-semibold text-birdware dark:text-birdware-bright">
-                            {{ obsSelectionStore.isGropingByMonth  && valueIsNumber(key) ?  getNameOfMonth(key) : key}}
+                        <span class="text-base text-birdware dark:text-birdware-bright">
+                            {{ obsSelectionStore.isGropingByMonth && valueIsNumber(key) ? getNameOfMonth(key) :
+                                key }}
                         </span>
                     </a>
-                    <span class="text-base font-semibold text-birdware text-right">{{ value.length}}</span>
+                    <span class="text-base text-birdware text-right">{{ value.length }}</span>
                 </div>
                 <table-birdware>
                     <template v-for="obs in obsSorted(value)" :key="obs.observationId">

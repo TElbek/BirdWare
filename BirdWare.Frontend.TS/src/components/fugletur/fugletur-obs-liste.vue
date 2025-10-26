@@ -2,8 +2,8 @@
     <tw-grid-cols-five :count="byFamilie.size">
         <div v-for="[key, value] in byFamilie">
             <tw-card>
-                <span class="text-base font-semibold text-birdware dark:text-birdware-bright capitalize">{{ key}}</span>
-                <span class="text-base font-semibold text-birdware dark:text-birdware-bright float-end">{{ value.length }}</span>
+                <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright capitalize">{{ key}}</span>
+                <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright float-end">{{ value.length }}</span>
                 <table-birdware>
                     <template v-for="obs in value">
                         <table-row-birdware>

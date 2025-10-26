@@ -1,6 +1,6 @@
 <template>
     <button @click="toggleDark()" class="cursor-pointer">
-        <span class="nav-item text-birdware dark:text-birdware-bright">
+        <span class="text-birdware dark:text-birdware-bright">
             {{ isDark ? '&#x263D Mørk' : '&#x263C Lys' }}
         </span>
     </button>

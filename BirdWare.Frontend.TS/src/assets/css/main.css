@@ -87,11 +87,17 @@ body {
 }
 
 .router-link-exact-active {
-  font-weight: bold;
+  border-bottom: 2px solid var(--color-birdware);
+  @variant dark {
+    border-bottom: 2px solid var(--color-birdware-bright);
+  }
 }
 
 .router-link-active {
-  font-weight: bold;
+  border-bottom: 2px solid var(--color-birdware);
+  @variant dark {
+    border-bottom: 2px solid var(--color-birdware-bright);
+  }
 }
 
 .forekomst {

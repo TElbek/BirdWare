@@ -1,7 +1,7 @@
 <template>
-    <div class="grid grid-cols-[auto_15px] mb-1">
-        <span class="text-base font-semibold text-birdware dark:text-birdware-bright">{{ props.caption }}</span>
-        <span v-if="showCount" class="text-base font-semibold text-birdware text-right">{{ props.count }}</span>
+    <div class="grid grid-cols-[auto_15px] mb-1 tracking-wider">
+        <span class="text-base font-medium text-birdware dark:text-birdware-bright">{{ props.caption }}</span>
+        <span v-if="showCount" class="text-base font-medium text-birdware text-right">{{ props.count }}</span>
     </div>    
 </template>
 
