@@ -7,7 +7,15 @@ export function useRouteLogic() {
 
     const homeRoute = router.options.routes.find(route => route.path === '/');
     const obsRoute =  router.options.routes.find(route => route.name === 'observation');
-    const turRoute = router.options.routes.find(route => route.name === 'fugletur');
+    const turRoute = findFugleturObsRoute();
+
+    function findFugleturObsRoute(): RouteRecordRaw | undefined {
+        let fugleturRoute = router.options.routes.find(route => route.name === 'fugletur');
+        if (!fugleturRoute || !fugleturRoute.children) {
+            return undefined;
+        }
+        return fugleturRoute.children.find(child => child.name === 'fugletur-obs');        
+    }
 
     const isAtHomeRoute = computed(() => {
         return route.path === '/';
