@@ -8,6 +8,9 @@
 import { formatDate } from '@/ts/dateandtime';
 import { useFugleturStore } from '@/stores/fugletur-store';
 import { useRouter } from 'vue-router';
+import { useRouteLogic } from '@/composables/route-logic';
+
+const { turRoute } = useRouteLogic();
 
 const fugleturStore = useFugleturStore();
 const router = useRouter();
@@ -21,6 +24,6 @@ const props = defineProps<fugleturDatoProps>();
 
 function navigateToFugletur() {
     fugleturStore.setFugleturId(props.fugleturId);
-    router.push({path: '/fugletur/observationer'});
+    router.push(turRoute!.path);
 }
 </script>

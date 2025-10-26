@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import TwToggleDark from '@/components/main/tailwind/tw-toggle-dark.vue';
-import {useRouteLogic} from '@/composables/route-logic'
+import { useRouteLogic } from '@/composables/route-logic'
 
 const { homeRoute, visibleRoutes } = useRouteLogic();
 </script>

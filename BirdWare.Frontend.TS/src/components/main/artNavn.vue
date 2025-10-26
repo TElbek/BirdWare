@@ -9,7 +9,9 @@ import api from '@/api';
 import { computed } from 'vue';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import { useRouter } from 'vue-router';
+import { useRouteLogic } from '@/composables/route-logic';
 
+const { obsRoute } = useRouteLogic();
 const obsSelectionStore = useObsSelectionStore();
 const router = useRouter();
 
@@ -32,7 +34,7 @@ function navigateToObservation() {
     api.get("tag/art/" + props.artId).then(response => {
         obsSelectionStore.SetTag(response.data);
         obsSelectionStore.SetGroupingId(0);
-        router.push({ path: '/art/observation' });
+        router.push(obsRoute!.path);
     });
 }
 </script>

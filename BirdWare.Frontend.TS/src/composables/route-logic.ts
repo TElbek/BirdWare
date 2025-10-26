@@ -1,11 +1,13 @@
 import { computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { useRouter, useRoute, type RouteRecordRaw } from 'vue-router';
 
 export function useRouteLogic() {
     const router = useRouter();
     const route = useRoute();
 
     const homeRoute = router.options.routes.find(route => route.path === '/');
+    const obsRoute =  router.options.routes.find(route => route.name === 'observation');
+    const turRoute = router.options.routes.find(route => route.name === 'fugletur');
 
     const isAtHomeRoute = computed(() => {
         return route.path === '/';
@@ -23,6 +25,8 @@ export function useRouteLogic() {
     return {
         isAtHomeRoute,
         visibleRoutes,
-        homeRoute
+        homeRoute,
+        obsRoute,
+        turRoute
     };
 }
