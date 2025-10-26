@@ -1,9 +1,9 @@
 <template>
     <div v-if="props.analyseListe.length > 0">
         <tw-card>
-            <span class="text-base font-semibold text-birdware dark:text-birdware-bright capitalize">{{
+            <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright capitalize">{{
                 props.analyseTypeTekst }}</span>
-            <span class="text-base font-semibold text-birdware dark:text-birdware-bright float-end">{{
+            <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright float-end">{{
                 props.analyseListe.length }}</span>
             <tw-flex>
                 <template v-for="item in arterSorteret(props.analyseListe)">
