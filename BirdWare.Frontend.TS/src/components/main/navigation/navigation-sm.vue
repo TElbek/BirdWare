@@ -1,6 +1,5 @@
 <template>
-    <nav class="mb-1">
-        <div class="lg:hidden grid grid-cols-[45px_auto] text-birdware dark:text-birdware-bright">
+    <div class="grid grid-cols-[45px_auto] text-birdware dark:text-birdware-bright">
 
             <button
                 class="relative mr-auto h-6 max-h-10 w-6 max-w-10 select-none text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none p-4 border border-gray-300 rounded"
@@ -36,34 +35,14 @@
                 </aside>
             </div>
         </div>
-
-        <div class="max-lg:hidden text-birdware dark:text-birdware-bright">
-            <ul class="flex gap-x-8 text-lg cursor-pointer tracking-wide">
-                <li>
-                    <router-link v-if="homeRoute != undefined" :to="homeRoute.path">
-                        <span>{{ homeRoute?.meta?.title }}</span>
-                    </router-link>
-                </li>
-                <li v-for="route in visibleRoutes" :key="route.path">
-                    <router-link :to="route.path">
-                        <span>{{ route.meta?.title }}</span>
-                    </router-link>
-                </li>
-                <li>
-                    <tw-toggle-dark></tw-toggle-dark>
-                </li>
-            </ul>
-        </div>
-    </nav>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue';
 import TwToggleDark from '@/components/main/tailwind/tw-toggle-dark.vue';
+import {useRouteLogic} from '@/composables/route-logic'
 
-const router = useRouter();
-const route = useRoute();
+const { homeRoute, isAtHomeRoute, visibleRoutes } = useRouteLogic();
 const isOpen = ref(false);
 
 onMounted(() => {
@@ -76,19 +55,4 @@ function toggleIsOpen() {
 function closeMenu() {
     isOpen.value = false;
 }
-
-const homeRoute = router.options.routes.find(route => route.path === '/');
-
-const isAtHomeRoute = computed(() => {
-    return route.path === '/';
-});
-
-const visibleRoutes = computed(() => {
-    return router.options.routes.filter((route) =>
-        route.meta?.showInNavBar == true &&
-        (route.meta?.requireSSL == true &&
-            location.protocol == 'https:' ||
-            location.hostname == 'localhost' ||
-            route.meta.requireSSL == false))
-});
 </script>

@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import type { aaretsGangType } from '@/types/aaretsGangType';
-import { useShowMoreHandler } from '@/ts/show-more-handler';
+import { useShowMoreHandler } from '@/composables/show-more-handler';
 import { watch } from 'vue';
 
 interface aaretsgangArtlisteProps {
