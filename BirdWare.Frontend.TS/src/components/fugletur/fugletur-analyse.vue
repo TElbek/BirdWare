@@ -3,7 +3,7 @@
         <fugletur-titel class="relative top-2" :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
         <fugletur-navigation></fugletur-navigation>
     </div>
-    <div class="max-h-160 xl:max-h-180 overflow-auto mt-3 mb-2">
+    <div class="max-h-160 xl:max-h-180 overflow-auto mb-2">
         <div v-if="state.hasData" class="mt-3 mb-2">
             <tw-grid-cols-five :count="analyseTyperCount">
                 <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
