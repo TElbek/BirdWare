@@ -1,10 +1,10 @@
 <template>
-    <div class="grid grid-cols-[auto_110px] mb-2">
-        <tw-text-sizeable class="relative bottom-1">{{ route.meta.title }}</tw-text-sizeable>
+    <div class="grid grid-cols-[auto_110px]">
+        <tw-text-sizeable class="relative top-2">{{ route.meta.title }}</tw-text-sizeable>
         <fugletur-navigation class="z-50"></fugletur-navigation>        
     </div>
-    <fugletur-selection></fugletur-selection>
-    <tw-grid-cols-five :count="groupedData?.size" class="mt-3">
+    <fugletur-selection  class="mt-3 mb-2"></fugletur-selection>
+    <tw-grid-cols-five :count="groupedData?.size">
         <div v-for="[key, value] in groupedData">
             <tw-card>
                 <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright capitalize">{{ key

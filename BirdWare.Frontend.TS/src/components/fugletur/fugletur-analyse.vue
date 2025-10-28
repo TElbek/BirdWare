@@ -1,9 +1,9 @@
 <template>
     <div class="grid grid-cols-[auto_110px]">
-        <fugletur-titel class="relative top-3" :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
-        <fugletur-navigation class="mb-3"></fugletur-navigation>        
+        <fugletur-titel class="relative top-2" :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+        <fugletur-navigation></fugletur-navigation>        
     </div>
-    <div v-if="state.hasData">
+    <div v-if="state.hasData" class="mt-3 mb-2">
         <tw-grid-cols-five :count="analyseTyperCount">
             <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
                 <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
