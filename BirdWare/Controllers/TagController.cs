@@ -8,6 +8,8 @@ namespace BirdWare.Controllers
     [ApiController]
     public class TagController(ITagQuery tagQuery, 
                                IArtQueries artQueries, 
+                               IFugleturQuery fugleturQuery,
+                               IFugleturObservationQuery fugleturObservationQuery,
                                ITagMemoryCache tagMemoryCache) : ControllerBase
     {
         [HttpGet]
@@ -47,7 +49,13 @@ namespace BirdWare.Controllers
                 .Where(t => t.TagType == TagTypes.Art &&
                        t.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1).ToList() ?? [];
 
-            return [.. list.OrderBy(o => o.Name)];
+            var latestFugleturId = fugleturQuery.GetSenesteFugletur();
+            var observedArtTagIds = fugleturObservationQuery.GetObservationer(latestFugleturId)
+                .Select(t => t.ArtId);
+
+            return [.. list
+                    .Where(q => !observedArtTagIds.Contains(q.Id))
+                    .OrderBy(o => o.Name)];
         }
 
 
