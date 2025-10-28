@@ -1,16 +1,18 @@
 <template>
     <div class="grid grid-cols-[auto_110px]">
         <fugletur-titel class="relative top-2" :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
-        <fugletur-navigation></fugletur-navigation>        
+        <fugletur-navigation></fugletur-navigation>
     </div>
-    <div v-if="state.hasData" class="mt-3 mb-2">
-        <tw-grid-cols-five :count="analyseTyperCount">
-            <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
-                <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
-                    :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
-                </fugleturAnalyseType>
-            </template>
-        </tw-grid-cols-five>
+    <div class="max-h-160 xl:max-h-180 overflow-auto mt-3 mb-2">
+        <div v-if="state.hasData" class="mt-3 mb-2">
+            <tw-grid-cols-five :count="analyseTyperCount">
+                <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
+                    <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
+                        :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
+                    </fugleturAnalyseType>
+                </template>
+            </tw-grid-cols-five>
+        </div>
     </div>
 </template>
 
