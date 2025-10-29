@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-[auto_110px]">
+    <div class="grid grid-cols-[1fr_max-content]">
         <tw-text-sizeable class="relative top-2">{{ route.meta.title }}</tw-text-sizeable>
         <fugletur-navigation class="z-50"></fugletur-navigation>        
     </div>

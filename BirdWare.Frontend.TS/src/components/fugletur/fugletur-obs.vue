@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-[auto_110px]">
+    <div class="grid grid-cols-[1fr_max-content]">
         <fugletur-titel class="relative top-2" :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
         <fugletur-navigation></fugletur-navigation>        
     </div>

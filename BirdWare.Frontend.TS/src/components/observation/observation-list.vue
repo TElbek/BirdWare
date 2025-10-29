@@ -2,7 +2,7 @@
     <tw-grid-cols-three :count="props.groupedData?.size">
         <div v-for="[key, value] in props.groupedData">
             <tw-card>
-                <div class="grid grid-cols-[auto_15px] mb-1 font-medium tracking-wide">
+                <div class="grid grid-cols-[1fr_max-content] gap-x-1 font-medium tracking-wide">
                     <a @click="addTag(key)" class="cursor-pointer">
                         <span class="text-base text-birdware dark:text-birdware-bright">
                             {{ obsSelectionStore.isGropingByMonth && valueIsNumber(key) ? getNameOfMonth(key) :

@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-[auto_110px] mb-1">
+  <div class="grid grid-cols-[1fr_max-content] mb-1">
     <tw-text-sizeable class="mt-4">{{ route.meta.title }}</tw-text-sizeable>
     <observation-grouping class="z-50" />
   </div>

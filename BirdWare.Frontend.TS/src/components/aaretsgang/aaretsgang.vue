@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="grid grid-cols-[auto_130px] mb-2">
+        <div class="grid grid-cols-[1fr_max-content] mb-2">
             <tw-text-sizeable class="mt-4">{{ route.meta.title }}: {{ state.aaretsGang.length }} Arter</tw-text-sizeable>
             <aaretsgang-selection :is-by-trip="isByTrip" @switch-is-by-trip="swtichIsByTrip"></aaretsgang-selection>
         </div>

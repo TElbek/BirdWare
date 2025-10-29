@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-[auto_160px]">
+    <div class="grid grid-cols-[1fr_max-content]">
         <tw-text-sizeable>Tilføj Tur</tw-text-sizeable>
         <input class="p-2 border border-gray-200 rounded dark:text-white" type="search" placeholder="Søg..." v-model="state.searchValue" />
     </div>

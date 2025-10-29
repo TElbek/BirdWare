@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-[auto_15px] mb-1 tracking-wider">
+    <div class="grid grid-cols-[1fr_max-content] mb-1 tracking-wider">
         <span class="text-base font-medium text-birdware dark:text-birdware-bright">{{ props.caption }}</span>
         <span v-if="showCount" class="text-base font-medium text-birdware text-right">{{ props.count }}</span>
     </div>    
