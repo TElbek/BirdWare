@@ -4,15 +4,15 @@
         <tw-button-dropdown
             :caption="isThisYear ? `${thisYear}: ${itemCountThisYear}` : `${lastYear}: ${itemCountLastYear}`">
             <button @click="$emit('switch-is-this-year')" :disabled="isThisYear"
-                class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright">
+                class="block px-2 py-1 text-sm cursor-pointer dark:text-birdware-bright">
                 {{ thisYear }}: {{ itemCountThisYear }}
             </button>
             <button @click="$emit('switch-is-this-year')" :disabled="!isThisYear"
-                class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright">
+                class="block px-2 py-1 text-sm cursor-pointer dark:text-birdware-bright">
                 {{ lastYear }}: {{ itemCountLastYear }}
             </button>
         </tw-button-dropdown>
-        <tw-button class="h-8 rounded border border-gray-300 mt-2 font-bold text-nowrap" :isSelected="false"
+        <tw-button class="rounded border border-gray-300 mt-2 font-bold text-nowrap" :isSelected="false"
             :caption="Math.abs(props.forskel).toString()"
             :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']"></tw-button>
     </div>

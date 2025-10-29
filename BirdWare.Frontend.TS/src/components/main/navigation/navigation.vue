@@ -1,6 +1,10 @@
 <template>
-    <navigation-sm class="lg:hidden"></navigation-sm>
-    <navigation-lg class="max-lg:hidden"></navigation-lg>
+    <tw-show-md>
+        <navigation-sm />
+    </tw-show-md>
+    <tw-show-lg>
+        <navigation-lg />
+    </tw-show-lg>
 </template>
 
 <script setup lang="ts">
