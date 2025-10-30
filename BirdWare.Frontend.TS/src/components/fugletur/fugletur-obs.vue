@@ -1,9 +1,9 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content]">
-        <fugletur-titel class="relative top-2" :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+    <div class="grid grid-cols-[1fr_max-content] py-2">
+        <fugletur-titel  :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
         <fugletur-navigation></fugletur-navigation>        
     </div>
-    <fugletur-obs-liste  class="max-h-160 xl:max-h-180 overflow-auto mt-3 mb-2"></fugletur-obs-liste>
+    <fugletur-obs-liste class="mb-2"></fugletur-obs-liste>
 </template> 
 
 <script setup lang="ts">

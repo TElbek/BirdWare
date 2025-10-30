@@ -1,6 +1,6 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content]">
-        <tw-text-sizeable class="mt-3">{{ route.meta.title }}</tw-text-sizeable>
+    <div class="grid grid-cols-[1fr_max-content] py-2">
+        <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
         <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
             :forskel="state.itemCountThisYear - state.itemCountLastYear" :item-count-last-year="state.itemCountLastYear"
             :item-count-this-year="state.itemCountThisYear" @switch-is-by-trip="switchIsByTrip"
@@ -8,14 +8,12 @@
     </div>
 
     <div :class="[state.isThisYear ? 'block' : 'hidden']">
-        <forskel-aar :is-by-trip="state.isByTrip" :is-this-year="true" @item-count="setItemCountThisYear"
-            class="max-h-160 xl:max-h-175 overflow-auto">
+        <forskel-aar :is-by-trip="state.isByTrip" :is-this-year="true" @item-count="setItemCountThisYear">
         </forskel-aar>
     </div>
 
     <div :class="[!state.isThisYear ? 'block' : 'hidden']">
-        <forskel-aar :is-by-trip="state.isByTrip" :is-this-year="false" @item-count="setItemCountLastYear"
-            class="max-h-160 xl:max-h-175 overflow-auto">
+        <forskel-aar :is-by-trip="state.isByTrip" :is-this-year="false" @item-count="setItemCountLastYear">
         </forskel-aar>
     </div>
 </template>

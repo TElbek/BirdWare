@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div class="grid grid-cols-[1fr_max-content] mb-2">
-            <tw-text-sizeable class="mt-4">{{ route.meta.title }}: {{ state.aaretsGang.length }} Arter</tw-text-sizeable>
+        <div class="grid grid-cols-[1fr_max-content] py-2">
+            <tw-text-sizeable >{{ route.meta.title }}: {{ state.aaretsGang.length }} Arter</tw-text-sizeable>
             <aaretsgang-selection :is-by-trip="isByTrip" @switch-is-by-trip="swtichIsByTrip"></aaretsgang-selection>
         </div>
-        <tw-grid-cols-five :count="listOfItems.size"  class="max-h-160 xl:max-h-175 overflow-auto">
+        <tw-grid-cols-five :count="listOfItems.size">
             <div v-for="([key, value], index) in listOfItems">
                 <tw-card v-if="index < 30 && isByTrip || !isByTrip">
                     <tw-card-header :caption="key" :count="value.length" :show-count="true"></tw-card-header>

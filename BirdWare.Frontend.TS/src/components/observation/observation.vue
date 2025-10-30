@@ -1,10 +1,10 @@
 <template>
-  <div class="grid grid-cols-[1fr_max-content] mb-1">
-    <tw-text-sizeable class="mt-4">{{ route.meta.title }}</tw-text-sizeable>
+  <div class="grid grid-cols-[1fr_max-content] py-2">
+    <tw-text-sizeable >{{ route.meta.title }}</tw-text-sizeable>
     <observation-grouping class="z-50" />
   </div>
   <observation-selection />
-  <observation-presenter class="max-h-140 xl:max-h-175 overflow-auto" />
+  <observation-presenter />
 </template>
 
 <script setup lang="ts">

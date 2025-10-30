@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-end gap-2 mb-2">
+    <div class="flex justify-end gap-2">
         <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
         <tw-button-dropdown
             :caption="isThisYear ? `${thisYear}: ${itemCountThisYear}` : `${lastYear}: ${itemCountLastYear}`">
@@ -12,9 +12,8 @@
                 {{ lastYear }}: {{ itemCountLastYear }}
             </button>
         </tw-button-dropdown>
-        <tw-button class="rounded border border-gray-300 mt-2 font-bold text-nowrap" :isSelected="false"
-            :caption="Math.abs(props.forskel).toString()"
-            :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']"></tw-button>
+        <button class="relative top-2 rounded-sm border border-gray-300 font-bold text-nowrap h-6 px-2"
+            :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{ Math.abs(props.forskel) }}</button>
     </div>
 </template>
 

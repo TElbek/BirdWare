@@ -1,5 +1,5 @@
 <template>
-    <observationList class="mt-3 mb-3" :grouped-data="groupedData" @addtag="addTag"></observationList>
+    <observationList class="my-2" :grouped-data="groupedData" @addtag="addTag"></observationList>
 </template>
 
 <script setup lang="ts">

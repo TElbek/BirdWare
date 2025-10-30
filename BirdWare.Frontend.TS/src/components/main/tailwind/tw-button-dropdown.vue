@@ -1,6 +1,6 @@
 <template>
     <div class="relative mt-2">
-        <button @click="switchShow" class="p-1 rounded-md border-gray-300 border dark:border-birdware-bright grid grid-cols-[max-content_1fr]">
+        <button @click="switchShow" class="ps-2 pe-1 rounded-sm border-gray-300 border dark:border-birdware-bright grid grid-cols-[max-content_1fr]">
             <div class="mr-1 ms-1 text-nowrap text-start text-birdware dark:text-birdware-bright">{{ props.caption }}</div>
             <svg class="w-5 h-5 text-birdware" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -8,7 +8,7 @@
                     clip-rule="evenodd" />
             </svg>
         </button>
-        <div v-show="state.show" class="absolute right-0 py-2 mt-1 border border-gray-200 dark:border dark:border-birdware rounded-md shadow-xl w-35 bg-white dark:bg-gray-900 text-birdware" @click="switchShow">
+        <div v-show="state.show" class="absolute right-0 py-2 mt-1 border-sm border-gray-200 dark:border dark:border-birdware rounded-md shadow-xl w-35 bg-white dark:bg-gray-900 text-birdware" @click="switchShow">
             <slot></slot>
         </div>
     </div>
