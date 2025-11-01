@@ -1,7 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OutputCaching;
 
 namespace BirdWare.Controllers
 {
@@ -9,7 +8,6 @@ namespace BirdWare.Controllers
     public class ForskelController(IForskelQueries forskelQueries) : ControllerBase
     {
         [HttpGet]
-        [OutputCache]
         [Route("api/forskel/iaar")]
         public List<Forskel> ForskelIAar()
         { 
@@ -17,7 +15,6 @@ namespace BirdWare.Controllers
         }
 
         [HttpGet]
-        [OutputCache]
         [Route("api/forskel/sidsteaar")]
         public List<Forskel> ForskelSidsteAar()
         {

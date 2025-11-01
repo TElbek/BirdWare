@@ -11,6 +11,8 @@ namespace BirdWare.Test.Controllers
         private readonly Mock<ITagQuery> tagQueryQueryMock = new();
         private readonly Mock<IArtQueries> artQueriesMock = new();
         private readonly Mock<TagMemoryCache> tagMemoryCacheMock = new();
+        private readonly Mock<IFugleturObservationQuery> fugleturObservationQueryMock = new();
+        private readonly Mock<IFugleturQuery> fugleturQueryMock = new();
 
         private readonly TagController tagController;
 
@@ -31,6 +33,8 @@ namespace BirdWare.Test.Controllers
             tagController = new TagController(
                                         tagQueryQueryMock.Object, 
                                         artQueriesMock.Object, 
+                                        fugleturQueryMock.Object,
+                                        fugleturObservationQueryMock.Object,
                                         tagMemoryCacheMock.Object);
         }
 

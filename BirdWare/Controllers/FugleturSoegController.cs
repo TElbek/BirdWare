@@ -1,7 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OutputCaching;
 using System.Text.Json;
 
 namespace BirdWare.Controllers
@@ -11,7 +10,6 @@ namespace BirdWare.Controllers
         IFugletureByTagsQuery fugletureByTagsQuery,
         IFugleturQuery fugleturQuery) : ControllerBase
     {
-        [OutputCache]
         [Route("api/fugleture/get/tags")]
         public List<VTur> GetFugletureByTags([FromQuery] string tagListAsJson)
         {
