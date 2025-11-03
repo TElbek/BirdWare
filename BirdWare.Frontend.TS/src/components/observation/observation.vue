@@ -1,7 +1,7 @@
 <template>
   <div class="grid grid-cols-[1fr_max-content] py-2">
     <tw-text-sizeable >{{ route.meta.title }}</tw-text-sizeable>
-    <observation-grouping class="z-50" />
+    <observation-grouping />
   </div>
   <observation-selection />
   <observation-presenter />

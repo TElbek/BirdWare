@@ -1,10 +1,10 @@
 <template>
     <div class="grid grid-cols-[1fr_max-content] py-2">
-        <fugletur-titel  :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
-        <fugletur-navigation></fugletur-navigation>        
+        <fugletur-titel :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+        <fugletur-navigation></fugletur-navigation>
     </div>
     <fugletur-obs-liste class="mb-2"></fugletur-obs-liste>
-</template> 
+</template>
 
 <script setup lang="ts">
 import fugleturTitel from './fugletur-titel.vue';

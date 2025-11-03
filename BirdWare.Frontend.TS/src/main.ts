@@ -28,6 +28,7 @@ function registerComponents() {
 function registerTailWindComponents() {
     app.component('tw-button', defineAsyncComponent(() => import('./components/main/tailwind/tw-button.vue')));
     app.component('tw-button-dropdown', defineAsyncComponent(() => import('./components/main/tailwind/tw-button-dropdown.vue')));
+    app.component('tw-button-responsive', defineAsyncComponent(() => import('./components/main/tailwind/tw-button-responsive.vue')));
     app.component('tw-button-group', defineAsyncComponent(() => import('./components/main/tailwind/tw-button-group.vue')));
     app.component('tw-card', defineAsyncComponent(() => import('./components/main/tailwind/tw-card.vue')));
     app.component('tw-card-header', defineAsyncComponent(() => import('./components/main/tailwind/tw-card-header.vue')));

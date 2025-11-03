@@ -2,7 +2,7 @@
     <div>
         <div class="grid grid-cols-[1fr_max-content] mb-2">
             <fugletur-titel :showTitle="false" :fugleturId="state.fugleturId"></fugletur-titel>
-            <tw-button-dropdown class="z-50" :caption="state.isForslagMode ? 'Forslag' : 'Liste'">
+            <tw-button-dropdown :caption="state.isForslagMode ? 'Forslag' : 'Liste'">
                 <button class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright" @click="setShowForslag">Liste</button>
                 <button class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright" @click="setShowForslag">Forslag</button>
             </tw-button-dropdown>

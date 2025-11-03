@@ -1,19 +1,18 @@
 <template>
     <div class="flex justify-end gap-2">
         <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
-        <tw-button-dropdown
+        <tw-button-responsive
             :caption="isThisYear ? `${thisYear}: ${itemCountThisYear}` : `${lastYear}: ${itemCountLastYear}`">
-            <button @click="$emit('switch-is-this-year')" :disabled="isThisYear"
-                class="block px-2 py-1 text-sm cursor-pointer dark:text-birdware-bright">
-                {{ thisYear }}: {{ itemCountThisYear }}
-            </button>
-            <button @click="$emit('switch-is-this-year')" :disabled="!isThisYear"
-                class="block px-2 py-1 text-sm cursor-pointer dark:text-birdware-bright">
-                {{ lastYear }}: {{ itemCountLastYear }}
-            </button>
-        </tw-button-dropdown>
-        <button class="relative top-2 rounded-sm border border-gray-300 font-bold text-nowrap h-6 px-2"
-            :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{ Math.abs(props.forskel) }}</button>
+            <tw-button :caption="thisYear + ' : ' + itemCountThisYear"
+                @click="$emit('switch-is-this-year')" :isSelected="isThisYear">
+            </tw-button>
+            <tw-button :caption="lastYear + ' : ' + itemCountLastYear"
+                @click="$emit('switch-is-this-year')" :isSelected="!isThisYear">
+            </tw-button>
+        </tw-button-responsive>
+        <button class="border border-gray-200 rounded-sm shadow-xs dark:border-birdware-bright w-10 mb-0.5"
+           :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{
+                Math.abs(props.forskel)}}</button>
     </div>
 </template>
 

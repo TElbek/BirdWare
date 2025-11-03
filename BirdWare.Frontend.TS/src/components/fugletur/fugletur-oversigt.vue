@@ -1,9 +1,9 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content]">
+    <div class="grid grid-cols-[1fr_max-content] py-2">
         <tw-text-sizeable class="relative top-2">{{ route.meta.title }}</tw-text-sizeable>
-        <fugletur-navigation class="z-50"></fugletur-navigation>        
+        <fugletur-navigation></fugletur-navigation>        
     </div>
-    <fugletur-selection  class="mt-3 mb-2"></fugletur-selection>
+    <fugletur-selection  class="mb-2"></fugletur-selection>
     <tw-grid-cols-five :count="groupedData?.size">
         <div v-for="[key, value] in groupedData">
             <tw-card>

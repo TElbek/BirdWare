@@ -1,9 +1,9 @@
 <template>
-    <tw-button-dropdown :caption="selectedGroupModeCaption">
-        <button class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright" v-for="mode in groupByModeList" @click="setGroupByMode(mode.id)">
-            {{ mode.caption }}
-        </button>
-    </tw-button-dropdown>
+    <tw-button-responsive :caption="selectedGroupModeCaption">
+        <tw-button v-for="mode in groupByModeList" :caption="mode.caption"
+            :isSelected="mode.id == obsSelectionStore.chosenGroupingId" @click="setGroupByMode(mode.id)">
+        </tw-button>
+    </tw-button-responsive>
 </template>
 
 <script setup lang="ts">
