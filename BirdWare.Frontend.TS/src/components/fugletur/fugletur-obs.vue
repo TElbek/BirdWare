@@ -1,6 +1,8 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content] py-2">
-        <fugletur-titel :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+    <div class="grid grid-cols-[1fr_max-content] mt-2 h-8 lg:h-10">
+        <div class="align-bottom">
+            <fugletur-titel :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+        </div>
         <fugletur-navigation></fugletur-navigation>
     </div>
     <fugletur-obs-liste class="mb-2"></fugletur-obs-liste>
