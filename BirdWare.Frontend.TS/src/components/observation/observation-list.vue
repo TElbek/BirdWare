@@ -11,23 +11,14 @@
                     </a>
                     <span class="text-base text-birdware text-right">{{ value.length }}</span>
                 </div>
-                <table-birdware>
+                <div class="grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 dark:text-white">
                     <template v-for="obs in obsSorted(value)" :key="obs.observationId">
-                        <table-row-birdware>
-                            <table-cell-birdware>
-                                <fugleturDato :fugleturId="obs.fugleturId" :dato="obs.dato" />
-                            </table-cell-birdware>
-                            <table-cell-birdware class="text-nowrap" v-if="showSpeciesNameInList">
-                                {{ obs.artNavn }}
-                            </table-cell-birdware>
-                            <table-cell-birdware class="text-nowrap">{{
-                                obs.lokalitetNavn }}</table-cell-birdware>
-                            <table-cell-birdware>
-                                <div>{{ obs.bem }}</div>
-                            </table-cell-birdware>
-                        </table-row-birdware>
+                        <div><fugleturDato :fugleturId="obs.fugleturId" :dato="obs.dato" /></div>
+                        <div><span v-if="showSpeciesNameInList">{{ obs.artNavn }}</span></div>
+                        <div>{{ obs.lokalitetNavn }}</div>
+                        <div>{{ obs.bem }}</div>
                     </template>
-                </table-birdware>
+                </div>
             </tw-card>
         </div>
     </tw-grid-cols-three>
@@ -61,5 +52,4 @@ function obsSorted(value: observationType[]) {
         .reverse()
         .slice(0, 10);
 }
-
 </script>

@@ -4,18 +4,12 @@
             <tw-card>
                 <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright capitalize">{{ key}}</span>
                 <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright float-end">{{ value.length }}</span>
-                <table-birdware>
+                <div class="grid grid-cols-[max-content_1fr] gap-x-2 dark:text-white">
                     <template v-for="obs in value">
-                        <table-row-birdware>
-                            <table-cell-birdware>
-                                <art-navn :art-id="obs.artId" :art-navn="obs.artNavn" :speciel="obs.speciel" :su="obs.su"></art-navn>
-                            </table-cell-birdware>
-                            <table-cell-birdware>
-                                {{ obs.bem }}
-                            </table-cell-birdware>  
-                        </table-row-birdware>
+                        <art-navn :art-id="obs.artId" :art-navn="obs.artNavn" :speciel="obs.speciel" :su="obs.su"></art-navn>
+                        <div class="text-start">{{ obs.bem }}</div>
                     </template>
-                </table-birdware>
+                </div>
             </tw-card>
         </div>
     </tw-grid-cols-five>
