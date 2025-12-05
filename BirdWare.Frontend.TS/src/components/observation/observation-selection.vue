@@ -1,5 +1,5 @@
 <template>
-    <multiselect v-model="obsSelectionStore.selectedTags" :options="state.tagList" track-by="name" label="name"
+    <multiselect class="z-100" v-model="obsSelectionStore.selectedTags" :options="state.tagList" track-by="name" label="name"
         :multiple="true" :showLabels="false" :allow-empty="true" @search-change="getTagList" placeholder="Vælg...">
     </multiselect>
 </template>
