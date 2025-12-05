@@ -11,18 +11,12 @@
                     }}</span>
                 <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright float-end">{{ value.length
                     }}</span>
-                <table-birdware>
+                <div class="grid grid-cols-[max-content_1fr] gap-x-3">
                     <template v-for="tur in value">
-                        <table-row-birdware>
-                            <table-cell-birdware>
-                                <fugleturDato :fugleturId="tur.id" :dato="tur.dato" />
-                            </table-cell-birdware>
-                            <table-cell-birdware>
-                                <span>{{ tur.lokalitetNavn }}</span>
-                            </table-cell-birdware>
-                        </table-row-birdware>
+                        <fugleturDato :fugleturId="tur.id" :dato="tur.dato" />
+                        <span>{{ tur.lokalitetNavn }}</span>
                     </template>
-                </table-birdware>
+                </div>
             </tw-card>
         </div>
     </tw-grid-cols-five>

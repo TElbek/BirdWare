@@ -6,6 +6,16 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+// import {Icon} from 'leaflet';
+
+// Icon.Default.mergeOptions({
+//    iconUrl:   require('leaflet/dist/images/marker-icon.png'),
+//    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+// });
+
+// function require(imgName: string): string {
+//     return new URL(`${imgName}`, import.meta.url).href;
+// }
 
 const app = createApp(App)
 
@@ -20,9 +30,6 @@ app.mount('#app');
 function registerComponents() {
     app.component('art-navn', defineAsyncComponent(() => import('./components/main/artNavn.vue')));
     app.component('show-more-ui', defineAsyncComponent(() => import('./components/main/show-more-ui.vue')));
-    app.component('table-birdware', defineAsyncComponent(() => import('./components/main/table/table.vue')));
-    app.component('table-row-birdware', defineAsyncComponent(() => import('./components/main/table/table-row.vue')));
-    app.component('table-cell-birdware', defineAsyncComponent(() => import('./components/main/table/table-cell.vue')));
 }
 
 function registerTailWindComponents() {
