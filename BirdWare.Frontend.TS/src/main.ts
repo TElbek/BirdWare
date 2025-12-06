@@ -6,16 +6,18 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-// import {Icon} from 'leaflet';
+import {Icon} from 'leaflet';
 
-// Icon.Default.mergeOptions({
-//    iconUrl:   require('leaflet/dist/images/marker-icon.png'),
-//    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-// });
+Icon.Default.mergeOptions({
+   iconUrl:   require('marker-icon.png'),
+   shadowUrl: require('marker-shadow.png'),
+});
 
-// function require(imgName: string): string {
-//     return new URL(`${imgName}`, import.meta.url).href;
-// }
+function require(imgName: string): string {
+    var x = new URL(`./assets/${imgName}`, import.meta.url).href;
+    console.log(x);
+    return x;
+}
 
 const app = createApp(App)
 
