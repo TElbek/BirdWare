@@ -48,6 +48,10 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     return selectedTags.value.filter((item) => item.id == tag.id && tag.tagType == item.tagType).length > 0;
   }
 
+  function hasTagWithName(name:string) {
+    return selectedTags.value.some((item) => item.name == name);
+  }
+
   return {
     chosenGroupingId,
     chosenViewMode,
@@ -60,6 +64,7 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     SetTag: setTag,
     RemoveTag: removeTag,
     SetGroupingId: setGroupingId,
-    SetViewMode: setViewMode
+    SetViewMode: setViewMode,
+    hasTagWithName
   }
 })

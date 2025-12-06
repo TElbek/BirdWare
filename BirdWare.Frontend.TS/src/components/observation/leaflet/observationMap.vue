@@ -9,18 +9,24 @@ import * as L from 'leaflet';
 import type { observationType } from '@/types/observationType';
 import type { GeoJSON } from 'geojson';
 
+import { useLeafletStore } from '@/stores/leaflet-store';
+const leafletStore = useLeafletStore();
+
+import { useObsSelectionStore } from '@/stores/obs-selection-store';
+const obsSelectionStore = useObsSelectionStore();
+
 const initialMap = ref();
 const geoJson = ref([] as GeoJSON[]);
 const observationLayer = ref({} as L.Layer);
 const hasLayer = ref(false);
 
-interface observationMapProps  {
+interface observationMapProps {
     observationer: observationType[]
 }
 
 const props = defineProps<observationMapProps>();
-
 const lokalitetIdList = computed(() => [...new Set(props.observationer.map(item => item.lokalitetId))]);
+const emit = defineEmits(['addtag']);
 
 onMounted(() => {
     initializeLeaflet();
@@ -33,9 +39,26 @@ function initializeLeaflet() {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(initialMap.value);
+
+    setupEvents();
+    centerMap();
 }
 
-function findFirstObservationByLokalitetId(id:number) {
+function setupEvents() {
+    initialMap.value.on({ zoomend: whenZoomEnd });
+    initialMap.value.on({ move: whenMove });
+}
+
+function whenZoomEnd(e:L.LeafletEvent) {
+    leafletStore.setZoomLevel(e.target._zoom);
+}
+
+function whenMove(e:L.LeafletEvent) {
+    let centerLatLong = e.target.getCenter();
+    leafletStore.setCenter(centerLatLong.lat, centerLatLong.lng);
+}
+
+function findFirstObservationByLokalitetId(id: number) {
     return props.observationer.find((item) => item.lokalitetId == id);
 }
 
@@ -47,14 +70,31 @@ function addPointsToMap() {
         let obs = findFirstObservationByLokalitetId(id);
         geoJson.value.push({
             type: 'Feature',
+            id: id,
             geometry: { type: 'Point', coordinates: obs ? [obs.longitude, obs.latitude] : [0, 0] },
-            properties: { name: obs?.lokalitetId, count: 1 }
+            properties: { name: obs?.lokalitetNavn, id: obs?.lokalitetId }
         })
     });
 
-    observationLayer.value = L.geoJSON(geoJson.value).addTo(initialMap.value);
-    centerMap();
+    observationLayer.value = L.geoJSON(geoJson.value, {
+        onEachFeature: function (feature, layer) {
+            layer.on({
+                click: whenFeatureClicked
+            });
+        }
+    }).addTo(initialMap.value);
+
     toggleHasLayer();
+}
+
+function whenFeatureClicked(e: L.LeafletMouseEvent) {
+    if (obsSelectionStore.hasTagWithName(e.target.feature.properties.name)) {
+        emit('addtag', e.target.feature.properties.name);
+    }
+    else {
+        emit('addtag', e.target.feature.properties.name);
+        obsSelectionStore.SetGroupingId(0);
+    }
 }
 
 function resetGeoJson() {
@@ -74,7 +114,7 @@ function toggleHasLayer() {
 }
 
 function calculateMapCenter() {
-        let minLat = Math.min(...props.observationer.map(o => o.latitude)),
+    let minLat = Math.min(...props.observationer.map(o => o.latitude)),
         maxLat = Math.max(...props.observationer.map(o => o.latitude)),
         minLng = Math.min(...props.observationer.map(o => o.longitude)),
         maxLng = Math.max(...props.observationer.map(o => o.longitude));
@@ -83,7 +123,7 @@ function calculateMapCenter() {
 }
 
 function centerMap() {
-    initialMap.value.setView(calculateMapCenter(), 7);
+    initialMap.value.setView([leafletStore.centerLatitude, leafletStore.centerLongitude], leafletStore.zoomLevel);
 }
 
 watch(() => props.observationer, (newValue) => {
