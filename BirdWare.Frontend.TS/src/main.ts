@@ -31,6 +31,7 @@ app.mount('#app');
 
 function registerComponents() {
     app.component('art-navn', defineAsyncComponent(() => import('./components/main/artNavn.vue')));
+    app.component('fugletur-dato', defineAsyncComponent(() => import('./components/main/fugleturdato.vue')));
     app.component('show-more-ui', defineAsyncComponent(() => import('./components/main/show-more-ui.vue')));
 }
 

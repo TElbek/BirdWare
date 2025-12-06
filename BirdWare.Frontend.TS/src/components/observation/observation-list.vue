@@ -29,7 +29,6 @@ import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import { type observationType } from '@/types/observationType';
 import { valueIsNumber } from '@/ts/typechecks';
 import { getNameOfMonth } from '@/ts/dateandtime.ts'
-import fugleturDato from '../main/fugleturdato.vue';
 import type { tagType } from '@/types/tagType';
 import { computed } from 'vue';
 

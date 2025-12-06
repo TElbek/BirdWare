@@ -26,7 +26,6 @@
 import { reactive, onMounted, computed, watch } from 'vue';
 import fugleturNavigation from '@/components/fugletur/fugletur-navigation.vue';
 import fugleturSelection from '@/components/fugletur/fugletur-selection.vue';
-import fugleturDato from '@/components/main/fugleturdato.vue';
 import { useFugleturSelectionStore } from '@/stores/fugletur-selection-store.ts';
 
 import api from '@/api';
