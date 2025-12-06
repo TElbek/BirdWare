@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded border border-gray-300 leaflet" id="map"></div>
+    <div class="rounded border border-gray-400 leaflet" id="map"></div>
 </template>
 
 <script setup lang="ts">
@@ -73,21 +73,17 @@ function toggleHasLayer() {
     hasLayer.value = !hasLayer.value;
 }
 
+function calculateMapCenter() {
+        let minLat = Math.min(...props.observationer.map(o => o.latitude)),
+        maxLat = Math.max(...props.observationer.map(o => o.latitude)),
+        minLng = Math.min(...props.observationer.map(o => o.longitude)),
+        maxLng = Math.max(...props.observationer.map(o => o.longitude));
+
+    return [(minLat + maxLat) / 2, (minLng + maxLng) / 2];
+}
+
 function centerMap() {
-    let minLat = 56,
-        maxLat = 56,
-        minLng = 11,
-        maxLng = 11;
-
-    props.observationer && props.observationer.forEach((item) => {
-        minLat = Math.min(minLat, item.latitude);
-        maxLat = Math.max(maxLat, item.latitude);
-        minLng = Math.min(minLng, item.longitude);
-        maxLng = Math.max(maxLng, item.longitude);
-    });
-
-    const mapCenter = [(minLat + maxLat) / 2, (minLng + maxLng) / 2];
-    initialMap.value.setView(mapCenter, 7);
+    initialMap.value.setView(calculateMapCenter(), 7);
 }
 
 watch(() => props.observationer, (newValue) => {
