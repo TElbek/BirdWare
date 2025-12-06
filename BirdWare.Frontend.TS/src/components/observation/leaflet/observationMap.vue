@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import "leaflet/dist/leaflet.css"
 import * as L from 'leaflet';
 import type { observationType } from '@/types/observationType';
@@ -11,12 +11,16 @@ import type { GeoJSON } from 'geojson';
 
 const initialMap = ref();
 const geoJson = ref([] as GeoJSON[]);
-const layer = ref({} as L.Layer);
+const observationLayer = ref({} as L.Layer);
 const hasLayer = ref(false);
 
-const props = defineProps({
-    groupedData: Map<string | number, observationType[]>
-});
+interface observationMapProps  {
+    observationer: observationType[]
+}
+
+const props = defineProps<observationMapProps>();
+
+const lokalitetIdList = computed(() => [...new Set(props.observationer.map(item => item.lokalitetId))]);
 
 onMounted(() => {
     initializeLeaflet();
@@ -31,19 +35,24 @@ function initializeLeaflet() {
     }).addTo(initialMap.value);
 }
 
+function findFirstObservationByLokalitetId(id:number) {
+    return props.observationer.find((item) => item.lokalitetId == id);
+}
+
 function addPointsToMap() {
 
     resetGeoJson();
 
-    props.groupedData && props.groupedData.forEach((value, key) => {
+    props.observationer && lokalitetIdList.value.forEach((id) => {
+        let obs = findFirstObservationByLokalitetId(id);
         geoJson.value.push({
             type: 'Feature',
-            geometry: { type: 'Point', coordinates: value[0] ? [value[0]?.longitude, value[0]?.latitude] : [0, 0] },
-            properties: { name: key, count: value.length }
+            geometry: { type: 'Point', coordinates: obs ? [obs.longitude, obs.latitude] : [0, 0] },
+            properties: { name: obs?.lokalitetId, count: 1 }
         })
     });
 
-    layer.value = L.geoJSON(geoJson.value).addTo(initialMap.value);
+    observationLayer.value = L.geoJSON(geoJson.value).addTo(initialMap.value);
     centerMap();
     toggleHasLayer();
 }
@@ -56,7 +65,7 @@ function resetGeoJson() {
 }
 
 function removeLayer() {
-    layer.value.remove();
+    observationLayer.value.remove();
     toggleHasLayer();
 }
 
@@ -70,18 +79,18 @@ function centerMap() {
         minLng = 11,
         maxLng = 11;
 
-    props.groupedData && props.groupedData.forEach((value, key) => {
-        minLat = Math.min(minLat, value[0] && value[0].latitude);
-        maxLat = Math.max(maxLat, value[0] && value[0].latitude);
-        minLng = Math.min(minLng, value[0] && value[0].longitude);
-        maxLng = Math.max(maxLng, value[0] && value[0].longitude);
+    props.observationer && props.observationer.forEach((item) => {
+        minLat = Math.min(minLat, item.latitude);
+        maxLat = Math.max(maxLat, item.latitude);
+        minLng = Math.min(minLng, item.longitude);
+        maxLng = Math.max(maxLng, item.longitude);
     });
 
     const mapCenter = [(minLat + maxLat) / 2, (minLng + maxLng) / 2];
     initialMap.value.setView(mapCenter, 7);
 }
 
-watch(() => props.groupedData, (newValue) => {
+watch(() => props.observationer, (newValue) => {
     addPointsToMap();
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <observationMap v-if="obsSelectionStore.isGropingByLocality" class="my-2" :grouped-data="groupedDataDKWithLatLong"></observationMap>
+    <observationMap v-if="obsSelectionStore.isGropingByLocality" class="my-2" :observationer="observationsDKWithLatLong"></observationMap>
     <observationList v-else class="my-2" :grouped-data="groupedData" @addtag="addTag"></observationList>
 </template>
 
@@ -34,8 +34,8 @@ const groupedData = computed(() => {
     }
 });
 
-const groupedDataDKWithLatLong = computed(() => {
-    return Map.groupBy(state.observationer.filter((item) => item.latitude && item.longitude && item.regionId > 0), (  one: observationType  ) => one.lokalitetNavn);
+const observationsDKWithLatLong = computed(() => {
+    return state.observationer.filter((item) => item.latitude && item.longitude && item.regionId > 0);
 });
 
 const groupByFunctions = {
