@@ -13,7 +13,7 @@
                     }}</span>
                 <div class="grid grid-cols-[max-content_1fr] gap-x-3">
                     <template v-for="tur in value">
-                        <fugleturDato :fugleturId="tur.id" :dato="tur.dato" />
+                        <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" />
                         <span>{{ tur.lokalitetNavn }}</span>
                     </template>
                 </div>

@@ -13,7 +13,7 @@
                 </div>
                 <div class="grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 dark:text-white">
                     <template v-for="obs in obsSorted(value)" :key="obs.observationId">
-                        <div><fugleturDato :fugleturId="obs.fugleturId" :dato="obs.dato" /></div>
+                        <div><fugletur-dato :fugleturId="obs.fugleturId" :dato="obs.dato" /></div>
                         <div><span v-if="showSpeciesNameInList">{{ obs.artNavn }}</span></div>
                         <div>{{ obs.lokalitetNavn }}</div>
                         <div>{{ obs.bem }}</div>
