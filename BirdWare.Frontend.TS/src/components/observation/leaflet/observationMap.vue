@@ -8,11 +8,8 @@ import "leaflet/dist/leaflet.css"
 import * as L from 'leaflet';
 import type { observationType } from '@/types/observationType';
 import type { GeoJSON } from 'geojson';
-
-import { useLeafletStore } from '@/stores/leaflet-store';
-const leafletStore = useLeafletStore();
-
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
+
 const obsSelectionStore = useObsSelectionStore();
 
 const initialMap = ref();
@@ -36,26 +33,9 @@ onMounted(() => {
 function initializeLeaflet() {
     initialMap.value = L.map('map');
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+        maxZoom: 15,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(initialMap.value);
-
-    setupEvents();
-    centerMap();
-}
-
-function setupEvents() {
-    initialMap.value.on({ zoomend: whenZoomEnd });
-    initialMap.value.on({ move: whenMove });
-}
-
-function whenZoomEnd(e:L.LeafletEvent) {
-    leafletStore.setZoomLevel(e.target._zoom);
-}
-
-function whenMove(e:L.LeafletEvent) {
-    let centerLatLong = e.target.getCenter();
-    leafletStore.setCenter(centerLatLong.lat, centerLatLong.lng);
 }
 
 function findFirstObservationByLokalitetId(id: number) {
@@ -84,6 +64,7 @@ function addPointsToMap() {
         }
     }).addTo(initialMap.value);
 
+    centerMap();
     toggleHasLayer();
 }
 
@@ -113,18 +94,33 @@ function toggleHasLayer() {
     hasLayer.value = !hasLayer.value;
 }
 
-function calculateMapCenter() {
-    let minLat = Math.min(...props.observationer.map(o => o.latitude)),
-        maxLat = Math.max(...props.observationer.map(o => o.latitude)),
-        minLng = Math.min(...props.observationer.map(o => o.longitude)),
-        maxLng = Math.max(...props.observationer.map(o => o.longitude));
-
-    return [(minLat + maxLat) / 2, (minLng + maxLng) / 2];
-}
-
 function centerMap() {
-    initialMap.value.setView([leafletStore.centerLatitude, leafletStore.centerLongitude], leafletStore.zoomLevel);
+    if (props.observationer && props.observationer.length > 0) {
+
+        let minLat = Math.min(...props.observationer.map(o => o.latitude)),
+            maxLat = Math.max(...props.observationer.map(o => o.latitude)),
+            minLng = Math.min(...props.observationer.map(o => o.longitude)),
+            maxLng = Math.max(...props.observationer.map(o => o.longitude));
+
+        initialMap.value.setView([(minLat + maxLat) / 2, (minLng + maxLng) / 2], 7);
+        initialMap.value.fitBounds([[minLat, minLng], [maxLat, maxLng]], {padding: [20,20]});
+
+    }
 }
+
+//function setupEvents() {
+//    initialMap.value.on({ zoomend: whenZoomEnd });
+//    initialMap.value.on({ move: whenMove });
+//}
+
+//function whenZoomEnd(e:L.LeafletEvent) {
+//    leafletStore.setZoomLevel(e.target._zoom);
+//}
+
+//function whenMove(e:L.LeafletEvent) {
+//    let centerLatLong = e.target.getCenter();
+//    leafletStore.setCenter(centerLatLong.lat, centerLatLong.lng);
+//}
 
 watch(() => props.observationer, (newValue) => {
     addPointsToMap();
