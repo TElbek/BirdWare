@@ -64,7 +64,7 @@ function addPointsToMap() {
         }
     }).addTo(initialMap.value);
 
-    centerMap();
+    fitBounds();
     toggleHasLayer();
 }
 
@@ -94,17 +94,12 @@ function toggleHasLayer() {
     hasLayer.value = !hasLayer.value;
 }
 
-function centerMap() {
+function fitBounds() {
     if (props.observationer && props.observationer.length > 0) {
-
-        let minLat = Math.min(...props.observationer.map(o => o.latitude)),
-            maxLat = Math.max(...props.observationer.map(o => o.latitude)),
-            minLng = Math.min(...props.observationer.map(o => o.longitude)),
-            maxLng = Math.max(...props.observationer.map(o => o.longitude));
-
-        initialMap.value.setView([(minLat + maxLat) / 2, (minLng + maxLng) / 2], 7);
-        initialMap.value.fitBounds([[minLat, minLng], [maxLat, maxLng]], {padding: [20,20]});
-
+        let layerList: L.Layer[] = [observationLayer.value as L.Layer];
+        let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
+        let bounds = featureGroup.getBounds();
+        initialMap.value.fitBounds(bounds, [50, 50]);
     }
 }
 
