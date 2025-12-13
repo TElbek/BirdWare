@@ -128,3 +128,8 @@ body {
 .forskel-danger::before {
   content: '-';
 }
+
+.leaflet {
+    height: 80vh;
+    z-index: 0 !important;
+}

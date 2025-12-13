@@ -3,27 +3,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from 'vue';
+import api from '@/api';
+import { ref, onMounted, watch, computed, reactive } from 'vue';
 import "leaflet/dist/leaflet.css"
 import * as L from 'leaflet';
-import type { observationType } from '@/types/observationType';
-import type { GeoJSON } from 'geojson';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 
 const obsSelectionStore = useObsSelectionStore();
 
 const initialMap = ref();
-const geoJson = ref([] as GeoJSON[]);
 const observationLayer = ref({} as L.Layer);
 const hasLayer = ref(false);
 
-interface observationMapProps {
-    observationer: observationType[]
-}
-
-const props = defineProps<observationMapProps>();
-const lokalitetIdList = computed(() => [...new Set(props.observationer.map(item => item.lokalitetId))]);
 const emit = defineEmits(['addtag']);
+const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
 
 onMounted(() => {
     initializeLeaflet();
@@ -38,34 +31,22 @@ function initializeLeaflet() {
     }).addTo(initialMap.value);
 }
 
-function findFirstObservationByLokalitetId(id: number) {
-    return props.observationer.find((item) => item.lokalitetId == id);
-}
-
 function addPointsToMap() {
 
     resetGeoJson();
 
-    props.observationer && lokalitetIdList.value.forEach((id) => {
-        let obs = findFirstObservationByLokalitetId(id);
-        geoJson.value.push({
-            type: 'Feature',
-            id: id,
-            geometry: { type: 'Point', coordinates: obs ? [obs.longitude, obs.latitude] : [0, 0] },
-            properties: { name: obs?.lokalitetNavn, id: obs?.lokalitetId }
-        })
+    api.get("observationer/get/tags/geojson?tagListAsJson=" + queryString.value).then(response => {
+        observationLayer.value = L.geoJSON(response.data, {
+            onEachFeature: function (feature, layer) {
+                layer.on({
+                    click: whenFeatureClicked
+                });
+            }
+        }).addTo(initialMap.value);
+
+        fitBounds();
+        toggleHasLayer();
     });
-
-    observationLayer.value = L.geoJSON(geoJson.value, {
-        onEachFeature: function (feature, layer) {
-            layer.on({
-                click: whenFeatureClicked
-            });
-        }
-    }).addTo(initialMap.value);
-
-    fitBounds();
-    toggleHasLayer();
 }
 
 function whenFeatureClicked(e: L.LeafletMouseEvent) {
@@ -79,7 +60,6 @@ function whenFeatureClicked(e: L.LeafletMouseEvent) {
 }
 
 function resetGeoJson() {
-    geoJson.value = [];
     if (hasLayer.value) {
         removeLayer();
     }
@@ -95,7 +75,7 @@ function toggleHasLayer() {
 }
 
 function fitBounds() {
-    if (props.observationer && props.observationer.length > 0) {
+    if (observationLayer) {
         let layerList: L.Layer[] = [observationLayer.value as L.Layer];
         let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
         let bounds = featureGroup.getBounds();
@@ -117,7 +97,7 @@ function fitBounds() {
 //    leafletStore.setCenter(centerLatLong.lat, centerLatLong.lng);
 //}
 
-watch(() => props.observationer, (newValue) => {
+watch(() => obsSelectionStore.selectedTags, (newValue) => {
     addPointsToMap();
 });
 </script>
