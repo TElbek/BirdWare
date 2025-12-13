@@ -1,4 +1,5 @@
 import 'vue-multiselect/dist/vue-multiselect.css';
+import "leaflet/dist/leaflet.css"
 import '@/assets/css/main.css';
 
 import { createApp, defineAsyncComponent } from 'vue'
@@ -6,18 +7,6 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
-import {Icon} from 'leaflet';
-
-// Icon.Default.mergeOptions({
-//    iconUrl:   require('marker-icon.png'),
-//    shadowUrl: require('marker-shadow.png'),
-// });
-
-// function require(imgName: string): string {
-//     var x = new URL(`./assets/${imgName}`, import.meta.url).href;
-//     console.log(x);
-//     return x;
-// }
 
 const app = createApp(App)
 

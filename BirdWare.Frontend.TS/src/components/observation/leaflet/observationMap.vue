@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import api from '@/api';
 import { ref, onMounted, watch, computed, reactive } from 'vue';
-import "leaflet/dist/leaflet.css"
+import type { Feature } from 'geojson';
 import * as L from 'leaflet';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 
@@ -17,6 +17,11 @@ const hasLayer = ref(false);
 
 const emit = defineEmits(['addtag']);
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
+
+const svgTemplate = `<svg xmlns="http://www.w3.org/2000/svg">
+   <circle cx="10" cy="10" r="8" fill="blue" />
+   Sorry, your browser does not support inline SVG.
+</svg>`;
 
 onMounted(() => {
     initializeLeaflet();
@@ -37,6 +42,11 @@ function addPointsToMap() {
 
     api.get("observationer/get/tags/geojson?tagListAsJson=" + queryString.value).then(response => {
         observationLayer.value = L.geoJSON(response.data, {
+            pointToLayer: function (feature: Feature, latlng: L.LatLng) {
+                return L.marker(latlng, {
+                    icon: createMapIcon({ width: 22})
+                });
+            },
             onEachFeature: function (feature, layer) {
                 layer.on({
                     click: whenFeatureClicked
@@ -46,6 +56,19 @@ function addPointsToMap() {
 
         fitBounds();
         toggleHasLayer();
+    });
+}
+
+function createMapIcon({ width = 22, color = '#0000ff'} = {}) {
+    const height = Math.round(width * (300 / 240)); // ratio 1.25
+    const html = L.Util.template(svgTemplate, {
+        width,
+        height,
+        color,
+    });
+    return L.divIcon({
+        html,
+        iconSize: [width, height]
     });
 }
 
@@ -83,28 +106,7 @@ function fitBounds() {
     }
 }
 
-//function setupEvents() {
-//    initialMap.value.on({ zoomend: whenZoomEnd });
-//    initialMap.value.on({ move: whenMove });
-//}
-
-//function whenZoomEnd(e:L.LeafletEvent) {
-//    leafletStore.setZoomLevel(e.target._zoom);
-//}
-
-//function whenMove(e:L.LeafletEvent) {
-//    let centerLatLong = e.target.getCenter();
-//    leafletStore.setCenter(centerLatLong.lat, centerLatLong.lng);
-//}
-
 watch(() => obsSelectionStore.selectedTags, (newValue) => {
     addPointsToMap();
 });
 </script>
-
-<style scoped>
-.leaflet {
-    height: 80vh;
-    z-index: 50 !important;
-}
-</style>
