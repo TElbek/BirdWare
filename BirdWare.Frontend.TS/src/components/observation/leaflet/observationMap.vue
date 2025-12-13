@@ -18,8 +18,13 @@ const hasLayer = ref(false);
 const emit = defineEmits(['addtag']);
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
 
-const svgTemplate = `<svg xmlns="http://www.w3.org/2000/svg">
-   <circle cx="10" cy="10" r="8" fill="blue" />
+const svgTemplateBlue = `<svg xmlns="http://www.w3.org/2000/svg">
+   <circle cx="10" cy="10" r="8" fill="#0000ff" />
+   Sorry, your browser does not support inline SVG.
+</svg>`;
+
+const svgTemplateRed = `<svg xmlns="http://www.w3.org/2000/svg">
+   <circle cx="10" cy="10" r="8" fill="#ff0000" />
    Sorry, your browser does not support inline SVG.
 </svg>`;
 
@@ -44,7 +49,7 @@ function addPointsToMap() {
         observationLayer.value = L.geoJSON(response.data, {
             pointToLayer: function (feature: Feature, latlng: L.LatLng) {
                 return L.marker(latlng, {
-                    icon: createMapIcon({ width: 22})
+                    icon: createMapIcon({ width: 22, countIsAboveAverage: feature.properties?.countIsAboveAverage})
                 });
             },
             onEachFeature: function (feature, layer) {
@@ -59,9 +64,9 @@ function addPointsToMap() {
     });
 }
 
-function createMapIcon({ width = 22, color = '#0000ff'} = {}) {
+function createMapIcon({countIsAboveAverage = false, width = 22, color = '#0000ff'} = {}) {
     const height = Math.round(width * (300 / 240)); // ratio 1.25
-    const html = L.Util.template(svgTemplate, {
+    const html = L.Util.template(countIsAboveAverage ? svgTemplateRed : svgTemplateBlue, {
         width,
         height,
         color,

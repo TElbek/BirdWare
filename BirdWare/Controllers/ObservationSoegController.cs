@@ -38,6 +38,10 @@ namespace BirdWare.Controllers
                     })
             );
 
+            geoJSON.Features
+                .ForEach(f => f.Properties.CountIsAboveAverage =
+                              f.Properties.Count > geoJSON.Features.Average(a => a.Properties.Count));
+
             return geoJSON;
         }
     }
