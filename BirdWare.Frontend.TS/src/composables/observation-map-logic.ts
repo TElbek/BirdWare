@@ -25,27 +25,26 @@ export function useObservationMapLogic(emitTagCallback: any) {
     }
 
     function addPointsToMap(geoJson: birdwareGeoJson) {
-        resetGeoJson();
-        observationLayer.value = L.geoJSON(geoJson as any, {
-            pointToLayer: function (feature: Feature, latlng: L.LatLng) {
-                let marker = L.marker(latlng, {
-                    icon: createMapIcon({ width: 22, countIsAboveAverage: feature.properties?.countIsAboveAverage })
-                });
-                marker.on('mouseover', function (ev) {
-                    marker.openPopup();
-                });
-                marker.on('click', function (ev) {
-                    whenFeatureClicked(ev);
-                });
-                return marker;
-            },
-            onEachFeature: function (feature, layer) {
-                layer.bindPopup('<strong>' + feature.properties?.name + '</strong><br/> ' + feature.properties?.count + ' observationer')
-            }
-        }).addTo(map.value);
+        if (map) {
+            resetGeoJson();
+            observationLayer.value = L.geoJSON(geoJson as any, {
+                pointToLayer: function (feature: Feature, latlng: L.LatLng) {
+                    let marker = L.marker(latlng, {
+                        icon: createMapIcon({ width: 22, countIsAboveAverage: feature.properties?.countIsAboveAverage })
+                    });
+                    marker.on('click', function (ev) {
+                        whenFeatureClicked(ev);
+                    });
+                    return marker;
+                },
+                onEachFeature: function (feature, layer) {
+                    layer.bindPopup('<strong>' + feature.properties?.name + '</strong><br/> ' + feature.properties?.count + ' observationer')
+                }
+            }).addTo(map.value);
 
-        fitBounds();
-        toggleHasLayer();
+            fitBounds();
+            toggleHasLayer();
+        }
     }
 
     function createMapIcon({ countIsAboveAverage = false, width = 22, color = '#0000ff' } = {}) {
@@ -81,11 +80,17 @@ export function useObservationMapLogic(emitTagCallback: any) {
     }
 
     function fitBounds() {
-        if (observationLayer) {
+        if (observationLayer && map) {
             let layerList: L.Layer[] = [observationLayer.value as L.Layer];
             let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
             let bounds = featureGroup.getBounds();
-            map.value.fitBounds(bounds, { padding: [20, 20] });
+            try {
+                map.value.fitBounds(bounds, { padding: [20, 20] });
+            }
+            catch {
+                map.value.setView([56,11],7);
+                return;
+            }
         }
     }
 
