@@ -133,8 +133,3 @@ body {
     height: 80vh;
     z-index: 0 !important;
 }
-
-.leaflet-div-icon {
-  background: transparent;
-  border-width: 0px;
-}

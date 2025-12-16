@@ -1,5 +1,5 @@
 <template>
-    <div class="relative z-50">
+    <div>
         <button @click="switchShow" class="w-27 ps-2 pe-1 rounded-sm border-gray-300 border dark:border-birdware-bright grid grid-cols-[max-content_1fr]">
             <svg class="w-5 h-5 text-birdware" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
@@ -8,7 +8,7 @@
             </svg>
             <div class="mr-1 ms-1 text-nowrap text-start text-birdware dark:text-birdware-bright">{{ props.caption }}</div>
         </button>
-        <div v-show="state.show" class="absolute right-1 py-2 mt-1 border border-gray-200 dark:border dark:border-birdware rounded-md shadow-xl w-35 bg-white dark:bg-gray-900 text-birdware" @click="switchShow">
+        <div v-show="state.show" class="z-100 absolute right-1 py-2 mt-1 border border-gray-200 dark:border dark:border-birdware rounded-md shadow-xl w-35 bg-white dark:bg-gray-900 text-birdware" @click="switchShow">
             <div class="grid grid-cols-1 gap-3 mx-2">
                 <slot></slot>
             </div>
