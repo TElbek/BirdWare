@@ -32,10 +32,7 @@ function getGeoJSon() {
 }
 
 function emitAddTag(name: string) {
-    if (obsSelectionStore.hasTagWithName(name)) {
-        emit('addtag', name);
-    }
-    else {
+    if (!obsSelectionStore.hasTagWithName(name)) {
         emit('addtag', name);
         obsSelectionStore.SetGroupingId(0);
     }
