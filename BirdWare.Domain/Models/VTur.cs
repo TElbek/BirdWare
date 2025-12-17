@@ -13,6 +13,8 @@ namespace BirdWare.Domain.Models
         public long Aarstal { get; set; }
         public long Maaned { get; set; }
         public long AntalArter { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
 
         public string FugleturAarMaaned =>
             Dato.HasValue ?

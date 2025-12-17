@@ -81,6 +81,8 @@ namespace BirdWare.EF.Queries
                 LokalitetNavn = f.Lokalitet.Navn ?? string.Empty,
                 LokalitetId = f.Lokalitet.Id,
                 RegionId = f.Lokalitet.RegionId,
+                Latitude = f.Lokalitet.Latitude,
+                Longitude = f.Lokalitet.Longitude,
                 RegionNavn = f.Lokalitet.Region.Navn ?? string.Empty,
                 Aarstal = f.Aarstal,
                 Maaned = f.Maaned
