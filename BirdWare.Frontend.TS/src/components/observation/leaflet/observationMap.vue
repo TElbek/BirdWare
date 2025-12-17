@@ -11,7 +11,7 @@ import { useObservationMapLogic } from '@/composables/observation-map-logic';
 
 const geoJsonObj = ref({} as birdwareGeoJson)
 const obsSelectionStore = useObsSelectionStore();
-const observationMapLogic = useObservationMapLogic(emitAddTag);
+const { initializeLeaflet, addPointsToMap } = useObservationMapLogic(emitAddTag);
 
 const emit = defineEmits(['addtag']);
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
@@ -19,7 +19,7 @@ const queryString = computed(() => { return JSON.stringify(obsSelectionStore.sel
 const hasData = ref(false);
 
 onMounted(() => {
-    observationMapLogic.initializeLeaflet();
+    initializeLeaflet();
     getGeoJSon();
 });
 
@@ -43,6 +43,6 @@ watch(() => obsSelectionStore.selectedTags, (newValue) => {
 });
 
 watch(() => geoJsonObj.value, (newValue) => {
-    if (hasData.value) observationMapLogic.addPointsToMap(geoJsonObj.value);
+    if (hasData.value) addPointsToMap(geoJsonObj.value);
 });
 </script>
