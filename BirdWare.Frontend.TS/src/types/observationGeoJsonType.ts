@@ -1,16 +1,11 @@
-import type { Crs, Geometry } from "./geoJsonTypes"
+import type { baseFeature, baseGeoJson } from "./geoJsonTypes"
 
-export type observationGeoJson = {
-  type: string
-  name: string
-  crs: Crs
+export interface observationGeoJson extends baseGeoJson {
   features: Feature[]
 }
 
-export type Feature = {
-  type: string
+export interface Feature extends baseFeature {
   properties: Properties
-  geometry: Geometry
 }
 
 export type Properties = {
