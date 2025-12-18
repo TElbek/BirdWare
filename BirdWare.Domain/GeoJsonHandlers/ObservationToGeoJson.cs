@@ -17,10 +17,13 @@ namespace BirdWare.Domain.GeoJsonHandlers
             ObservationsBylokalitet.ToList().ForEach(lokalitet => {
 
                 dynamic expandoObject = new ExpandoObject();
-                expandoObject.Id = lokalitet.key.LokalitetId;
-                expandoObject.Name = lokalitet.key.LokalitetNavn;
-                expandoObject.Count = lokalitet.count;
-                expandoObject.CountIsAboveAverage = lokalitet.count > ObservationsBylokalitet.Average(a => a.count);
+                expandoObject.id = lokalitet.key.LokalitetId;
+                expandoObject.name = lokalitet.key.LokalitetNavn;
+                expandoObject.count = lokalitet.count;
+                expandoObject.countIsAboveAverage = lokalitet.count > ObservationsBylokalitet.Average(a => a.count);
+                expandoObject.latestDate = observationsByTags
+                                                .Where(q => q.LokalitetId == lokalitet.key.LokalitetId)
+                                                .Max(m => m.Dato);
 
                 geoJSON.Features.Add(
                     new GeoJsonFeature

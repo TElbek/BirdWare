@@ -1,7 +1,8 @@
 import type { Feature } from 'geojson';
-import type { birdwareGeoJson } from '@/types/birdwareGeoJsonType';
+import type { observationGeoJson } from '@/types/observationGeoJsonType';
 import * as L from 'leaflet';
 import { ref, shallowRef } from 'vue';
+import { formatDate } from '@/ts/dateandtime';
 
 export function useObservationMapLogic(emitTagCallback: any) {
     const map = shallowRef();
@@ -16,7 +17,7 @@ export function useObservationMapLogic(emitTagCallback: any) {
         }).addTo(map.value);
     }
 
-    function addPointsToMap(geoJson: birdwareGeoJson) {
+    function addPointsToMap(geoJson: observationGeoJson) {
         if (map) {
             resetGeoJson();
             observationLayer.value = L.geoJSON(geoJson as any, {
@@ -29,7 +30,7 @@ export function useObservationMapLogic(emitTagCallback: any) {
                     return marker;
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindTooltip('<strong>' + feature.properties?.name + '</strong><br/> ' + feature.properties?.count + ' observationer')
+                    layer.bindTooltip('<strong>' + feature.properties?.name + '</strong>: ' + feature.properties?.count + ' obs<br/><strong>Seneste </strong>' + formatDate( feature.properties?.latestDate))
                 }
             }).addTo(map.value);
 

@@ -6,10 +6,10 @@
 import api from '@/api';
 import { ref, onMounted, watch, computed } from 'vue';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
-import type { birdwareGeoJson } from '@/types/birdwareGeoJsonType';
+import type { observationGeoJson } from '@/types/observationGeoJsonType';
 import { useObservationMapLogic } from '@/composables/observation-map-logic';
 
-const geoJsonObj = ref({} as birdwareGeoJson)
+const geoJsonObj = ref({} as observationGeoJson)
 const obsSelectionStore = useObsSelectionStore();
 const { initializeLeaflet, addPointsToMap } = useObservationMapLogic(emitAddTag);
 
