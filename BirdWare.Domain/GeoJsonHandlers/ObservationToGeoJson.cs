@@ -12,7 +12,7 @@ namespace BirdWare.Domain.GeoJsonHandlers
             var ObservationsBylokalitet = from o in observationsByTags
                                           where (o.Latitude.HasValue && o.Longitude.HasValue && o.RegionId > 0)
                                           group o by new { o.LokalitetId, o.LokalitetNavn, o.Latitude, o.Longitude } into ogroup
-                                          select new { key = ogroup.Key, count = ogroup.Count() };
+                                          select new { key = ogroup.Key, count = ogroup.Count(), latestDate = ogroup.Max(m => m.Dato)};
 
             ObservationsBylokalitet.ToList().ForEach(lokalitet => {
 
@@ -21,9 +21,7 @@ namespace BirdWare.Domain.GeoJsonHandlers
                 expandoObject.name = lokalitet.key.LokalitetNavn;
                 expandoObject.count = lokalitet.count;
                 expandoObject.countIsAboveAverage = lokalitet.count > ObservationsBylokalitet.Average(a => a.count);
-                expandoObject.latestDate = observationsByTags
-                                                .Where(q => q.LokalitetId == lokalitet.key.LokalitetId)
-                                                .Max(m => m.Dato);
+                expandoObject.latestDate = lokalitet.latestDate ?? DateTime.MinValue;
 
                 geoJSON.Features.Add(
                     new GeoJsonFeature

@@ -44,9 +44,9 @@ export function useObservationMapLogic(emitTagCallback: any) {
     }
 
     function resetGeoJson() {
-        if (hasLayer.value) {
-            removeLayer();
-        }
+       if (hasLayer.value) {
+           removeLayer();
+       }
     }
 
     function removeLayer() {
@@ -75,6 +75,7 @@ export function useObservationMapLogic(emitTagCallback: any) {
 
     return {
         initializeLeaflet,
-        addPointsToMap
+        addPointsToMap,
+        resetGeoJson
     }
 }

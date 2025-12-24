@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import api from '@/api';
-import { ref, onMounted, watch, computed } from 'vue';
+import { useObservationMapLogic } from '@/composables/observation-map-logic';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import type { observationGeoJson } from '@/types/observationGeoJsonType';
-import { useObservationMapLogic } from '@/composables/observation-map-logic';
+import { computed, onMounted, ref, watch } from 'vue';
 
 const geoJsonObj = ref({} as observationGeoJson)
 const obsSelectionStore = useObsSelectionStore();
-const { initializeLeaflet, addPointsToMap } = useObservationMapLogic(emitAddTag);
+const { initializeLeaflet, addPointsToMap, resetGeoJson } = useObservationMapLogic(emitAddTag);
 
 const emit = defineEmits(['addtag']);
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
@@ -24,11 +24,18 @@ onMounted(() => {
 });
 
 function getGeoJSon() {
-    hasData.value = false;
-    api.get("observationer/get/tags/geojson?tagListAsJson=" + queryString.value).then(response => {
-        geoJsonObj.value = response.data;
-        hasData.value = true;
-    });
+    if (obsSelectionStore.selectedTags.length > 0) {
+        hasData.value = false;
+        api.get("observationer/get/tags/geojson?tagListAsJson=" + queryString.value).then(response => {
+            geoJsonObj.value = response.data;
+            hasData.value = true;
+        });
+    }
+    else {
+        geoJsonObj.value = {} as observationGeoJson;
+        hasData.value = false;
+        resetGeoJson();
+    }
 }
 
 function emitAddTag(name: string) {
