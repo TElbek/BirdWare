@@ -23,17 +23,20 @@ namespace BirdWare.Domain.GeoJsonHandlers
                 expandoObject.countIsAboveAverage = lokalitet.count > ObservationsBylokalitet.Average(a => a.count);
                 expandoObject.latestDate = lokalitet.latestDate ?? DateTime.MinValue;
 
-                geoJSON.Features.Add(
-                    new GeoJsonFeature
-                    {
-                        Properties = expandoObject,
-                        Geometry = { Coordinates = [
-                            lokalitet.key.Longitude != null ? lokalitet.key.Longitude.Value : 0,
-                            lokalitet.key.Latitude  != null ? lokalitet.key.Latitude.Value : 0] }
-                    });
+                geoJSON.Features.Add(new GeoJsonFeature
+                {
+                    Properties = expandoObject,
+                    Geometry = { Coordinates = [GetDoubleValueOrZero(lokalitet.key.Longitude), 
+                                                GetDoubleValueOrZero(lokalitet.key.Latitude)]}
+                });
             });
 
             return geoJSON;
+        }
+
+        private static double GetDoubleValueOrZero(double? value)
+        { 
+            return value ?? 0;
         }
     }
 }
