@@ -11,7 +11,7 @@
                     }}</span>
                 <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright float-end">{{ value.length
                     }}</span>
-                <div class="grid grid-cols-[max-content_1fr] gap-x-3">
+                <div class="grid grid-cols-[max-content_1fr] gap-x-3 dark:text-white">
                     <template v-for="tur in value">
                         <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" />
                         <span>{{ tur.lokalitetNavn }}</span>
