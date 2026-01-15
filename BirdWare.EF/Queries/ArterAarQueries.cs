@@ -1,5 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
@@ -22,11 +23,14 @@ namespace BirdWare.EF.Queries
 
         private IQueryable<ArterAar> GetArterAar(long aarstal)
         {
-            var arterAar = from o in birdWareContext.Observation join 
-                        a in birdWareContext.Art on o.ArtId equals a.Id join
-                        f in birdWareContext.Fugletur on o.FugleturId equals f.Id join 
-                        l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
-                  where f.Dato.HasValue && f.Dato.Value.Year == aarstal && l.RegionId > 0
+            var startOfYear = new DateTime((int)aarstal, 1, 1);
+            var startNextYear = startOfYear.AddYears(1);
+
+            var arterAar = from o in birdWareContext.Observation.AsNoTracking() join 
+                                a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id join
+                                f in birdWareContext.Fugletur.AsNoTracking() on o.FugleturId equals f.Id join 
+                                l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id                 
+                  where f.Dato.HasValue && f.Dato >= startOfYear && f.Dato < startNextYear && l.RegionId > 0
                   select new { o.ArtId, a.GruppeId, a.Navn, a.SU, a.Speciel, f.Dato, FugleturId = f.Id };
 
                  return from o in arterAar

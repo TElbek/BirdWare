@@ -1,6 +1,7 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
-using BirdWare.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
@@ -11,9 +12,9 @@ namespace BirdWare.EF.Queries
             var withMaaned = birdWareContext.Fugletur.GetAarMaaned()
                             .Where(q => q.Aarstal == aarstal && q.Maaned == maaned);
 
-            return [.. (from f in birdWareContext.Fugletur join
-                             l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id join
-                             r in birdWareContext.Region on l.RegionId equals r.Id
+            return [.. (from f in birdWareContext.Fugletur.AsNoTracking() join
+                             l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id join
+                             r in birdWareContext.Region.AsNoTracking() on l.RegionId equals r.Id
                     where withMaaned.Any(s => s.FugleturId == f.Id)
                     select new VTur
                     {
@@ -30,11 +31,11 @@ namespace BirdWare.EF.Queries
 
         public VTur GetFugletur(long id)
         {
-            var vtur = from f in birdWareContext.Fugletur
+            var vtur = from f in birdWareContext.Fugletur.AsNoTracking()
                        join
-                            l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
+                            l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
                        join
-                            r in birdWareContext.Region on l.RegionId equals r.Id
+                            r in birdWareContext.Region.AsNoTracking() on l.RegionId equals r.Id
                        where f.Id == id
                        select new VTur{
                            Aarstal = f.Aarstal,
@@ -56,7 +57,7 @@ namespace BirdWare.EF.Queries
 
         public long GetSenesteFugletur()
         {
-            return birdWareContext.Fugletur.Max(f => f.Id);
+            return birdWareContext.Fugletur.AsNoTracking().Max(f => f.Id);
         }
     }
 }

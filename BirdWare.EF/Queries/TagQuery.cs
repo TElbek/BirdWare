@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 namespace BirdWare.EF.Queries
@@ -101,39 +102,39 @@ namespace BirdWare.EF.Queries
 
         private List<int> GetAarstal()
         {
-            return [.. birdWareContext.Fugletur
+            return [.. birdWareContext.Fugletur.AsNoTracking()
                 .Select(r => r.Dato.HasValue ? r.Dato.Value.Year : 0).Distinct()];
         }
 
         private List<int> GetMaaneder()
         {
-            return [.. birdWareContext.Fugletur
+            return [.. birdWareContext.Fugletur.AsNoTracking()
                 .Select(r => r.Dato.HasValue ? r.Dato.Value.Month : 0).Distinct()];
         }
 
         private List<Lokalitet> GetLokaliteter()
         {
-            return [.. birdWareContext.Lokalitet];
+            return [.. birdWareContext.Lokalitet.AsNoTracking()];
         }
 
         private List<Region> GetRegioner()
         {
-            return [.. birdWareContext.Region];
+            return [.. birdWareContext.Region.AsNoTracking()];
         }
 
         private List<Familie> GetFamilier()
         {
-            return [.. birdWareContext.Familie];
+            return [.. birdWareContext.Familie.AsNoTracking()];
         }
 
         private List<Gruppe> GetArt_Grupper()
         {
-            return [.. birdWareContext.Gruppe];
+            return [.. birdWareContext.Gruppe.AsNoTracking()];
         }
 
         private List<Art> GetArter()
         {
-            return [.. birdWareContext.Art];
+            return [.. birdWareContext.Art.AsNoTracking()];
         }
     }
 }

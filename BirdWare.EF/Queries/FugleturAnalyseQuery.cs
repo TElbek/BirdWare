@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
@@ -55,7 +56,7 @@ namespace BirdWare.EF.Queries
 
         private List<Art> HentArtListe(long fugleturId)
         {
-            return [.. (from o in birdWareContext.Observation
+            return [.. (from o in birdWareContext.Observation.AsNoTracking()
                     join a in birdWareContext.Art on o.ArtId equals a.Id
                     where o.FugleturId == fugleturId
                     select a)];
@@ -65,8 +66,8 @@ namespace BirdWare.EF.Queries
         {
             if (birdWareContext.Fugletur.Any(q => q.Id == fugleturId))
             {
-                return (from f in birdWareContext.Fugletur
-                        join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
+                return (from f in birdWareContext.Fugletur.AsNoTracking()
+                        join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
                         where f.Id == fugleturId
                         select new VTur
                         {
@@ -83,10 +84,10 @@ namespace BirdWare.EF.Queries
 
         private ILookup<long, VObs> FindAnalyseData(VTur vTur, List<Art> artList)
         {
-            return (from f in birdWareContext.Fugletur
-                       join l in birdWareContext.Lokalitet on f.LokalitetId equals l.Id
-                       join o in birdWareContext.Observation on f.Id equals o.FugleturId
-                       join a in birdWareContext.Art on o.ArtId equals a.Id
+            return (from f in birdWareContext.Fugletur.AsNoTracking()
+                    join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
+                       join o in birdWareContext.Observation.AsNoTracking() on f.Id equals o.FugleturId
+                       join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
                        where f.Id < vTur.Id && artList.Select(s => s.Id).Contains(a.Id)
                        select new VObs
                        {

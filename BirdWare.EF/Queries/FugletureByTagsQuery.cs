@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
@@ -8,7 +9,7 @@ namespace BirdWare.EF.Queries
     {        
         public List<VTur> GetFugletureByTags(List<Tag> TagList)
         {
-            IQueryable<Fugletur> fugleture = birdWareContext.Fugletur;
+            IQueryable<Fugletur> fugleture = birdWareContext.Fugletur.AsNoTracking();
 
             if (TagList.Any(t => t.TagType == TagTypes.Aarstal))
             {

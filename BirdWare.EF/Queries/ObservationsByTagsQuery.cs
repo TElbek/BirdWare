@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace BirdWare.EF.Queries
@@ -9,7 +10,7 @@ namespace BirdWare.EF.Queries
     {
         public List<VObs> GetObservationsByTags(List<Tag> tagList)
         {
-            IQueryable<Observation> observations = birdWareContext.Observation;
+            IQueryable<Observation> observations = birdWareContext.Observation.AsNoTracking();
             var filterMethods = HentFilterMetoder();
 
             foreach (var tagType in tagList.Select(r => r.TagType).Distinct())

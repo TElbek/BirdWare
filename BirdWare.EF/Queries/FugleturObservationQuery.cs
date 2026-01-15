@@ -1,5 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
@@ -7,10 +8,10 @@ namespace BirdWare.EF.Queries
     {
         public List<VObs> GetObservationer(long FugleturId)
         {
-            var list = from o in birdWareContext.Observation join
-                            a in birdWareContext.Art on o.ArtId equals a.Id join
-                            g in birdWareContext.Gruppe on a.GruppeId equals g.Id join
-                            f in birdWareContext.Familie on g.FamilieId equals f.Id
+            var list = from o in birdWareContext.Observation.AsNoTracking() join
+                            a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id join
+                            g in birdWareContext.Gruppe.AsNoTracking() on a.GruppeId equals g.Id join
+                            f in birdWareContext.Familie.AsNoTracking() on g.FamilieId equals f.Id
                        where o.FugleturId == FugleturId
                        orderby f.Navn, a.Navn
                        select new VObs
