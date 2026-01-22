@@ -3,7 +3,7 @@
         <ul class="flex gap-x-8 text-base cursor-pointer tracking-wide">
             <li>
                 <router-link v-if="homeRoute != undefined" :to="homeRoute.path">
-                    <span>{{ homeRoute?.meta?.title }}</span>
+                    <span class="tracking-wider">{{ homeRoute?.meta?.title }}</span>
                 </router-link>
             </li>
             <li v-for="route in visibleRoutes" :key="route.path">
