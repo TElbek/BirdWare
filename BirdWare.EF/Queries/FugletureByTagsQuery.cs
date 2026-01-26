@@ -7,68 +7,60 @@ namespace BirdWare.EF.Queries
 {
     public class FugletureByTagsQuery(BirdWareContext birdWareContext) : BaseByTagsQuery(birdWareContext), IFugletureByTagsQuery
     {        
-        public List<VTur> GetFugletureByTags(List<Tag> TagList)
+        public List<VTur> GetFugletureByTags(List<Tag> tagList)
         {
             IQueryable<Fugletur> fugleture = birdWareContext.Fugletur.AsNoTracking();
 
-            if (TagList.Any(t => t.TagType == TagTypes.Aarstal))
-            {
-                fugleture = FilterForYear(TagList, fugleture);
-            }
+            var filterMethods = HentFilterMetoder();
 
-            if (TagList.Any(t => t.TagType == TagTypes.Maaned))
+            foreach (var tagType in tagList.Select(r => r.TagType).Distinct())
             {
-                fugleture = FilterForMonth(TagList, fugleture);
-            }
-
-            if (TagList.Any(q => ErSaesonTagType(q)))
-            {
-                fugleture = FilterForSeason(TagList, fugleture);
-            }
-
-            if (TagList.Any(t => t.TagType == TagTypes.Region))
-            {
-                fugleture = FilterForRegion(TagList, fugleture);
-            }
-
-            if (TagList.Any(t => t.TagType == TagTypes.Lokalitet))
-            {
-                fugleture = FilterForLocality(TagList, fugleture);
+                var method = FindFilterMetodeForTagType(tagType, filterMethods);
+                var result = method?.Invoke(this, [tagList, fugleture]);
+                if (result is IQueryable<Fugletur> fugletur)
+                {
+                    fugleture = fugletur;
+                }
             }
 
             return MapToResult(fugleture.OrderByDescending(r => r.Id).Take(50));
         }
 
-        private static IQueryable<Fugletur> FilterForLocality(List<Tag> TagList, IQueryable<Fugletur> fugleture)
+        [TagFilter(TagType = TagTypes.Lokalitet)]
+        private static IQueryable<Fugletur> FilterForLocality(List<Tag> tagList, IQueryable<Fugletur> fugleture)
         {
-            var list = TagList.Where(r => r.TagType == TagTypes.Lokalitet).Select(s => s.Id).Cast<long>().ToList();
+            var list = GetTagIdsByType(tagList, TagTypes.Lokalitet);
             return fugleture.Where(g => list.Contains(g.LokalitetId));
         }
 
-        private static IQueryable<Fugletur> FilterForRegion(List<Tag> TagList, IQueryable<Fugletur> fugleture)
+        [TagFilter(TagType = TagTypes.Region)]
+        private static IQueryable<Fugletur> FilterForRegion(List<Tag> tagList, IQueryable<Fugletur> fugleture)
         {
-            var list = TagList.Where(r => r.TagType == TagTypes.Region).Select(s => s.Id).Cast<long>().ToList();
+            var list = GetTagIdsByType(tagList, TagTypes.Region);
             return fugleture.Where(g => list.Contains(g.Lokalitet.RegionId));
         }
 
-        private IQueryable<Fugletur> FilterForSeason(List<Tag> TagList, IQueryable<Fugletur> fugleture)
+        [TagFilter(TagTypeList = [TagTypes.SaesonEfteraar, TagTypes.SaesonForaar, TagTypes.SaesonSommer, TagTypes.SaesonVinter])]
+        private IQueryable<Fugletur> FilterForSeason(List<Tag> tagList, IQueryable<Fugletur> fugleture)
         {
-            var seasonTagTypes = TagList.Where(q => ErSaesonTagType(q)).Select(s => s.TagType).ToList();
+            var seasonTagTypes = tagList.Where(q => ErSaesonTagType(q)).Select(s => s.TagType).ToList();
             var months = SaesonMaaneder.Liste.Where(q => seasonTagTypes.Contains(q.Key)).SelectMany(s => s.Value).ToList();
             var withMaaned = birdWareContext.Fugletur.GetAarMaaned().Where(y => months.Contains(y.Maaned));
             return fugleture.Where(f => withMaaned.Any(a => a.FugleturId == f.Id));
         }
 
-        private IQueryable<Fugletur> FilterForMonth(List<Tag> TagList, IQueryable<Fugletur> fugleture)
+        [TagFilter(TagType = TagTypes.Maaned)]
+        private IQueryable<Fugletur> FilterForMonth(List<Tag> tagList, IQueryable<Fugletur> fugleture)
         {
-            var list = TagList.Where(r => r.TagType == TagTypes.Maaned).Select(s => s.Id).Cast<long>().ToList();
+            var list = GetTagIdsByType(tagList, TagTypes.Maaned);
             var withAarstal = birdWareContext.Fugletur.GetAarMaaned().Where(y => list.Contains(y.Maaned));
             return fugleture.Where(f => withAarstal.Any(a => a.FugleturId == f.Id));
         }
 
-        private IQueryable<Fugletur> FilterForYear(List<Tag> TagList, IQueryable<Fugletur> fugleture)
+        [TagFilter(TagType = TagTypes.Aarstal)]
+        private IQueryable<Fugletur> FilterForYear(List<Tag> tagList, IQueryable<Fugletur> fugleture)
         {
-            var list = TagList.Where(r => r.TagType == TagTypes.Aarstal).Select(s => s.Id).Cast<long>().ToList();
+            var list = GetTagIdsByType(tagList, TagTypes.Aarstal);
             var withAarstal = birdWareContext.Fugletur.GetAarMaaned().Where(y => list.Contains(y.Aarstal));
             return fugleture.Where(f => withAarstal.Any(a => a.FugleturId == f.Id));
         }
