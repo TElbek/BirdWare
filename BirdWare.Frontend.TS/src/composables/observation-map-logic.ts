@@ -3,6 +3,7 @@ import type { observationGeoJson } from '@/types/observationGeoJsonType';
 import * as L from 'leaflet';
 import { ref, shallowRef } from 'vue';
 import { formatDate } from '@/ts/dateandtime';
+import type { baseGeoJson } from '@/types/geoJsonTypes';
 
 export function useObservationMapLogic(emitTagCallback: any) {
     const map = shallowRef();
@@ -23,14 +24,14 @@ export function useObservationMapLogic(emitTagCallback: any) {
             observationLayer.value = L.geoJSON(geoJson as any, {
                 pointToLayer: function (feature: Feature, latlng: L.LatLng) {
                     let marker = L.circleMarker(latlng).addTo(map.value);
-                    marker.setStyle({color: feature.properties?.countIsAboveAverage ? 'green' : 'blue'});
+                    marker.setStyle({ color: feature.properties?.countIsAboveAverage ? 'green' : 'blue' });
                     marker.on('click', function (ev) {
                         whenFeatureClicked(ev);
                     });
                     return marker;
                 },
                 onEachFeature: function (feature, layer) {
-                    layer.bindTooltip('<strong>' + feature.properties?.name + '</strong>: ' + feature.properties?.count + ' obs<br/><strong>Seneste </strong>' + formatDate( feature.properties?.latestDate))
+                    layer.bindTooltip('<strong>' + feature.properties?.name + '</strong>: ' + feature.properties?.count + ' obs<br/><strong>Seneste </strong>' + formatDate(feature.properties?.latestDate))
                 }
             }).addTo(map.value);
 
@@ -39,14 +40,28 @@ export function useObservationMapLogic(emitTagCallback: any) {
         }
     }
 
+    function addSimplePointToMap(geoJson: baseGeoJson) {
+        if (map) {
+            resetGeoJson();
+            observationLayer.value = L.geoJSON(geoJson as any, {
+                pointToLayer: function (feature: Feature, latlng: L.LatLng) {
+                    let marker = L.circleMarker(latlng).addTo(map.value);
+                    return marker;
+                },
+            });
+
+            fitBounds();
+        }
+    }
+
     function whenFeatureClicked(e: L.LeafletMouseEvent) {
         emitTagCallback(e.target.feature.properties.name)
     }
 
     function resetGeoJson() {
-       if (hasLayer.value) {
-           removeLayer();
-       }
+        if (hasLayer.value) {
+            removeLayer();
+        }
     }
 
     function removeLayer() {
@@ -76,6 +91,7 @@ export function useObservationMapLogic(emitTagCallback: any) {
     return {
         initializeLeaflet,
         addPointsToMap,
+        addSimplePointToMap,
         resetGeoJson
     }
 }

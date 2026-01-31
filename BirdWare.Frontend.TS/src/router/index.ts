@@ -111,7 +111,18 @@ const router = createRouter({
         requireSSL: false,
       }
     },
-{
+    {
+      path: '/opret/opretlokalitet',
+      name: 'addlocality',
+      component: () => import('../views/OpretLokalitetView.vue'),
+      meta: {
+        title: 'Tilføj Lokalitet',
+        showInNavBar: true,
+        requiresAuth: false,
+        requireSSL: false
+      }
+    },
+    {
       path: '/opret/oprettur',
       name: 'addtrip',
       component: () => import('../views/OpretTurView.vue'),
@@ -157,7 +168,7 @@ const router = createRouter({
           }
         },
       ]
-    },    
+    },
   ],
 })
 
