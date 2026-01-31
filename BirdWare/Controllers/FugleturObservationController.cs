@@ -7,7 +7,8 @@ namespace BirdWare.Controllers
     [ApiController]
     public class FugleturObservationController(
         IFugleturQuery fugleturQuery,
-        IFugleturObservationQuery fugleturObservationQuery) : ControllerBase
+        IFugleturObservationQuery fugleturObservationQuery,
+        ISletObsCommand sletObsCommand) : ControllerBase
     {
         [HttpGet]
         [Route("api/fugletur/{id}/observationer")]
@@ -28,7 +29,7 @@ namespace BirdWare.Controllers
         [Route("api/fugletur/observation/{id}/slet")]
         public void SletObservation(long id)
         { 
-            fugleturObservationQuery.SletObservation(id);
+            sletObsCommand.SletObservation(id);
         }
     }
 }

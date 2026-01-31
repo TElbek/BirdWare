@@ -1,7 +1,6 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.EF.Queries;
 using BirdWare.Test.Moq;
-using Moq;
 
 namespace BirdWare.Test.Queries
 {
@@ -50,28 +49,6 @@ namespace BirdWare.Test.Queries
             var observationer = fugleturObservationQuery.GetObservationer(idNotExists);
             
             Assert.Empty(observationer);
-        }
-
-        [Fact]
-        public void SletObservationTest()
-        {
-            var fugleturObservationQuery = GetFugleturObservationQuery();
-
-            fugleturObservationQuery.SletObservation(3);
-
-            MockContext.Verify(c => c.Observation.Remove(observationMockSet.DbSet.Single(o => o.Id == 3)), Times.Once);
-            MockContext.Verify(c => c.SaveChanges(), Times.Once);
-        }
-
-        [Fact]
-        public void SletObservationIkkeFundetTest()
-        {
-            var fugleturObservationQuery = GetFugleturObservationQuery();
-
-            fugleturObservationQuery.SletObservation(33);
-
-            MockContext.Verify(c => c.Observation.Remove(It.IsAny<Observation>()), Times.Never);
-            MockContext.Verify(c => c.SaveChanges(), Times.Never);
         }
 
         private FugleturObservationQuery GetFugleturObservationQuery()
