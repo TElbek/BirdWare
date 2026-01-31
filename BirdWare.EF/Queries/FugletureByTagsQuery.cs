@@ -2,25 +2,26 @@
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BirdWare.EF.Queries
 {
-    public class FugletureByTagsQuery(BirdWareContext birdWareContext, IServiceProvider serviceProvider) : BaseByTagsQuery(birdWareContext), IFugletureByTagsQuery
+    public class FugletureByTagsQuery(
+                    BirdWareContext birdWareContext, IServiceProvider serviceProvider) : 
+                    BaseByTagsQuery(birdWareContext, serviceProvider), IFugletureByTagsQuery
     {        
         public List<VTur> GetFugletureByTags(List<Tag> tagList)
         {
             IQueryable<Fugletur> fugleture = birdWareContext.Fugletur.AsNoTracking();
 
-            foreach (var tagType in tagList.Select(r => r.TagType).Distinct())
+            tagList.Select(r => r.TagType).Distinct().ToList().ForEach(tagType =>
             {
-                var impl = serviceProvider.GetRequiredKeyedService<IFugleturTagFilter>(tagType);
-                var result = impl.Filter(tagList, fugleture);
-                if (result is IQueryable<Fugletur> fugletur)
+                var fugleturTagFilter = GetFilterForTagType<IFugleturTagFilter>(tagType);
+                var result = fugleturTagFilter.Filter(tagList, fugleture);
+                if (result is IQueryable<Fugletur> fugleturResult)
                 {
-                    fugleture = fugletur;
+                    fugleture = fugleturResult;
                 }
-            }
+            });
 
             return MapToResult(fugleture.OrderByDescending(r => r.Id).Take(50));
         }

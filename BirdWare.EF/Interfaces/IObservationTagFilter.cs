@@ -3,7 +3,7 @@ using BirdWare.Domain.Models;
 
 namespace BirdWare.EF.Interfaces
 {
-    public interface IObservationTagFilter
+    public interface IObservationTagFilter : ITagFilter
     {
         IQueryable<Observation> Filter(List<Tag> tagList, IQueryable<Observation> queryable);
     }

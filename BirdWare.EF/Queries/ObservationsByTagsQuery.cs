@@ -2,25 +2,26 @@
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace BirdWare.EF.Queries
 {
-    public class ObservationsByTagsQuery(BirdWareContext birdWareContext, IServiceProvider serviceProvider) : BaseByTagsQuery(birdWareContext), IObservationsByTagsQuery
+    public class ObservationsByTagsQuery(
+                    BirdWareContext birdWareContext, IServiceProvider serviceProvider) : 
+                    BaseByTagsQuery(birdWareContext, serviceProvider), IObservationsByTagsQuery
     {
         public List<VObs> GetObservationsByTags(List<Tag> tagList)
         {
-            IQueryable<Observation> observations = birdWareContext.Observation.AsNoTracking();
+            var observations = birdWareContext.Observation.AsNoTracking();
 
-            foreach (var tagType in tagList.Select(r => r.TagType).Distinct())
+            tagList.Select(r => r.TagType).Distinct().ToList().ForEach(tagType =>
             {
-                var impl = serviceProvider.GetRequiredKeyedService<IObservationTagFilter>(tagType);
-                var result = impl.Filter(tagList, observations);
-                if (result is IQueryable<Observation> obs)
+                var observationTagFilter = GetFilterForTagType<IObservationTagFilter>(tagType);
+                var result = observationTagFilter.Filter(tagList, observations);
+                if (result is IQueryable<Observation> observationResult)
                 {
-                    observations = obs;
+                    observations = observationResult;
                 }
-            }
+            });
             return MapToResult(observations.OrderByDescending(r => r.FugleturId).Take(200));
         }
 
