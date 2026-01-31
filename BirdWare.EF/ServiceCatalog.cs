@@ -35,6 +35,8 @@ namespace BirdWare.EF
             services.AddTransient<IOpretObsCommand, OpretObsCommand>();
             services.AddTransient<IOpretTurCommand, OpretTurCommand>();
 
+            services.AddTransient<ISletObsCommand, SletObsCommand>();
+
             services.AddTransient<ISynchTripCommand, SynchTripCommand>();
             services.AddTransient<ISynchTripQuery, SynchTripQuery>();
 
