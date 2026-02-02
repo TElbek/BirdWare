@@ -15,5 +15,7 @@ namespace BirdWare.EF.Queries
             return serviceProvider.GetRequiredKeyedService<T>(tagType);
         }
 
+        protected static Dictionary<TagTypes, List<Tag>> GetGroupByTagTypes(List<Tag> tagList) =>
+            tagList.GroupBy(t => t.TagType).ToDictionary(g => g.Key, g => g.ToList());
     }
 }

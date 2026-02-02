@@ -13,15 +13,15 @@ namespace BirdWare.EF.Queries
         {
             var observations = birdWareContext.Observation.AsNoTracking();
 
-            tagList.Select(r => r.TagType).Distinct().ToList().ForEach(tagType =>
+            foreach (var tagType in GetGroupByTagTypes(tagList))
             {
-                var observationTagFilter = GetFilterForTagType<IObservationTagFilter>(tagType);
-                var result = observationTagFilter.Filter(tagList, observations);
+                var observationTagFilter = GetFilterForTagType<IObservationTagFilter>(tagType.Key);
+                var result = observationTagFilter.Filter(tagType.Value, observations);
                 if (result is IQueryable<Observation> observationResult)
                 {
                     observations = observationResult;
                 }
-            });
+            }
             return MapToResult(observations.OrderByDescending(r => r.FugleturId).Take(200));
         }
 

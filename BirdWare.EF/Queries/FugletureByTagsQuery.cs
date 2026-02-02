@@ -11,17 +11,17 @@ namespace BirdWare.EF.Queries
     {        
         public List<VTur> GetFugletureByTags(List<Tag> tagList)
         {
-            IQueryable<Fugletur> fugleture = birdWareContext.Fugletur.AsNoTracking();
+            var fugleture = birdWareContext.Fugletur.AsNoTracking();
 
-            tagList.Select(r => r.TagType).Distinct().ToList().ForEach(tagType =>
+            foreach (var tagType in GetGroupByTagTypes(tagList))
             {
-                var fugleturTagFilter = GetFilterForTagType<IFugleturTagFilter>(tagType);
-                var result = fugleturTagFilter.Filter(tagList, fugleture);
+                var fugleturTagFilter = GetFilterForTagType<IFugleturTagFilter>(tagType.Key);
+                var result = fugleturTagFilter.Filter(tagType.Value, fugleture);
                 if (result is IQueryable<Fugletur> fugleturResult)
                 {
                     fugleture = fugleturResult;
                 }
-            });
+            };
 
             return MapToResult(fugleture.OrderByDescending(r => r.Id).Take(50));
         }
