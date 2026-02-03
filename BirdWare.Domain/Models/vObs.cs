@@ -1,4 +1,6 @@
-﻿namespace BirdWare.Domain.Models
+﻿using BirdWare.Domain.Entities;
+
+namespace BirdWare.Domain.Models
 {
     public class VObs
     {
@@ -39,5 +41,32 @@
 
         public long Aarstal {  get; set; }
         public long Maaned {  get; set; }
+
+        public static VObs MapFromObservation(Observation m)
+        {
+            return new VObs()
+            {
+                ObservationId = m.Id,
+                Dato = m.Fugletur.Dato,
+                ArtId = m.Art.Id,
+                FamilieId = m.Art.Gruppe.FamilieId,
+                FugleturId = m.Fugletur.Id,
+                ArtNavn = m.Art.Navn ?? string.Empty,
+                FamilieNavn = m.Art.Gruppe.Familie.Navn ?? string.Empty,
+                GruppeNavn = m.Art.Gruppe.Navn ?? string.Empty,
+                GruppeId = m.Art.GruppeId,
+                SU = m.Art.SU,
+                Speciel = m.Art.Speciel,
+                LokalitetNavn = m.Fugletur.Lokalitet.Navn ?? string.Empty,
+                LokalitetId = m.Fugletur.Lokalitet.Id,
+                Latitude = m.Fugletur.Lokalitet.Latitude,
+                Longitude = m.Fugletur.Lokalitet.Longitude,
+                Bem = m.Beskrivelse ?? string.Empty,
+                RegionId = m.Fugletur.Lokalitet.RegionId,
+                RegionNavn = m.Fugletur.Lokalitet.Region.Navn ?? string.Empty,
+                Aarstal = m.Fugletur.Aarstal,
+                Maaned = m.Fugletur.Maaned
+            };
+        }
     }
 }

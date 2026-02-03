@@ -18,7 +18,7 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void FindLokaliteterUdfraLatLongTest()
         {
-            lokalitetController.FindLokaliteterUdfraLatLong(0, 0);
+            lokalitetController.FindLokaliteterLatLong(0, 0);
             lokaliteterByLatLongQuerySPMock.Verify(x => x.FindLokaliteterLatLong(It.IsAny<double>(), It.IsAny<double>()), Times.Once);
         }
     }

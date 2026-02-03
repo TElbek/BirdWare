@@ -9,7 +9,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/lokalitet/{latitude}/{longitude}")]
-        public List<spLokaliteterByLatLongResult> FindLokaliteterUdfraLatLong(double latitude, double longitude)
+        public List<spLokaliteterByLatLongResult> FindLokaliteterLatLong(double latitude, double longitude)
         { 
             return lokaliteterByLatLongQuerySP.FindLokaliteterLatLong(latitude, longitude);
         }

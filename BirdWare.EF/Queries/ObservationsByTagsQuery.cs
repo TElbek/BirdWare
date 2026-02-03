@@ -22,34 +22,24 @@ namespace BirdWare.EF.Queries
                     observations = observationResult;
                 }
             }
-            return MapToResult(observations.OrderByDescending(r => r.FugleturId).Take(200));
+
+            return GenerateResultSet(observations);
         }
 
-        private static List<VObs> MapToResult(IQueryable<Observation> observations)
+        private static List<VObs> GenerateResultSet(IQueryable<Observation> observations)
         {
-            return [.. observations.Select(m => new VObs()
-            {
-                ObservationId = m.Id,
-                Dato = m.Fugletur.Dato,
-                ArtId = m.Art.Id,
-                FamilieId = m.Art.Gruppe.FamilieId,
-                FugleturId = m.Fugletur.Id,
-                ArtNavn = m.Art.Navn ?? string.Empty,
-                FamilieNavn = m.Art.Gruppe.Familie.Navn ?? string.Empty,
-                GruppeNavn = m.Art.Gruppe.Navn ?? string.Empty,
-                GruppeId = m.Art.GruppeId,
-                SU = m.Art.SU,
-                Speciel = m.Art.Speciel,
-                LokalitetNavn = m.Fugletur.Lokalitet.Navn ?? string.Empty,
-                LokalitetId = m.Fugletur.Lokalitet.Id,
-                Latitude = m.Fugletur.Lokalitet.Latitude,
-                Longitude = m.Fugletur.Lokalitet.Longitude,
-                Bem = m.Beskrivelse ?? string.Empty,
-                RegionId = m.Fugletur.Lokalitet.RegionId,
-                RegionNavn = m.Fugletur.Lokalitet.Region.Navn ?? string.Empty,
-                Aarstal = m.Fugletur.Aarstal,
-                Maaned = m.Fugletur.Maaned
-            })];
+            var listeAfObservationer = observations
+                    .Include(i => i.Fugletur)
+                    .Include(i => i.Fugletur.Lokalitet)
+                    .Include(i => i.Fugletur.Lokalitet.Region)
+                    .Include(i => i.Art)
+                    .Include(i => i.Art.Gruppe)
+                    .Include(i => i.Art.Gruppe.Familie)
+                    .OrderByDescending(r => r.FugleturId)
+                    .Take(200)
+                    .ToList();
+
+            return [.. listeAfObservationer.Select(s => VObs.MapFromObservation(s))];
         }
     }
 }
