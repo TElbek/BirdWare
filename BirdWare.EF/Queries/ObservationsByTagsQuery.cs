@@ -13,7 +13,7 @@ namespace BirdWare.EF.Queries
         {
             var observations = birdWareContext.Observation.AsNoTracking();
 
-            foreach (var tagType in GetGroupByTagTypes(tagList))
+            foreach (var tagType in TagsGroupedByTagType(tagList))
             {
                 var observationTagFilter = GetFilterForTagType<IObservationTagFilter>(tagType.Key);
                 var result = observationTagFilter.Filter(tagType.Value, observations);

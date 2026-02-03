@@ -13,7 +13,7 @@ namespace BirdWare.EF.Queries
         {
             var fugleture = birdWareContext.Fugletur.AsNoTracking();
 
-            foreach (var tagType in GetGroupByTagTypes(tagList))
+            foreach (var tagType in TagsGroupedByTagType(tagList))
             {
                 var fugleturTagFilter = GetFilterForTagType<IFugleturTagFilter>(tagType.Key);
                 var result = fugleturTagFilter.Filter(tagType.Value, fugleture);

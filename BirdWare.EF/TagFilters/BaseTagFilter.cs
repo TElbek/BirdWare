@@ -7,12 +7,9 @@ namespace BirdWare.EF.TagFilters
         public abstract IQueryable<T> Filter(List<Tag> tagList, IQueryable<T> queryable);
         protected static bool ErSaesonTagType(Tag tag) => SaesonMaaneder.Liste.Any(q => q.Key == tag.TagType);
 
-        protected static List<long> GetTagIdsByType(List<Tag> TagList, TagTypes tagType)
+        protected static List<long> GetTagIds(List<Tag> TagList)
         {
-            return [.. TagList
-                        .Where(r => r.TagType == tagType)
-                        .Select(s => s.Id)
-                        .Cast<long>()];
+            return [.. TagList.Select(s => s.Id)];
         }
     }
 }

@@ -7,7 +7,7 @@ namespace BirdWare.EF.TagFilters
     {
         public override IQueryable<Fugletur> Filter(List<Tag> tagList, IQueryable<Fugletur> queryable)
         {
-            var tagIdsByTypeList = GetTagIdsByType(tagList, TagTypes.Maaned);
+            var tagIdsByTypeList = GetTagIds(tagList);
             var withMaaned = birdWareContext.Fugletur.GetAarMaaned().Where(y => tagIdsByTypeList.Contains(y.Maaned));
             return queryable.Where(o => withMaaned.Any(a => a.FugleturId == o.Id));
         }
