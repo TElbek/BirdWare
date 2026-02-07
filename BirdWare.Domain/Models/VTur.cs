@@ -1,4 +1,5 @@
-﻿using BirdWare.Domain.Utilities;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Utilities;
 
 namespace BirdWare.Domain.Models
 {
@@ -20,5 +21,22 @@ namespace BirdWare.Domain.Models
             Dato.HasValue ?
             Aarstal.ToString() + " " + DateFormatting.GetMonthName(Dato.Value) :
             string.Empty;
+
+        public static VTur MapFromFugletur(Fugletur s)
+        {
+            return new VTur
+            {
+                Id = s.Id,
+                Dato = s.Dato,
+                LokalitetId = s.LokalitetId,
+                LokalitetNavn = s.Lokalitet?.Navn ?? string.Empty,
+                RegionId = s.Lokalitet?.RegionId ?? 0,
+                RegionNavn = s.Lokalitet?.Region?.Navn ?? string.Empty,
+                Aarstal = s.Aarstal,
+                Maaned = s.Maaned,
+                Latitude = s.Lokalitet?.Latitude,
+                Longitude = s.Lokalitet?.Longitude
+            };
+        }
     }
 }

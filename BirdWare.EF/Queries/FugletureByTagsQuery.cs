@@ -23,25 +23,19 @@ namespace BirdWare.EF.Queries
                 }
             };
 
-            return MapToResult(fugleture.OrderByDescending(r => r.Id).Take(50));
+            return GenerateResultSet(fugleture);
         }
 
-        private static List<VTur> MapToResult(IQueryable<Fugletur> fugleture)
+        private static List<VTur> GenerateResultSet(IQueryable<Fugletur> fugleture)
         {
-            return [.. fugleture.Select(f => new VTur()
-            {
-                Dato = f.Dato,
-                Id = f.Id,
-                LokalitetNavn = f.Lokalitet.Navn ?? string.Empty,
-                LokalitetId = f.Lokalitet.Id,
-                RegionId = f.Lokalitet.RegionId,
-                Latitude = f.Lokalitet.Latitude,
-                Longitude = f.Lokalitet.Longitude,
-                RegionNavn = f.Lokalitet.Region.Navn ?? string.Empty,
-                Aarstal = f.Aarstal,
-                Maaned = f.Maaned
-            })];
+            var listeAfFugleture = fugleture
+                    .Include(i => i.Lokalitet)
+                    .Include(i => i.Lokalitet.Region)
+                    .OrderByDescending(r => r.Id)
+                    .Take(30)
+                    .ToList();
 
+            return [.. listeAfFugleture.Select(s => VTur.MapFromFugletur(s))];
         }
     }
 }
