@@ -17,31 +17,24 @@ namespace BirdWare.EF.Queries
 
         internal static List<Tag> TransformSaesonTagsToMonthTags(List<Tag> tagList)
         {
-            var result = new List<Tag>();    
-
-            foreach (var tag in tagList)
+            var seasonTags = tagList.Where(ErSaesonTagType);
+            foreach (var seasonTag in seasonTags)
             {
-                if(ErSaesonTagType(tag))
+                tagList.Remove(seasonTag);
+                var saesonMaaned = SaesonMaaneder.Liste.First(q => q.Key == seasonTag.TagType);
+                saesonMaaned.Value.ForEach(maaned =>
                 {
-                    var saesonMaaned = SaesonMaaneder.Liste.First(q => q.Key == tag.TagType);
-                    saesonMaaned.Value.ForEach(maaned =>
+                    tagList.Add(new Tag
                     {
-                        result.Add(new Tag
-                        {
-                            Id = maaned,
-                            Name = maaned.ToString(),
-                            ParentId = tag.ParentId,
-                            TagType = TagTypes.Maaned,
-                            TagTypeTitle = "Måned"
-                        });
+                        Id = maaned,
+                        Name = maaned.ToString(),
+                        ParentId = seasonTag.ParentId,
+                        TagType = TagTypes.Maaned,
+                        TagTypeTitle = "Måned"
                     });
-                }
-                else
-                {
-                    result.Add(tag);
-                }
+                });
             }
-            return result;
+            return tagList;
         }
 
         protected static Dictionary<TagTypes, List<Tag>> TagsGroupedByTagType(List<Tag> tagList)
