@@ -17,7 +17,7 @@ namespace BirdWare.EF.Queries
 
         internal static List<Tag> TransformSaesonTagsToMonthTags(List<Tag> tagList)
         {
-            var seasonTags = tagList.Where(ErSaesonTagType);
+            var seasonTags = tagList.Where(ErSaesonTagType).ToList();
             foreach (var seasonTag in seasonTags)
             {
                 tagList.Remove(seasonTag);
