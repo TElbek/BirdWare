@@ -29,24 +29,7 @@ namespace BirdWare.Domain.Models
         Land = 9,
         Familie = 10,
         Gruppe = 11,
-        Art = 12
-    }
-
-    public static class TagTypeInfo
-    {
-        public static string GetTagTypeTitle(TagTypes type)
-        {
-            return type switch
-            {
-                TagTypes.Ukendt => string.Empty,
-                TagTypes.Aarstal or TagTypes.Maaned => "Tidspunkt",
-                TagTypes.Art => "Arter",
-                TagTypes.Gruppe => "Gruppe",
-                TagTypes.Familie => "Familie",
-                TagTypes.Lokalitet or TagTypes.Region or TagTypes.Land => "Geografi",
-                TagTypes.SaesonForaar or TagTypes.SaesonSommer or TagTypes.SaesonEfteraar or TagTypes.SaesonVinter => "Sæson",
-                _ => "Ukendt",
-            };
-        }
+        Art = 12,
+        SenesteNÅr = 13
     }
 }
