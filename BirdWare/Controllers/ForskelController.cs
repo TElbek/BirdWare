@@ -9,16 +9,16 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/forskel/iaar")]
-        public List<Forskel> ForskelIAar()
+        public async Task<List<Forskel>> ForskelIAar()
         { 
-            return forskelQueries.GetForskelIAar();
+            return await forskelQueries.GetForskelIAar();
         }
 
         [HttpGet]
         [Route("api/forskel/sidsteaar")]
-        public List<Forskel> ForskelSidsteAar()
+        public async Task<List<Forskel>> ForskelSidsteAar()
         {
-            return forskelQueries.GetForskelSidsteAar();
+            return await forskelQueries.GetForskelSidsteAar();
         }
 
     }

@@ -21,18 +21,18 @@ namespace BirdWare.Test.Queries
         }
 
         [Fact]
-        public void GetForskelIAarTest()
+        public async Task GetForskelIAarTest()
         {
             var forskelQueries = GetForskelQueries();
-            var forskelIAar = forskelQueries.GetForskelIAar();
+            var forskelIAar = await forskelQueries.GetForskelIAar();
             Assert.NotEmpty(forskelIAar);
         }
 
         [Fact]
-        public void GetForskelSidsteAarTest()
+        public async Task GetForskelSidsteAarTest()
         {
             var forskelQueries = GetForskelQueries();
-            var forskelSidsteAar = forskelQueries.GetForskelSidsteAar();
+            var forskelSidsteAar = await forskelQueries.GetForskelSidsteAar();
             Assert.NotEmpty(forskelSidsteAar);
         }
 

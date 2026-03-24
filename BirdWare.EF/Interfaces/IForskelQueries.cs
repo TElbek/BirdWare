@@ -4,7 +4,7 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IForskelQueries
     {
-        List<Forskel> GetForskelIAar();
-        List<Forskel> GetForskelSidsteAar();
+        Task<List<Forskel>> GetForskelIAar();
+        Task<List<Forskel>> GetForskelSidsteAar();
     }
 }

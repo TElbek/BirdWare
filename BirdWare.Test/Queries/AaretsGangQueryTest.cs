@@ -14,10 +14,10 @@ namespace BirdWare.Test.Queries
         private readonly DbSetMock<Lokalitet> lokalitetMockSet = new();
 
         [Fact]
-        public void GetAaretsGangTest()
+        public async Task GetAaretsGangTest()
         { 
             var aaretsGangQuery = GetAaretsGangQuery();
-            var aaretsGang = aaretsGangQuery.GetAaretsGang();
+            var aaretsGang = await aaretsGangQuery.GetAaretsGang();
             Assert.Equal(3, aaretsGang.Count);
             Assert.Equal("Sortspætte", aaretsGang[0].ArtNavn);
             Assert.Equal("Himalayasanger", aaretsGang[1].ArtNavn);

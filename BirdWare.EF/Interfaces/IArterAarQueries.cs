@@ -4,7 +4,7 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IArterAarQueries
     {
-        IQueryable<ArterAar> GetArterIAar();
-        IQueryable<ArterAar> GetArterSidsteAar();
+        Task<IQueryable<ArterAar>> GetArterIAar();
+        Task<IQueryable<ArterAar>> GetArterSidsteAar();
     }
 }

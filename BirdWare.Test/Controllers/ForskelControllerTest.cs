@@ -11,23 +11,23 @@ namespace BirdWare.Test.Controllers
 
         public ForskelControllerTest()
         {
-            forskelQueriesMock.Setup(x => x.GetForskelIAar()).Returns([]);
-            forskelQueriesMock.Setup(x => x.GetForskelSidsteAar()).Returns([]);
+            forskelQueriesMock.Setup(x => x.GetForskelIAar().Result).Returns([]);
+            forskelQueriesMock.Setup(x => x.GetForskelSidsteAar().Result).Returns([]);
             forskelController = new ForskelController(forskelQueriesMock.Object);
         }
 
         [Fact]
-        public void IAarTest()
+        public async Task IAarTest()
         {
-            forskelController.ForskelIAar();
+            await forskelController.ForskelIAar();
             forskelQueriesMock.Verify(x => x.GetForskelIAar(), Times.Once);
             forskelQueriesMock.Verify(x => x.GetForskelSidsteAar(), Times.Never);
         }
 
         [Fact]
-        public void SidsteAarTest()
+        public async Task SidsteAarTest()
         {
-            forskelController.ForskelSidsteAar();
+            await forskelController.ForskelSidsteAar();
             forskelQueriesMock.Verify(x => x.GetForskelSidsteAar(), Times.Once);
             forskelQueriesMock.Verify(x => x.GetForskelIAar(), Times.Never);
         }

@@ -5,10 +5,15 @@ namespace BirdWare.EF.Queries
 {
     public class ForskelQueries(BirdWareContext birdWareContext, IArterAarQueries arterAarQueries) : ContextBase(birdWareContext), IForskelQueries
     {
-        public List<Forskel> GetForskelIAar()
+        public async Task<List<Forskel>> GetForskelIAar()
         {
-            var speciesThisYear = arterAarQueries.GetArterIAar();
-            var speciesLastYear = arterAarQueries.GetArterSidsteAar();
+            var speciesThisYearTask = arterAarQueries.GetArterIAar();
+            var speciesLastYearTask = arterAarQueries.GetArterSidsteAar();
+
+            await Task.WhenAll(speciesThisYearTask, speciesLastYearTask);
+
+            var speciesThisYear = await speciesThisYearTask;
+            var speciesLastYear = await speciesLastYearTask;
 
             return [.. (from sty in speciesThisYear
                     where !speciesLastYear.Any(t => t.ArtId == sty.ArtId)
@@ -30,10 +35,15 @@ namespace BirdWare.EF.Queries
                     }).OrderByDescending(o => o.Dato)];
         }
 
-        public List<Forskel> GetForskelSidsteAar()
+        public async Task<List<Forskel>> GetForskelSidsteAar()
         {
-            var speciesThisYear = arterAarQueries.GetArterIAar();
-            var speciesLastYear = arterAarQueries.GetArterSidsteAar();
+            var speciesThisYearTask = arterAarQueries.GetArterIAar();
+            var speciesLastYearTask = arterAarQueries.GetArterSidsteAar();
+
+            await Task.WhenAll(speciesThisYearTask, speciesLastYearTask);
+
+            var speciesThisYear = await speciesThisYearTask;
+            var speciesLastYear = await speciesLastYearTask;
 
             return [.. (from sly in speciesLastYear
                     where !speciesThisYear.Any(t => t.ArtId == sly.ArtId)

@@ -6,14 +6,14 @@ namespace BirdWare.EF.Queries
 {
     public class ArterAarQueries(BirdWareContext birdWareContext) : ContextBase(birdWareContext), IArterAarQueries
     {
-        public IQueryable<ArterAar> GetArterIAar()
+        public async Task<IQueryable<ArterAar>> GetArterIAar()
         {
-            return GetArterAar(DateTime.Now.Year);
+            return await GetArterAar(DateTime.Now.Year);
         }
 
-        public IQueryable<ArterAar> GetArterSidsteAar()
+        public async Task<IQueryable<ArterAar>> GetArterSidsteAar()
         {
-            var artersidsteAar = GetArterAar(DateTime.Now.Year - 1);
+            var artersidsteAar = await GetArterAar(DateTime.Now.Year - 1);
 
             var artersidsteAarSammePeriode = artersidsteAar
                   .Where(q => q.Dato.HasValue && q.Dato.Value <= DateTime.Now.AddYears(-1));
@@ -21,7 +21,7 @@ namespace BirdWare.EF.Queries
             return artersidsteAarSammePeriode;
         }
 
-        private IQueryable<ArterAar> GetArterAar(long aarstal)
+        private async Task<IQueryable<ArterAar>> GetArterAar(long aarstal)
         {
             var startOfYear = new DateTime((int)aarstal, 1, 1);
             var startNextYear = startOfYear.AddYears(1);
