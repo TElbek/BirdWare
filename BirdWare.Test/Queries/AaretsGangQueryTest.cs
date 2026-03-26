@@ -17,7 +17,7 @@ namespace BirdWare.Test.Queries
         public async Task GetAaretsGangTest()
         { 
             var aaretsGangQuery = GetAaretsGangQuery();
-            var aaretsGang = await aaretsGangQuery.GetAaretsGang();
+            var aaretsGang = aaretsGangQuery.GetAaretsGang();
             Assert.Equal(3, aaretsGang.Count);
             Assert.Equal("Sortspætte", aaretsGang[0].ArtNavn);
             Assert.Equal("Himalayasanger", aaretsGang[1].ArtNavn);

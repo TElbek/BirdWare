@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IAaretsGangQuery
     {
-        Task<List<AaretsGang>> GetAaretsGang();
+        List<AaretsGang> GetAaretsGang();
     }
 }

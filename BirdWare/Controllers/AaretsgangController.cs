@@ -9,9 +9,9 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/aaretsgang")]
-        public async Task<List<AaretsGang>> GetAaretsGang()
+        public List<AaretsGang> GetAaretsGang()
         { 
-            return await aaretsGangQuery.GetAaretsGang();
+            return aaretsGangQuery.GetAaretsGang();
         }
     }
 }

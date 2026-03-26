@@ -6,10 +6,10 @@ namespace BirdWare.EF.Queries
 {
     public class AaretsGangQuery(BirdWareContext birdWareContext, IArterAarQueries arterAarQueries) : ContextBase(birdWareContext), IAaretsGangQuery
     {
-        public async Task<List<AaretsGang>> GetAaretsGang()
+        public List<AaretsGang> GetAaretsGang()
         {
             var aaretsGangList =
-                from species in await arterAarQueries.GetArterIAar()
+                from species in arterAarQueries.GetArterIAar()
                 join fugletur in birdWareContext.Fugletur.AsNoTracking() on species.FugleturId equals fugletur.Id
                 join lokalitet in birdWareContext.Lokalitet.AsNoTracking() on fugletur.LokalitetId equals lokalitet.Id
                 join art in birdWareContext.Art.AsNoTracking() on species.ArtId equals art.Id

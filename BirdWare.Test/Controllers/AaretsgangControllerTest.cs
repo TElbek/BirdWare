@@ -11,14 +11,14 @@ namespace BirdWare.Test.Controllers
 
         public AaretsgangControllerTest()
         {
-            aaretsGangQueryMock.Setup(x => x.GetAaretsGang().Result).Returns([]);
+            aaretsGangQueryMock.Setup(x => x.GetAaretsGang()).Returns([]);
             aaretsgangController = new AaretsgangController(aaretsGangQueryMock.Object);
         }
 
         [Fact]
         public async Task GetAaretsGangTest()
         {
-            await aaretsgangController.GetAaretsGang();
+            aaretsgangController.GetAaretsGang();
             aaretsGangQueryMock.Verify(x => x.GetAaretsGang(), Times.Once);
         }
     }
