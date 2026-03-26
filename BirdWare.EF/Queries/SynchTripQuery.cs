@@ -30,7 +30,7 @@ namespace BirdWare.EF.Queries
                 return synchTrip;
             }
 
-            throw new ArgumentException();
+            throw new ArgumentException($"Fugletur {fugleturId} not found");
         }
     }
 }
