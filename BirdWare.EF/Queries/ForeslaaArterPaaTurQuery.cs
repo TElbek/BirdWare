@@ -9,22 +9,16 @@ namespace BirdWare.EF.Queries
     {
         public List<ArtForslag> ForeslaaArterSenesteTur()
         {
-            var fugleTurId = birdWareContext.Fugletur.Max(m => m.Id);
+            var fugleTurId = GetSenesteFugleTurId();
 
-            var speciesOnTripAlready = birdWareContext.Observation
-                .Where(q => q.FugleturId == fugleTurId)
-                .Select(s => s.ArtId);
+            var seteArterSenesteFugletur = GetSpeciesOnTripAlready(fugleTurId);
+            long maaned = GetMaanedForSenesteFugletur(fugleTurId);
 
-            var maaned = birdWareContext.Fugletur.First(q => q.Id == fugleTurId).Maaned;
+            var otherTrips = GetAndreFugletureMedMindstEnArt(seteArterSenesteFugletur);
 
-            var otherTrips = birdWareContext.Observation
-                .Where(q => speciesOnTripAlready.Contains(q.ArtId))
-                .Select(s => s.FugleturId).Distinct();
-
-            var maanedStart = Math.Max(1, maaned - 1);
-            var maanedSlut  = Math.Min(12, maaned + 1);
-            var withMaaned = birdWareContext.Fugletur.GetAarMaaned()
-                                .Where(a => a.Maaned >= maanedStart && a.Maaned <= maanedSlut);
+            var maanedStart = GetMaanedStart(maaned);
+            var maanedSlut = GetMaanedSlut(maaned);
+            var withMaaned = GetWithMaaned(maanedStart, maanedSlut);
 
             var artList = (from o in birdWareContext.Observation.AsNoTracking()
                            join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
@@ -33,18 +27,45 @@ namespace BirdWare.EF.Queries
                            join f in birdWareContext.Fugletur.AsNoTracking() on o.FugleturId equals f.Id
                            join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
                            where otherTrips.Contains(f.Id) &&
-                                !speciesOnTripAlready.Contains(a.Id) &&
+                                !seteArterSenesteFugletur.Contains(a.Id) &&
                                  withMaaned.Any(s => s.FugleturId == f.Id) &&
                                  l.RegionId > 0
                            group o by new { a.Id, Artnavn = a.Navn, FamilieNavn = fa.Navn } into oGroup
                            orderby oGroup.Count() descending
-                           select new ArtForslag { ArtId = oGroup.Key.Id, 
-                                                   ArtNavn = oGroup.Key.Artnavn, 
-                                                   FamilieNavn = oGroup.Key.FamilieNavn, 
-                                                   Indeks = (oGroup.Count() - oGroup.Count() % 10) })
-                          .Take(20);
+                           select new ArtForslag
+                           {
+                               ArtId = oGroup.Key.Id,
+                               ArtNavn = oGroup.Key.Artnavn,
+                               FamilieNavn = oGroup.Key.FamilieNavn
+                           })
+                          .Take(40);
 
             return [.. artList];
         }
+
+        private IQueryable<FugleturAarMaaned> GetWithMaaned(long maanedStart, long maanedSlut) => 
+                    birdWareContext.Fugletur
+                        .GetAarMaaned()
+                        .Where(a => a.Maaned >= maanedStart && a.Maaned <= maanedSlut);
+
+        private static long GetMaanedSlut(long maaned) => Math.Min(12, maaned + 1);
+
+        private static long GetMaanedStart(long maaned) => Math.Max(1, maaned - 1);
+
+        private IQueryable<long> GetAndreFugletureMedMindstEnArt(IQueryable<long> seteArterSenesteFugletur) => 
+                    birdWareContext.Observation
+                            .Where(q => seteArterSenesteFugletur.Contains(q.ArtId))
+                            .Select(s => s.FugleturId).Distinct();
+
+        private long GetMaanedForSenesteFugletur(long fugleTurId) => 
+                    birdWareContext.Fugletur.First(q => q.Id == fugleTurId).Maaned;
+
+        private IQueryable<long> GetSpeciesOnTripAlready(long fugleTurId) => 
+                    birdWareContext.Observation
+                            .Where(q => q.FugleturId == fugleTurId)
+                            .Select(s => s.ArtId);
+
+        private long GetSenesteFugleTurId() => 
+                    birdWareContext.Fugletur.Max(m => m.Id);
     }
 }

@@ -10,24 +10,7 @@ namespace BirdWare.EF.Queries
             var speciesThisYear = arterAarQueries.GetArterIAar();
             var speciesLastYear = arterAarQueries.GetArterSidsteAar();
 
-            return [.. (from sty in speciesThisYear
-                    where !speciesLastYear.Any(t => t.ArtId == sty.ArtId)
-                    join fty in birdWareContext.Fugletur on sty.FugleturId equals fty.Id
-                    join lty in birdWareContext.Lokalitet on fty.LokalitetId equals lty.Id
-                    join gr in birdWareContext.Gruppe on sty.GruppeId equals gr.Id
-                    join fa in birdWareContext.Familie on gr.FamilieId equals fa.Id
-                    select new Forskel
-                    {
-                        ArtId = sty.ArtId,
-                        ArtNavn = sty.ArtNavn,
-                        FamilieNavn = fa.Navn,
-                        Dato = sty.Dato,
-                        RegionId = lty.RegionId,
-                        SU = sty.SU,
-                        Speciel = sty.Speciel,
-                        LokalitetId = lty.Id,
-                        LokalitetNavn = lty.Navn
-                    }).OrderByDescending(o => o.Dato)];
+            return Populate(speciesThisYear, speciesLastYear);
         }
 
         public List<Forskel> GetForskelSidsteAar()
@@ -35,23 +18,28 @@ namespace BirdWare.EF.Queries
             var speciesThisYear = arterAarQueries.GetArterIAar();
             var speciesLastYear = arterAarQueries.GetArterSidsteAar();
 
-            return [.. (from sly in speciesLastYear
-                    where !speciesThisYear.Any(t => t.ArtId == sly.ArtId)
-                    join fly in birdWareContext.Fugletur on sly.FugleturId equals fly.Id
-                    join lly in birdWareContext.Lokalitet on fly.LokalitetId equals lly.Id
-                    join gr in birdWareContext.Gruppe on sly.GruppeId equals gr.Id
+            return Populate(speciesLastYear, speciesThisYear);
+        }
+
+        private List<Forskel> Populate(IQueryable<ArterAar> currentYear, IQueryable<ArterAar> compareYear)
+        {
+            return [.. (from cy in currentYear
+                    where compareYear.All(t => t.ArtId != cy.ArtId)
+                    join fcy in birdWareContext.Fugletur on cy.FugleturId equals fcy.Id
+                    join lcy in birdWareContext.Lokalitet on fcy.LokalitetId equals lcy.Id
+                    join gr in birdWareContext.Gruppe on cy.GruppeId equals gr.Id
                     join fa in birdWareContext.Familie on gr.FamilieId equals fa.Id
                     select new Forskel
                     {
-                        ArtId = sly.ArtId,
-                        ArtNavn = sly.ArtNavn,
+                        ArtId = cy.ArtId,
+                        ArtNavn = cy.ArtNavn,
                         FamilieNavn = fa.Navn,
-                        Dato = sly.Dato,
-                        RegionId = lly.RegionId,
-                        SU = sly.SU,
-                        Speciel = sly.Speciel,
-                        LokalitetId = lly.Id,
-                        LokalitetNavn = lly.Navn
+                        Dato = cy.Dato,
+                        RegionId = lcy.RegionId,
+                        SU = cy.SU,
+                        Speciel = cy.Speciel,
+                        LokalitetId = lcy.Id,
+                        LokalitetNavn = lcy.Navn
                     }).OrderByDescending(o => o.Dato)];
         }
     }
