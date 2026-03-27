@@ -117,9 +117,9 @@ const router = createRouter({
       component: () => import('../views/OpretLokalitetView.vue'),
       meta: {
         title: 'Tilføj Lokalitet',
-        showInNavBar: true,
-        requiresAuth: false,
-        requireSSL: false
+        showInNavBar: false,
+        requiresAuth: true,
+        requireSSL: true
       }
     },
     {
