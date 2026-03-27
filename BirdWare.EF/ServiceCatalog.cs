@@ -40,6 +40,7 @@ namespace BirdWare.EF
             services.AddTransient<IHvorKanJegFindeQuery, HvorKanJegFindeQuery>();
             services.AddTransient<ILokaliteterByLatLongQuerySP, LokaliteterByLatLongQuerySP>();
 
+            services.AddTransient<IOpretLokalitetCommand, OpretLokalitetCommand>();
             services.AddTransient<IObservationsByTagsQuery, ObservationsByTagsQuery>();
             services.AddTransient<IObservationsByLatLongQuery, ObservationsByLatLongQuery>();
             services.AddTransient<IRegionQuery, RegionQuery>();

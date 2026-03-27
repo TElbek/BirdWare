@@ -1,4 +1,5 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,13 @@ namespace BirdWare.Controllers
         public List<spLokaliteterByLatLongResult> FindLokaliteterLatLong(double latitude, double longitude)
         { 
             return lokaliteterByLatLongQuerySP.FindLokaliteterLatLong(latitude, longitude);
+        }
+
+        [HttpGet]
+        [Route("api/lokalitet/opret")]
+        public Lokalitet CreateLokalitet()
+        { 
+            return new Lokalitet();
         }
     }
 }
