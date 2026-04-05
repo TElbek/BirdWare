@@ -138,3 +138,8 @@ body {
     height: 65vh;
     z-index: 0 !important;
 }
+
+.leaflet-small {
+    height: 55vh;
+    z-index: 0 !important;
+}

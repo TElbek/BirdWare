@@ -16,7 +16,7 @@ namespace BirdWare.Controllers
         }
 
         [HttpGet]
-        [Route("api/lokalitet/opret")]
+        [Route("api/lokalitet/ny")]
         public Lokalitet CreateLokalitet()
         { 
             return new Lokalitet();

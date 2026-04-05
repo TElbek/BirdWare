@@ -16,6 +16,20 @@ registerTailWindComponents();
 app.use(createPinia())
 app.use(router)
 
+app.directive('focus', {
+  mounted(el) {
+    el.focus()
+  }
+});
+
+app.directive('focus-condition', {
+  mounted(el, binding) {
+    if (binding.value == true) {
+      el.focus()
+    }
+  }
+});
+
 app.mount('#app');
 
 function registerComponents() {
