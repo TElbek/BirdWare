@@ -22,6 +22,7 @@ namespace BirdWare.EF.Commands
                         Longitude = synchTrip.Fugletur.Lokalitet.Longitude,
                     };
                     birdWareContext.Lokalitet.Add(lokalitet);
+                    birdWareContext.SaveChanges();
                 }
 
                 if (!birdWareContext.Fugletur.Any(r => r.Id == synchTrip.Fugletur.FugleturId))
