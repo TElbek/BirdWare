@@ -11,8 +11,20 @@ namespace BirdWare.EF.Commands
 			try
 			{
                 using var transaction = birdWareContext.Database.BeginTransaction();
-                if (!birdWareContext.Fugletur.Any(r => r.Id == synchTrip.Fugletur.FugleturId) &&
-                    birdWareContext.Lokalitet.Any(q => q.Id == synchTrip.Fugletur.LokalitetId))
+
+                if (birdWareContext.Lokalitet.All(q => q.Id != synchTrip.Fugletur.LokalitetId))
+                { 
+                    var lokalitet = new Lokalitet {
+                        Id = synchTrip.Fugletur.LokalitetId,
+                        RegionId = synchTrip.Fugletur.Lokalitet.Regionid,
+                        Navn = synchTrip.Fugletur.Lokalitet.LokalitetNavn,
+                        Latitude = synchTrip.Fugletur.Lokalitet.Latitude,
+                        Longitude = synchTrip.Fugletur.Lokalitet.Longitude,
+                    };
+                    birdWareContext.Lokalitet.Add(lokalitet);
+                }
+
+                if (!birdWareContext.Fugletur.Any(r => r.Id == synchTrip.Fugletur.FugleturId))
                 {
                     var fugletur = new Fugletur()
                     {

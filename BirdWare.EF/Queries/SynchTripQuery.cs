@@ -20,13 +20,15 @@ namespace BirdWare.EF.Queries
                 synchTrip.Fugletur.Lokalitet.LokalitetNavn = trip.Lokalitet.Navn ?? string.Empty;
                 synchTrip.Fugletur.Lokalitet.LokalitetId = trip.Lokalitet.Id;
                 synchTrip.Fugletur.Lokalitet.Regionid = trip.Lokalitet.RegionId;
+                synchTrip.Fugletur.Lokalitet.Latitude = trip.Lokalitet.Latitude;
+                synchTrip.Fugletur.Lokalitet.Longitude = trip.Lokalitet.Longitude;
                 synchTrip.Fugletur.Dato = trip.Dato ?? DateTime.MinValue;
                 synchTrip.Fugletur.FugleturId = trip.Id;
                 synchTrip.Fugletur.LokalitetId = trip.LokalitetId;
-                synchTrip.Fugletur.Observation = trip.Observationer.Select(y => new SynchObservation { 
+                synchTrip.Fugletur.Observation = [.. trip.Observationer.Select(y => new SynchObservation { 
                                                                             ArtId = y.ArtId, 
                                                                             Beskrivelse = y.Beskrivelse ?? string.Empty }
-                                                                        ).ToList();
+                                                                        )];
                 return synchTrip;
             }
 

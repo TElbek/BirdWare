@@ -8,6 +8,8 @@ namespace BirdWare.Domain.Models
         public string LokalitetNavn { get; set; } = string.Empty;
         public long Regionid { get; set; }
         public long LokalitetId { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
     }
 
     [NotMapped]

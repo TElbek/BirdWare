@@ -12,9 +12,13 @@ namespace BirdWare.EF.Commands
                 if (lokalitet != null && ExistRegion(lokalitet) && !string.IsNullOrEmpty(lokalitet.Navn))
                 {
                     using var transaction = birdWareContext.Database.BeginTransaction();
+
+                    lokalitet.Id = GetNewId();
+
                     birdWareContext.Lokalitet.Add(lokalitet);
                     birdWareContext.SaveChanges();
                     transaction.Commit();
+
                     return true;
                 }
             }
@@ -23,6 +27,12 @@ namespace BirdWare.EF.Commands
                 return false;
             }
             return false;
+        }
+
+        private long GetNewId()
+        {
+            return birdWareContext.Lokalitet.Any() ? 
+                   birdWareContext.Lokalitet.Max(a => a.Id) + 1 : 1;
         }
 
         private bool ExistRegion(Lokalitet lokalitet) => birdWareContext.Region.Any(a => a.Id == lokalitet.RegionId);
