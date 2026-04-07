@@ -2,7 +2,7 @@
     <div class="grid grid-cols-[1fr_max-content] text-birdware dark:text-birdware-bright">
 
         <router-link v-if="!isAtHomeRoute && homeRoute != undefined" :to="homeRoute.path">
-            <span class="text-2xl tracking-wide">{{ homeRoute?.meta?.title }}</span>
+            <span class="text-2xl ">{{ homeRoute?.meta?.title }}</span>
         </router-link>
         <div v-else></div>
 
@@ -22,7 +22,7 @@
 
         <aside @click="closeMenu"
             :class="['fixed top-0 right-0 h-full z-200 w-64 bg-white dark:bg-gray-800 p-4 transform transition-transform duration-300', isOpen ? 'translate-x-0 rounded shadow-xl shadow-gray-400 dark:shadow-gray-100' : 'translate-x-full']">
-            <ul class="flex flex-col gap-4 text-base tracking-wide">
+            <ul class="flex flex-col gap-4 text-base ">
                 <li v-for="route in visibleRoutes" :key="route.path" class="cursor-pointer">
                     <router-link :to="route.path">
                         <span>{{ route.meta?.title }}</span>

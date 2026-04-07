@@ -7,9 +7,9 @@
     <tw-grid-cols-five :count="groupedData?.size">
         <div v-for="[key, value] in groupedData">
             <tw-card>
-                <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright capitalize">{{ key
+                <span class="text-base font-medium  text-birdware dark:text-birdware-bright capitalize">{{ key
                     }}</span>
-                <span class="text-base font-medium tracking-wide text-birdware dark:text-birdware-bright float-end">{{ value.length
+                <span class="text-base font-medium  text-birdware dark:text-birdware-bright float-end">{{ value.length
                     }}</span>
                 <div class="grid grid-cols-[max-content_1fr] gap-x-3 dark:text-white">
                     <template v-for="tur in value">
