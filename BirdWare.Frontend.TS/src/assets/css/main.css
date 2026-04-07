@@ -9,6 +9,7 @@
 
 body {
   font-size: 0.9rem;
+  letter-spacing: var(--tracking-wide);
 }
 
 .scrollbar-hide::-webkit-scrollbar {
