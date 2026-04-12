@@ -13,7 +13,7 @@ namespace BirdWare.EF.Queries
 
             var ankomstDagQuery = GetAnkomstDagQuery(familieId);
 
-            foreach (var item in ankomstDagQuery.Select(s => new { s.ArtId, s.ArtNavn }).Distinct())
+            foreach (var item in ankomstDagQuery.Select(s => new { s.ArtId, s.ArtNavn, s.Speciel, s.SU }).Distinct())
             {
                 var ankomstDatoIAar = GetAnkomstDatoIAar(iAarQuery, item.ArtId);
 
@@ -21,6 +21,8 @@ namespace BirdWare.EF.Queries
                 {
                     ArtId = item.ArtId,
                     ArtNavn = item.ArtNavn,
+                    Speciel = item.Speciel,
+                    SU = item.SU,
                     AnkomstDato = new DateTime(DateTime.Now.Year, 1, 1).AddDays(GetAnkomstDatoGennemsnit(ankomstDagQuery, item.ArtId)),
                     SetIaarDato = ankomstDatoIAar.HasValue ? new DateTime(DateTime.Now.Year, 1, 1).AddDays(ankomstDatoIAar.Value) : null,
                 });
@@ -47,12 +49,20 @@ namespace BirdWare.EF.Queries
                        join art in birdWareContext.Art on obs.ArtId equals art.Id
                        join grupper in birdWareContext.Gruppe on art.GruppeId equals grupper.Id
                        join fugletur in birdWareContext.Fugletur on obs.FugleturId equals fugletur.Id
-                       where grupper.FamilieId == familieId && art.SU == false
-                       group obs by new { art.Id, art.Navn, Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year } into g
+                       join lokalitet in birdWareContext.Lokalitet on fugletur.LokalitetId equals lokalitet.Id
+                       join region in birdWareContext.Region on lokalitet.RegionId equals region.Id
+                       where grupper.FamilieId == familieId && 
+                                     art.SetIDK == true && 
+                                     art.SU == false && 
+                                     fugletur.Dato.HasValue &&
+                                     region.Id > 0
+                       group obs by new { art.Id, art.Navn, art.Speciel, art.SU, Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year } into g
                        select new AnkomstDagBeregning
                        {
                             ArtId = g.Key.Id,
                             ArtNavn = g.Key.Navn,
+                            Speciel = g.Key.Speciel,
+                            SU = g.Key.SU,
                             Aarstal = g.Key.Aarstal,
                             AnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 0)
                        }];
@@ -64,8 +74,11 @@ namespace BirdWare.EF.Queries
                     join art in birdWareContext.Art on obs.ArtId equals art.Id
                     join grupper in birdWareContext.Gruppe on art.GruppeId equals grupper.Id
                     join fugletur in birdWareContext.Fugletur on obs.FugleturId equals fugletur.Id
-                    where grupper.FamilieId == familieId &&
-                          art.SU == false &&
+                    join lokalitet in birdWareContext.Lokalitet on fugletur.LokalitetId equals lokalitet.Id
+                    join region in birdWareContext.Region on lokalitet.RegionId equals region.Id
+                   where  grupper.FamilieId == familieId && 
+                          art.SetIDK == true &&
+                          region.Id > 0 &&
                           fugletur.Dato.HasValue && fugletur.Dato.Value.Year == DateTime.Now.Year
                     group obs by new { art.Id, art.Navn } into g
                     select new AnkomstDagBeregning

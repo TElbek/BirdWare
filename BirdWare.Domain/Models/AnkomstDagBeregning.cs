@@ -7,5 +7,7 @@
         public int Aarstal { get; set; }
         public int AnkomstDag { get; set; }
         public int? SetIaarDag { get; set; }
+        public bool SU { get; set; }
+        public bool Speciel { get; set; }
     }
 }

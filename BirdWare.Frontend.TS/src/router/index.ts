@@ -82,6 +82,16 @@ const router = createRouter({
       }
     },
     {
+      path: '/ankomst',
+      name: 'ankomst',
+      component: () => import('../components/ankomst/ankomst.vue'),
+      meta: {
+        title: 'Ankomst',
+        showInNavBar: true,
+        requireSSL: false,
+      }
+    },
+    {
       path: '/forskel',
       name: 'forskel',
       component: () => import('../views/ForskelView.vue'),
