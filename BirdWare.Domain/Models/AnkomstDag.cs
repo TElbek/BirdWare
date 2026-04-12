@@ -7,7 +7,7 @@
         public DateTime AnkomstDato { get; set; }
         public DateTime? SetIaarDato { get; set; }
         public bool ErSetIaar => SetIaarDato.HasValue;
-        public bool SenereIaar => SetIaarDato.HasValue && AnkomstDato > SetIaarDato.Value;
-        public double Forskel => (AnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays;
+        public bool TidligereIAar => SetIaarDato.HasValue && AnkomstDato > SetIaarDato.Value;
+        public double Forskel => ErSetIaar ? Math.Round((AnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
     }
 }
