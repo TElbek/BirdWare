@@ -64,5 +64,13 @@ namespace BirdWare.Controllers
         {
             return artQueries.GetArtTagById(Id);
         }
+
+        [Route("api/tags/familie")]
+        public List<Tag> GetFamilieTagsBySearchValue([FromQuery] string query)
+        {
+            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
+            return [.. cacheEntry.Where(q => q.TagType == TagTypes.Familie &&
+                                            q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
+        }
     }
 }
