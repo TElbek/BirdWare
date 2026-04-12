@@ -45,6 +45,7 @@ namespace BirdWare.EF
             services.AddTransient<IObservationsByLatLongQuery, ObservationsByLatLongQuery>();
             services.AddTransient<IRegionQuery, RegionQuery>();
             services.AddTransient<ISynchTripQuery, SynchTripQuery>();
+            services.AddTransient<IAnkomtsDagQuery, AnkomtsDagQuery>();
 
             services.AddTransient<ITagQuery, TagQuery>();
             services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();
