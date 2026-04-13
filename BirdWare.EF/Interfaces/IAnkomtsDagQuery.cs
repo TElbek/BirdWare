@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IAnkomtsDagQuery
     {
-        List<AnkomstDag> GetAnkomtsDage(long familieId);
+        Task<List<AnkomstDag>> GetAnkomtsDage(long familieId);
     }
 }

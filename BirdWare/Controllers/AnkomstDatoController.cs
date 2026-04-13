@@ -9,9 +9,9 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/ankomstdato/familie/{familieId}")]
-        public List<AnkomstDag> AnkomstDagFamilie(long familieId)
+        public async Task<List<AnkomstDag>> AnkomstDagFamilie(long familieId)
         {
-            return ankomtsDagQuery.GetAnkomtsDage(familieId);
+            return await ankomtsDagQuery.GetAnkomtsDage(familieId);
         }
     }
 }
