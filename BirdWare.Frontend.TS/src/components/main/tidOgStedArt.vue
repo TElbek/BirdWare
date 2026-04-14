@@ -1,8 +1,6 @@
 <template>
-    <tw-button-responsive :caption="props.isByTrip ? 'Tid & Sted' : 'Arter'">
-        <tw-button @click="switchIsByTrip" :caption="'Tid & Sted'" :isSelected="isByTrip"></tw-button>
-        <tw-button @click="switchIsByTrip" :caption="'Arter'" :isSelected="!isByTrip"></tw-button>
-    </tw-button-responsive>
+    <tw-button @click="switchIsByTrip" :caption="'Tid & Sted'" :isSelected="isByTrip"></tw-button>
+    <tw-button @click="switchIsByTrip" :caption="'Arter'" :isSelected="!isByTrip"></tw-button>
 </template>
 
 <script setup lang="ts">

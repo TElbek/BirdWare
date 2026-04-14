@@ -1,25 +1,28 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content] py-2">
-        <tw-text-sizeable class="relative top-2">{{ route.meta.title }}</tw-text-sizeable>
-        <fugletur-navigation></fugletur-navigation>        
-    </div>
-    <fugletur-selection  class="mb-2"></fugletur-selection>
-    <tw-grid-cols-five :count="groupedData?.size">
-        <div v-for="[key, value] in groupedData">
-            <tw-card>
-                <span class="text-base font-medium  text-birdware dark:text-birdware-bright capitalize">{{ key
-                    }}</span>
-                <span class="text-base font-medium  text-birdware dark:text-birdware-bright float-end">{{ value.length
-                    }}</span>
-                <div class="grid grid-cols-[max-content_1fr] gap-x-3 dark:text-white">
-                    <template v-for="tur in value">
-                        <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" />
-                        <span>{{ tur.lokalitetNavn }}</span>
-                    </template>
-                </div>
-            </tw-card>
+    <div class="flex flex-col gap-y-2">
+        <div class="flex justify-between">
+            <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
+            <fugletur-navigation></fugletur-navigation>
         </div>
-    </tw-grid-cols-five>
+        <fugletur-selection></fugletur-selection>
+        <tw-grid-cols-five :count="groupedData?.size">
+            <div v-for="[key, value] in groupedData">
+                <tw-card>
+                    <span class="text-base font-medium  text-birdware dark:text-birdware-bright capitalize">{{ key
+                        }}</span>
+                    <span class="text-base font-medium  text-birdware dark:text-birdware-bright float-end">{{
+                        value.length
+                        }}</span>
+                    <div class="grid grid-cols-[max-content_1fr] gap-x-3 dark:text-white">
+                        <template v-for="tur in value">
+                            <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" />
+                            <span>{{ tur.lokalitetNavn }}</span>
+                        </template>
+                    </div>
+                </tw-card>
+            </div>
+        </tw-grid-cols-five>
+    </div>
 </template>
 
 <script setup lang="ts">

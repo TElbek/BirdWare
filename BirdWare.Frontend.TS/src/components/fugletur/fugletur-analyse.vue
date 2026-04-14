@@ -1,17 +1,19 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content] py-2">
-        <fugletur-titel :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
-        <fugletur-navigation></fugletur-navigation>
-    </div>
-    <div class="max-h-160 xl:max-h-180 overflow-auto mb-2">
-        <div v-if="state.hasData">
-            <tw-grid-cols-five :count="analyseTyperCount">
-                <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
-                    <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
-                        :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
-                    </fugleturAnalyseType>
-                </template>
-            </tw-grid-cols-five>
+    <div class="flex flex-col gap-y-2">
+        <div class="grid grid-cols-[1fr_max-content]">
+            <fugletur-titel :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+            <fugletur-navigation></fugletur-navigation>
+        </div>
+        <div class="max-h-160 xl:max-h-180 overflow-auto">
+            <div v-if="state.hasData">
+                <tw-grid-cols-five :count="analyseTyperCount">
+                    <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
+                        <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
+                            :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
+                        </fugleturAnalyseType>
+                    </template>
+                </tw-grid-cols-five>
+            </div>
         </div>
     </div>
 </template>

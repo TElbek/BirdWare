@@ -1,10 +1,12 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content] py-2">
-        <fugletur-titel :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
-        <fugletur-navigation></fugletur-navigation>
-    </div>
+    <div class="flex flex-col gap-y-2">
+        <div class="grid grid-cols-[1fr_max-content]">
+            <fugletur-titel :fugletur-id="fugleturStore.chosenFugleturId"></fugletur-titel>
+            <fugletur-navigation></fugletur-navigation>
+        </div>
 
-    <fugletur-obs-liste class="mb-2"></fugletur-obs-liste>
+        <fugletur-obs-liste></fugletur-obs-liste>
+    </div>
 </template>
 
 <script setup lang="ts">
