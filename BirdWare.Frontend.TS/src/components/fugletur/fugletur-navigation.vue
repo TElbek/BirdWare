@@ -7,7 +7,7 @@
         </tw-button-responsive>
     </tw-show-lg>
     <tw-show-md>
-        <div class="fixed pb-2 bottom-0 left-0 right-0 bg-white dark:bg-black">
+        <div class="fixed pb-2 bottom-0 left-0 right-0 bg-white dark:bg-gray-900">
             <tw-button-group class="flex justify-between gap-2 w-full px-2 py-1" :caption="''">
                 <tw-button v-for="route in availableRoutes" :caption="route.meta?.title"
                     :isSelected="currentRoute.name == route.name" @click="navigate(route.name)">
