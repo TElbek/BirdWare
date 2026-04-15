@@ -1,10 +1,12 @@
 <template>
-  <div class="grid grid-cols-[1fr_max-content] py-2">
+  <div class="flex flex-col gap-y-2">
+    <div class="flex flex-row justify-between">
     <tw-text-sizeable >{{ route.meta.title }}</tw-text-sizeable>
     <observation-grouping />
   </div>
   <observation-selection />
   <observation-presenter />
+  </div>
 </template>
 
 <script setup lang="ts">

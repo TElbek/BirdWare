@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-[1fr_max-content] text-birdware dark:text-birdware-bright">
+    <div class="flex flex-row justify-between text-birdware dark:text-birdware-bright">
 
         <router-link v-if="!isAtHomeRoute && homeRoute != undefined" :to="homeRoute.path">
             <span class="text-2xl ">{{ homeRoute?.meta?.title }}</span>

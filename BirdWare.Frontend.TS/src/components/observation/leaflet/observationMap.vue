@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded border border-gray-400 leaflet" id="map"></div>
+    <div class="rounded border border-gray-300 leaflet" id="map"></div>
 </template>
 
 <script setup lang="ts">

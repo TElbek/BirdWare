@@ -131,7 +131,7 @@ body {
 }
 
 .leaflet {
-    height: 75vh;
+    height: calc(100vh - 180px);
     z-index: 0 !important;
 }
 

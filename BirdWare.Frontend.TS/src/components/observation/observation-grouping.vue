@@ -7,9 +7,9 @@
         </tw-button-responsive>
     </tw-show-lg>
     <tw-show-md>
-        <div class="fixed pb-2 m-4 bottom-0 left-0 right-0 bg-white">
-            <tw-button-group class="flex justify-between gap-2 w-full px-2 py-1" :caption="selectedGroupModeCaption">
-                <tw-button v-for="mode in groupByModeList" :caption="mode.caption"
+        <div class="fixed pb-2 px-2 bottom-0 left-0 right-0 bg-white dark:bg-black">
+            <tw-button-group class="flex justify-between gap-2 w-full px-2" :caption="selectedGroupModeCaption">
+                <tw-button v-for="mode in groupByModeList" :caption="mode.caption" 
                     :isSelected="mode.id == obsSelectionStore.chosenGroupingId" @click="setGroupByMode(mode.id)">
                 </tw-button>
             </tw-button-group>
