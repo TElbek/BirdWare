@@ -1,5 +1,5 @@
 <template>
-    <tw-grid-cols-five :count="byFamilie.size">
+    <tw-grid-cols-three :count="byFamilie.size">
         <div v-for="[key, value] in byFamilie">
             <tw-card>
                 <span class="text-base font-medium  text-birdware dark:text-birdware-bright capitalize">{{ key}}</span>
@@ -12,7 +12,7 @@
                 </div>
             </tw-card>
         </div>
-    </tw-grid-cols-five>
+    </tw-grid-cols-three>
 </template>
 
 <script setup lang="ts">

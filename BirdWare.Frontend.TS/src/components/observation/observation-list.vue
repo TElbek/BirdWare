@@ -16,7 +16,7 @@
                         <div><fugletur-dato :fugleturId="obs.fugleturId" :dato="obs.dato" /></div>
                         <div><span v-if="showSpeciesNameInList">{{ obs.artNavn }}</span></div>
                         <div>{{ obs.lokalitetNavn }}</div>
-                        <div>{{ obs.bem }}</div>
+                        <div class="col-span-4 lg:col-span-1 italic lg:not-italic">{{ obs.bem }}</div>
                     </template>
                 </div>
             </tw-card>
