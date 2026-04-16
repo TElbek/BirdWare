@@ -1,23 +1,12 @@
 <template>
     <div class="flex flex-col gap-y-2">
-        <tw-show-lg>
-            <div class="flex justify-between">
-                <fugletur-titel :showTitle="false" :fugleturId="state.fugleturId"></fugletur-titel>
-                <tw-button-group :caption="''" class="flex gap-x-5">
-                    <tw-button :caption="'Liste'" :isSelected="!state.isForslagMode"
-                        @click="setShowForslag"></tw-button>
-                    <tw-button :caption="'Forslag'" :isSelected="state.isForslagMode"
-                        @click="setShowForslag"></tw-button>
-                </tw-button-group>
-            </div>
-        </tw-show-lg>
-        <tw-show-md>
+        <div class="flex justify-between">
             <fugletur-titel :showTitle="false" :fugleturId="state.fugleturId"></fugletur-titel>
-            <tw-bottom-nav-bar>
+            <tw-action-bar>
                 <tw-button :caption="'Liste'" :isSelected="!state.isForslagMode" @click="setShowForslag"></tw-button>
                 <tw-button :caption="'Forslag'" :isSelected="state.isForslagMode" @click="setShowForslag"></tw-button>
-            </tw-bottom-nav-bar>
-        </tw-show-md>
+            </tw-action-bar>
+        </div>
         <RouterView></RouterView>
     </div>
 </template>

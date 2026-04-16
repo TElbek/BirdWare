@@ -1,19 +1,16 @@
 <template>
-    <tw-button-group class="w-full flex lg:gap-x-5 justify-between"
-        :caption="isThisYear ? `${thisYear}: ${itemCountThisYear}` : `${lastYear}: ${itemCountLastYear}`">
-            <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
-            <tw-button :caption="thisYear + ':' + itemCountThisYear" @click="$emit('switch-is-this-year')"
-                :isSelected="isThisYear">
-            </tw-button>
-            <tw-button :caption="lastYear + ':' + itemCountLastYear" @click="$emit('switch-is-this-year')"
-                :isSelected="!isThisYear">
-            </tw-button>
-            <tw-show-lg>
-                <button class="rounded-sm shadow-xs dark:border-birdware-bright w-10"
-                    :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{
-                        Math.abs(props.forskel) }}</button>
-            </tw-show-lg>
-    </tw-button-group>
+    <tw-action-bar>
+        <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
+        <tw-button :caption="thisYear + ':' + itemCountThisYear" @click="$emit('switch-is-this-year')"
+            :isSelected="isThisYear">
+        </tw-button>
+        <tw-button :caption="lastYear + ':' + itemCountLastYear" @click="$emit('switch-is-this-year')"
+            :isSelected="!isThisYear">
+        </tw-button>
+        <button class="rounded-sm shadow-xs dark:border-birdware-bright w-10"
+            :class="[props.forskel >= 0 ? 'forskel-success' : 'forskel-danger']">{{
+                Math.abs(props.forskel) }}</button>
+    </tw-action-bar>
 </template>
 
 <script setup lang="ts">

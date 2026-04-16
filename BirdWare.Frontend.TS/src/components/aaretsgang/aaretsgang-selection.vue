@@ -1,14 +1,7 @@
 <template>
-    <tw-show-lg>
-        <tw-button-group class="flex gap-x-4">
-            <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
-        </tw-button-group>
-    </tw-show-lg>
-    <tw-show-md>
-        <tw-bottom-nav-bar>
-            <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
-        </tw-bottom-nav-bar>
-    </tw-show-md>
+    <tw-action-bar>
+        <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
+    </tw-action-bar>
 </template>
 
 <script setup lang="ts">

@@ -2,20 +2,10 @@
     <div class="flex flex-col gap-y-2">
         <div class="flex justify-between">
             <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
-            <tw-show-lg>
-                <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
-                    :forskel="state.itemCountThisYear - state.itemCountLastYear"
-                    :item-count-last-year="state.itemCountLastYear" :item-count-this-year="state.itemCountThisYear"
-                    @switch-is-by-trip="switchIsByTrip" @switch-is-this-year="switchIsThisYear"></forskel-selection>
-            </tw-show-lg>
-            <tw-show-md>
-                <tw-bottom-nav-bar>
-                    <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
-                        :forskel="state.itemCountThisYear - state.itemCountLastYear"
-                        :item-count-last-year="state.itemCountLastYear" :item-count-this-year="state.itemCountThisYear"
-                        @switch-is-by-trip="switchIsByTrip" @switch-is-this-year="switchIsThisYear"></forskel-selection>
-                </tw-bottom-nav-bar>
-            </tw-show-md>
+            <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
+                :forskel="state.itemCountThisYear - state.itemCountLastYear"
+                :item-count-last-year="state.itemCountLastYear" :item-count-this-year="state.itemCountThisYear"
+                @switch-is-by-trip="switchIsByTrip" @switch-is-this-year="switchIsThisYear"></forskel-selection>
         </div>
 
         <div :class="[state.isThisYear ? 'block' : 'hidden']">

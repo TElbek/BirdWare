@@ -1,18 +1,9 @@
 <template>
-    <tw-show-lg>
-        <tw-button-responsive :caption="selectedGroupModeCaption">
-            <tw-button v-for="mode in groupByModeList" :caption="mode.caption"
-                :isSelected="mode.id == obsSelectionStore.chosenGroupingId" @click="setGroupByMode(mode.id)">
-            </tw-button>
-        </tw-button-responsive>
-    </tw-show-lg>
-    <tw-show-md>
-        <tw-bottom-nav-bar>
-            <tw-button v-for="mode in groupByModeList" :caption="mode.caption"
-                :isSelected="mode.id == obsSelectionStore.chosenGroupingId" @click="setGroupByMode(mode.id)">
-            </tw-button>
-        </tw-bottom-nav-bar>
-    </tw-show-md>
+    <tw-action-bar>
+        <tw-button v-for="mode in groupByModeList" :caption="mode.caption"
+            :isSelected="mode.id == obsSelectionStore.chosenGroupingId" @click="setGroupByMode(mode.id)">
+        </tw-button>
+    </tw-action-bar>
 </template>
 
 <script setup lang="ts">

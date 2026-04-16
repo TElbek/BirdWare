@@ -1,18 +1,9 @@
 <template>
-    <tw-show-lg>
-        <tw-button-responsive :caption="currentRoute.meta?.title">
-            <tw-button v-for="route in availableRoutes" :caption="route.meta?.title"
-                :isSelected="currentRoute.name == route.name" @click="navigate(route.name)">
-            </tw-button>
-        </tw-button-responsive>
-    </tw-show-lg>
-    <tw-show-md>
-        <tw-bottom-nav-bar>
-            <tw-button v-for="route in availableRoutes" :caption="route.meta?.title"
-                :isSelected="currentRoute.name == route.name" @click="navigate(route.name)">
-            </tw-button>
-        </tw-bottom-nav-bar>
-    </tw-show-md>
+    <tw-action-bar>
+        <tw-button v-for="route in availableRoutes" :caption="route.meta?.title"
+            :isSelected="currentRoute.name == route.name" @click="navigate(route.name)">
+        </tw-button>
+    </tw-action-bar>
 </template>
 
 <script setup lang="ts">
