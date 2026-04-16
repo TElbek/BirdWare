@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-y-2">
-        <div class="flex gap-x-2 justify-between">
+        <div class="flex justify-between">
             <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
             <tw-show-lg>
                 <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
@@ -9,7 +9,7 @@
                     @switch-is-by-trip="switchIsByTrip" @switch-is-this-year="switchIsThisYear"></forskel-selection>
             </tw-show-lg>
             <tw-show-md>
-                <div class="fixed bottom-2 left-0 right-0 bg-white dark:bg-gray-900 px-2">
+                <div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 p-2">
                     <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
                         :forskel="state.itemCountThisYear - state.itemCountLastYear"
                         :item-count-last-year="state.itemCountLastYear" :item-count-this-year="state.itemCountThisYear"

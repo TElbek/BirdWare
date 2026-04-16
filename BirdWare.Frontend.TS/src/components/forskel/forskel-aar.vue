@@ -1,5 +1,5 @@
 <template>
-    <tw-grid-cols-five :count="listOfItems.size">
+    <tw-grid-cols-five :count="listOfItems.size" :offset="5">
         <div v-for="[key, value] in listOfItems">
             <tw-card>
                 <tw-card-header :caption="key" :count="value.length" :show-count="true"></tw-card-header>
