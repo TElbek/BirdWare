@@ -84,7 +84,7 @@ const router = createRouter({
     {
       path: '/ankomst',
       name: 'ankomst',
-      component: () => import('../components/ankomst/ankomst.vue'),
+      component: () => import('../views/AnkomstView.vue'),
       meta: {
         title: 'Ankomst',
         showInNavBar: true,
