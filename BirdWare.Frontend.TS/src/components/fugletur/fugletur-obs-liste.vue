@@ -2,12 +2,11 @@
     <tw-grid-cols-three :count="byFamilie.size">
         <div v-for="[key, value] in byFamilie">
             <tw-card>
-                <span class="text-base font-medium  text-birdware dark:text-birdware-bright capitalize">{{ key}}</span>
-                <span class="text-base font-medium  text-birdware dark:text-birdware-bright float-end">{{ value.length }}</span>
+                <tw-card-header :caption="key" :count="value.length" :showCount="true"></tw-card-header>
                 <div class="grid grid-cols-[max-content_1fr] gap-x-2 dark:text-white">
                     <template v-for="obs in value">
                         <art-navn :art-id="obs.artId" :art-navn="obs.artNavn" :speciel="obs.speciel" :su="obs.su"></art-navn>
-                        <div class="text-start">{{ obs.bem }}</div>
+                        <div class="text-start italic col-span-2 lg:col-span-1">{{ obs.bem }}</div>
                     </template>
                 </div>
             </tw-card>

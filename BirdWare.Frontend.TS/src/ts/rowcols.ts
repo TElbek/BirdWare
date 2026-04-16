@@ -4,7 +4,7 @@ export const getRowColClasses = (itemCount: number) => {
 }
 
 export const getRowColClassesThree = (itemCount: number) => {
-    const classesThree = ['sm:grid-cols-1', 'md:grid-cols-2', 'lg:grid-cols-3'];
+    const classesThree = ['sm:grid-cols-1', 'md:grid-cols-2', 'xl:grid-cols-3'];
     return 'grid gap-3 ' + classesThree.slice(0, Math.min(3, itemCount)).join(' ');
 }
 

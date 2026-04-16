@@ -2,21 +2,23 @@
     <tw-grid-cols-three :count="props.groupedData?.size">
         <div v-for="[key, value] in props.groupedData">
             <tw-card>
-                <div class="grid grid-cols-[1fr_max-content] gap-x-1 font-medium ">
-                    <a @click="addTag(key)" class="cursor-pointer">
-                        <span class="text-base text-birdware dark:text-birdware-bright">
-                            {{ obsSelectionStore.isGropingByMonth && valueIsNumber(key) ? getNameOfMonth(key) :
-                                key }}
-                        </span>
-                    </a>
-                    <span class="text-base text-birdware text-right">{{ value.length }}</span>
-                </div>
+                <tw-card-header-slot>
+                    <div class="grid grid-cols-[1fr_max-content] gap-x-1 font-medium ">
+                        <a @click="addTag(key)" class="cursor-pointer">
+                            <span>
+                                {{ obsSelectionStore.isGropingByMonth && valueIsNumber(key) ? getNameOfMonth(key) :
+                                    key }}
+                            </span>
+                        </a>
+                        <span class="text-right">{{ value.length }}</span>
+                    </div>
+                </tw-card-header-slot>
                 <div class="grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 dark:text-white">
                     <template v-for="obs in obsSorted(value)" :key="obs.observationId">
                         <div><fugletur-dato :fugleturId="obs.fugleturId" :dato="obs.dato" /></div>
                         <div><span v-if="showSpeciesNameInList">{{ obs.artNavn }}</span></div>
                         <div>{{ obs.lokalitetNavn }}</div>
-                        <div class="col-span-4 lg:col-span-1 italic lg:not-italic">{{ obs.bem }}</div>
+                        <div class="col-span-4 lg:col-span-1 italic">{{ obs.bem }}</div>
                     </template>
                 </div>
             </tw-card>
