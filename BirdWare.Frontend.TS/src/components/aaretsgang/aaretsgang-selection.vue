@@ -5,11 +5,9 @@
         </tw-button-group>
     </tw-show-lg>
     <tw-show-md>
-        <div class="fixed bottom-3 left-0 right-0 bg-white dark:bg-gray-900 px-2 w-full">
-            <div class="flex justify-between mx-2">
-                <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
-            </div>
-        </div>
+        <tw-bottom-nav-bar>
+            <tidOgStedArt :isByTrip="props.isByTrip" @switch-is-by-trip="switchIsByTrip"></tidOgStedArt>
+        </tw-bottom-nav-bar>
     </tw-show-md>
 </template>
 

@@ -9,12 +9,12 @@
                     @switch-is-by-trip="switchIsByTrip" @switch-is-this-year="switchIsThisYear"></forskel-selection>
             </tw-show-lg>
             <tw-show-md>
-                <div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 p-2">
+                <tw-bottom-nav-bar>
                     <forskel-selection :is-by-trip="state.isByTrip" :is-this-year="state.isThisYear"
                         :forskel="state.itemCountThisYear - state.itemCountLastYear"
                         :item-count-last-year="state.itemCountLastYear" :item-count-this-year="state.itemCountThisYear"
                         @switch-is-by-trip="switchIsByTrip" @switch-is-this-year="switchIsThisYear"></forskel-selection>
-                </div>
+                </tw-bottom-nav-bar>
             </tw-show-md>
         </div>
 

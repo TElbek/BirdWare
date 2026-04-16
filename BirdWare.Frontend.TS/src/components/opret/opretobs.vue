@@ -13,15 +13,10 @@
         </tw-show-lg>
         <tw-show-md>
             <fugletur-titel :showTitle="false" :fugleturId="state.fugleturId"></fugletur-titel>
-            <div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 px-3 pb-2">
-                <tw-button-group :caption="state.isForslagMode ? 'Forslag' : 'Liste'"
-                    class="flex justify-between w-full">
-                    <tw-button :caption="'Liste'" :isSelected="!state.isForslagMode"
-                        @click="setShowForslag"></tw-button>
-                    <tw-button :caption="'Forslag'" :isSelected="state.isForslagMode"
-                        @click="setShowForslag"></tw-button>
-                </tw-button-group>
-            </div>
+            <tw-bottom-nav-bar>
+                <tw-button :caption="'Liste'" :isSelected="!state.isForslagMode" @click="setShowForslag"></tw-button>
+                <tw-button :caption="'Forslag'" :isSelected="state.isForslagMode" @click="setShowForslag"></tw-button>
+            </tw-bottom-nav-bar>
         </tw-show-md>
         <RouterView></RouterView>
     </div>

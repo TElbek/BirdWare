@@ -7,13 +7,11 @@
         </tw-button-responsive>
     </tw-show-lg>
     <tw-show-md>
-        <div class="fixed pb-2 px-2 bottom-0 left-0 right-0 bg-white dark:bg-gray-900">
-            <tw-button-group class="flex justify-between gap-2 w-full px-2" :caption="selectedGroupModeCaption">
-                <tw-button v-for="mode in groupByModeList" :caption="mode.caption" 
-                    :isSelected="mode.id == obsSelectionStore.chosenGroupingId" @click="setGroupByMode(mode.id)">
-                </tw-button>
-            </tw-button-group>
-        </div>
+        <tw-bottom-nav-bar>
+            <tw-button v-for="mode in groupByModeList" :caption="mode.caption"
+                :isSelected="mode.id == obsSelectionStore.chosenGroupingId" @click="setGroupByMode(mode.id)">
+            </tw-button>
+        </tw-bottom-nav-bar>
     </tw-show-md>
 </template>
 
