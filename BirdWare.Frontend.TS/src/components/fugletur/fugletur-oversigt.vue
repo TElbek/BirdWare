@@ -5,7 +5,7 @@
             <fugletur-navigation></fugletur-navigation>
         </div>
         <fugletur-selection></fugletur-selection>
-        <tw-grid-cols-five :count="groupedData?.size">
+        <tw-grid-cols-five :count="groupedData?.size" :offset="5">
             <div v-for="[key, value] in groupedData">
                 <tw-card>
                     <span class="text-base font-medium  text-birdware dark:text-birdware-bright capitalize">{{ key

@@ -1,12 +1,10 @@
 <template>
-    <div>
-        <multiselect v-model="state.selectedTag" :options="state.tagList" track-by="name" label="name"
-        :multiple="false" :showLabels="false" :allow-empty="true" @search-change="getTagList"></multiselect>
-    </div>
-    <tw-grid-cols-five :count="groupByFamilie.size" class="mt-2">
+    <multiselect v-model="state.selectedTag" :options="state.tagList" track-by="name" label="name" :multiple="false"
+        :showLabels="false" :allow-empty="true" @search-change="getTagList"></multiselect>
+    <tw-grid-cols-five :count="groupByFamilie.size" :offset="5">
         <div v-for="[key, value] in groupByFamilie">
             <tw-card>
-                <tw-card-header :caption="key"  :count="value.length" :showCount="true"></tw-card-header>
+                <tw-card-header :caption="key" :count="value.length" :showCount="true"></tw-card-header>
                 <tw-flex>
                     <template v-for="obs in value">
                         <a @click="removeObservation(obs.observationId)">
@@ -64,7 +62,7 @@ function getTagList(query: string) {
 
 watch(() => state.selectedTag, (newValue) => {
     api.post("observation/opretobs/" + newValue.id).then(() => {
-        getObservationer();            
+        getObservationer();
     });
 });
 </script>

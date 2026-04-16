@@ -2,11 +2,11 @@
     <tw-grid-cols-five :count="byFamilie.size" v-if="hasData">
         <div v-for="[key, value] in byFamilie">
             <tw-card>
-                <tw-card-header :caption="key" :count="value.length" :showCount="true"></tw-card-header>                
+                <tw-card-header class="italic" :caption="key" :count="value.length" :showCount="true"></tw-card-header>                
                 <tw-flex>
                     <template v-for="art in artSorted(value)">
                         <a @click="addObs(art.artId)">
-                            <span class="dark:text-white">{{ art.artNavn }}</span>
+                            <span class="italic text-gray-500 dark:text-gray-200">{{ art.artNavn }}</span>
                         </a>
                     </template>
                 </tw-flex>

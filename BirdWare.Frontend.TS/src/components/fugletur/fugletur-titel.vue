@@ -1,8 +1,8 @@
 <template>
-    <div v-if="state.hasdata" class="flex flex-wrap gap-x-2 me-2">
+    <div v-if="state.hasdata" class="flex gap-x-2">
         <tw-text-sizeable>{{ formatDate(state.fugletur.dato) }}</tw-text-sizeable>
         <tw-text-sizeable>{{ state.fugletur.lokalitetNavn }}</tw-text-sizeable>
-        <tw-text-sizeable>#{{ state.fugletur.antalArter }}</tw-text-sizeable>
+        <tw-text-sizeable>{{ state.fugletur.antalArter }} {{ state.fugletur.antalArter > 1 ? 'Arter' : 'Art' }}</tw-text-sizeable>
     </div>
 </template>
 

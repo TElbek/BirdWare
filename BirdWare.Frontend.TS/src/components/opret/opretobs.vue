@@ -1,12 +1,28 @@
 <template>
-    <div>
-        <div class="grid grid-cols-[1fr_max-content] mb-2">
+    <div class="flex flex-col gap-y-2">
+        <tw-show-lg>
+            <div class="flex justify-between">
+                <fugletur-titel :showTitle="false" :fugleturId="state.fugleturId"></fugletur-titel>
+                <tw-button-group :caption="''" class="flex gap-x-5">
+                    <tw-button :caption="'Liste'" :isSelected="!state.isForslagMode"
+                        @click="setShowForslag"></tw-button>
+                    <tw-button :caption="'Forslag'" :isSelected="state.isForslagMode"
+                        @click="setShowForslag"></tw-button>
+                </tw-button-group>
+            </div>
+        </tw-show-lg>
+        <tw-show-md>
             <fugletur-titel :showTitle="false" :fugleturId="state.fugleturId"></fugletur-titel>
-            <tw-button-dropdown :caption="state.isForslagMode ? 'Forslag' : 'Liste'">
-                <button class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright" @click="setShowForslag">Liste</button>
-                <button class="block px-4 py-1 text-sm cursor-pointer dark:text-birdware-bright" @click="setShowForslag">Forslag</button>
-            </tw-button-dropdown>
-        </div>
+            <div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 px-3 pb-2">
+                <tw-button-group :caption="state.isForslagMode ? 'Forslag' : 'Liste'"
+                    class="flex justify-between w-full">
+                    <tw-button :caption="'Liste'" :isSelected="!state.isForslagMode"
+                        @click="setShowForslag"></tw-button>
+                    <tw-button :caption="'Forslag'" :isSelected="state.isForslagMode"
+                        @click="setShowForslag"></tw-button>
+                </tw-button-group>
+            </div>
+        </tw-show-md>
         <RouterView></RouterView>
     </div>
 </template>

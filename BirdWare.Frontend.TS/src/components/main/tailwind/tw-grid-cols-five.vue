@@ -1,14 +1,22 @@
 <template>
-    <div :class="getRowColClasses(props.count)" class="scrollbar-hide max-h-[80vh] overflow-auto">
-        <slot></slot>
+    <div class="scrollbar-hide overflow-auto" :class="`max-h-[${vh}vh]`">
+        <div :class="getRowColClasses(props.count)">
+            <slot></slot>
+        </div>
     </div>
-</template> 
- 
+</template>
+
 <script setup lang="ts">
 import { getRowColClasses } from '@/ts/rowcols';
+import { computed } from 'vue';
 interface rowcolsProps {
     count: number;
+    offset: number
 }
 
-const props = defineProps<rowcolsProps>();
+const vh = computed(() => 80 - props.offset);
+
+const props = withDefaults(defineProps<rowcolsProps>(), {
+    offset: 0
+});
 </script>
