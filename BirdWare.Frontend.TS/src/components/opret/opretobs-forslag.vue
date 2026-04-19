@@ -1,5 +1,5 @@
 <template>
-    <tw-grid-cols-five :count="byFamilie.size" v-if="hasData" :offset="5">
+    <tw-grid-cols-five :count="byFamilie.size" v-if="hasData" >
         <div v-for="[key, value] in byFamilie">
             <tw-card>
                 <tw-card-header class="italic" :caption="key" :count="value.length" :showCount="true"></tw-card-header>                
