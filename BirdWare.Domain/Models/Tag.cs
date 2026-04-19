@@ -30,6 +30,8 @@ namespace BirdWare.Domain.Models
         Familie = 10,
         Gruppe = 11,
         Art = 12,
-        SenesteNÅr = 13
+        SenesteNÅr = 13,
+        HalvårVinter = 14,
+        HalvårSommer = 15,
     }
 }

@@ -93,6 +93,8 @@ namespace BirdWare.EF
             services.AddKeyedTransient<IObservationTagFilter, ObservationSaesonFilter>(TagTypes.SaesonForaar);
             services.AddKeyedTransient<IObservationTagFilter, ObservationSaesonFilter>(TagTypes.SaesonSommer);
             services.AddKeyedTransient<IObservationTagFilter, ObservationSaesonFilter>(TagTypes.SaesonEfteraar);
+            services.AddKeyedTransient<IObservationTagFilter, ObservationSaesonFilter>(TagTypes.HalvårSommer);
+            services.AddKeyedTransient<IObservationTagFilter, ObservationSaesonFilter>(TagTypes.HalvårVinter);
             services.AddKeyedTransient<IObservationTagFilter, ObservationMaanedFilter>(TagTypes.Maaned);
             services.AddKeyedTransient<IObservationTagFilter, ObservationAarstalFilter>(TagTypes.Aarstal);
             services.AddKeyedTransient<IObservationTagFilter, ObservationSenesteAarFilter>(TagTypes.SenesteNÅr);

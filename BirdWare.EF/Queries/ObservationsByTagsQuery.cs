@@ -22,18 +22,19 @@ namespace BirdWare.EF.Queries
             return GenerateResultSet(observations);
         }
 
-        private static List<VObs> GenerateResultSet(IQueryable<Observation> observations)
+        private List<VObs> GenerateResultSet(IQueryable<Observation> observations)
         {
-            return [.. observations
-                        .Include(i => i.Fugletur)
-                        .Include(i => i.Fugletur.Lokalitet)
-                        .Include(i => i.Fugletur.Lokalitet.Region)
-                        .Include(i => i.Art)
-                        .Include(i => i.Art.Gruppe)
-                        .Include(i => i.Art.Gruppe.Familie)
-                        .OrderByDescending(r => r.FugleturId)
-                        .Take(200)
-                        .Select(s => VObs.MapFromObservation(s))];
-        }
+            var result = (from o in observations
+                          join f in birdWareContext.Fugletur.AsNoTracking() on o.FugleturId equals f.Id
+                          join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
+                          join r in birdWareContext.Region.AsNoTracking() on l.RegionId equals r.Id
+                          join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
+                          join g in birdWareContext.Gruppe.AsNoTracking() on a.GruppeId equals g.Id
+                          join fa in birdWareContext.Familie.AsNoTracking() on g.FamilieId equals fa.Id
+                          orderby f.Dato descending
+                          select VObs.MapToVObs(o, f, l, r, a, g, fa)).Take(200).ToList();
+
+            return result;
+        }        
     }
 }

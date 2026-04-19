@@ -1,5 +1,8 @@
 <template>
-    <div class="rounded border border-gray-300 leaflet" id="map"></div>
+    <!-- <span>{{ heightExpr }}</span> -->
+    <div :style="heightExpr" ref="map">
+        <div class="rounded border border-gray-300 leaflet" id="map" ></div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -7,7 +10,11 @@ import api from '@/api';
 import { useObservationMapLogic } from '@/composables/observation-map-logic';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import type { observationGeoJson } from '@/types/observationGeoJsonType';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch, useTemplateRef } from 'vue';
+
+const mapRef = useTemplateRef('map');
+const mapYPos = ref(0);
+const heightExpr = computed(() => '{height: calc(100vh - ' + mapYPos.value + 'px)}');
 
 const geoJsonObj = ref({} as observationGeoJson)
 const obsSelectionStore = useObsSelectionStore();
@@ -21,6 +28,7 @@ const hasData = ref(false);
 onMounted(() => {
     initializeLeaflet();
     getGeoJSon();
+    mapYPos.value = Math.trunc(mapRef.value?.getBoundingClientRect().y  ?? 0 - 200);
 });
 
 function getGeoJSon() {
@@ -53,3 +61,10 @@ watch(() => geoJsonObj.value, (newValue) => {
     if (hasData.value) addPointsToMap(geoJsonObj.value);
 });
 </script>
+
+<!-- <style scoped>
+.leaflet {
+    height: calc(100vh - 180px);
+    z-index: 0 !important;
+}
+</style> -->

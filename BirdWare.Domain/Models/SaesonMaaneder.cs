@@ -7,7 +7,9 @@
             { TagTypes.SaesonForaar, [3, 4, 5] },
             { TagTypes.SaesonSommer, [6, 7, 8] },
             { TagTypes.SaesonEfteraar, [9, 10, 11] },
-            { TagTypes.SaesonVinter, [12, 1, 2] }
+            { TagTypes.SaesonVinter, [12, 1, 2] },
+            { TagTypes.HalvårSommer, [4,5,6,7,8,9] },
+            { TagTypes.HalvårVinter, [10,11,12,1,2,3] }
         };
     }
 }
