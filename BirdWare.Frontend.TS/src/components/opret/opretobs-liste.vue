@@ -1,7 +1,7 @@
 <template>
     <multiselect v-model="state.selectedTag" :options="state.tagList" track-by="name" label="name" :multiple="false"
         :showLabels="false" :allow-empty="true" @search-change="getTagList"></multiselect>
-    <tw-grid-cols-five :count="groupByFamilie.size">
+    <tw-grid-cols-five :count="groupByFamilie.size" :offset="5">
         <div v-for="[key, value] in groupByFamilie">
             <tw-card>
                 <tw-card-header :caption="key" :count="value.length" :showCount="true"></tw-card-header>

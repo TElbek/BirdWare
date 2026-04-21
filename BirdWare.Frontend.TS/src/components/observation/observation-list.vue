@@ -1,5 +1,5 @@
 <template>
-    <tw-grid-cols-three :count="props.groupedData?.size">
+    <tw-grid-cols-three :count="props.groupedData?.size" :offset="5">
         <div v-for="[key, value] in props.groupedData">
             <tw-card>
                 <tw-card-header-slot>
