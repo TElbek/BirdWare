@@ -13,12 +13,12 @@
                         <span class="text-right">{{ value.length }}</span>
                     </div>
                 </tw-card-header-slot>
-                <div class="grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-2 dark:text-white">
+                <div class="grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-1 lg:gap-x-2 dark:text-white">
                     <template v-for="obs in obsSorted(value)" :key="obs.observationId">
                         <div><fugletur-dato :fugleturId="obs.fugleturId" :dato="obs.dato" /></div>
                         <div><span v-if="showSpeciesNameInList">{{ obs.artNavn }}</span></div>
                         <div>{{ obs.lokalitetNavn }}</div>
-                        <div class="col-span-4 lg:col-span-1 italic">{{ obs.bem }}</div>
+                        <div class="col-span-4 lg:col-span-1 leading-none lg:leading-5.5 text-start text-gray-500 dark:text-white mb-2 lg:mb-0">{{ obs.bem }}</div>
                     </template>
                 </div>
             </tw-card>

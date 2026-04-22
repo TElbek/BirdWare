@@ -3,10 +3,10 @@
         <div v-for="[key, value] in byFamilie">
             <tw-card>
                 <tw-card-header :caption="key" :count="value.length" :showCount="true"></tw-card-header>
-                <div class="grid grid-cols-[max-content_1fr] gap-x-2 dark:text-white">
+                <div class="grid grid-cols-[max-content_1fr] lg:gap-x-4 dark:text-white">
                     <template v-for="obs in value">
-                        <art-navn :art-id="obs.artId" :art-navn="obs.artNavn" :speciel="obs.speciel" :su="obs.su"></art-navn>
-                        <div class="text-start italic col-span-2 lg:col-span-1">{{ obs.bem }}</div>
+                        <art-navn :art-id="obs.artId" :art-navn="obs.artNavn" :speciel="obs.speciel" :su="obs.su" ></art-navn>
+                        <div class="leading-none lg:leading-5 text-start text-gray-500 dark:text-white col-span-2 lg:col-span-1 mb-2 lg:mb-0">{{ obs.bem }}</div>
                     </template>
                 </div>
             </tw-card>
