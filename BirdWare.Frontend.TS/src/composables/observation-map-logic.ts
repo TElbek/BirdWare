@@ -92,6 +92,7 @@ export function useObservationMapLogic(emitTagCallback: any) {
         initializeLeaflet,
         addPointsToMap,
         addSimplePointToMap,
-        resetGeoJson
+        resetGeoJson,
+        fitBounds
     }
 }

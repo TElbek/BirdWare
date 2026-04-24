@@ -1,7 +1,6 @@
 <template>
-    <span>{{ heightExpr }}</span>
-    <div :style="heightExpr" ref="map">
-        <div class="rounded border border-gray-300 leaflet" id="map" ></div>
+    <div :style="heightExpr" ref="map" class="map-wrapper">
+        <div class="rounded border border-gray-300 h-full" id="map"></div>
     </div>
 </template>
 
@@ -11,14 +10,16 @@ import { useObservationMapLogic } from '@/composables/observation-map-logic';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import type { observationGeoJson } from '@/types/observationGeoJsonType';
 import { computed, onMounted, ref, watch, useTemplateRef } from 'vue';
+import { useWindowSize } from '@/composables/windowSize';
 
+const { windowHeight, windowWidth, isMobile } = useWindowSize();
 const mapRef = useTemplateRef('map');
 const mapYPos = ref(0);
-const heightExpr = computed(() => '{height: calc(100vh - ' + mapYPos.value + 'px)}');
+const heightExpr = computed(() => 'calc(100vh - ' + Math.round(mapYPos.value) + 'px  - ' + (isMobile.value == true ? '50px' : '20px') + ')');
 
 const geoJsonObj = ref({} as observationGeoJson)
 const obsSelectionStore = useObsSelectionStore();
-const { initializeLeaflet, addPointsToMap, resetGeoJson } = useObservationMapLogic(emitAddTag);
+const { initializeLeaflet, addPointsToMap, resetGeoJson, fitBounds } = useObservationMapLogic(emitAddTag);
 
 const emit = defineEmits(['addtag']);
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
@@ -67,4 +68,16 @@ watch(() => obsSelectionStore.selectedTags, (newValue) => {
 watch(() => geoJsonObj.value, (newValue) => {
     if (hasData.value) addPointsToMap(geoJsonObj.value);
 });
+
+watch([windowHeight, windowWidth, isMobile], () => {
+    updateMapYPos();
+    if (hasData.value) fitBounds();
+});
 </script>
+
+<style scoped>
+.map-wrapper {
+    height: v-bind(heightExpr);
+    z-index: 0 !important;
+}
+</style>
