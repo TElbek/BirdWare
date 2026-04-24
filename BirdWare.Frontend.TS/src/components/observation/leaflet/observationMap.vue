@@ -1,5 +1,5 @@
 <template>
-    <!-- <span>{{ heightExpr }}</span> -->
+    <span>{{ heightExpr }}</span>
     <div :style="heightExpr" ref="map">
         <div class="rounded border border-gray-300 leaflet" id="map" ></div>
     </div>
@@ -28,8 +28,14 @@ const hasData = ref(false);
 onMounted(() => {
     initializeLeaflet();
     getGeoJSon();
-    mapYPos.value = Math.trunc(mapRef.value?.getBoundingClientRect().y  ?? 0 - 200);
+    updateMapYPos();
 });
+
+function updateMapYPos() {
+    if (mapRef.value) {
+        mapYPos.value = mapRef.value.getBoundingClientRect().top;
+    }
+}
 
 function getGeoJSon() {
     if (obsSelectionStore.selectedTags.length > 0) {
@@ -55,16 +61,10 @@ function emitAddTag(name: string) {
 
 watch(() => obsSelectionStore.selectedTags, (newValue) => {
     getGeoJSon();
+    updateMapYPos();
 });
 
 watch(() => geoJsonObj.value, (newValue) => {
     if (hasData.value) addPointsToMap(geoJsonObj.value);
 });
 </script>
-
-<!-- <style scoped>
-.leaflet {
-    height: calc(100vh - 180px);
-    z-index: 0 !important;
-}
-</style> -->
