@@ -11,6 +11,7 @@ import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import type { observationGeoJson } from '@/types/observationGeoJsonType';
 import { computed, onMounted, ref, watch, useTemplateRef } from 'vue';
 import { useWindowSize } from '@/composables/windowSize';
+import { useDebounce } from '@/composables/debounce';
 
 const { windowHeight, windowWidth, isMobile } = useWindowSize();
 const mapRef = useTemplateRef('map');
@@ -25,6 +26,8 @@ const emit = defineEmits(['addtag']);
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
 
 const hasData = ref(false);
+const {debounce} = useDebounce();
+const debounceWindowEventHandler = debounce(() => windowEventHandler(), 500);
 
 onMounted(() => {
     initializeLeaflet();
@@ -60,6 +63,11 @@ function emitAddTag(name: string) {
     }
 }
 
+function windowEventHandler() {
+    updateMapYPos();
+    if (hasData.value) fitBounds();    
+}
+
 watch(() => obsSelectionStore.selectedTags, (newValue) => {
     getGeoJSon();
     updateMapYPos();
@@ -70,8 +78,7 @@ watch(() => geoJsonObj.value, (newValue) => {
 });
 
 watch([windowHeight, windowWidth, isMobile], () => {
-    updateMapYPos();
-    if (hasData.value) fitBounds();
+    debounceWindowEventHandler();
 });
 </script>
 
