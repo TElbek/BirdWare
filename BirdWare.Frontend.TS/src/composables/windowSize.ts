@@ -1,20 +1,18 @@
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
  
 export function useWindowSize() {
-  // Reactive size refs
   const windowWidth = ref(window.innerWidth);
   const windowHeight = ref(window.innerHeight);
+  const tailwindBreakpointLG = 1024;
  
-  // Resize handler
   const handleResize = () => {
     windowWidth.value = window.innerWidth;
     windowHeight.value = window.innerHeight;
-    isMobile.value = windowWidth.value <= 1024;
+    isMobile.value = windowWidth.value <= tailwindBreakpointLG;
   };
  
   const isMobile = ref(false);
 
-  // Lifecycle hooks
   onMounted(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
@@ -24,6 +22,5 @@ export function useWindowSize() {
     window.removeEventListener('resize', handleResize);
   });
  
-  // Return the reactive values
   return { windowWidth, windowHeight, isMobile };
 }
