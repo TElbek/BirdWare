@@ -1,5 +1,5 @@
 <template>
-    <observationMap v-if="obsSelectionStore.isGropingByLocality" :observationer="observationsDKWithLatLong" @addtag="addTag"></observationMap>
+    <observationMap v-if="obsSelectionStore.isGropingByLocality" :observationer="observationsDKWithLatLong"></observationMap>
     <observationList v-else :grouped-data="groupedData" @addtag="addTag"></observationList>
 </template>
 
@@ -10,7 +10,7 @@ import { storeToRefs } from 'pinia'
 import { type observationType } from '@/types/observationType.ts';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
 import observationList from './observation-list.vue';
-import observationMap from './leaflet/observationMap.vue';
+import observationMap from './leaflet/observationMapCluster.vue';
 
 const obsSelectionStore = useObsSelectionStore();
 const { selectedTags } = storeToRefs(obsSelectionStore);
