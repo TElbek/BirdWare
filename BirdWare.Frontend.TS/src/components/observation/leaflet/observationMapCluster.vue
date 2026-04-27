@@ -1,11 +1,13 @@
 <template>
-    <div class="rounded border border-gray-300 h-full" id="map" style="height:75vh;">        
+    <div ref="map-wrapper-ref" class="map-wrapper">
+        <div class="rounded border border-gray-300 h-full" id="map">
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import type { observationType } from '@/types/observationType';
-import { computed, onMounted, ref, shallowRef, watch } from 'vue';
+import { computed, onMounted, ref, shallowRef, useTemplateRef, watch } from 'vue';
 
 import "leaflet/dist/leaflet.css"
 import * as L from 'leaflet';
@@ -13,6 +15,17 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import "leaflet.markercluster";
+
+import { useWindowSize } from '@/composables/windowSize';
+import { useDebounce } from '@/composables/debounce';
+
+const { windowHeight, windowWidth, isMobile } = useWindowSize();
+const mapRef = useTemplateRef('map-wrapper-ref');
+const mapYPos = ref(0);
+const heightExpr = computed(() => 'calc(100vh - ' + Math.round(mapYPos.value) + 'px  - ' + (isMobile.value == true ? '50px' : '20px') + ')');
+
+const { debounce } = useDebounce();
+const debounceWindowEventHandler = debounce(() => windowEventHandler(), 500);
 
 const initialMap = shallowRef();
 const props = defineProps({
@@ -25,8 +38,8 @@ const props = defineProps({
 const markers = L.markerClusterGroup();
 
 const groupedData = computed(() => Map.groupBy(
-            props.observationer.sort((a, b) => a.lokalitetNavn.localeCompare(b.lokalitetNavn)),
-            (one: observationType) => (one.lokalitetId)));
+    props.observationer.sort((a, b) => a.lokalitetNavn.localeCompare(b.lokalitetNavn)),
+    (one: observationType) => (one.lokalitetId)));
 
 const averageCount = computed(() => {
     const totalObservations = props.observationer.length;
@@ -35,14 +48,26 @@ const averageCount = computed(() => {
 });
 
 onMounted(() => {
-  initialMap.value = L.map('map').setView([56, 11], 7);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-  }).addTo(initialMap.value);
+    initialMap.value = L.map('map').setView([56, 11], 7);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(initialMap.value);
 
-  addMarkers();
-});      
+    updateMapYPos();
+    addMarkers();
+});
+
+function updateMapYPos() {
+    if (mapRef.value) {
+        mapYPos.value = mapRef.value.getBoundingClientRect().top;
+    }
+}
+
+function windowEventHandler() {
+    updateMapYPos();
+    fitBounds();    
+}
 
 function addMarkers() {
     markers.clearLayers();
@@ -56,9 +81,36 @@ function addMarkers() {
         }
     }
     initialMap.value.addLayer(markers);
+    fitBounds();
+}
+
+function fitBounds() {
+    if (markers && initialMap.value) {
+        let layerList: L.Layer[] = [markers];
+        let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
+        let bounds = featureGroup.getBounds();
+        try {
+            initialMap.value.fitBounds(bounds, { padding: [20, 20] });
+        }
+        catch {
+            initialMap.value.setView([56, 11], 7);
+            return;
+        }
+    }
 }
 
 watch(() => props.observationer, (newVal) => {
     addMarkers();
 });
+
+watch([windowHeight, windowWidth, isMobile], () => {
+    debounceWindowEventHandler();
+});
 </script>
+
+<style scoped>
+.map-wrapper {
+    height: v-bind(heightExpr);
+    z-index: 0 !important;
+}
+</style>
