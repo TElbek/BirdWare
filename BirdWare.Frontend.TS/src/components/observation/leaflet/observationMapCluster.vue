@@ -73,7 +73,7 @@ function addMarkers() {
     markers.clearLayers();
     for (const [lokalitetId, observationer] of groupedData.value) {
         const firstObservation = observationer[0];
-        if (firstObservation.latitude && firstObservation.longitude) {
+        if (firstObservation.latitude && firstObservation.longitude && firstObservation.regionId > 0) {
             const marker = L.circleMarker([firstObservation.latitude, firstObservation.longitude]);
             marker.setStyle({ color: observationer.length > averageCount.value ? 'green' : 'blue' });
             marker.bindPopup(`<b>${firstObservation.lokalitetNavn}</b><br>Antal observationer: ${observationer.length}`);
