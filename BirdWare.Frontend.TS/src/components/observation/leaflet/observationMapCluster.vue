@@ -7,7 +7,7 @@
 
 <script setup lang="ts">
 import type { observationType } from '@/types/observationType';
-import { computed, onMounted, ref, shallowRef, useTemplateRef, watch } from 'vue';
+import { computed, onMounted, onUnmounted, ref, shallowRef, useTemplateRef, watch } from 'vue';
 
 import "leaflet/dist/leaflet.css"
 import * as L from 'leaflet';
@@ -18,6 +18,7 @@ import "leaflet.markercluster";
 
 import { useWindowSize } from '@/composables/windowSize';
 import { useDebounce } from '@/composables/debounce';
+import { formatDate } from '@/ts/dateandtime';
 
 const { windowHeight, windowWidth, isMobile } = useWindowSize();
 const mapRef = useTemplateRef('map-wrapper-ref');
@@ -50,12 +51,19 @@ const averageCount = computed(() => {
 onMounted(() => {
     initialMap.value = L.map('map');
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 13,
+        maxZoom: 14,
+        minZoom: 7,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(initialMap.value);
 
     updateMapYPos();
     addMarkers();
+});
+
+onUnmounted(() => {
+    if (initialMap.value) {
+        initialMap.value.remove();
+    }
 });
 
 function updateMapYPos() {
@@ -66,7 +74,7 @@ function updateMapYPos() {
 
 function windowEventHandler() {
     updateMapYPos();
-    fitBounds();    
+    fitBounds();
 }
 
 function addMarkers() {
@@ -76,7 +84,7 @@ function addMarkers() {
         if (firstObservation.latitude && firstObservation.longitude && firstObservation.regionId > 0) {
             const marker = L.circleMarker([firstObservation.latitude, firstObservation.longitude]);
             marker.setStyle({ color: observationer.length > averageCount.value ? 'green' : 'blue' });
-            marker.bindPopup(`<b>${firstObservation.lokalitetNavn}</b><br>Antal observationer: ${observationer.length}`);
+            marker.bindPopup(`<b>${firstObservation.lokalitetNavn}</b><br>Observationer: ${observationer.length}</br>Seneste: ${formatDate(firstObservation.dato)} `);
             markers.addLayer(marker);
         }
     }
@@ -90,7 +98,7 @@ function fitBounds() {
         let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
         let bounds = featureGroup.getBounds();
         try {
-            initialMap.value.fitBounds(bounds, { padding: [20, 20] });
+            initialMap.value.fitBounds(bounds, { padding: [100, 100] });
         }
         catch {
             initialMap.value.setView([56, 11], 7);
