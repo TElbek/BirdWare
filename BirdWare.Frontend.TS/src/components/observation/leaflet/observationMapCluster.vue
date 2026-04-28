@@ -52,7 +52,7 @@ onMounted(() => {
     initialMap.value = L.map('map');
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 14,
-        minZoom: 7,
+        minZoom: 6,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(initialMap.value);
 
