@@ -48,7 +48,7 @@ const averageCount = computed(() => {
 });
 
 onMounted(() => {
-    initialMap.value = L.map('map').setView([56, 11], 7);
+    initialMap.value = L.map('map');
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 13,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
