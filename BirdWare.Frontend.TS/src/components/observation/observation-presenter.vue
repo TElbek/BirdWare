@@ -5,12 +5,13 @@
 
 <script setup lang="ts">
 import api from '@/api';
-import { reactive, onMounted, computed, watch } from 'vue';
+import { reactive, onMounted, computed, watch, defineAsyncComponent } from 'vue';
 import { storeToRefs } from 'pinia'
 import { type observationType } from '@/types/observationType.ts';
 import { useObsSelectionStore } from '@/stores/obs-selection-store';
-import observationList from './observation-list.vue';
-import observationMap from './leaflet/observationMapCluster.vue';
+
+const observationList = defineAsyncComponent(() => import('./observation-list.vue'));
+const observationMap = defineAsyncComponent(() => import('./leaflet/observationMapCluster.vue'));
 
 const obsSelectionStore = useObsSelectionStore();
 const { selectedTags } = storeToRefs(obsSelectionStore);
@@ -21,6 +22,8 @@ import { valueIsNumber } from '@/ts/typechecks.ts';
 const state = reactive({
     observationer: [] as observationType[]
 });
+
+const emptyObservation = [] as observationType[];
 
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
 
@@ -52,7 +55,7 @@ const groupByFunctions = {
     },
 
     byLokalitet: function () {
-        return Map.groupBy(state.observationer.sort((a, b) => a.lokalitetNavn.localeCompare(b.lokalitetNavn)), (  one: observationType  ) => one.lokalitetNavn);
+        return Map.groupBy(emptyObservation.sort((a, b) => a.lokalitetNavn.localeCompare(b.lokalitetNavn)), (  one: observationType  ) => one.lokalitetId);
     },
 
     byRegion: function () {
