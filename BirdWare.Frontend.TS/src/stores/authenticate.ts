@@ -14,4 +14,7 @@ export const useAuthenticateStore = defineStore('authenticate', () => {
     });
 
     return { jwtToken, setJwtToken, isLoggedIn };
-});
+},
+    {
+        persist: true,
+    });

@@ -8,4 +8,7 @@ export const useThemeStore = defineStore('themeStore', () => {
   }
 
   return { isDarkMode, toggleDarkMode }
-})
+},
+    {
+        persist: true,
+    })

@@ -22,4 +22,6 @@ export const useLeafletStore = defineStore('leaflet', () => {
         centerLongitude,
         setCenter
     }
+}, {
+    persist: true
 });

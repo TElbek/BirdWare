@@ -67,4 +67,7 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     SetViewMode: setViewMode,
     hasTagWithName
   }
-})
+},
+    {
+        persist: true,
+    })

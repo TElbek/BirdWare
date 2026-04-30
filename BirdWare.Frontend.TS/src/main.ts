@@ -8,12 +8,16 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+import piniaPluginPersistedState from "pinia-plugin-persistedstate"
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedState);
+
 const app = createApp(App)
 
 registerComponents();
 registerTailWindComponents();
 
-app.use(createPinia())
+app.use(pinia)
 app.use(router)
 
 app.directive('focus', {

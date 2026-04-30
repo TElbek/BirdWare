@@ -15,4 +15,6 @@ export const useFugleturStore = defineStore('fugletur', () => {
         hasId,
         setFugleturId
     }
+}, {
+    persist: true
 });

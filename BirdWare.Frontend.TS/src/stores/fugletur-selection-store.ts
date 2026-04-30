@@ -39,4 +39,6 @@ export const useFugleturSelectionStore = defineStore('fugletur-selection', () =>
            AddTag, 
            SetTag, 
            RemoveTag}
+}, {
+    persist: true
 })

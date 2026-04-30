@@ -16,4 +16,7 @@ export const useAnkomstSelectionStore = defineStore('ankomst-selection', () => {
     SetTag,
     hasSelectedTag
   };
-});
+},
+    {
+        persist: true,
+    });
