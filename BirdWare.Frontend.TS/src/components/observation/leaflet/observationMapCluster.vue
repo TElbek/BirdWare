@@ -23,7 +23,7 @@ import { formatDate } from '@/ts/dateandtime';
 const { windowHeight, windowWidth, isMobile } = useWindowSize();
 const mapRef = useTemplateRef('map-wrapper-ref');
 const mapYPos = ref(0);
-const heightExpr = computed(() => 'calc(100vh - ' + Math.round(mapYPos.value) + 'px  - ' + (isMobile.value == true ? '50px' : '20px') + ')');
+const heightExpr = computed(() => 'calc(100vh - ' + Math.round(mapYPos.value) + 'px  - ' + (isMobile.value == true ? '60px' : '20px') + ')');
 
 const { debounce } = useDebounce();
 const debounceWindowEventHandler = debounce(() => windowEventHandler(), 500);
@@ -98,7 +98,7 @@ function fitBounds() {
         let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
         let bounds = featureGroup.getBounds();
         try {
-            initialMap.value.fitBounds(bounds, { padding: [100, 100] });
+            initialMap.value.fitBounds(bounds, { padding: [120, 120] });
         }
         catch {
             initialMap.value.setView([56, 11], 7);
