@@ -24,7 +24,7 @@ export function useObservationMapLogicCluster(emitTagCallback: any) {
     }
 
     function addMarkers(observationList: observationType[]) {
-        markers.value.clearLayers();
+        cleanUpMarkersAndClusters();
         let averageCount = calculateAverageCount(observationList);
 
         for (const [lokalitetId, observationer] of groupObservationsByLokalitet(observationList)) {
@@ -41,6 +41,11 @@ export function useObservationMapLogicCluster(emitTagCallback: any) {
         }
         initialMap.value.addLayer(markers.value);
         fitBounds();
+    }
+
+    function cleanUpMarkersAndClusters() {
+        initialMap.value.removeLayer(markers.value);
+        markers.value = L.markerClusterGroup();
     }
 
     function fitBounds() {
