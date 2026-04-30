@@ -14,8 +14,9 @@ import "leaflet/dist/leaflet.css"
 import { useWindowSize } from '@/composables/windowSize';
 import { useDebounce } from '@/composables/debounce';
 import { useObservationMapLogicCluster } from '@/composables/observation-map-logic-cluster';
+import { useObsSelectionStore } from '@/stores/obs-selection-store';
 
-const { initializeLeaflet, addMarkers, fitBounds } = useObservationMapLogicCluster();
+const { initializeLeaflet, addMarkers, fitBounds } = useObservationMapLogicCluster(emitAddTag);
 const { windowHeight, windowWidth, isMobile } = useWindowSize();
 const mapRef = useTemplateRef('map-wrapper-ref');
 const mapYPos = ref(0);
@@ -23,6 +24,9 @@ const heightExpr = computed(() => 'calc(100vh - ' + Math.round(mapYPos.value) + 
 
 const { debounce } = useDebounce();
 const debounceWindowEventHandler = debounce(() => windowEventHandler(), 500);
+const emit = defineEmits(['addtag']);
+
+const obsSelectionStore = useObsSelectionStore();
 
 const props = defineProps({
     observationer: {
@@ -55,6 +59,14 @@ watch(() => props.observationer, (newVal) => {
 watch([windowHeight, windowWidth, isMobile], () => {
     debounceWindowEventHandler();
 });
+
+function emitAddTag(name: string) {
+    // console.error('Emitting addtag for:', name);
+    if (!obsSelectionStore.hasTagWithName(name)) {
+        emit('addtag', name);
+        obsSelectionStore.SetGroupingId(0);
+    }
+}
 </script>
 
 <style scoped>

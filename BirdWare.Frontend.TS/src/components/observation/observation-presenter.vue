@@ -1,5 +1,5 @@
 <template>
-    <observationMap v-if="obsSelectionStore.isGropingByLocality" :observationer="observationsDKWithLatLong"></observationMap>
+    <observationMap v-if="obsSelectionStore.isGropingByLocality" :observationer="observationsDKWithLatLong" @addtag="addTag"></observationMap>
     <observationList v-else :grouped-data="groupedData" @addtag="addTag"></observationList>
 </template>
 

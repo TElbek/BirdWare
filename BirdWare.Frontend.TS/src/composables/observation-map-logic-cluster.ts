@@ -11,7 +11,7 @@ import type { observationType } from '@/types/observationType';
 const initialMap = shallowRef();
 const markers = shallowRef<L.MarkerClusterGroup>(L.markerClusterGroup());
 
-export function useObservationMapLogicCluster() {
+export function useObservationMapLogicCluster(emitTagCallback: any) {
 
     function initializeLeaflet() {
         initialMap.value = L.map('map');
@@ -32,6 +32,9 @@ export function useObservationMapLogicCluster() {
             if (firstObservation.latitude && firstObservation.longitude && firstObservation.regionId > 0) {
                 const marker = L.circleMarker([firstObservation.latitude, firstObservation.longitude]);
                 marker.setStyle({ color: observationer.length > averageCount ? 'green' : 'blue' });
+                marker.on('click', function (ev) {
+                        whenFeatureClicked(ev, firstObservation.lokalitetNavn);
+                    });
                 marker.bindTooltip(`<b>${firstObservation.lokalitetNavn}</b><br>Observationer: ${observationer.length}</br>Seneste: ${formatDate(firstObservation.dato)} `);
                 markers.value.addLayer(marker);
             }
@@ -72,9 +75,14 @@ export function useObservationMapLogicCluster() {
         return uniqueLokalitetCount > 0 ? (totalObservations / uniqueLokalitetCount) : 0.00;
     }
 
+    function whenFeatureClicked(ev: L.LeafletMouseEvent, lokalitetNavn: string) {
+        emitTagCallback(lokalitetNavn);
+    }
+
     return {
         initializeLeaflet,
         addMarkers,
         fitBounds
     };
 }
+
