@@ -45,7 +45,11 @@ namespace BirdWare
         {
             builder.Services.AddAuthorization();
             builder.Services.AddControllers();
-            builder.Services.AddDbContextFactory<BirdWareContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn")));
+            
+            builder.Services.AddDbContextFactory<BirdWareContext>
+                (options => options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn"), 
+                            x => x.UseNetTopologySuite()));
+
             builder.Services.AddTransient<IMemoryCache, MemoryCache>();
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
             builder.Services.RegisterEF();
