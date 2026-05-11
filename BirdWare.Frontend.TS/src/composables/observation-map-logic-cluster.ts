@@ -46,7 +46,7 @@ export function useObservationMapLogicCluster(emitTagCallback: any) {
                 }
             }
         }
-        // initialMap.value.addLayer(markersOtherPlaces.value);
+        initialMap.value.addLayer(markersOtherPlaces.value);
         initialMap.value.addLayer(markersBestPlaces.value);
 
         layerControl.value.addOverlay(markersBestPlaces.value, 'Bedste steder');
