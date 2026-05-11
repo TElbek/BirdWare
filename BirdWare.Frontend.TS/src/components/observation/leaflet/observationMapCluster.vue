@@ -61,7 +61,6 @@ watch([windowHeight, windowWidth, isMobile], () => {
 });
 
 function emitAddTag(name: string) {
-    // console.error('Emitting addtag for:', name);
     if (!obsSelectionStore.hasTagWithName(name)) {
         emit('addtag', name);
         obsSelectionStore.SetGroupingId(0);

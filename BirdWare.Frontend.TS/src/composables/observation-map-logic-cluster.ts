@@ -9,18 +9,20 @@ import "leaflet.markercluster";
 import type { observationType } from '@/types/observationType';
 
 const initialMap = shallowRef();
-const markers = shallowRef<L.MarkerClusterGroup>(L.markerClusterGroup());
+const layerControl = shallowRef<L.Control.Layers>(L.control.layers());
+const markersOtherPlaces = shallowRef<L.MarkerClusterGroup>(L.markerClusterGroup());
+const markersBestPlaces = shallowRef<L.MarkerClusterGroup>(L.markerClusterGroup());
 
 export function useObservationMapLogicCluster(emitTagCallback: any) {
 
     function initializeLeaflet() {
-        initialMap.value = L.map('map');
-
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        let osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 14,
             minZoom: 6,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(initialMap.value);
+        });
+
+        initialMap.value = L.map('map').addLayer(osm);
     }
 
     function addMarkers(observationList: observationType[]) {
@@ -36,21 +38,38 @@ export function useObservationMapLogicCluster(emitTagCallback: any) {
                         whenFeatureClicked(ev, firstObservation.lokalitetNavn);
                     });
                 marker.bindTooltip(`<b>${firstObservation.lokalitetNavn}</b><br>Observationer: ${observationer.length}</br>Seneste: ${formatDate(firstObservation.dato)} `);
-                markers.value.addLayer(marker);
+                if(observationer.length > averageCount) {
+                    markersBestPlaces.value.addLayer(marker);
+                }
+                else {
+                    markersOtherPlaces.value.addLayer(marker);
+                }
             }
         }
-        initialMap.value.addLayer(markers.value);
+        // initialMap.value.addLayer(markersOtherPlaces.value);
+        initialMap.value.addLayer(markersBestPlaces.value);
+
+        layerControl.value.addOverlay(markersBestPlaces.value, 'Bedste steder');
+        layerControl.value.addOverlay(markersOtherPlaces.value, 'Andre steder');
+        layerControl.value.addTo(initialMap.value);
+
         fitBounds();
     }
 
     function cleanUpMarkersAndClusters() {
-        initialMap.value.removeLayer(markers.value);
-        markers.value = L.markerClusterGroup();
+        initialMap.value.removeLayer(markersOtherPlaces.value);
+        initialMap.value.removeLayer(markersBestPlaces.value);
+
+        layerControl.value.removeLayer(markersOtherPlaces.value);
+        layerControl.value.removeLayer(markersBestPlaces.value);
+
+        markersBestPlaces.value = L.markerClusterGroup();
+        markersOtherPlaces.value = L.markerClusterGroup();
     }
 
     function fitBounds() {
-        if (markers && initialMap.value) {
-            let layerList: L.Layer[] = [markers.value];
+        if (markersOtherPlaces && markersBestPlaces && initialMap.value) {
+            let layerList: L.Layer[] = [markersOtherPlaces.value, markersBestPlaces.value];
             let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
             let bounds = featureGroup.getBounds();
             try {
@@ -90,4 +109,3 @@ export function useObservationMapLogicCluster(emitTagCallback: any) {
         fitBounds
     };
 }
-
