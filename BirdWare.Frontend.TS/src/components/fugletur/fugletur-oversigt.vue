@@ -1,9 +1,5 @@
 <template>
     <div class="flex flex-col gap-y-2">
-        <div class="flex justify-between">
-            <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
-            <fugletur-navigation></fugletur-navigation>
-        </div>
         <fugletur-selection></fugletur-selection>
         <tw-grid-cols-five :count="groupedData?.size" :offset="5">
             <div v-for="[key, value] in groupedData">
