@@ -31,6 +31,7 @@ namespace BirdWare.EF.Queries
             var listeAfFugleture = fugleture
                     .Include(i => i.Lokalitet)
                     .Include(i => i.Lokalitet.Region)
+                    .Include(i => i.Observationer)
                     .OrderByDescending(r => r.Id)
                     .Take(30)
                     .ToList();

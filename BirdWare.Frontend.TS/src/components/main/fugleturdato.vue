@@ -1,6 +1,8 @@
 <template>
     <a @click="navigateToFugletur" class="cursor-pointer">
-        <span class="fw-small-bold">{{ formatDate(props.dato) }}</span>
+        <span :class="highlight ? 'text-birdware dark:text-birdware-bright' : 'text-black dark:text-white'"  >
+            {{ formatDate(props.dato) }}
+        </span>
     </a>
 </template>
 
@@ -17,10 +19,13 @@ const router = useRouter();
 
 interface fugleturDatoProps {
     fugleturId: number,
-    dato: string
+    dato: string,
+    highlight?: boolean
 }
 
-const props = defineProps<fugleturDatoProps>();
+const props = withDefaults(defineProps<fugleturDatoProps>(), {
+    highlight: false
+});
 
 function navigateToFugletur() {
     fugleturStore.setFugleturId(props.fugleturId);

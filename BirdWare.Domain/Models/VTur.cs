@@ -35,7 +35,8 @@ namespace BirdWare.Domain.Models
                 Aarstal = s.Aarstal,
                 Maaned = s.Maaned,
                 Latitude = s.Lokalitet?.Latitude,
-                Longitude = s.Lokalitet?.Longitude
+                Longitude = s.Lokalitet?.Longitude,
+                AntalArter = s.Observationer?.Count ?? 0
             };
         }
     }

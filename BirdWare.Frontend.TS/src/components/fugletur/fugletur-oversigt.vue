@@ -1,23 +1,25 @@
 <template>
     <div class="flex flex-col gap-y-2">
         <fugletur-selection></fugletur-selection>
-        <tw-grid-cols-five :count="groupedData?.size" :offset="5">
+        <tw-grid-cols-three :count="groupedData?.size" :offset="5">
             <div v-for="[key, value] in groupedData">
                 <tw-card>
-                    <span class="text-base font-medium  text-birdware dark:text-birdware-bright capitalize">{{ key
-                        }}</span>
-                    <span class="text-base font-medium  text-birdware dark:text-birdware-bright float-end">{{
-                        value.length
-                        }}</span>
-                    <div class="grid grid-cols-[max-content_1fr] gap-x-3 dark:text-white">
-                        <template v-for="tur in value">
-                            <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" />
-                            <span>{{ tur.lokalitetNavn }}</span>
-                        </template>
+                    <tw-text-sizeable class="text-birdware dark:text-birdware-bright capitalize">{{ key }}</tw-text-sizeable>
+                    <tw-text-sizeable class="text-birdware dark:text-birdware-bright float-end">{{ value.length }}</tw-text-sizeable>
+                    <div class="flex flex-row flex-wrap gap-2 mt-2 mb-2 justify-items-stretch">
+                        <div v-for="tur in value">
+                            <div class="flex flex-col border rounded-md border-gray-300 p-1 dark:border-gray-600 w-max lg:w-50 ps-2">
+                                <div class="flex flex-row justify-between gap-x-2">
+                                    <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" :highlight="true"/>
+                                    <span class="pe-1">{{ tur.antalArter }} {{ tur.antalArter === 1 ? 'art' : 'arter' }}</span>
+                                </div>
+                                <span>{{ tur.lokalitetNavn }}</span>
+                            </div>
+                        </div>
                     </div>
                 </tw-card>
             </div>
-        </tw-grid-cols-five>
+        </tw-grid-cols-three>
     </div>
 </template>
 
@@ -32,6 +34,7 @@ import { storeToRefs } from 'pinia'
 import { type fugleturType } from '@/types/fugleturType.ts';
 
 import { useRoute } from 'vue-router';
+import TwTextSizeable from '../main/tailwind/tw-text-sizeable.vue';
 const route = useRoute();
 
 const fugleturSelectionStore = useFugleturSelectionStore();
