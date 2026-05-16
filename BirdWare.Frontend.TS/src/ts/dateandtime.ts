@@ -8,6 +8,15 @@ export const formatDate = (date: string) => {
     return date ? new Date(date).toLocaleDateString('da-DK', options) : '';    
 };
 
+export const formatDateDDMM = (date: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+        day: '2-digit',
+        month: 'short'
+    };
+
+    return date ? new Date(date).toLocaleDateString('da-DK', options) : '';    
+};
+
 export const getNameOfMonth = (month: number) => {
     let date = new Date();
     date = new Date(date.getFullYear(), month - 1, 1);

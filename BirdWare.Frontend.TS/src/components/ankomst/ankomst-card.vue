@@ -6,6 +6,9 @@
                 <div class="flex gap-x-1">
                     <div :class="getIndicatorClass(art)"></div>
                     <art-navn :artId="art.artId" :artNavn="art.artNavn" :speciel="false" :su="false"></art-navn>
+                    <span class="italic" v-if="art.erSetIaar" :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500']">
+                        ({{ Math.abs(art.forskel) }} dage)
+                    </span>
                 </div>
             </template>
         </div>

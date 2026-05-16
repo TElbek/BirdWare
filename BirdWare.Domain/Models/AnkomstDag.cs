@@ -3,14 +3,40 @@
     public class AnkomstDag
     {
         public long ArtId { get; set; }
-        public string ArtNavn { get; set; } = string.Empty;
+        public string ArtNavn { get; set; } = empty;
         public bool Speciel { get; set; }
         public bool SU { get; set; }
         public DateTime AnkomstDato { get; set; }
         public DateTime? SetIaarDato { get; set; }
-        public long Maaned => SetIaarDato.HasValue ? SetIaarDato.Value.Month : AnkomstDato.Month;
-        public bool ErSetIaar => SetIaarDato.HasValue;
-        public bool TidligereIAar => SetIaarDato.HasValue && AnkomstDato > SetIaarDato.Value;
-        public double Forskel => ErSetIaar ? Math.Round((AnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
+        public long Maaned => GetMaaned();
+        public bool ErSetIaar => GetErSetIaar();
+        public bool TidligereIAar => GetTidligereIAar();
+        public double Forskel => GetForskel();
+
+        #region properties
+        private static readonly string empty = string.Empty;
+        #endregion
+        #region methods
+        private int GetMaaned()
+        {
+            return SetIaarDato.HasValue ? SetIaarDato.Value.Month : AnkomstDato.Month;
+        }
+
+        private bool GetErSetIaar()
+        {
+            return SetIaarDato.HasValue;
+        }
+
+        private bool GetTidligereIAar()
+        {
+            return SetIaarDato.HasValue && AnkomstDato > SetIaarDato.Value;
+        }
+
+        private double GetForskel()
+        {
+            return ErSetIaar ? Math.Round((AnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
+        }
+
+        #endregion
     }
 }
