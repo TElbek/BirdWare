@@ -1,11 +1,20 @@
 <template>
-    <tw-text-sizeable class="py-2">{{ route.meta.title }}</tw-text-sizeable>
-    <ankomst-selection class="mt-1"></ankomst-selection>
-    <tw-grid-cols-three :count="groupedByMaaned.size" class="mt-4">
-        <template v-for="[key, value] in groupedByMaaned" :key="key">
-            <ankomst-card :ankomstList="value" :caption="getNameOfMonth(key)"></ankomst-card>
-        </template>
-    </tw-grid-cols-three>
+    <div class="flex flex-col gap-y-3">
+        <div class="flex flex-row justify-between">
+            <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
+            <div class="flex flex-row gap-x-3 mt-2 font-semibold">
+                <div class="w-6 h-6 shadow rounded-full bg-green-500 text-center text-white">{{ setFoerTid.length }}</div>
+                <div class="w-6 h-6 shadow rounded-full bg-red-500 text-center text-white">{{ setForsinket.length }}</div>
+                <div class="w-6 h-6 shadow rounded-full bg-gray-300 text-center text-black">{{ ikkeSetEndnu.length }}</div>
+            </div>
+        </div>
+        <ankomst-selection></ankomst-selection>
+        <tw-grid-cols-three :count="groupedByMaaned.size">
+            <template v-for="[key, value] in groupedByMaaned" :key="key">
+                <ankomst-card :ankomstList="value" :caption="getNameOfMonth(key)"></ankomst-card>
+            </template>
+        </tw-grid-cols-three>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -42,6 +51,18 @@ function getAnkomst(id: number) {
 
 const groupedByMaaned = computed(() => {
     return Map.groupBy(state.ankomst.sort((a, b) => a.maaned - b.maaned), (one: ankomstDatoType) => one.maaned);
+});
+
+const ikkeSetEndnu = computed(() => {
+    return state.ankomst.filter((one) => !one.erSetIaar);
+});
+
+const setFoerTid = computed(() => {
+    return state.ankomst.filter((one) => one.erSetIaar && one.forskel >= 0);
+});
+
+const setForsinket = computed(() => {
+    return state.ankomst.filter((one) => one.erSetIaar && one.forskel < 0);
 });
 
 watch(selectedTag, () => {
