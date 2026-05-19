@@ -57,7 +57,7 @@ namespace BirdWare.EF.Queries
         private List<Art> HentArtListe(long fugleturId)
         {
             return [.. (from o in birdWareContext.Observation.AsNoTracking()
-                    join a in birdWareContext.Art on o.ArtId equals a.Id
+                    join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
                     where o.FugleturId == fugleturId
                     select a)];
         }
