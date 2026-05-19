@@ -12,10 +12,17 @@ namespace BirdWare.EF.TagFilters
 
         public override IQueryable<Observation> Filter(List<Tag> tagList, IQueryable<Observation> queryable)
         {
-            return queryable;
+            var distanceTag = tagList
+                                .Where(t => t.TagType == TagTypes.Distance)
+                                .OrderBy(t => t.SomeValue)
+                                .FirstOrDefault() ?? new Tag { SomeValue = 0 };
+
+            return queryable
+                    .Where(o => o.Fugletur.Lokalitet.Point != null && 
+                                o.Fugletur.Lokalitet.Point.Distance(GetVSOPPOI()) <= distanceTag.SomeValue);
         }
 
-        private Point GetVSOPPOI()
+        private static Point GetVSOPPOI()
         {
             var geometryFactory = new GeometryFactory(new PrecisionModel(), Srid);
             return geometryFactory.CreatePoint(new Coordinate(VSOPLatitude, VSOPLongitude));

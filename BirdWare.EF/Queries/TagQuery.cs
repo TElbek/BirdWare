@@ -43,42 +43,47 @@ namespace BirdWare.EF.Queries
 
         private static List<Tag> SortByName(List<Tag> tagList) => [.. tagList.OrderBy(r => r.Name)];
 
-        private static void PopulateLand(List<Tag> tagList) => tagList.Add(new Tag { Id = 1, ParentId = 0, Name = "Danmark", TagType = TagTypes.Land });
+        private static void PopulateLand(List<Tag> tagList) => tagList.Add(new Tag { Id = 1, Name = "Danmark", TagType = TagTypes.Land });
 
         private static void PopulateSenesteNAar(List<Tag> tagList)
         {
-            tagList.Add(new Tag { Id = 1, ParentId = 0, Name = "Seneste år", TagType = TagTypes.SenesteNÅr });
-            tagList.Add(new Tag { Id = 2, ParentId = 0, Name = "Seneste 2 år", TagType = TagTypes.SenesteNÅr });
-            tagList.Add(new Tag { Id = 5, ParentId = 0, Name = "Seneste 5 år", TagType = TagTypes.SenesteNÅr });
-            tagList.Add(new Tag { Id = 10, ParentId = 0, Name = "Seneste 10 år", TagType = TagTypes.SenesteNÅr });
+            tagList.Add(new Tag { Id = 1, Name = "Seneste år", TagType = TagTypes.SenesteNÅr });
+            tagList.Add(new Tag { Id = 2, Name = "Seneste 2 år", TagType = TagTypes.SenesteNÅr });
+            tagList.Add(new Tag { Id = 5, Name = "Seneste 5 år", TagType = TagTypes.SenesteNÅr });
+            tagList.Add(new Tag { Id = 10, Name = "Seneste 10 år", TagType = TagTypes.SenesteNÅr });
         }
 
         private static void PopulateSaeson(List<Tag> tagList)
         {
-            tagList.Add(new Tag { Id = 1, ParentId = 0, Name = "Forår", TagType = TagTypes.SaesonForaar });
-            tagList.Add(new Tag { Id = 2, ParentId = 0, Name = "Sommer", TagType = TagTypes.SaesonSommer });
-            tagList.Add(new Tag { Id = 3, ParentId = 0, Name = "Efterår", TagType = TagTypes.SaesonEfteraar });
-            tagList.Add(new Tag { Id = 4, ParentId = 0, Name = "Vinter", TagType = TagTypes.SaesonVinter });
-            tagList.Add(new Tag { Id = 5, ParentId = 0, Name = "Vinterhalvår", TagType = TagTypes.HalvårVinter });
-            tagList.Add(new Tag { Id = 6, ParentId = 0, Name = "Sommerhalvår", TagType = TagTypes.HalvårSommer });
+            tagList.Add(new Tag { Id = 1, Name = "Forår", TagType = TagTypes.SaesonForaar });
+            tagList.Add(new Tag { Id = 2, Name = "Sommer", TagType = TagTypes.SaesonSommer });
+            tagList.Add(new Tag { Id = 3, Name = "Efterår", TagType = TagTypes.SaesonEfteraar });
+            tagList.Add(new Tag { Id = 4, Name = "Vinter", TagType = TagTypes.SaesonVinter });
+            tagList.Add(new Tag { Id = 5, Name = "Vinterhalvår", TagType = TagTypes.HalvårVinter });
+            tagList.Add(new Tag { Id = 6, Name = "Sommerhalvår", TagType = TagTypes.HalvårSommer });
         }
 
-        private void PopulateArter(List<Tag> tagList) => GetArter().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Art, Id = t.Id, ParentId = (int)t.GruppeId, Name = t.Navn ?? string.Empty }));
+        private void PopulateArter(List<Tag> tagList) => GetArter().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Art, Id = t.Id, Name = t.Navn ?? string.Empty }));
 
         private void PopulateGrupper(List<Tag> tagList)
         {
-            GetArt_Grupper().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Gruppe, Id = t.Id, ParentId = t.FamilieId, Name = t.Navn ?? string.Empty }));
+            GetArt_Grupper().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Gruppe, Id = t.Id, Name = t.Navn ?? string.Empty }));
         }
 
         private void PopulateFamilier(List<Tag> tagList) => GetFamilier().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Familie, Id = t.Id, Name = t.Navn ?? string.Empty }));
 
         private void PopulateRegioner(List<Tag> tagList) => GetRegioner().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Region, Id = t.Id, Name = t.Navn ?? string.Empty }));
 
-        private void PopulateLokaliteter(List<Tag> tagList) => GetLokaliteter().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Lokalitet, Id = t.Id, ParentId = t.RegionId, Name = t.Navn ?? string.Empty }));
+        private void PopulateLokaliteter(List<Tag> tagList) => GetLokaliteter().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Lokalitet, Id = t.Id, Name = t.Navn ?? string.Empty }));
 
         private void PopulateDistance(List<Tag> tagList)
         {
-            //tagList.Add(new Tag { Id = 1, ParentId = 0, Name = "Indenfor 5 km", TagType = TagTypes.Distance });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 1 km", TagType = TagTypes.Distance, SomeValue = 1000 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 2 km", TagType = TagTypes.Distance, SomeValue = 2000 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 5 km", TagType = TagTypes.Distance, SomeValue = 5000 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 10 km", TagType = TagTypes.Distance, SomeValue = 10000 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 20 km", TagType = TagTypes.Distance, SomeValue = 20000 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 50 km", TagType = TagTypes.Distance, SomeValue = 50000 });
         }
 
         private void PopulateMaaneder(List<Tag> tagList)

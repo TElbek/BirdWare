@@ -98,6 +98,7 @@ namespace BirdWare.EF
             services.AddKeyedTransient<IObservationTagFilter, ObservationMaanedFilter>(TagTypes.Maaned);
             services.AddKeyedTransient<IObservationTagFilter, ObservationAarstalFilter>(TagTypes.Aarstal);
             services.AddKeyedTransient<IObservationTagFilter, ObservationSenesteAarFilter>(TagTypes.SenesteNÅr);
+            services.AddKeyedTransient<IObservationTagFilter, ObservationDistanceFilter>(TagTypes.Distance);
         }
     }
 }

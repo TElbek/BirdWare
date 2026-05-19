@@ -11,8 +11,7 @@ namespace BirdWare.EF.Queries
             return art != null ? new Tag { 
                 Id = art.Id, 
                 Name = art.Navn ?? string.Empty, 
-                TagType = TagTypes.Art, 
-                ParentId = art.GruppeId } : new Tag();
+                TagType = TagTypes.Art } : new Tag();
         }
     }
 }

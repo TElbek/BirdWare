@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using NetTopologySuite.Geometries;
 
 namespace BirdWare.Domain.Entities
 {
@@ -13,6 +14,7 @@ namespace BirdWare.Domain.Entities
         public string? Navn { get; set; }
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
+        public Point? Point { get; set; }
 
         public virtual Region? Region { get; set; }
 

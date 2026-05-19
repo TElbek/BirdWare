@@ -9,8 +9,8 @@ namespace BirdWare.Domain.Models
         public string TagTypeTitle { get; set; } = string.Empty;
         [JsonPropertyName("id")]
         public long Id { get; set; }
-        [JsonPropertyName("parentId")]
-        public long ParentId { get; set; }
+        [JsonPropertyName("someValue")]
+        public long SomeValue { get; set; }
         [JsonPropertyName("name")]
         public string Name { get; set; } = string.Empty;
     }
