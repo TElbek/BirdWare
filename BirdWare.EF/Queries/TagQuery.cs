@@ -14,6 +14,7 @@ namespace BirdWare.EF.Queries
             PopulateAarstal(tagList);
             PopulateMaaneder(tagList);
             PopulateLokaliteter(tagList);
+            PopulateDistance(tagList);
             PopulateRegioner(tagList);
             PopulateFamilier(tagList);
             PopulateGrupper(tagList);
@@ -74,6 +75,11 @@ namespace BirdWare.EF.Queries
         private void PopulateRegioner(List<Tag> tagList) => GetRegioner().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Region, Id = t.Id, Name = t.Navn ?? string.Empty }));
 
         private void PopulateLokaliteter(List<Tag> tagList) => GetLokaliteter().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Lokalitet, Id = t.Id, ParentId = t.RegionId, Name = t.Navn ?? string.Empty }));
+
+        private void PopulateDistance(List<Tag> tagList)
+        {
+            //tagList.Add(new Tag { Id = 1, ParentId = 0, Name = "Indenfor 5 km", TagType = TagTypes.Distance });
+        }
 
         private void PopulateMaaneder(List<Tag> tagList)
         {

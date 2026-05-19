@@ -33,5 +33,6 @@ namespace BirdWare.Domain.Models
         SenesteNÅr = 13,
         HalvårVinter = 14,
         HalvårSommer = 15,
+        Distance = 16,
     }
 }

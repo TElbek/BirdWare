@@ -15,6 +15,7 @@ namespace BirdWare.Domain.Entities
         public double? Longitude { get; set; }
 
         public virtual Region? Region { get; set; }
+
         public virtual ICollection<Fugletur> Fugleture { get; set; }
 
         public Lokalitet()
