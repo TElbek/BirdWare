@@ -1,13 +1,18 @@
 <template>
     <tw-card>
-        <tw-card-header :count="ankomstList.length" :caption="caption" :showCount="true"></tw-card-header>
-        <div class="flex gap-x-3 gap-y-1 flex-wrap mb-2">
+        <tw-card-header-slot>
+            <div class="flex justify-between text-birdware dark:text-birdware-bright text-lg">
+                <span class="text-lg font-semibold">{{ caption }}</span>
+                <ankomst-count :ankomstList="ankomstList"></ankomst-count>
+            </div>
+        </tw-card-header-slot>
+        <div class="mb-1 mt-1">
             <template v-for="art in ankomstList" :key="art.artId">
-                <div class="flex gap-x-1">
+                <div class="grid grid-cols-[auto_1fr_auto] gap-x-2">
                     <div :class="getIndicatorClass(art)"></div>
                     <art-navn :artId="art.artId" :artNavn="art.artNavn" :speciel="false" :su="false"></art-navn>
-                    <span class="italic" v-if="art.erSetIaar" :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500']">
-                        ({{ Math.abs(art.forskel) }} dage)
+                    <span v-if="art.erSetIaar" :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500 dark:text-white']">
+                        {{ Math.abs(art.forskel) }} dage
                     </span>
                 </div>
             </template>
@@ -15,8 +20,11 @@
     </tw-card>
 </template>
 
+<!-- text-gray-900 dark:text-white -->
+
 <script setup lang="ts">
 import { type ankomstDatoType } from '@/types/ankomstDatoType';
+import AnkomstCount from './ankomst-count.vue';
 import ArtNavn from '../main/artNavn.vue';
 
 const props = defineProps<{
