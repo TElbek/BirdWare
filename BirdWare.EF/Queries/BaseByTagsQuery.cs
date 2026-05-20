@@ -28,8 +28,7 @@ namespace BirdWare.EF.Queries
                     {
                         Id = maaned,
                         Name = maaned.ToString(),
-                        TagType = TagTypes.Maaned,
-                        TagTypeTitle = "Måned"
+                        TagType = TagTypes.Maaned
                     });
                 });
             }

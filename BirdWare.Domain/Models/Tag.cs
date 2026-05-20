@@ -6,7 +6,6 @@ namespace BirdWare.Domain.Models
     {
         [JsonPropertyName("tagType")]
         public TagTypes TagType { get; set; }
-        public string TagTypeTitle { get; set; } = string.Empty;
         [JsonPropertyName("id")]
         public long Id { get; set; }
         [JsonPropertyName("someValue")]

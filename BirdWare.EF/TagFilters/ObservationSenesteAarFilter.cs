@@ -6,9 +6,14 @@ namespace BirdWare.EF.TagFilters
     public class ObservationSenesteAarFilter : ObservationTagFilter
     {
         public override IQueryable<Observation> Filter(List<Tag> tagList, IQueryable<Observation> queryable)
-        {
-            var tagIdsByTypeList = GetTagIds(tagList);
-            return queryable.Where(q => q.Fugletur.Dato >= DateTime.Now.AddYears(-1 * (int)tagIdsByTypeList.First()));
+        {           
+            var senesteNaarTag = tagList
+                                    .Where(t => t.TagType == TagTypes.SenesteNÅr)
+                                    .OrderBy(t => t.SomeValue)
+                                    .FirstOrDefault() ?? new Tag { SomeValue = 0 };
+
+            return queryable
+                    .Where(q => q.Fugletur.Dato >= DateTime.Now.AddYears(-1 * (int)senesteNaarTag.SomeValue));
         }
     }
 }

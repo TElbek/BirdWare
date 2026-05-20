@@ -47,10 +47,10 @@ namespace BirdWare.EF.Queries
 
         private static void PopulateSenesteNAar(List<Tag> tagList)
         {
-            tagList.Add(new Tag { Id = 1, Name = "Seneste år", TagType = TagTypes.SenesteNÅr });
-            tagList.Add(new Tag { Id = 2, Name = "Seneste 2 år", TagType = TagTypes.SenesteNÅr });
-            tagList.Add(new Tag { Id = 5, Name = "Seneste 5 år", TagType = TagTypes.SenesteNÅr });
-            tagList.Add(new Tag { Id = 10, Name = "Seneste 10 år", TagType = TagTypes.SenesteNÅr });
+            tagList.Add(new Tag { Id = 1, Name = "Seneste år", TagType = TagTypes.SenesteNÅr, SomeValue = 1 });
+            tagList.Add(new Tag { Id = 2, Name = "Seneste 2 år", TagType = TagTypes.SenesteNÅr, SomeValue = 2 });
+            tagList.Add(new Tag { Id = 3, Name = "Seneste 5 år", TagType = TagTypes.SenesteNÅr, SomeValue = 5 });
+            tagList.Add(new Tag { Id = 4, Name = "Seneste 10 år", TagType = TagTypes.SenesteNÅr, SomeValue = 10 });
         }
 
         private static void PopulateSaeson(List<Tag> tagList)
