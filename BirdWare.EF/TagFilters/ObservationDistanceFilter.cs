@@ -8,6 +8,7 @@ namespace BirdWare.EF.TagFilters
     {
         private const double VSOPLatitude = 12.4654394049127;
         private const double VSOPLongitude = 55.8025850215902;
+        private const double metersPerKilometer = 1000;
         private const int Srid = 4326;
 
         public override IQueryable<Observation> Filter(List<Tag> tagList, IQueryable<Observation> queryable)
@@ -19,7 +20,7 @@ namespace BirdWare.EF.TagFilters
 
             return queryable
                     .Where(o => o.Fugletur.Lokalitet.Point != null && 
-                                o.Fugletur.Lokalitet.Point.Distance(GetVSOPPOI()) <= distanceTag.SomeValue);
+                                o.Fugletur.Lokalitet.Point.Distance(GetVSOPPOI()) <= distanceTag.SomeValue * metersPerKilometer);
         }
 
         private static Point GetVSOPPOI()

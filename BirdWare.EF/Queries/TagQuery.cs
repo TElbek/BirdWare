@@ -78,12 +78,13 @@ namespace BirdWare.EF.Queries
 
         private void PopulateDistance(List<Tag> tagList)
         {
-            tagList.Add(new Tag { Id = 1, Name = "Indenfor 1 km", TagType = TagTypes.Distance, SomeValue = 1000 });
-            tagList.Add(new Tag { Id = 1, Name = "Indenfor 2 km", TagType = TagTypes.Distance, SomeValue = 2000 });
-            tagList.Add(new Tag { Id = 1, Name = "Indenfor 5 km", TagType = TagTypes.Distance, SomeValue = 5000 });
-            tagList.Add(new Tag { Id = 1, Name = "Indenfor 10 km", TagType = TagTypes.Distance, SomeValue = 10000 });
-            tagList.Add(new Tag { Id = 1, Name = "Indenfor 20 km", TagType = TagTypes.Distance, SomeValue = 20000 });
-            tagList.Add(new Tag { Id = 1, Name = "Indenfor 50 km", TagType = TagTypes.Distance, SomeValue = 50000 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 1 km", TagType = TagTypes.Distance, SomeValue = 1 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 2 km", TagType = TagTypes.Distance, SomeValue = 2 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 5 km", TagType = TagTypes.Distance, SomeValue = 5 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 10 km", TagType = TagTypes.Distance, SomeValue = 10 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 20 km", TagType = TagTypes.Distance, SomeValue = 20 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 25 km", TagType = TagTypes.Distance, SomeValue = 25 });
+            tagList.Add(new Tag { Id = 1, Name = "Indenfor 50 km", TagType = TagTypes.Distance, SomeValue = 50 });
         }
 
         private void PopulateMaaneder(List<Tag> tagList)
