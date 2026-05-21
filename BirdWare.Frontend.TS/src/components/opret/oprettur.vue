@@ -7,11 +7,11 @@
         <div v-for="[key, value] in byDistance">
             <tw-card>
                 <tw-card-header :caption="key + ' km.'" :show-count="false"></tw-card-header>
-                <tw-flex>
-                    <a v-for="lokalitet in value" @click="opretTur(lokalitet.id)" >
+                <div class="grid grid-cols-1 gap-y-2 lg:gap-y-1">
+                    <a v-for="lokalitet in value.sort((a, b) => a.navn.localeCompare(b.navn))" @click="opretTur(lokalitet.id)" >
                         <span class="dark:text-white">{{ lokalitet.navn }}</span>
                     </a>
-                </tw-flex>
+                </div>
             </tw-card>
         </div>
     </tw-grid-cols-five>
