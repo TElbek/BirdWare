@@ -69,11 +69,11 @@ export function useObservationMapLogicCluster(emitTagCallback: any) {
 
     function fitBounds() {
         if (markersOtherPlaces && markersBestPlaces && initialMap.value) {
-            let layerList: L.Layer[] = [markersOtherPlaces.value, markersBestPlaces.value];
+            let layerList: L.Layer[] = [markersBestPlaces.value, markersOtherPlaces.value];
             let featureGroup = new L.FeatureGroup<L.Layer>(layerList);
             let bounds = featureGroup.getBounds();
             try {
-                initialMap.value.fitBounds(bounds, { padding: [120, 120] });
+                initialMap.value.fitBounds(bounds, { padding: [100, 100] });
             }
             catch {
                 initialMap.value.setView([56, 11], 7);
