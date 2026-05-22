@@ -11,7 +11,7 @@ namespace BirdWare.EF.Queries
 
         public List<LokaliteterByLatLong> FindLokaliteterLatLong(double latitude, double longitude)
         {
-            var currentPoint = GeographyPointFactory.GetPointFromLatLong(longitude,latitude);
+            var currentPoint = GeographyPoint.GetPointFromLatLong(latitude, longitude);
 
             var q = from l in birdWareContext.Lokalitet
                     where l.Point != null && l.Point.Distance(currentPoint) <= twenty * metersPerKilometer

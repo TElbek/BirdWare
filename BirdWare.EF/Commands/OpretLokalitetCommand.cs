@@ -1,4 +1,5 @@
 ﻿using BirdWare.Domain.Entities;
+using BirdWare.EF.Geography;
 using BirdWare.EF.Interfaces;
 
 namespace BirdWare.EF.Commands
@@ -14,6 +15,10 @@ namespace BirdWare.EF.Commands
                     using var transaction = birdWareContext.Database.BeginTransaction();
 
                     lokalitet.Id = GetNewId();
+                    if (lokalitet.Latitude != null && lokalitet.Longitude != null)
+                    {
+                        lokalitet.Point = GeographyPoint.GetPointFromLatLong(lokalitet.Latitude ?? 0, lokalitet.Longitude ?? 0);
+                    }
 
                     birdWareContext.Lokalitet.Add(lokalitet);
                     birdWareContext.SaveChanges();

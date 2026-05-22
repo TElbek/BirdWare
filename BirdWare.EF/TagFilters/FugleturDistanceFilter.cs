@@ -4,9 +4,9 @@ using BirdWare.EF.Geography;
 
 namespace BirdWare.EF.TagFilters
 {
-    public class ObservationDistanceFilter : ObservationTagFilter
+    public class FugleturDistanceFilter : FugleturTagFilter
     {
-        public override IQueryable<Observation> Filter(List<Tag> tagList, IQueryable<Observation> queryable)
+        public override IQueryable<Fugletur> Filter(List<Tag> tagList, IQueryable<Fugletur> queryable)
         {
             var distanceTag = tagList
                                 .Where(t => t.TagType == TagTypes.Distance)
@@ -15,8 +15,8 @@ namespace BirdWare.EF.TagFilters
 
             var vsopPOI = GeographyPoint.GetPointFromLatLong(GeographyPoint.VSOPLatitude, GeographyPoint.VSOPLongitude);
 
-            return queryable.Where(o => o.Fugletur.Lokalitet.Point != null && 
-                   o.Fugletur.Lokalitet.Point.Distance(vsopPOI) <= distanceTag.SomeValue * GeographyPoint.metersPerKilometer);
+            return queryable.Where(f => f.Lokalitet.Point != null &&
+                   f.Lokalitet.Point.Distance(vsopPOI) <= distanceTag.SomeValue * GeographyPoint.metersPerKilometer);
         }
     }
 }

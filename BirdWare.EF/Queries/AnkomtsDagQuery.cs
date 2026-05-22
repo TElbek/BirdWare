@@ -22,14 +22,12 @@ namespace BirdWare.EF.Queries
             var iAarQuery = iAarQueryTask.Result;
             var ankomstDagQuery = ankomstDagQueryTask.Result;
 
-            ankomtsDage.AddRange(from item in ankomstDagQuery.Select(s => new { s.ArtId, s.ArtNavn, s.Speciel, s.SU }).Distinct()
+            ankomtsDage.AddRange(from item in ankomstDagQuery.Select(s => new { s.ArtId, s.ArtNavn }).Distinct()
                 let ankomstDatoIAar = GetAnkomstDatoIAar(iAarQuery, item.ArtId)
                 select new AnkomstDag
                 {
                     ArtId = item.ArtId,
                     ArtNavn = item.ArtNavn,
-                    Speciel = item.Speciel,
-                    SU = item.SU,
                     AnkomstDato = new DateTime(DateTime.Now.Year, 1, 1).AddDays(GetAnkomstDatoGennemsnit(ankomstDagQuery, item.ArtId)),
                     SetIaarDato = ankomstDatoIAar.HasValue ? new DateTime(DateTime.Now.Year, 1, 1).AddDays(ankomstDatoIAar.Value) : null,
                 });

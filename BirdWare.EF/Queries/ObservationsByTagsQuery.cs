@@ -15,8 +15,8 @@ namespace BirdWare.EF.Queries
 
             foreach (var tagType in TagsGroupedByTagType(tagList))
             {
-                var observationTagFilter = GetFilterForTagType<IObservationTagFilter>(tagType.Key);
-                observations = observationTagFilter.Filter(tagType.Value, observations);
+                var filterImplementation = GetFilterForTagType<IObservationTagFilter>(tagType.Key);
+                observations = filterImplementation.Filter(tagType.Value, observations);
             }
 
             return GenerateResultSet(observations);

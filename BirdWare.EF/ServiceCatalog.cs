@@ -73,10 +73,12 @@ namespace BirdWare.EF
             services.AddKeyedTransient<IFugleturTagFilter, FugleturLandFilter>(TagTypes.Land);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturLokalitetFilter>(TagTypes.Lokalitet);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturRegionFilter>(TagTypes.Region);
+            services.AddKeyedTransient<IFugleturTagFilter, FugleturDistanceFilter>(TagTypes.Distance);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturSaesonFilter>(TagTypes.SaesonVinter);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturSaesonFilter>(TagTypes.SaesonForaar);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturSaesonFilter>(TagTypes.SaesonSommer);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturSaesonFilter>(TagTypes.SaesonEfteraar);
+            services.AddKeyedTransient<IFugleturTagFilter, FugleturSenesteAarFilter>(TagTypes.SenesteNÅr);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturMaanedFilter>(TagTypes.Maaned);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturAarstalFilter>(TagTypes.Aarstal);
         }

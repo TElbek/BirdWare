@@ -20,7 +20,6 @@ namespace BirdWare.EF.Queries
                           join region in birdWareContext.Region on lokalitet.RegionId equals region.Id
                           where grupper.FamilieId == familieId &&
                                         art.SetIDK == true &&
-                                        art.SU == false &&
                                         fugletur.Dato.HasValue &&
                                         region.Id > 0
                           group obs by new { art.Id, art.Navn, art.Speciel, art.SU, Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year } into g
@@ -28,8 +27,6 @@ namespace BirdWare.EF.Queries
                           {
                               ArtId = g.Key.Id,
                               ArtNavn = g.Key.Navn,
-                              Speciel = g.Key.Speciel,
-                              SU = g.Key.SU,
                               Aarstal = g.Key.Aarstal,
                               AnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 0)
                           }).ToListAsync();

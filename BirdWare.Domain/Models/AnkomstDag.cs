@@ -4,8 +4,6 @@
     {
         public long ArtId { get; set; }
         public string ArtNavn { get; set; } = empty;
-        public bool Speciel { get; set; }
-        public bool SU { get; set; }
         public DateTime AnkomstDato { get; set; }
         public DateTime? SetIaarDato { get; set; }
         public long Maaned => GetMaaned();
