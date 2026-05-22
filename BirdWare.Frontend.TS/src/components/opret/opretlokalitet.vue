@@ -58,7 +58,7 @@ onMounted(() => {
 });
 
 function getRegioner() {
-    api.get('regioner').then((response) => {
+    api.get('regioner/inkludland').then((response) => {
         regioner.value = response.data;
     });
 }

@@ -1,5 +1,4 @@
 ﻿using NetTopologySuite.Geometries;
-using System.Runtime.Intrinsics.X86;
 
 namespace BirdWare.EF.Geography
 {
