@@ -7,8 +7,8 @@ namespace BirdWare.EF.TagFilters
     {
         public override IQueryable<Observation> Filter(List<Tag> tagList, IQueryable<Observation> queryable)
         {
-            var tagIdsByTypeList = GetTagIds(tagList);
-            return queryable.Where(g => tagIdsByTypeList.Contains(g.Fugletur.LokalitetId));
+            var tagIdList = GetTagIds(tagList);
+            return queryable.Where(g => tagIdList.Contains(g.Fugletur.LokalitetId));
         }
     }
 }
