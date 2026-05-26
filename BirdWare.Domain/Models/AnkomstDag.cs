@@ -4,11 +4,11 @@
     {
         public long ArtId { get; set; }
         public string ArtNavn { get; set; } = empty;
-        public DateTime AnkomstDato { get; set; }
+        public DateTime GnsAnkomstDato { get; set; }
         public DateTime? SetIaarDato { get; set; }
         public long Maaned => GetMaaned();
         public bool ErSetIaar => GetErSetIaar();
-        public bool TidligereIAar => GetTidligereIAar();
+        public bool TidligereIAar => SetTidligereIAar();
         public double Forskel => GetForskel();
 
         #region properties
@@ -17,7 +17,7 @@
         #region methods
         private int GetMaaned()
         {
-            return SetIaarDato.HasValue ? SetIaarDato.Value.Month : AnkomstDato.Month;
+            return SetIaarDato.HasValue ? SetIaarDato.Value.Month : GnsAnkomstDato.Month;
         }
 
         private bool GetErSetIaar()
@@ -25,14 +25,14 @@
             return SetIaarDato.HasValue;
         }
 
-        private bool GetTidligereIAar()
+        private bool SetTidligereIAar()
         {
-            return SetIaarDato.HasValue && AnkomstDato > SetIaarDato.Value;
+            return SetIaarDato.HasValue && GnsAnkomstDato >= SetIaarDato.Value;
         }
 
         private double GetForskel()
         {
-            return ErSetIaar ? Math.Round((AnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
+            return ErSetIaar ? Math.Round((GnsAnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
         }
 
         #endregion

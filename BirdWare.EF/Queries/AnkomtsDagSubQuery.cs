@@ -22,15 +22,17 @@ namespace BirdWare.EF.Queries
                                         art.SetIDK == true &&
                                         fugletur.Dato.HasValue &&
                                         region.Id > 0
-                          group obs by new { art.Id, art.Navn, art.Speciel, art.SU, Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year } into g
-                          select new AnkomstDagBeregning
+                          group obs by new { 
+                              art.Id, 
+                              art.Navn, 
+                              Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year } 
+                          into g select new AnkomstDagBeregning
                           {
                               ArtId = g.Key.Id,
                               ArtNavn = g.Key.Navn,
                               Aarstal = g.Key.Aarstal,
-                              AnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 0)
+                              GnsAnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 0)
                           }).ToListAsync();
         }
-
     }
 }

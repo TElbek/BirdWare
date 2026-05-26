@@ -28,7 +28,7 @@ namespace BirdWare.EF.Queries
                 {
                     ArtId = item.ArtId,
                     ArtNavn = item.ArtNavn,
-                    AnkomstDato = new DateTime(DateTime.Now.Year, 1, 1).AddDays(GetAnkomstDatoGennemsnit(ankomstDagQuery, item.ArtId)),
+                    GnsAnkomstDato = new DateTime(DateTime.Now.Year, 1, 1).AddDays(GetAnkomstDatoGennemsnit(ankomstDagQuery, item.ArtId)),
                     SetIaarDato = ankomstDatoIAar.HasValue ? new DateTime(DateTime.Now.Year, 1, 1).AddDays(ankomstDatoIAar.Value) : null,
                 });
 
@@ -38,7 +38,7 @@ namespace BirdWare.EF.Queries
         private static double GetAnkomstDatoGennemsnit(List<AnkomstDagBeregning> ankomstDagQuery, long artId)
         {
             var match = ankomstDagQuery.Where(x => x.ArtId == artId);
-            return match != null ? match.Average(a => a.AnkomstDag) - 1 : 0;
+            return match != null ? match.Average(a => a.GnsAnkomstDag) - 1 : 0;
         }
 
         private static double? GetAnkomstDatoIAar(List<AnkomstDagBeregning> iAarQuery, long artId)
