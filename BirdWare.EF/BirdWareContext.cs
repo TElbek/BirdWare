@@ -46,6 +46,11 @@ namespace BirdWare.EF
                       .WithMany(t => t.Fugleture)
                       .HasForeignKey(l => l.LokalitetId));
 
+            modelBuilder.Entity<Kommune>(entity =>
+                entity.HasOne(k => k.Region)
+                .WithMany(l => l.Kommuner)
+                .HasForeignKey(k => k.RegionId));
+
             modelBuilder.Entity<Lokalitet>(entity =>
                 entity.HasOne(r => r.Region)
                 .WithMany(t => t.Lokaliteter)
@@ -63,6 +68,7 @@ namespace BirdWare.EF
         public virtual DbSet<Observation> Observation {get; set;}
         public virtual DbSet<Fugletur> Fugletur {get; set;}
         public virtual DbSet<Lokalitet> Lokalitet {get; set;}
+        public virtual DbSet<Kommune> Kommune {get; set;}
         public virtual DbSet<Region> Region {get; set;}
         public virtual DbSet<SpTripAnalysisResult> SpTripAnalysisResult {get; set;}
         public virtual DbSet<spLokaliteterByLatLongResult> SpLokaliteterByLatLongResult { get; set;}

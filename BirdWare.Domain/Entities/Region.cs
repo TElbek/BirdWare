@@ -13,10 +13,12 @@ namespace BirdWare.Domain.Entities
         public bool Indland { get; set; }
 
         public virtual ICollection<Lokalitet> Lokaliteter { get; set; }
+        public virtual ICollection<Kommune> Kommuner { get; set; }
 
         public Region()
         {
             Lokaliteter = [];
+            Kommuner = [];
         }
     }
 }
