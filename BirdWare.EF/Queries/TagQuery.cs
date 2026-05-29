@@ -33,6 +33,7 @@ namespace BirdWare.EF.Queries
             PopulateAarstal(tagList);
             PopulateMaaneder(tagList);
             PopulateLokaliteter(tagList);
+            PopulateKommuner(tagList);
             PopulateRegioner(tagList);
             PopulateDistance(tagList);
             PopulateSaeson(tagList);
