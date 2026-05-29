@@ -10,6 +10,7 @@ namespace BirdWare.Domain.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long Id { get; set; }
         public long RegionId { get; set; }
+        public long KommuneId { get; set; }
         [StringLength(30)]
         public string? Navn { get; set; }
         public double? Latitude { get; set; }
@@ -17,6 +18,7 @@ namespace BirdWare.Domain.Entities
         public Point? Point { get; set; }
 
         public virtual Region? Region { get; set; }
+        public virtual Kommune? Kommune { get; set; }
 
         public virtual ICollection<Fugletur> Fugleture { get; set; }
 

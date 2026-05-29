@@ -33,5 +33,6 @@ namespace BirdWare.Domain.Models
         HalvårVinter = 14,
         HalvårSommer = 15,
         Distance = 16,
+        Kommune = 17,
     }
 }

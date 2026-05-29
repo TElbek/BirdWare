@@ -73,6 +73,7 @@ namespace BirdWare.EF
             services.AddKeyedTransient<IFugleturTagFilter, FugleturLandFilter>(TagTypes.Land);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturLokalitetFilter>(TagTypes.Lokalitet);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturRegionFilter>(TagTypes.Region);
+            services.AddKeyedTransient<IFugleturTagFilter, FugleturKommuneFilter>(TagTypes.Kommune);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturDistanceFilter>(TagTypes.Distance);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturSaesonFilter>(TagTypes.SaesonVinter);
             services.AddKeyedTransient<IFugleturTagFilter, FugleturSaesonFilter>(TagTypes.SaesonForaar);
@@ -90,6 +91,7 @@ namespace BirdWare.EF
             services.AddKeyedTransient<IObservationTagFilter, ObservationFamilieFilter>(TagTypes.Familie);
             services.AddKeyedTransient<IObservationTagFilter, ObservationLandFilter>(TagTypes.Land);
             services.AddKeyedTransient<IObservationTagFilter, ObservationLokalitetFilter>(TagTypes.Lokalitet);
+            services.AddKeyedTransient<IObservationTagFilter, ObservationKommuneFilter>(TagTypes.Kommune);
             services.AddKeyedTransient<IObservationTagFilter, ObservationRegionFilter>(TagTypes.Region);
             services.AddKeyedTransient<IObservationTagFilter, ObservationSaesonFilter>(TagTypes.SaesonVinter);
             services.AddKeyedTransient<IObservationTagFilter, ObservationSaesonFilter>(TagTypes.SaesonForaar);
