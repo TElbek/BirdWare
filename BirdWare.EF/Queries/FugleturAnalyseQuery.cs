@@ -32,6 +32,9 @@ namespace BirdWare.EF.Queries
                     if (FoersteObsIDK(vObsLookUp, art))
                         analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDK));
 
+                    if(FoersteObsForKommune(vTur, vObsLookUp, art))
+                        analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForKommune));
+
                     if (FoersteObsIAar(vTur, vObsLookUp, art))
                         analyseResultatListe.Add(TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIAar));
 
@@ -76,6 +79,7 @@ namespace BirdWare.EF.Queries
                             Dato = f.Dato,
                             Id = f.Id,
                             LokalitetId = l.Id,
+                            KommuneId = l.KommuneId,
                             RegionId = l.RegionId,
                         }).First();
             }
@@ -93,6 +97,7 @@ namespace BirdWare.EF.Queries
                        {
                            ArtId = a.Id,
                            LokalitetId = l.Id,
+                           KommuneId = l.KommuneId,
                            RegionId = l.RegionId,
                            Aarstal = f.Aarstal,
                            Maaned = f.Maaned,
@@ -108,6 +113,9 @@ namespace BirdWare.EF.Queries
 
         private static bool FoersteObsIRegion(VTur vTur, ILookup<long, VObs> vObsLookup, Art art) => 
             !vObsLookup[art.Id].Any(q => q.RegionId == vTur.RegionId);
+
+        private bool FoersteObsForKommune(VTur vTur, ILookup<long, VObs> vObsLookUp, Art art) => 
+            !vObsLookUp[art.Id].Any(q => q.KommuneId == vTur.KommuneId);
 
         private static bool FoersteObsForLokalitet(VTur vTur, ILookup<long, VObs> vObsLookup, Art art) =>
             !vObsLookup[art.Id].Any(q => q.LokalitetId == vTur.LokalitetId);

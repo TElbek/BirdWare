@@ -9,6 +9,8 @@ namespace BirdWare.Domain.Models
         public DateTime? Dato { get; set; }
         public long LokalitetId { get; set; }
         public string LokalitetNavn { get; set; } = string.Empty;
+        public long KommuneId { get; set; }
+        public string KommuneNavn { get; set; } = string.Empty;
         public long RegionId { get; set; }
         public string RegionNavn { get; set; } = string.Empty;
         public long Aarstal { get; set; }
@@ -22,6 +24,7 @@ namespace BirdWare.Domain.Models
             Aarstal.ToString() + " " + DateFormatting.GetMonthName(Dato.Value) :
             string.Empty;
 
+
         public static VTur MapFromFugletur(Fugletur s)
         {
             return new VTur
@@ -34,8 +37,10 @@ namespace BirdWare.Domain.Models
                 RegionNavn = s.Lokalitet?.Region?.Navn ?? string.Empty,
                 Aarstal = s.Aarstal,
                 Maaned = s.Maaned,
+                KommuneId = s.Lokalitet?.KommuneId ?? 0,
                 Latitude = s.Lokalitet?.Latitude,
                 Longitude = s.Lokalitet?.Longitude,
+                KommuneNavn = s.Lokalitet?.Kommune?.Navn ?? string.Empty,
                 AntalArter = s.Observationer?.Count ?? 0
             };
         }

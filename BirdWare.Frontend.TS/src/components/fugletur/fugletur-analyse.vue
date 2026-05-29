@@ -12,8 +12,6 @@
 
 <script setup lang="ts">
 import api from '@/api';
-import fugleturTitel from '@/components/fugletur/fugletur-titel.vue';
-import fugleturNavigation from '@/components/fugletur/fugletur-navigation.vue';
 import fugleturAnalyseType from '@/components/fugletur/fugletur-analyse-type.vue';
 import { reactive, watch, onMounted, computed } from 'vue';
 import { useFugleturStore } from '@/stores/fugletur-store';
@@ -65,19 +63,24 @@ function getAnalyseListeForType(analyseType: number) {
 }
 
 function getAnalyseTypeTekst(analyseType: number) {
-    var analyseTypeTekst = state.analyseTyper.filter((item) => item.analyseType == analyseType)[0].analyseTypeTekst;
+    var analyseTypeTekst = state.analyseTyper.find((item) => item.analyseType == analyseType)?.analyseTypeTekst ?? '';
+
     if (analyseType == 3) {
-        return analyseTypeTekst.replaceAll('[Region]', state.fugletur.regionNavn);
+        return analyseTypeTekst?.replaceAll('[Region]', state.fugletur.regionNavn);
     }
     if (analyseType == 4) {
-        return analyseTypeTekst.replaceAll('[Lokalitet]', state.fugletur.lokalitetNavn);
+        return analyseTypeTekst?.replaceAll('[Kommune]', state.fugletur.kommuneNavn + ' Kommune');
     }
     if (analyseType == 5) {
-        return analyseTypeTekst.replaceAll('[Aar]', state.fugletur.aarstal.toString());
+        return analyseTypeTekst?.replaceAll('[Lokalitet]', state.fugletur.lokalitetNavn);
     }
     if (analyseType == 6) {
-        return analyseTypeTekst.replaceAll('[Maaned]', getNameOfMonth(state.fugletur.maaned));
+        return analyseTypeTekst?.replaceAll('[Aar]', state.fugletur.aarstal.toString());
     }
+    if (analyseType == 7) {
+        return analyseTypeTekst?.replaceAll('[Maaned]', getNameOfMonth(state.fugletur.maaned));
+    }
+    
     return analyseTypeTekst;
 }
 

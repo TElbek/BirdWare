@@ -3,6 +3,8 @@ export type fugleturType = {
     dato: string
     lokalitetId: number
     lokalitetNavn: string
+    kommuneId: number
+    kommuneNavn: string
     regionId: number
     regionNavn: string
     aarstal: number

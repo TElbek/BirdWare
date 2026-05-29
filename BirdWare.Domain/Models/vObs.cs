@@ -22,8 +22,11 @@ namespace BirdWare.Domain.Models
         public long LokalitetId { get; set; }
 
         public string LokalitetNavn { get; set; } = string.Empty;
+        
+        public long KommuneId { get; set; }
 
         public double? Latitude { get; set; }
+        
         public double? Longitude { get; set; }
 
         public long FugleturId { get; set; }

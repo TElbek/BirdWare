@@ -32,10 +32,10 @@ namespace BirdWare.EF.Queries
         public VTur GetFugletur(long id)
         {
             var vtur = from f in birdWareContext.Fugletur.AsNoTracking()
-                       join
-                            l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
-                       join
-                            r in birdWareContext.Region.AsNoTracking() on l.RegionId equals r.Id
+                       join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
+                       join kgrp in birdWareContext.Kommune.AsNoTracking() on l.KommuneId equals kgrp.Id into kgroup
+                       from k in kgroup.DefaultIfEmpty()
+                       join r in birdWareContext.Region.AsNoTracking() on l.RegionId equals r.Id
                        where f.Id == id
                        select new VTur{
                            Aarstal = f.Aarstal,
@@ -44,6 +44,8 @@ namespace BirdWare.EF.Queries
                            Id = f.Id,
                            LokalitetId = l.Id,
                            LokalitetNavn = l.Navn ?? string.Empty,
+                           KommuneId = l.KommuneId,
+                           KommuneNavn = (k != null ? k.Navn : string.Empty),
                            RegionId = r.Id,
                            RegionNavn = r.Navn ?? string.Empty,
                            AntalArter = birdWareContext.Observation
