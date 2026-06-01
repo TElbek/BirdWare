@@ -3,6 +3,7 @@ using BirdWare.Controllers;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Moq;
+using BirdWare.Domain.Entities;
 
 namespace BirdWare.Test.Controllers
 {
@@ -29,6 +30,9 @@ namespace BirdWare.Test.Controllers
 
             artQueriesMock.Setup(x => x.GetArtTagById(11)).Returns(new Tag {Id = 11, Name = "Drosselrørsanger", TagType = TagTypes.Art});
             artQueriesMock.Setup(x => x.GetArtTagById(10)).Returns(new Tag ());
+
+            fugleturQueryMock.Setup(x => x.GetSenesteFugletur()).Returns(1);
+            fugleturObservationQueryMock.Setup(x => x.GetObservationer(1)).Returns([]);
 
             tagController = new TagController(
                                         tagQueryQueryMock.Object, 
@@ -122,7 +126,7 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void GetTagsArterTagNotFoundTest()
         {
-            var list = tagController.GetTagsArter("Blå Glente");
+            var list = tagController.GetTagsArter("Markpiber");
             Assert.Empty(list);
         }
 

@@ -8,6 +8,7 @@ namespace BirdWare.Test.Queries
     {
         private readonly DbSetMock<Fugletur> fugleturMockSet = new();
         private readonly DbSetMock<Lokalitet> lokalitetMockSet = new();
+        private readonly DbSetMock<Kommune> kommuneMockSet = new();
         private readonly DbSetMock<Observation> observationMockSet = new();
         private readonly DbSetMock<Region> regionMockSet = new();
 
@@ -68,9 +69,14 @@ namespace BirdWare.Test.Queries
                 new() { Id = 3, Dato = DateTime.Now.AddMonths(+1), LokalitetId = 3}]);
 
             lokalitetMockSet.AddData([
-                new() { Id = 1, Navn = "Lokalitet1", RegionId = 1},
-                new() { Id = 2, Navn = "Lokalitet2", RegionId = 2},
-                new() { Id = 3, Navn = "Lokalitet3", RegionId = 3}]);
+                new() { Id = 1, Navn = "Lokalitet1", RegionId = 1, KommuneId = 1},
+                new() { Id = 2, Navn = "Lokalitet2", RegionId = 2, KommuneId = 2},
+                new() { Id = 3, Navn = "Lokalitet3", RegionId = 3, KommuneId = 3}]);
+
+            kommuneMockSet.AddData([
+                new() { Id = 1, Navn = "Kommune1", RegionId = 1},
+                new() { Id = 2, Navn = "Kommune2", RegionId = 2},
+                new() { Id = 3, Navn = "Kommune3", RegionId = 3}]);
 
             regionMockSet.AddData([
                 new() { Id = 1, Navn = "Region1"},
@@ -83,6 +89,7 @@ namespace BirdWare.Test.Queries
 
             MockContext.Setup(c => c.Fugletur).Returns(fugleturMockSet.DbSet);
             MockContext.Setup(c => c.Lokalitet).Returns(lokalitetMockSet.DbSet);
+            MockContext.Setup(c => c.Kommune).Returns(kommuneMockSet.DbSet);
             MockContext.Setup(c => c.Region).Returns(regionMockSet.DbSet);
             MockContext.Setup(c => c.Observation).Returns(observationMockSet.DbSet);
 

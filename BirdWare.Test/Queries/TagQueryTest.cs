@@ -11,6 +11,7 @@ namespace BirdWare.Test.Queries
         private readonly DbSetMock<Gruppe> gruppeMockSet = new();
         private readonly DbSetMock<Familie> familieMockSet = new();
         private readonly DbSetMock<Lokalitet> lokalitetMockSet = new();
+        private readonly DbSetMock<Kommune> kommuneMockSet = new();
         private readonly DbSetMock<Region> regionMockSet = new();
         private readonly DbSetMock<Fugletur> fugleturMockSet = new();
 
@@ -20,12 +21,13 @@ namespace BirdWare.Test.Queries
             var tagQuery = GetTagQueries();
             var tagList = tagQuery.GetTagList();
 
-            Assert.Equal(26, tagList.Count);
+            Assert.Equal(42, tagList.Count);
             
             MockContext.Verify(c => c.Art, Times.Once);
             MockContext.Verify(c => c.Gruppe, Times.Once);
             MockContext.Verify(c => c.Familie, Times.Once);
             MockContext.Verify(c => c.Lokalitet, Times.Once);
+            MockContext.Verify(c => c.Kommune, Times.Once);
             MockContext.Verify(c => c.Region, Times.Once);
             MockContext.Verify(c => c.Fugletur, Times.Exactly(2));
         }
@@ -36,7 +38,7 @@ namespace BirdWare.Test.Queries
             var tagQuery = GetTagQueries();
             var tagList = tagQuery.GetTagListFugletur();
 
-            Assert.Equal(17, tagList.Count);
+            Assert.Equal(33, tagList.Count);
 
             MockContext.Verify(c => c.Art, Times.Never);
             MockContext.Verify(c => c.Gruppe, Times.Never);
@@ -64,9 +66,14 @@ namespace BirdWare.Test.Queries
                 new() { Id = 3, Navn = "Familie3"}]);
 
             lokalitetMockSet.AddData([
-                new() { Id = 1, Navn = "Lokalitet1", RegionId = 1 },
-                new() { Id = 2, Navn = "Lokalitet2", RegionId = 2 },
-                new() { Id = 3, Navn = "Lokalitet3", RegionId = 3 }]);
+                new() { Id = 1, Navn = "Lokalitet1", RegionId = 1, KommuneId = 1 },
+                new() { Id = 2, Navn = "Lokalitet2", RegionId = 2, KommuneId = 2 },
+                new() { Id = 3, Navn = "Lokalitet3", RegionId = 3, KommuneId = 3 }]);
+
+            kommuneMockSet.AddData([
+                new() { Id = 1, Navn = "Kommune1"},
+                new() { Id = 2, Navn = "Kommune2"},
+                new() { Id = 3, Navn = "Kommune3"}]);   
 
             regionMockSet.AddData([
                 new() { Id = 1, Navn = "Region1"},
@@ -82,6 +89,7 @@ namespace BirdWare.Test.Queries
             MockContext.Setup(c => c.Gruppe).Returns(gruppeMockSet.DbSet);
             MockContext.Setup(c => c.Familie).Returns(familieMockSet.DbSet);
             MockContext.Setup(c => c.Lokalitet).Returns(lokalitetMockSet.DbSet);
+            MockContext.Setup(c => c.Kommune).Returns(kommuneMockSet.DbSet);
             MockContext.Setup(c => c.Region).Returns(regionMockSet.DbSet);
             MockContext.Setup(c => c.Fugletur).Returns(fugleturMockSet.DbSet);
             return new TagQuery(MockContext.Object);
