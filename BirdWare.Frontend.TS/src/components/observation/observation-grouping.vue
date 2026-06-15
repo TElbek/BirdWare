@@ -18,7 +18,8 @@ const groupByModeList: groupByModeType[] = [
     { caption: 'Måned', id: 1 },
     { caption: 'Art', id: 2 },
     { caption: 'Lokalitet', id: 3 },
-    { caption: 'Region', id: 4 },
+    { caption: 'Kommune', id: 4 },
+    { caption: 'Region', id: 5 },
 ];
 
 const selectedGroupModeCaption = computed(() => {

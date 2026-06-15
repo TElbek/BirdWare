@@ -9,6 +9,8 @@ export type observationType = {
     generelt: string
     lokalitetId: number
     lokalitetNavn: string
+    kommuneId: number,
+    kommuneNavn: string,
     latitude: number
     longitude: number
     fugleturId: number

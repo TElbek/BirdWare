@@ -10,9 +10,16 @@ namespace BirdWare.EF.Queries
 
         protected static bool ErSaesonTagType(Tag tag) => SaesonMaaneder.Liste.Any(q => q.Key == tag.TagType);
 
-        protected T GetFilterForTagType<T>(TagTypes tagType) where T : class, ITagFilter
+        protected T? GetFilterForTagType<T>(TagTypes tagType) where T : class, ITagFilter
         {
-            return serviceProvider.GetRequiredKeyedService<T>(tagType);
+            try
+            {
+                return serviceProvider.GetRequiredKeyedService<T>(tagType);
+            }
+            catch (InvalidOperationException)
+            {
+                return null;
+            }
         }
 
         internal static List<Tag> TransformSaesonTagsToMonthTags(List<Tag> tagList)

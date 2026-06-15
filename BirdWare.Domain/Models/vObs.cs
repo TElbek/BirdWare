@@ -25,6 +25,8 @@ namespace BirdWare.Domain.Models
         
         public long KommuneId { get; set; }
 
+        public string KommuneNavn {  get; set; } = string.Empty;
+
         public double? Latitude { get; set; }
         
         public double? Longitude { get; set; }
@@ -47,7 +49,8 @@ namespace BirdWare.Domain.Models
 
         public static VObs MapToVObs(Observation o, 
                                      Fugletur f, 
-                                     Lokalitet l, 
+                                     Lokalitet l,
+                                     Kommune k,
                                      Region r, 
                                      Art a, 
                                      Gruppe g, 
@@ -68,6 +71,8 @@ namespace BirdWare.Domain.Models
                 Latitude = l.Latitude,
                 Longitude = l.Longitude,
                 LokalitetId = l.Id,
+                KommuneId = k?.Id ?? 0,
+                KommuneNavn = $"{k?.Navn} Kommune" ?? string.Empty,
                 LokalitetNavn = l.Navn ?? string.Empty,
                 Maaned = f.Maaned,
                 ObservationId = o.Id,

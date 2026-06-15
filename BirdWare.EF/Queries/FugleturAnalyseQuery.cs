@@ -115,7 +115,7 @@ namespace BirdWare.EF.Queries
             !vObsLookup[art.Id].Any(q => q.RegionId == vTur.RegionId);
 
         private bool FoersteObsForKommune(VTur vTur, ILookup<long, VObs> vObsLookUp, Art art) => 
-            !vObsLookUp[art.Id].Any(q => q.KommuneId == vTur.KommuneId);
+            !vObsLookUp[art.Id].Any(q => q.KommuneId == vTur.KommuneId && vTur.KommuneId > 0);
 
         private static bool FoersteObsForLokalitet(VTur vTur, ILookup<long, VObs> vObsLookup, Art art) =>
             !vObsLookup[art.Id].Any(q => q.LokalitetId == vTur.LokalitetId);

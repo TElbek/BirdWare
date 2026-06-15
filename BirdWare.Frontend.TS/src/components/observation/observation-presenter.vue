@@ -25,6 +25,8 @@ const state = reactive({
 
 const emptyObservation = [] as observationType[];
 
+const danskeObservationer = computed(() => {return state.observationer.filter((item) => item.regionId > 0)})
+
 const queryString = computed(() => { return JSON.stringify(obsSelectionStore.selectedTags) });
 
 const groupedData = computed(() => {
@@ -33,7 +35,8 @@ const groupedData = computed(() => {
         case 1: return groupByFunctions['byMaaned']();
         case 2: return groupByFunctions['byArt']();
         case 3: return groupByFunctions['byLokalitet']();
-        case 4: return groupByFunctions['byRegion']();
+        case 4: return groupByFunctions['byKommune']();
+        case 5: return groupByFunctions['byRegion']();
     }
 });
 
@@ -56,6 +59,10 @@ const groupByFunctions = {
 
     byLokalitet: function () {
         return Map.groupBy(emptyObservation.sort((a, b) => a.lokalitetNavn.localeCompare(b.lokalitetNavn)), (  one: observationType  ) => one.lokalitetId);
+    },
+
+    byKommune: function () {
+        return Map.groupBy(danskeObservationer.value.sort((a, b) => a.kommuneNavn.localeCompare(b.kommuneNavn)), (  one: observationType  ) => one.kommuneNavn);
     },
 
     byRegion: function () {

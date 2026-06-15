@@ -16,7 +16,7 @@ namespace BirdWare.EF.Queries
             foreach (var tagType in TagsGroupedByTagType(tagList))
             {
                 var fugleturTagFilter = GetFilterForTagType<IFugleturTagFilter>(tagType.Key);
-                var result = fugleturTagFilter.Filter(tagType.Value, fugleture);
+                var result = fugleturTagFilter?.Filter(tagType.Value, fugleture);
                 if (result is IQueryable<Fugletur> fugleturResult)
                 {
                     fugleture = fugleturResult;
