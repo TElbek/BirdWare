@@ -19,7 +19,7 @@ import { useObsSelectionStore } from '@/stores/obs-selection-store';
 const { initializeLeaflet, addMarkers, fitBounds } = useObservationMapLogicCluster(emitAddTag);
 const { windowHeight, windowWidth, isMobile } = useWindowSize();
 const mapRef = useTemplateRef('map-wrapper-ref');
-const mapYPos = ref(0);
+const mapYPos = ref(70);
 const heightExpr = computed(() => 'calc(100vh - ' + Math.round(mapYPos.value) + 'px  - ' + (isMobile.value == true ? '50px' : '20px') + ')');
 
 const { debounce } = useDebounce();
