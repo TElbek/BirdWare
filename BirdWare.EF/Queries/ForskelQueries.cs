@@ -8,7 +8,7 @@ namespace BirdWare.EF.Queries
         public List<Forskel> GetForskelIAar()
         {
             var speciesThisYear = arterAarQueries.GetArterIAar();
-            var speciesLastYear = arterAarQueries.GetArterSidsteAar();
+            var speciesLastYear = arterAarQueries.GetArterSidsteAarSammePeriode();
 
             return Populate(speciesThisYear, speciesLastYear);
         }
@@ -16,7 +16,7 @@ namespace BirdWare.EF.Queries
         public List<Forskel> GetForskelSidsteAar()
         {
             var speciesThisYear = arterAarQueries.GetArterIAar();
-            var speciesLastYear = arterAarQueries.GetArterSidsteAar();
+            var speciesLastYear = arterAarQueries.GetArterSidsteAarSammePeriode();
 
             return Populate(speciesLastYear, speciesThisYear);
         }

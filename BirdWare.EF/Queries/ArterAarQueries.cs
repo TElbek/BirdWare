@@ -11,7 +11,7 @@ namespace BirdWare.EF.Queries
             return GetArterAar(DateTime.Now.Year);
         }
 
-        public IQueryable<ArterAar> GetArterSidsteAar()
+        public IQueryable<ArterAar> GetArterSidsteAarSammePeriode()
         {
             var artersidsteAar = GetArterAar(DateTime.Now.Year - 1);
 
@@ -19,6 +19,11 @@ namespace BirdWare.EF.Queries
                   .Where(q => q.Dato.HasValue && q.Dato.Value <= DateTime.Now.AddYears(-1));
 
             return artersidsteAarSammePeriode;
+        }
+
+        public IQueryable<ArterAar> GetArterHeleSidsteAar()
+        {
+            return GetArterAar(DateTime.Now.Year - 1);
         }
 
         private IQueryable<ArterAar> GetArterAar(long aarstal)
