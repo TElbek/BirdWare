@@ -14,20 +14,21 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/tags")]
-        public List<Tag> GetTagList([FromQuery] string query)
+        public List<TagGroup> GetTagList([FromQuery] string query)
         {
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-
-            return [.. cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
+            var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
+            return GroupTagsByTypeName(result);
         }
 
         [HttpGet]
         [Route("api/tags/fugletur")]
-        public List<Tag> GetTagListFugletur([FromQuery] string query)
+        public List<TagGroup> GetTagListFugletur([FromQuery] string query)
         {
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagListFugletur, "TagListFugletur");
 
-            return [.. cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
+            var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
+            return GroupTagsByTypeName(result);
         }
 
         [Route("api/tag/{query}")]
@@ -71,6 +72,14 @@ namespace BirdWare.Controllers
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
             return [.. cacheEntry.Where(q => q.TagType == TagTypes.Familie &&
                                             q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
+        }
+
+        private static List<TagGroup> GroupTagsByTypeName(IEnumerable<Tag> result)
+        {
+            return [.. result
+                        .GroupBy(q => q.TypeName)
+                        .Select(s => new TagGroup { Name = s.Key, Tags = [.. s.OrderBy(o => o.Name)] })
+                        .OrderBy(o => o.Name)];
         }
     }
 }
