@@ -29,6 +29,8 @@ namespace BirdWare.EF
             services.AddTransient<IArtQueries, ArtQueries>();
             services.AddTransient<IArterAarQueries, ArterAarQueries>();
 
+            services.AddTransient<IBedsteMaanedForFamilieQuery, BedsteMaanedForFamilieQuery>();
+
             services.AddTransient<IForeslaaArterPaaTurQuery, ForeslaaArterPaaTurQuery>();
             services.AddTransient<IForskelQueries, ForskelQueries>();
             services.AddTransient<IFugleturAnalyseQuerySP, FugleturAnalyseQuerySP>();

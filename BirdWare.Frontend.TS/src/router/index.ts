@@ -112,6 +112,16 @@ const router = createRouter({
       }
     },
     {
+      path: '/bedstemaanedforfamilie',
+      name: 'bedstemaanedforfamilie',
+      component: () => import('../views/BedsteMaanedForFamilieView.vue'),
+      meta: {
+        title: 'Hvornår kan jeg se...',
+        showInNavBar: true,
+        requireSSL: false,
+      }
+    },
+    {
       path: '/aaretsgang',
       name: 'aaretsgang',
       component: () => import('../views/AaretsGangView.vue'),
