@@ -31,3 +31,33 @@ export const getMonthNameFromNumber = (value: number) => {
     };
     return new Date('2025-' + value + '-01').toLocaleDateString('da-DK', options);
 }
+
+export const getCurrentSeasonName = () => {
+    const month = new Date().getMonth() + 1;
+    let saesonNavn: string = "";
+
+    switch(month) {
+        case 1:
+        case 2:
+        case 12: 
+            saesonNavn = 'Vinter';
+            break;
+        case 3:
+        case 4:
+        case 5: 
+            saesonNavn = 'Forår';
+            break;
+        case 6:
+        case 7:
+        case 8: 
+            saesonNavn = 'Sommer';
+            break;
+        case 9:
+        case 10:
+        case 11: 
+            saesonNavn = 'Efterår';
+            break;
+    }
+
+    return saesonNavn;
+}

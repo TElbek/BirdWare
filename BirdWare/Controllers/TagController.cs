@@ -2,6 +2,7 @@
 using BirdWare.EF.Interfaces;
 using BirdWare.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace BirdWare.Controllers
 {
@@ -72,6 +73,16 @@ namespace BirdWare.Controllers
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
             return [.. cacheEntry.Where(q => q.TagType == TagTypes.Familie &&
                                             q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
+        }
+
+        [Route("api/tags/tagsFromNames")]
+        public string GetTagsFromNamesAsJSON([FromQuery] string tagNamesAsJson)
+        {
+            var tagNames = JsonSerializer.Deserialize<string[]>(tagNamesAsJson);
+
+            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
+            var tagList = cacheEntry.Where(q => tagNames.Contains(q.Name)).ToList();
+            return JsonSerializer.Serialize(tagList);
         }
 
         private static List<TagGroup> GroupTagsByTypeName(IEnumerable<Tag> result)

@@ -20,8 +20,9 @@
                             <template v-for="[keyFamilie, valueArter] in groupArterByFamilie(value)">
                                 <div class="text-birdware dark:text-birdware-bright">{{ keyFamilie }}</div>
                                 <div class="flex gap-x-2 flex-wrap">
-                                    <art-navn v-for="item in valueArter" :art-navn="item.artNavn" :art-id="item.artId"
-                                        :speciel="false" :su="false"></art-navn>
+                                    <a v-for="item in valueArter" @click="navigateToObs(item)">
+                                        {{ item.artNavn }}
+                                    </a>
                                 </div>
                             </template>
                         </div>
@@ -51,9 +52,14 @@ import api from '@/api';
 import { reactive, computed, onMounted, ref } from 'vue';
 import { type hvorKanJegFindeType } from '@/types/hvorKanJegFindeType';
 import ArtNavn from '../main/artNavn.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { getCurrentSeasonName } from '@/ts/dateandtime.ts'
+import { useObsSelectionStore } from '@/stores/obs-selection-store.ts'; 
+import type { tagType } from '@/types/tagType.ts';
 
+const obsSelectionStore = useObsSelectionStore();
 const route = useRoute();
+const router = useRouter()
 const isByLokalitet = ref(true);
 
 const state = reactive({
@@ -63,7 +69,7 @@ const state = reactive({
 const isByFamilie = computed(() => !isByLokalitet.value);
 
 const byLokalitet = computed(() => {
-    return Map.groupBy(state.hvorKanJegFinde.sort((a,b) => a.distance - b.distance), (one: hvorKanJegFindeType) => one.lokalitetNavn);
+    return Map.groupBy(state.hvorKanJegFinde.sort((a, b) => a.distance - b.distance), (one: hvorKanJegFindeType) => one.lokalitetNavn);
 });
 
 const byFamilie = computed(() => {
@@ -82,9 +88,6 @@ function getHvorKanJegFinde() {
     });
 }
 
-function arterSorteret(trip: hvorKanJegFindeType[]) {
-    return trip.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
-}
 
 function groupArterByLokalitet(value: hvorKanJegFindeType[]) {
     return Map.groupBy(value.slice(), (one: hvorKanJegFindeType) => one.lokalitetNavn)
@@ -96,5 +99,20 @@ function groupArterByFamilie(value: hvorKanJegFindeType[]) {
 
 function toggleGrouping() {
     isByLokalitet.value = !isByLokalitet.value;
+}
+
+function navigateToObs(item: hvorKanJegFindeType) {
+    let season = getCurrentSeasonName();
+    let names = [season, item.artNavn, item.lokalitetNavn];
+    let json = JSON.stringify(names);
+
+    obsSelectionStore.clearAllTags();
+
+    api.get('tags/tagsFromNames?tagNamesAsJson=' + json).then(res => {
+        res.data.forEach((item:tagType) => {
+            obsSelectionStore.AddTag(item)
+        });
+    });
+    router.push({name: 'observation'});
 }
 </script>

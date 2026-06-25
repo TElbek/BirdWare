@@ -20,8 +20,12 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     }
   }
 
-  function setTag(value: tagType) {
+  function clearAllTags() {
     selectedTags.value = [];
+  }
+
+  function setTag(value: tagType) {
+    clearAllTags();
     addTag(value);
   }
 
@@ -60,6 +64,7 @@ export const useObsSelectionStore = defineStore('obs-selection', () => {
     isGropingByLocality,
     isGropingByNumber,
     isGropingByText,
+    clearAllTags,
     AddTag: addTag,
     SetTag: setTag,
     RemoveTag: removeTag,
