@@ -13,7 +13,7 @@
                                     <fugletur-dato :fugleturId="tur.id" :dato="tur.dato" :highlight="true"/>
                                     <span class="pe-1">{{ tur.antalArter }} {{ tur.antalArter === 1 ? 'art' : 'arter' }}</span>
                                 </div>
-                                <span>{{ tur.lokalitetNavn }}</span>
+                                <span class="dark:text-white">{{ tur.lokalitetNavn }}</span>
                             </div>
                         </div>
                     </div>

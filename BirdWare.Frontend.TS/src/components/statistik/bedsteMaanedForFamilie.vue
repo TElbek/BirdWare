@@ -9,7 +9,7 @@
                     <tw-card-header :caption="getNameOfMonth(key)" :show-count="false"></tw-card-header>
                     <tw-flex>
                         <template v-for="familie in sortValues(value)">
-                            <span>{{ familie.familieNavn }}</span>
+                            <span class="dark:text-white">{{ familie.familieNavn }}</span>
                         </template>
                     </tw-flex>
                 </tw-card>
