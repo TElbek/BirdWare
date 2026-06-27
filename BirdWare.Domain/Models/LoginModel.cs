@@ -15,5 +15,11 @@
         public LoginModel()
         {
         }
+
+        public bool HasLoginInformation => 
+            !string.IsNullOrEmpty(Username) && 
+            !string.IsNullOrEmpty(Password);
+
+        public bool HasNoLoginInformation => !HasLoginInformation;
     }
 }

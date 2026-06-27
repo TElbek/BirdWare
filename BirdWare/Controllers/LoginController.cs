@@ -13,16 +13,15 @@ namespace BirdWare.Controllers
         [Route("api/auth/login")]
         public IActionResult Login([FromBody] LoginModel loginModel)
         {
-            if (loginHelper.DoLogin(loginModel))
-            {
-                var bruger = brugerQuery.GetBrugerByName(loginModel.Username);
-                var token = tokenHelper.GenerateJWTToken(bruger);
-                return Ok(new { AccessToken = token });
-            }
-            else 
-            { 
-                return Unauthorized();
-            }
+            ArgumentNullException.ThrowIfNull(loginModel);
+            if (!loginModel.HasLoginInformation) return Unauthorized();
+
+            var isAuthorized = loginHelper.DoLogin(loginModel);
+            if(!isAuthorized) return Unauthorized();
+
+            var bruger = brugerQuery.GetBrugerByName(loginModel.Username);
+            var token = tokenHelper.GenerateJWTToken(bruger);
+            return Ok(new { AccessToken = token });
         }
     }
 }

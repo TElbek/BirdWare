@@ -13,7 +13,7 @@ namespace BirdWare.EF.Queries
             }
             else
             {
-                throw new ArgumentOutOfRangeException();
+                throw new UnauthorizedAccessException();
             }
         }
     }

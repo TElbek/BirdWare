@@ -8,24 +8,18 @@ namespace BirdWare.EF.Security
     {
         public bool DoLogin(LoginModel loginModel)
         {
-            if (loginModel == null || string.IsNullOrEmpty(loginModel.Username) || string.IsNullOrEmpty(loginModel.Password))
-            {
-                return false;
-            }
+            ArgumentNullException.ThrowIfNull(loginModel);
+            if (loginModel.HasNoLoginInformation) return false;
 
             try
             {
-                var bruger = brugerQuery.GetBrugerByName(loginModel.Username);
-                if (passwordHelper.VerifyPassword(bruger, bruger.PasswordHash, loginModel.Password))
-                {
-                    return true;
-                }
+                var bruger = brugerQuery.GetBrugerByName(loginModel?.Username ?? string.Empty);
+                return passwordHelper.VerifyPassword(bruger, bruger.PasswordHash, loginModel?.Password ?? string.Empty);
             }
             catch (Exception)
             {
                 return false;
             }
-            return false;
         }
     }
 }
