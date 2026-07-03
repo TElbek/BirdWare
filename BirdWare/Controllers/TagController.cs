@@ -1,65 +1,40 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
-using BirdWare.Domain.Interfaces;
+using BirdWare.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace BirdWare.Controllers
 {
     [ApiController]
-    public class TagController(ITagQuery tagQuery, 
-                               IArtQueries artQueries, 
-                               IFugleturQuery fugleturQuery,
-                               IFugleturObservationQuery fugleturObservationQuery,
-                               ITagMemoryCache tagMemoryCache) : ControllerBase
+    public class TagController(ITagHandler tagHandler,
+                               IArtQueries artQueries,
+                               ISoegArtIkkeSetPaaTurHandler soegArtIkkeSetPaaTurHandler) : ControllerBase
     {
         [HttpGet]
         [Route("api/tags")]
         public List<TagGroup> GetTagList([FromQuery] string query)
         {
-            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-            var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
-            return GroupTagsByTypeName(result);
+            return tagHandler.GetTagList(query);
         }
 
         [HttpGet]
         [Route("api/tags/fugletur")]
         public List<TagGroup> GetTagListFugletur([FromQuery] string query)
         {
-            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagListFugletur, "TagListFugletur");
-
-            var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
-            return GroupTagsByTypeName(result);
+            return tagHandler.GetTagListFugletur(query);
         }
 
         [Route("api/tag/{query}")]
         public Tag GetTag(string query)
         {
-            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-
-            return cacheEntry
-                .Where(t => t.Name.ToLower().Equals(query, StringComparison.CurrentCultureIgnoreCase))
-                .FirstOrDefault() ?? new Tag();
+            return tagHandler.GetTag(query);
         }
 
         [Route("api/tags/arter")]
         public List<Tag> GetTagsArter([FromQuery] string query)
         {
-            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-
-            var list = cacheEntry
-                .Where(t => t.TagType == TagTypes.Art &&
-                       t.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1).ToList() ?? [];
-
-            var latestFugleturId = fugleturQuery.GetSenesteFugletur();
-            var observedArtTagIds = fugleturObservationQuery.GetObservationer(latestFugleturId)
-                .Select(t => t.ArtId);
-
-            return [.. list
-                    .Where(q => !observedArtTagIds.Contains(q.Id))
-                    .OrderBy(o => o.Name)];
+            return soegArtIkkeSetPaaTurHandler.GetTags(query);
         }
-
 
         [Route("api/tag/art/{Id}")]
         public Tag GetArtTagById(long Id)
@@ -70,27 +45,13 @@ namespace BirdWare.Controllers
         [Route("api/tags/familie")]
         public List<Tag> GetFamilieTagsBySearchValue([FromQuery] string query)
         {
-            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-            return [.. cacheEntry.Where(q => q.TagType == TagTypes.Familie &&
-                                            q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
+            return tagHandler.GetFamilieTagsBySearchValue(query);
         }
 
         [Route("api/tags/tagsFromNames")]
         public string GetTagsFromNamesAsJSON([FromQuery] string tagNamesAsJson)
         {
-            var tagNames = JsonSerializer.Deserialize<string[]>(tagNamesAsJson);
-
-            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-            var tagList = cacheEntry.Where(q => tagNames.Contains(q.Name)).ToList();
-            return JsonSerializer.Serialize(tagList);
-        }
-
-        private static List<TagGroup> GroupTagsByTypeName(IEnumerable<Tag> result)
-        {
-            return [.. result
-                        .GroupBy(q => q.TypeName)
-                        .Select(s => new TagGroup { Name = s.Key, Tags = [.. s.OrderBy(o => o.Name)] })
-                        .OrderBy(o => o.Name)];
+            return tagHandler.GetTagsFromNamesAsJSON(tagNamesAsJson);
         }
     }
 }

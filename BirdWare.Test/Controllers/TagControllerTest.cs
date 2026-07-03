@@ -1,9 +1,8 @@
-﻿using BirdWare.Domain.Cache;
-using BirdWare.Controllers;
+﻿using BirdWare.Controllers;
+using BirdWare.Domain.Cache;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using Moq;
-using BirdWare.Domain.Entities;
 
 namespace BirdWare.Test.Controllers
 {
@@ -19,27 +18,27 @@ namespace BirdWare.Test.Controllers
 
         public TagControllerTest()
         {
-            tagQueryQueryMock.Setup(x => x.GetTagList()).Returns([
-                new Tag {Id = 1, Name = "Musvåge", TagType = TagTypes.Art},
-                new Tag {Id = 2, Name = "Sjælland", TagType = TagTypes.Region},
-            ]);
+            //tagQueryQueryMock.Setup(x => x.GetTagList()).Returns([
+            //    new Tag {Id = 1, Name = "Musvåge", TagType = TagTypes.Art},
+            //    new Tag {Id = 2, Name = "Sjælland", TagType = TagTypes.Region},
+            //]);
 
-            tagQueryQueryMock.Setup(x => x.GetTagListFugletur()).Returns([
-                new Tag {Id = 2, Name = "Vestamager", TagType = TagTypes.Lokalitet}
-            ]);
+            //tagQueryQueryMock.Setup(x => x.GetTagListFugletur()).Returns([
+            //    new Tag {Id = 2, Name = "Vestamager", TagType = TagTypes.Lokalitet}
+            //]);
 
-            artQueriesMock.Setup(x => x.GetArtTagById(11)).Returns(new Tag {Id = 11, Name = "Drosselrørsanger", TagType = TagTypes.Art});
-            artQueriesMock.Setup(x => x.GetArtTagById(10)).Returns(new Tag ());
+            //artQueriesMock.Setup(x => x.GetArtTagById(11)).Returns(new Tag {Id = 11, Name = "Drosselrørsanger", TagType = TagTypes.Art});
+            //artQueriesMock.Setup(x => x.GetArtTagById(10)).Returns(new Tag ());
 
-            fugleturQueryMock.Setup(x => x.GetSenesteFugletur()).Returns(1);
-            fugleturObservationQueryMock.Setup(x => x.GetObservationer(1)).Returns([]);
+            //fugleturQueryMock.Setup(x => x.GetSenesteFugletur()).Returns(1);
+            //fugleturObservationQueryMock.Setup(x => x.GetObservationer(1)).Returns([]);
 
-            tagController = new TagController(
-                                        tagQueryQueryMock.Object, 
-                                        artQueriesMock.Object, 
-                                        fugleturQueryMock.Object,
-                                        fugleturObservationQueryMock.Object,
-                                        tagMemoryCacheMock.Object);
+            //tagController = new TagController(
+            //                            tagQueryQueryMock.Object, 
+            //                            artQueriesMock.Object, 
+            //                            fugleturQueryMock.Object,
+            //                            fugleturObservationQueryMock.Object,
+            //                            tagMemoryCacheMock.Object);
         }
 
         [Fact]

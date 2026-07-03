@@ -9,6 +9,8 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using BirdWare.Business;
+using BirdWare.Interfaces;
 
 namespace BirdWare
 {
@@ -50,8 +52,12 @@ namespace BirdWare
                 (options => options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn"), 
                             x => x.UseNetTopologySuite()));
 
-            builder.Services.AddTransient<IMemoryCache, MemoryCache>();
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
+
+            builder.Services.AddTransient<IMemoryCache, MemoryCache>();
+            builder.Services.AddTransient<ITagHandler, TagHandler>();
+            builder.Services.AddTransient<ISoegArtIkkeSetPaaTurHandler, SoegArtIkkeSetPaaTurHandler>();
+
             builder.Services.RegisterEF();
             builder.Services.RegisterDomain();
         }
