@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Interfaces;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using BirdWare.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
@@ -13,8 +14,8 @@ namespace BirdWare.Controllers
         [Route("api/auth/login")]
         public IActionResult Login([FromBody] LoginModel loginModel)
         {
-            ArgumentNullException.ThrowIfNull(loginModel);
-            if (!loginModel.HasLoginInformation) return Unauthorized();
+            var validator = new LoginValidator();
+            if(!validator.Validate(loginModel).IsValid) return BadRequest();
 
             var isAuthorized = loginHelper.DoLogin(loginModel);
             if(!isAuthorized) return Unauthorized();

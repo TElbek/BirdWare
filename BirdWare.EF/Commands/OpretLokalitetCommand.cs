@@ -8,30 +8,25 @@ namespace BirdWare.EF.Commands
     {
         public bool OpretLokalitet(Lokalitet lokalitet)
         {
+            if (!ExistRegion(lokalitet)) return false;
+
             try
             {
-                if (lokalitet != null && ExistRegion(lokalitet) && !string.IsNullOrEmpty(lokalitet.Navn))
+                lokalitet.Id = GetNewId();
+                if (lokalitet.Latitude != null && lokalitet.Longitude != null)
                 {
-                    using var transaction = birdWareContext.Database.BeginTransaction();
-
-                    lokalitet.Id = GetNewId();
-                    if (lokalitet.Latitude != null && lokalitet.Longitude != null)
-                    {
-                        lokalitet.Point = GeographyPoint.GetPointFromLatLong(lokalitet.Latitude ?? 0, lokalitet.Longitude ?? 0);
-                    }
-
-                    birdWareContext.Lokalitet.Add(lokalitet);
-                    birdWareContext.SaveChanges();
-                    transaction.Commit();
-
-                    return true;
+                    lokalitet.Point = GeographyPoint.GetPointFromLatLong(lokalitet.Latitude ?? 0, lokalitet.Longitude ?? 0);
                 }
+
+                birdWareContext.Lokalitet.Add(lokalitet);
+                birdWareContext.SaveChanges();
+
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
-            return false;
         }
 
         private long GetNewId()

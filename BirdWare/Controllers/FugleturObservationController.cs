@@ -1,5 +1,7 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using BirdWare.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
@@ -13,7 +15,12 @@ namespace BirdWare.Controllers
         [HttpGet]
         [Route("api/fugletur/{id}/observationer")]
         public List<VObs> GetFugleturObservationer(long id)
-        { 
+        {
+            var validator = new GreaterThanZeroValidator();
+            if (!validator.Validate(id).IsValid)
+            {
+                return [];
+            }
             return fugleturObservationQuery.GetObservationer(id);
         }
 
@@ -28,7 +35,12 @@ namespace BirdWare.Controllers
         [HttpPost]
         [Route("api/fugletur/observation/{id}/slet")]
         public void SletObservation(long id)
-        { 
+        {
+            var validator = new GreaterThanZeroValidator();
+            if (!validator.Validate(id).IsValid)
+            {
+                return;
+            }
             sletObsCommand.SletObservation(id);
         }
     }

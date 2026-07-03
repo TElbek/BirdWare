@@ -1,4 +1,5 @@
 ﻿using BirdWare.EF.Interfaces;
+using BirdWare.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -13,7 +14,13 @@ namespace BirdWare.Controllers
         [HttpPost]
         public HttpResponseMessage OpretTur(long lokalitetId)
         {
-            return lokalitetId > 0 && opretTurCommand.OpretTurPaaLokalitet(lokalitetId) ?
+            var validator = new GreaterThanZeroValidator();
+            if(!validator.Validate(lokalitetId).IsValid)
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+
+            return opretTurCommand.OpretTurPaaLokalitet(lokalitetId) ?
                 new HttpResponseMessage(HttpStatusCode.OK) :
                 new HttpResponseMessage(HttpStatusCode.BadRequest);
         }

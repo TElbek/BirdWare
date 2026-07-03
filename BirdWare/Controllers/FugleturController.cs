@@ -1,5 +1,7 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using BirdWare.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
@@ -11,6 +13,11 @@ namespace BirdWare.Controllers
         [Route("api/fugletur/{id}")]
         public VTur GetFugletur(long id)
         {
+            var validator = new GreaterThanZeroValidator();
+            if (!validator.Validate(id).IsValid)
+            {
+                return new VTur();
+            }
             return fugleturQuery.GetFugletur(id);
         }
 

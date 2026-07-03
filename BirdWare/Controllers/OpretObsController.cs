@@ -1,5 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using BirdWare.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,12 @@ namespace BirdWare.Controllers
         [HttpPost]
         public HttpResponseMessage OpretObs(long artId)
         {
+            var validator = new GreaterThanZeroValidator();
+            if (!validator.Validate(artId).IsValid)
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+            }
+
             return (artId > 0 && opretObsCommand.OpretObsPåFugletur(artId)) ?
                 new HttpResponseMessage(System.Net.HttpStatusCode.OK) : 
                 new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
@@ -23,6 +30,12 @@ namespace BirdWare.Controllers
         [HttpPost]
         public HttpResponseMessage OpdaterObs([FromBody] VObs vObs)
         {
+            var validator = new OpdaterObsValidator();
+            if (!validator.Validate(vObs).IsValid)
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+            }
+
             return opdaterObsCommand.OpdaterObservation(vObs) ?
                 new HttpResponseMessage(System.Net.HttpStatusCode.OK) :
                 new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);

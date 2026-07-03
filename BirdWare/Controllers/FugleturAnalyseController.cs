@@ -1,5 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using BirdWare.Validation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
@@ -12,6 +13,12 @@ namespace BirdWare.Controllers
         [Route("api/fugletur/{fugleturId}/analyse")]
         public List<TripAnalysisResult> AnalyserFugletur(long fugleturId)
         {
+            var validator = new GreaterThanZeroValidator();
+            if(!validator.Validate(fugleturId).IsValid)
+            {
+                return [];
+            }
+
             return fugleturAnalyseQuery.Analyser(fugleturId);
         }
 
