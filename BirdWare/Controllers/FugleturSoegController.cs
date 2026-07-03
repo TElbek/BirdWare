@@ -1,5 +1,6 @@
 ﻿using BirdWare.Domain.GeoJsonHandlers;
 using BirdWare.Domain.Models;
+using BirdWare.Domain.Utilities;
 using BirdWare.EF.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -14,18 +15,9 @@ namespace BirdWare.Controllers
         [Route("api/fugleture/get/tags")]
         public List<VTur> GetFugletureByTags([FromQuery] string tagListAsJson)
         {
-            var tagList = JsonSerializer.Deserialize<List<Tag>>(tagListAsJson);
+            var tagList = JsonOperations<Tag>.GetListFromJSON(tagListAsJson);
             return fugletureByTagsQuery.GetFugletureByTags(tagList ?? []);
-        }
-
-        [Route("api/fugleture/get/tags/geojson")]
-        public GeoJson GetFugletureByTagsAsGeoJson([FromQuery] string tagListAsJson)
-        {
-            var tagList = JsonSerializer.Deserialize<List<Tag>>(tagListAsJson);
-            var fugletureList = fugletureByTagsQuery.GetFugletureByTags(tagList ?? []);
-            return FugletureToGeoJson.MapFugletureToGeoJson(fugletureList);
-        }
-
+        }     
 
         [Route("api/fugleture/aar/maaned")]
         public List<VTur> GetFugletureAarMaaned([FromQuery] long aarstal, long maaned)
