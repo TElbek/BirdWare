@@ -1,96 +1,113 @@
 ﻿using BirdWare.Controllers;
-using BirdWare.Domain.Cache;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using BirdWare.Interfaces;
 using Moq;
 
 namespace BirdWare.Test.Controllers
 {
     public class TagControllerTest
     {
-        private readonly Mock<ITagQuery> tagQueryQueryMock = new();
+        private readonly Mock<ITagHandler> tagHandlerMock = new();
         private readonly Mock<IArtQueries> artQueriesMock = new();
-        private readonly Mock<TagMemoryCache> tagMemoryCacheMock = new();
-        private readonly Mock<IFugleturObservationQuery> fugleturObservationQueryMock = new();
-        private readonly Mock<IFugleturQuery> fugleturQueryMock = new();
+        private readonly Mock<ISoegArtIkkeSetPaaTurHandler> soegArtIkkeSetPaaTurHandlerMock = new();
 
         private readonly TagController tagController;
 
         public TagControllerTest()
         {
-            //tagQueryQueryMock.Setup(x => x.GetTagList()).Returns([
-            //    new Tag {Id = 1, Name = "Musvåge", TagType = TagTypes.Art},
-            //    new Tag {Id = 2, Name = "Sjælland", TagType = TagTypes.Region},
-            //]);
+            tagHandlerMock.Setup(x => x.GetTagList(It.IsAny<string>())).Returns((string query) =>
+            {
+                if (query == "Musvåge") { return [new TagGroup {Name = "Art", Tags = [new() { Id = 1, Name = "Musvåge", TagType = TagTypes.Art }]}];}
+                return [];
+            });
 
-            //tagQueryQueryMock.Setup(x => x.GetTagListFugletur()).Returns([
-            //    new Tag {Id = 2, Name = "Vestamager", TagType = TagTypes.Lokalitet}
-            //]);
+            tagHandlerMock.Setup(x => x.GetTagListFugletur(It.IsAny<string>())).Returns((string query) =>
+            {
+                if (query == "Vestamager") { return [new TagGroup { Name = "Lokalitet", Tags = [new() { Id = 1, Name = "Vestamager", TagType = TagTypes.Lokalitet }] }]; }
+                return [];
+            });
 
-            //artQueriesMock.Setup(x => x.GetArtTagById(11)).Returns(new Tag {Id = 11, Name = "Drosselrørsanger", TagType = TagTypes.Art});
-            //artQueriesMock.Setup(x => x.GetArtTagById(10)).Returns(new Tag ());
+            tagHandlerMock.Setup(x => x.GetTag(It.IsAny<string>())).Returns((string query) =>
+            {
+                if (query == "Sjælland") { return new Tag { Id = 2, Name = "Sjælland", TagType = TagTypes.Region }; }
+                return new Tag();
+            });
 
-            //fugleturQueryMock.Setup(x => x.GetSenesteFugletur()).Returns(1);
-            //fugleturObservationQueryMock.Setup(x => x.GetObservationer(1)).Returns([]);
+            tagHandlerMock.Setup(x => x.GetTagListArt(It.IsAny<string>())).Returns((string query) =>
+            {
+                if (query == "Musvåge") { return [new Tag { Id = 1, Name = "Musvåge", TagType = TagTypes.Art }]; }
+                return [];
+            });
 
-            //tagController = new TagController(
-            //                            tagQueryQueryMock.Object, 
-            //                            artQueriesMock.Object, 
-            //                            fugleturQueryMock.Object,
-            //                            fugleturObservationQueryMock.Object,
-            //                            tagMemoryCacheMock.Object);
+            artQueriesMock.Setup(x => x.GetArtTagById(It.IsAny<long>())).Returns((long id) =>
+            {
+                if (id == 11) { return new Tag { Id = 11, Name = "Drosselrørsanger", TagType = TagTypes.Art }; }
+                return new Tag();
+            });
+
+            soegArtIkkeSetPaaTurHandlerMock.Setup(x => x.GetTags(It.IsAny<string>())).Returns((string query) =>
+            {
+                if (query == "Musvåge") { return [new Tag { Id = 1, Name = "Musvåge", TagType = TagTypes.Art }]; }
+                return [];
+            });
+
+            tagController = new TagController(
+                tagHandlerMock.Object, 
+                artQueriesMock.Object, 
+                soegArtIkkeSetPaaTurHandlerMock.Object);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagListTest()
         {
             tagController.GetTagList("query");
-            tagQueryQueryMock.Verify(x => x.GetTagList(), Times.Once);
+            tagHandlerMock.Verify(x => x.GetTagList(It.IsAny<string>()), Times.Once);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagListTestTagFound()
         {
             var list = tagController.GetTagList("Musvåge");
             Assert.Single(list);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagListTestTagNotFound()
         {
             var list = tagController.GetTagList("Sjagger");
             Assert.Empty(list);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagListFugleturTest()
         {
             tagController.GetTagListFugletur("query");
-            tagQueryQueryMock.Verify(x => x.GetTagListFugletur(), Times.Once);
+            tagHandlerMock.Verify(x => x.GetTagListFugletur(It.IsAny<string>()), Times.Once);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagListFugleturTagFoundTest()
         {
             var list = tagController.GetTagListFugletur("Vestamager");
             Assert.Single(list);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagListFugleturTagNotFoundTest()
         {
             var list = tagController.GetTagListFugletur("Skagen");
             Assert.Empty(list);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagTest()
         {
-            tagController.GetTag("query");
-            tagQueryQueryMock.Verify(x => x.GetTagList(), Times.Once);
+            tagController.GetTag("Sjælland");
+            tagHandlerMock.Verify(x => x.GetTag(It.IsAny<string>()), Times.Once);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagFoundTest()
         {
             var tag = tagController.GetTag("Sjælland");
@@ -99,7 +116,7 @@ namespace BirdWare.Test.Controllers
             Assert.Equal("Sjælland", tag.Name);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagNotFoundTest()
         {
             var tag = tagController.GetTag("query");
@@ -108,35 +125,35 @@ namespace BirdWare.Test.Controllers
             Assert.Equal(string.Empty, tag.Name);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagsArterTest()
         {
-            tagController.GetTagsArter("query");
-            tagQueryQueryMock.Verify(x => x.GetTagList(), Times.Once);
+            tagController.GetTagsArterIkkeSetPaaTur("Musvåge");
+            soegArtIkkeSetPaaTurHandlerMock.Verify(x => x.GetTags(It.IsAny<string>()), Times.Once);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagsArterTagFoundTest()
         {
-            var list = tagController.GetTagsArter("Musvåge");
+            var list = tagController.GetTagsArterIkkeSetPaaTur("Musvåge");
             Assert.Single(list);
         }
 
-        //[Fact]
+        [Fact]
         public void GetTagsArterTagNotFoundTest()
         {
-            var list = tagController.GetTagsArter("Markpiber");
+            var list = tagController.GetTagsArterIkkeSetPaaTur("Markpiber");
             Assert.Empty(list);
         }
 
-        //[Fact]
+        [Fact]
         public void GetArtTagByIdTest()
         {
             tagController.GetArtTagById(1);
             artQueriesMock.Verify(x => x.GetArtTagById(1), Times.Once);
         }
 
-        //[Fact]
+        [Fact]
         public void GetArtTagByIdTestTagFound()
         {
             var tag = tagController.GetArtTagById(11);
@@ -145,7 +162,7 @@ namespace BirdWare.Test.Controllers
             Assert.Equal("Drosselrørsanger", tag.Name);
         }
 
-        //[Fact]
+        [Fact]
         public void GetArtTagByIdTestTagNotFound()
         {
             var tag = tagController.GetArtTagById(10);

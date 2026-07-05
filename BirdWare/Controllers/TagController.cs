@@ -31,7 +31,7 @@ namespace BirdWare.Controllers
         }
 
         [Route("api/tags/arter")]
-        public List<Tag> GetTagsArter([FromQuery] string query)
+        public List<Tag> GetTagsArterIkkeSetPaaTur([FromQuery] string query)
         {
             return soegArtIkkeSetPaaTurHandler.GetTags(query);
         }
