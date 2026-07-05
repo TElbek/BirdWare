@@ -19,7 +19,7 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void AnalyserFugleturTest()
         {
-            fugleturAnalyseController.AnalyserFugletur(0);
+            fugleturAnalyseController.AnalyserFugletur(1);
             fugleturAnalyseQuery.Verify(x => x.Analyser(It.IsAny<long>()), Times.Once);
         }
 

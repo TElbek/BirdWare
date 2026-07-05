@@ -68,7 +68,7 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void OpdaterObs_WithVObs_ReturnsOk()
         {
-            var result = opretObsController.OpdaterObs(new VObs());
+            var result = opretObsController.OpdaterObs(new VObs() { ObservationId = 1, ArtId = 2, FugleturId = 3 });
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
             opdaterObsCommandMock.Verify(x => x.OpdaterObservation(It.IsAny<VObs>()), Times.Once);
         }
@@ -79,7 +79,7 @@ namespace BirdWare.Test.Controllers
             opdaterObsCommandMock.Setup(x => x.OpdaterObservation(It.IsAny<VObs>())).Returns(false);
             opretObsController = new OpretObsController(opretObsCommandMock.Object, opdaterObsCommandMock.Object);
 
-            var result = opretObsController.OpdaterObs(new VObs());
+            var result = opretObsController.OpdaterObs(new VObs() {ObservationId = 1, ArtId = 2, FugleturId = 3});
             Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
             opdaterObsCommandMock.Verify(x => x.OpdaterObservation(It.IsAny<VObs>()), Times.Once);
         }
