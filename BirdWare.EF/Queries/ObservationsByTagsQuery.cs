@@ -28,17 +28,17 @@ namespace BirdWare.EF.Queries
 
         private List<VObs> GenerateResultSet(IQueryable<Observation> observations)
         {
-            var result = (from o in observations
-                          join f in birdWareContext.Fugletur.AsNoTracking() on o.FugleturId equals f.Id
-                          join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
-                          join kgrp in birdWareContext.Kommune.AsNoTracking() on l.KommuneId equals kgrp.Id into kgroup
-                          from k in kgroup.DefaultIfEmpty()
-                          join r in birdWareContext.Region.AsNoTracking() on l.RegionId equals r.Id
-                          join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
-                          join g in birdWareContext.Gruppe.AsNoTracking() on a.GruppeId equals g.Id
-                          join fa in birdWareContext.Familie.AsNoTracking() on g.FamilieId equals fa.Id
-                          orderby f.Dato descending
-                          select VObs.MapToVObs(o, f, l, k, r, a, g, fa)).Take(200).ToList();
+            var result = (from obs in observations
+                          join tur in birdWareContext.Fugletur.AsNoTracking() on obs.FugleturId equals tur.Id
+                          join lok in birdWareContext.Lokalitet.AsNoTracking() on tur.LokalitetId equals lok.Id
+                          join kgrp in birdWareContext.Kommune.AsNoTracking() on lok.KommuneId equals kgrp.Id into kgroup
+                          from kom in kgroup.DefaultIfEmpty()
+                          join reg in birdWareContext.Region.AsNoTracking() on lok.RegionId equals reg.Id
+                          join art in birdWareContext.Art.AsNoTracking() on obs.ArtId equals art.Id
+                          join grp in birdWareContext.Gruppe.AsNoTracking() on art.GruppeId equals grp.Id
+                          join fam in birdWareContext.Familie.AsNoTracking() on grp.FamilieId equals fam.Id
+                          orderby tur.Dato descending
+                          select VObs.MapToVObs(obs, tur, lok, kom, reg, art, grp, fam)).Take(200).ToList();
 
             return result;
         }        
