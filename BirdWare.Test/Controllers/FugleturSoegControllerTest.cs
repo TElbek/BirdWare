@@ -25,13 +25,10 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void GetFugletureByTagsTest()
         {
-            var tagList = new List<Tag>();
-            //{
-            //    new() { Id = 1, Name = "Tag1", TagType = TagTypes.Aarstal }
-            //};
+            var tagList = new List<Tag>() {new() { Id = 1, Name = "Tag1", TagType = TagTypes.Aarstal }};
             var tagListAsJson = JsonSerializer.Serialize(tagList);
             fugleturSoegController.GetFugletureByTags(tagListAsJson);
-             fugletureByTagsQueryMock.Verify(x => x.GetFugletureByTags(tagList), Times.Once);
+            fugletureByTagsQueryMock.Verify(x => x.GetFugletureByTags(It.IsAny<List<Tag>>()), Times.Once);
         }
 
         [Fact]

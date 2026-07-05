@@ -1,4 +1,5 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using BirdWare.Validation;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,12 @@ namespace BirdWare.Controllers
         [HttpPost]
         public HttpResponseMessage AddTrip([FromBody] SynchTrip synchTrip)
         {
+            var validator = new GreaterThanZeroValidator();
+            if (!validator.Validate(synchTrip.Fugletur.FugleturId).IsValid)
+            {
+                return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
+            }
+
             return synchTripCommand.PostTrip(synchTrip) ?
                 new HttpResponseMessage(System.Net.HttpStatusCode.OK) :
                 new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);

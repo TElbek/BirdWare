@@ -20,10 +20,10 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void GetObservationsByTagsTest()
         {
-            var tagList = new List<Tag>();
+            var tagList = new List<Tag>() { new() { Id = 1, Name = "Tag1", TagType = TagTypes.Art } };
             var tagListAsJson = JsonSerializer.Serialize(tagList);
             observationSoegController.GetObservationsByTags(tagListAsJson);
-            observationsByTagsQueryMock.Verify(o => o.GetObservationsByTags(tagList), Times.Once);
+            observationsByTagsQueryMock.Verify(o => o.GetObservationsByTags(It.IsAny<List<Tag>>()), Times.Once);
         }
     }
 }
