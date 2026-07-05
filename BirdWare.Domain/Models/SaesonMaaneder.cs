@@ -9,7 +9,10 @@
             { TagTypes.SaesonEfteraar, [9, 10, 11] },
             { TagTypes.SaesonVinter, [12, 1, 2] },
             { TagTypes.HalvårSommer, [4,5,6,7,8,9] },
-            { TagTypes.HalvårVinter, [10,11,12,1,2,3] }
+            { TagTypes.HalvårVinter, [10,11,12,1,2,3] },
+            { TagTypes.TrækTidForår, [3,4,5] },
+            { TagTypes.TrækTidEfterår, [7,8,9,10] },
+            { TagTypes.TrækTidUdenfor, [11,12,1,2,6] }
         };
     }
 }

@@ -60,7 +60,7 @@ namespace BirdWare.Business
         private static List<TagGroup> GroupTagsByTypeName(IEnumerable<Tag> tags)
         {
             return [.. tags
-                .GroupBy(t => t.TagType)
+                .GroupBy(t => t.TypeName)
                 .Select(g => new TagGroup
                 {
                     Name = g.Key.ToString(),

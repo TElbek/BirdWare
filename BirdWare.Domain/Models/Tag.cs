@@ -55,5 +55,11 @@ namespace BirdWare.Domain.Models
         Distance = 16,
         [Description("Kommune")]
         Kommune = 17,
+        [Description("Træktid")]
+        TrækTidForår = 18,
+        [Description("Træktid")]
+        TrækTidEfterår = 19,
+        [Description("Træktid")]
+        TrækTidUdenfor = 20,
     }
 }

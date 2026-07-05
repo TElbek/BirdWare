@@ -65,6 +65,9 @@ namespace BirdWare.EF.Queries
             tagList.Add(new Tag { Id = 4, Name = "Vinter", TagType = TagTypes.SaesonVinter });
             tagList.Add(new Tag { Id = 5, Name = "Vinterhalvår", TagType = TagTypes.HalvårVinter });
             tagList.Add(new Tag { Id = 6, Name = "Sommerhalvår", TagType = TagTypes.HalvårSommer });
+            tagList.Add(new Tag { Id = 7, Name = "Forårstræk", TagType = TagTypes.TrækTidForår });
+            tagList.Add(new Tag { Id = 8, Name = "Efterårstræk", TagType = TagTypes.TrækTidEfterår });
+            tagList.Add(new Tag { Id = 9, Name = "Ikke Træktid", TagType = TagTypes.TrækTidUdenfor });
         }
 
         private void PopulateArter(List<Tag> tagList) => GetArter().ForEach(t => tagList.Add(new Tag { TagType = TagTypes.Art, Id = t.Id, Name = t.Navn ?? string.Empty }));
