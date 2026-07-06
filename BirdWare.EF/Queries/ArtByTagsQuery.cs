@@ -4,9 +4,9 @@ using BirdWare.EF.Interfaces;
 
 namespace BirdWare.EF.Queries
 {
-    public class SpeciesByTagsQuery(
+    public class ArtByTagsQuery(
                     BirdWareContext birdWareContext, IServiceProvider serviceProvider) :
-                    ObservationsByTagsQueryBase<VArt>(birdWareContext, serviceProvider), ISpeciesByTagsQuery
+                    ObservationsByTagsQueryBase<VArt>(birdWareContext, serviceProvider), IArtByTagsQuery
     {
         protected override List<VArt> GenerateResultSet(IQueryable<Observation> observations)
         {
@@ -16,14 +16,14 @@ namespace BirdWare.EF.Queries
                              select a).Distinct();
 
             return [.. from v in resultSet select new VArt {
-                        ArtNavn = v.Navn ?? string.Empty,
-                        ArtId = v.Id,
-                        SU = v.SU,
-                        Speciel = v.Speciel,
-                        GruppeNavn = v.Gruppe.Navn ?? string.Empty,
-                        GruppeId = v.GruppeId,
-                        FamilieId = v.Gruppe.Familie.Id,
-                        FamilieNavn = v.Gruppe.Familie.Navn ?? string.Empty
+                       ArtNavn = v.Navn ?? string.Empty,
+                       ArtId = v.Id,
+                       SU = v.SU,
+                       Speciel = v.Speciel,
+                       GruppeNavn = v.Gruppe.Navn ?? string.Empty,
+                       GruppeId = v.GruppeId,
+                       FamilieId = v.Gruppe.Familie.Id,
+                       FamilieNavn = v.Gruppe.Familie.Navn ?? string.Empty
                     }];
         }
     }

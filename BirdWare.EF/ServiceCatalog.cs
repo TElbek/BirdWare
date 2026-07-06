@@ -51,7 +51,7 @@ namespace BirdWare.EF
             services.AddTransient<IAnkomtsDagSubQuery, AnkomtsDagSubQuery>();
             services.AddTransient<IAnkomstDagIAarQuery, AnkomstDagIAarQuery>();
 
-            services.AddTransient<ISpeciesByTagsQuery, SpeciesByTagsQuery>();
+            services.AddTransient<IArtByTagsQuery, ArtByTagsQuery>();
 
             services.AddTransient<ITagQuery, TagQuery>();
             services.AddTransient<IAaretsGangQuery, AaretsGangQuery>();

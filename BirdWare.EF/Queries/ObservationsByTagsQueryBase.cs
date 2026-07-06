@@ -9,7 +9,15 @@ namespace BirdWare.EF.Queries
                     BirdWareContext birdWareContext, IServiceProvider serviceProvider) :
                     BaseByTagsQuery(birdWareContext, serviceProvider) where T : class
     {
+        protected abstract List<T> GenerateResultSet(IQueryable<Observation> observations);
+        
         public List<T> GetByTags(List<Tag> tagList)
+        {
+            IQueryable<Observation> observations = GetData(tagList);
+            return GenerateResultSet(observations);
+        }
+
+        private IQueryable<Observation> GetData(List<Tag> tagList)
         {
             var observations = birdWareContext.Observation.AsNoTracking();
 
@@ -22,10 +30,7 @@ namespace BirdWare.EF.Queries
                     observations = observationResult;
                 }
             }
-
-            return GenerateResultSet(observations);
-        }
-
-        protected abstract List<T> GenerateResultSet(IQueryable<Observation> observations);
+            return observations;
+        }        
     }
 }

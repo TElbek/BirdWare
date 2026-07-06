@@ -2,7 +2,7 @@
 
 namespace BirdWare.EF.Interfaces
 {
-    public interface ISpeciesByTagsQuery
+    public interface IArtByTagsQuery
     {
         List<VArt> GetByTags(List<Tag> TagList);
     }

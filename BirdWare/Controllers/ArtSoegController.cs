@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
 {
-    public class ArtSoegController(ISpeciesByTagsQuery speciesByTagsQuery) : ControllerBase
+    public class ArtSoegController(IArtByTagsQuery speciesByTagsQuery) : ControllerBase
     {
         [Route("api/arter/get/tags")]
         public List<VArt> GetSpeciesByTags([FromQuery] string tagListAsJson)
