@@ -10,14 +10,12 @@ namespace BirdWare.EF.Queries
     {
         protected override List<VArt> GenerateResultSet(IQueryable<Observation> observations)
         {
-            var resultSet = observations
-                .Where(o => o.Fugletur.Lokalitet.RegionId > 0)
-                .Join(birdWareContext.Art, o => o.ArtId, v => v.Id, (o, v) => v)                
-                .Distinct();
+            var resultSet = (from o in observations
+                             where o.Fugletur.Lokalitet.RegionId > 0
+                             join a in birdWareContext.Art on o.ArtId equals a.Id
+                             select a).Distinct();
 
-            return [.. (from v in resultSet
-                    select new VArt
-                    {
+            return [.. from v in resultSet select new VArt {
                         ArtNavn = v.Navn ?? string.Empty,
                         ArtId = v.Id,
                         SU = v.SU,
@@ -26,7 +24,7 @@ namespace BirdWare.EF.Queries
                         GruppeId = v.GruppeId,
                         FamilieId = v.Gruppe.Familie.Id,
                         FamilieNavn = v.Gruppe.Familie.Navn ?? string.Empty
-                    })];
+                    }];
         }
     }
 }
