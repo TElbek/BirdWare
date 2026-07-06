@@ -21,7 +21,7 @@ namespace BirdWare.Test.Queries
             var tagQuery = GetTagQueries();
             var tagList = tagQuery.GetTagList();
 
-            Assert.Equal(42, tagList.Count);
+            Assert.Equal(45, tagList.Count);
             
             MockContext.Verify(c => c.Art, Times.Once);
             MockContext.Verify(c => c.Gruppe, Times.Once);
@@ -38,7 +38,7 @@ namespace BirdWare.Test.Queries
             var tagQuery = GetTagQueries();
             var tagList = tagQuery.GetTagListFugletur();
 
-            Assert.Equal(33, tagList.Count);
+            Assert.Equal(36, tagList.Count);
 
             MockContext.Verify(c => c.Art, Times.Never);
             MockContext.Verify(c => c.Gruppe, Times.Never);
