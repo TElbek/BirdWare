@@ -6,11 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
 {
-    [ApiController]
-    public class ObservationSoegController(IObservationsByTagsQuery observationsByTagsQuery) : ControllerBase
+    public class ArtSoegController(ISpeciesByTagsQuery speciesByTagsQuery) : ControllerBase
     {
-        [Route("api/observationer/get/tags")]
-        public List<VObs> GetObservationsByTags([FromQuery] string tagListAsJson)
+        [Route("api/arter/get/tags")]
+        public List<VArt> GetSpeciesByTags([FromQuery] string tagListAsJson)
         {
             var tagListAsJSONValidator = new TagListAsJSONValidator();
             var tagListValidator = new TagListValidator();
@@ -26,7 +25,7 @@ namespace BirdWare.Controllers
                 return [];
             }
 
-            return observationsByTagsQuery.GetByTags(tagList ?? []);
+            return speciesByTagsQuery.GetByTags(tagList ?? []);
         }
     }
 }

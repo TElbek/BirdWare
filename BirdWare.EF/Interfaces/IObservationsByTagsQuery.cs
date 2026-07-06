@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IObservationsByTagsQuery
     {
-        List<VObs> GetObservationsByTags(List<Tag> TagList);
+        List<VObs> GetByTags(List<Tag> TagList);
     }
 }

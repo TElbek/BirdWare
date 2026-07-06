@@ -43,6 +43,22 @@ namespace BirdWare.EF.Queries
             return SortByName(tagList);
         }
 
+        public List<Tag> GetTagListSpecies()
+        {
+            var tagList = TagListFactory();
+            PopulateFamilier(tagList);
+            PopulateGrupper(tagList);
+            PopulateAarstal(tagList);
+            PopulateMaaneder(tagList);
+            PopulateLokaliteter(tagList);
+            PopulateKommuner(tagList);
+            PopulateRegioner(tagList);
+            PopulateDistance(tagList);
+            PopulateSaeson(tagList);
+            PopulateSenesteNAar(tagList);
+            return SortByName(tagList);
+        }
+
         private static List<Tag> TagListFactory() => [];
 
         private static List<Tag> SortByName(List<Tag> tagList) => [.. tagList.OrderBy(r => r.Name)];

@@ -6,5 +6,6 @@ namespace BirdWare.EF.Interfaces
     {
         List<Tag> GetTagList();
         List<Tag> GetTagListFugletur();
+        List<Tag> GetTagListSpecies();
     }
 }

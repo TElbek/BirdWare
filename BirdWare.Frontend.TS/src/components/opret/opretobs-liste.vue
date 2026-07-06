@@ -54,7 +54,7 @@ function removeObservation(id: number) {
 
 function getTagList(query: string) {
     if ((query != undefined) && (query.length >= 3)) {
-        api.get('tags/arter?query=' + query).then(response => {
+        api.get('tags/arter/ikke-set-paa-tur?query=' + query).then(response => {
             state.tagList = response.data;
         });
     }

@@ -6,27 +6,10 @@ using Microsoft.EntityFrameworkCore;
 namespace BirdWare.EF.Queries
 {
     public class ObservationsByTagsQuery(
-                    BirdWareContext birdWareContext, IServiceProvider serviceProvider) : 
-                    BaseByTagsQuery(birdWareContext, serviceProvider), IObservationsByTagsQuery
+                    BirdWareContext birdWareContext, IServiceProvider serviceProvider) :
+                    ObservationsByTagsQueryBase<VObs>(birdWareContext, serviceProvider), IObservationsByTagsQuery
     {
-        public List<VObs> GetObservationsByTags(List<Tag> tagList)
-        {
-            var observations = birdWareContext.Observation.AsNoTracking();
-
-            foreach (var tagType in TagsGroupedByTagType(tagList))
-            {
-                var filterImplementation = GetFilterForTagType<IObservationTagFilter>(tagType.Key);
-                var result = filterImplementation?.Filter(tagType.Value, observations);
-                if (result is IQueryable<Observation> observationResult) 
-                {
-                    observations = observationResult;
-                }
-            }
-
-            return GenerateResultSet(observations);
-        }
-
-        private List<VObs> GenerateResultSet(IQueryable<Observation> observations)
+        protected override List<VObs> GenerateResultSet(IQueryable<Observation> observations)
         {
             var query = from obs in observations
                 join tur in birdWareContext.Fugletur.AsNoTracking() on obs.FugleturId equals tur.Id

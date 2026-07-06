@@ -7,7 +7,7 @@ namespace BirdWare.EF.Queries
     {
         public List<ByLatitudeLongitude> GetObservationsByLatLong(List<Tag> tagList)
         { 
-            var observationList = observationsByTagsQuery.GetObservationsByTags(tagList);
+            var observationList = observationsByTagsQuery.GetByTags(tagList);
             return [.. (from o in observationList
                     group o by new { o.LokalitetId, o.LokalitetNavn, o.Latitude, o.Longitude } into g
                     select new ByLatitudeLongitude

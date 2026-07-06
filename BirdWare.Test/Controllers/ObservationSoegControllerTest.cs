@@ -13,7 +13,7 @@ namespace BirdWare.Test.Controllers
 
         public ObservationSoegControllerTest()
         {
-            observationsByTagsQueryMock.Setup(o => o.GetObservationsByTags(It.IsAny<List<Tag>>())).Returns([]);
+            observationsByTagsQueryMock.Setup(o => o.GetByTags(It.IsAny<List<Tag>>())).Returns([]);
             observationSoegController = new ObservationSoegController(observationsByTagsQueryMock.Object);
         }
 
@@ -23,7 +23,7 @@ namespace BirdWare.Test.Controllers
             var tagList = new List<Tag>() { new() { Id = 1, Name = "Tag1", TagType = TagTypes.Art } };
             var tagListAsJson = JsonSerializer.Serialize(tagList);
             observationSoegController.GetObservationsByTags(tagListAsJson);
-            observationsByTagsQueryMock.Verify(o => o.GetObservationsByTags(It.IsAny<List<Tag>>()), Times.Once);
+            observationsByTagsQueryMock.Verify(o => o.GetByTags(It.IsAny<List<Tag>>()), Times.Once);
         }
     }
 }

@@ -7,6 +7,7 @@ namespace BirdWare.Interfaces
     {
         List<TagGroup> GetTagList(string query);
         List<TagGroup> GetTagListFugletur(string query);
+        List<TagGroup> GetTagListArter(string query);
         List<Tag> GetTagListArt(string query);
         List<Tag> GetFamilieTagsBySearchValue([FromQuery] string query);
         string GetTagsFromNamesAsJSON([FromQuery] string tagNamesAsJson);

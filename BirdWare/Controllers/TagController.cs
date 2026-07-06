@@ -18,11 +18,19 @@ namespace BirdWare.Controllers
         }
 
         [HttpGet]
+        [Route("api/tags/arter")]
+        public List<TagGroup> GetTagListArter([FromQuery] string query)
+        {
+            return tagHandler.GetTagListArter(query);
+        }
+
+        [HttpGet]
         [Route("api/tags/fugletur")]
         public List<TagGroup> GetTagListFugletur([FromQuery] string query)
         {
             return tagHandler.GetTagListFugletur(query);
         }
+
 
         [Route("api/tag/{query}")]
         public Tag GetTag(string query)
@@ -30,7 +38,7 @@ namespace BirdWare.Controllers
             return tagHandler.GetTag(query);
         }
 
-        [Route("api/tags/arter")]
+        [Route("api/tags/arter/ikke-set-paa-tur")]
         public List<Tag> GetTagsArterIkkeSetPaaTur([FromQuery] string query)
         {
             return soegArtIkkeSetPaaTurHandler.GetTags(query);
