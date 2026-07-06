@@ -82,6 +82,16 @@ const router = createRouter({
       }
     },
     {
+      path: '/art',
+      name: 'art',
+      component: () => import('../views/ArterView.vue'),
+      meta: {
+        title: 'Art',
+        showInNavBar: true,
+        requireSSL: false,
+      }
+    },
+    {
       path: '/ankomst',
       name: 'ankomst',
       component: () => import('../views/AnkomstView.vue'),
@@ -117,7 +127,7 @@ const router = createRouter({
       component: () => import('../views/BedsteMaanedForFamilieView.vue'),
       meta: {
         title: 'Hvornår kan jeg se...',
-        showInNavBar: true,
+        showInNavBar: false,
         requireSSL: false,
       }
     },

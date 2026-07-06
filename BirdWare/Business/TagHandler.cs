@@ -18,7 +18,7 @@ namespace BirdWare.Business
 
         public List<TagGroup> GetTagListArter(string query)
         {
-            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagListArter");
+            var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagListSpecies, "TagListArter");
             var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
             return GroupTagsByTypeName(result);
         }
