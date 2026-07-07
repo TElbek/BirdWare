@@ -3,7 +3,7 @@
         <tw-card-header-slot>
             <div class="flex justify-between text-birdware dark:text-birdware-bright text-lg">
                 <span class="text-lg font-semibold">{{ caption }}</span>
-                <ankomst-count :ankomstList="ankomstList"></ankomst-count>
+                <ankomst-count class="mt-1" :ankomstList="ankomstList"></ankomst-count>
             </div>
         </tw-card-header-slot>
         <div class="mb-1 mt-1">

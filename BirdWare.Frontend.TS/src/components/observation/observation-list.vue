@@ -2,17 +2,9 @@
     <tw-grid-cols-three :count="props.groupedData?.size" :offset="5">
         <div v-for="[key, value] in props.groupedData">
             <tw-card>
-                <tw-card-header-slot>
-                    <div class="grid grid-cols-[1fr_max-content] gap-x-1 font-medium ">
-                        <a @click="addTag(key)" class="cursor-pointer">
-                            <span>
-                                {{ obsSelectionStore.isGropingByMonth && valueIsNumber(key) ? getNameOfMonth(key) :
-                                    key }}
-                            </span>
-                        </a>
-                        <span class="text-right">{{ value.length }}</span>
-                    </div>
-                </tw-card-header-slot>
+                <tw-card-header :caption="obsSelectionStore.isGropingByMonth && valueIsNumber(key) ? getNameOfMonth(key) : key"
+                    :count="value.length" :showCount="true" @click="addTag">                    
+                </tw-card-header>
                 <div class="grid grid-cols-[max-content_max-content_max-content_1fr] gap-x-1 lg:gap-x-2 dark:text-white">
                     <template v-for="obs in obsSorted(value)" :key="obs.observationId">
                         <div><fugletur-dato :fugleturId="obs.fugleturId" :dato="obs.dato" /></div>

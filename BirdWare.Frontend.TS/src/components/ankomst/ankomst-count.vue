@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-row gap-x-2 font-semibold text-sm">
-        <div v-if="setFoerTidAny" class="w-7 h-7 shadow rounded-full border-3 border-green-500 text-center text-black dark:text-white">{{ setFoerTid.length }}</div>
-        <div v-if="setForsinketAny" class="w-7 h-7 shadow rounded-full border-3 border-red-500 text-center text-black dark:text-white">{{ setForsinket.length }}</div>
-        <div v-if="ikkeSetEndnuAny" class="w-7 h-7 shadow rounded-full border-3 border-gray-300 text-center text-black dark:text-white">{{ ikkeSetEndnu.length }}</div>
+    <div class="flex flex-row gap-x-2 font-semibold text-xs">
+        <div v-if="setFoerTidAny" class="w-6 h-6 shadow rounded-full border-3 border-green-500 text-center text-black dark:text-white">{{ setFoerTid.length }}</div>
+        <div v-if="setForsinketAny" class="w-6 h-6 shadow rounded-full border-3 border-red-500 text-center text-black dark:text-white">{{ setForsinket.length }}</div>
+        <div v-if="ikkeSetEndnuAny" class="w-6 h-6 shadow rounded-full border-3 border-gray-300 text-center text-black dark:text-white">{{ ikkeSetEndnu.length }}</div>
     </div>
 </template>
 
