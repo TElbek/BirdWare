@@ -3,6 +3,7 @@
         <tw-grid-cols-five :count="analyseTyperCount">
             <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
                 <fugleturAnalyseType :analyseListe="getAnalyseListeForType(analyseType.analyseType)"
+                    v-if="getAnalyseListeForType(analyseType.analyseType).length > 0"
                     :analysetype="analyseType" :analyseTypeTekst="getAnalyseTypeTekst(analyseType.analyseType)">
                 </fugleturAnalyseType>
             </template>

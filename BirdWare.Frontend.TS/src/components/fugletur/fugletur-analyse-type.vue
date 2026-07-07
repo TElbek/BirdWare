@@ -1,17 +1,12 @@
 <template>
-    <div v-if="props.analyseListe.length > 0">
-        <tw-card>
-            <span class="text-base font-medium text-birdware dark:text-birdware-bright capitalize">{{
-                props.analyseTypeTekst }}</span>
-            <span class="text-base font-medium text-birdware dark:text-birdware-bright float-end">{{
-                props.analyseListe.length }}</span>
-            <tw-flex>
-                <template v-for="item in arterSorteret(props.analyseListe)">
-                    <art-navn :art-navn="item.artNavn" :art-id="item.artId" :speciel="item.speciel" :su="item.su"></art-navn>
-                </template>
-            </tw-flex>
-        </tw-card>
-    </div>
+    <tw-card>
+        <tw-card-header :caption="props.analyseTypeTekst" :count="props.analyseListe.length"
+            :show-count="true"></tw-card-header>
+        <tw-flex>
+            <art-navn v-for="item in arterSorteret(props.analyseListe)" :art-navn="item.artNavn" :art-id="item.artId"
+                :speciel="item.speciel" :su="item.su"></art-navn>
+        </tw-flex>
+    </tw-card>
 </template>
 
 <script setup lang="ts">
