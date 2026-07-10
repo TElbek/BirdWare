@@ -82,11 +82,11 @@ const router = createRouter({
       }
     },
     {
-      path: '/art',
-      name: 'art',
+      path: '/artsliste',
+      name: 'artsliste',
       component: () => import('../views/ArterView.vue'),
       meta: {
-        title: 'Art',
+        title: 'Artsliste',
         showInNavBar: true,
         requireSSL: false,
       }

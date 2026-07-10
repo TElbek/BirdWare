@@ -2,8 +2,7 @@
     <tw-grid-cols-five :count="groupedData.size">
         <div v-for="[groupName, arts] in groupedData" :key="groupName">
             <tw-card>
-                <tw-card-header :caption="groupName" :count="arts.length" :showCount="true">
-                </tw-card-header>
+                <tw-card-header :caption="groupName" :count="arts.length" :showCount="true" @click="addTag(groupName)"></tw-card-header>
                 <tw-flex>
                     <template v-for="item in arterSorteret(arts)" :key="item.artId">
                         <art-navn :art-navn="item.artNavn" :art-id="item.artId" :speciel="item.speciel"
@@ -23,6 +22,7 @@ import { computed, onMounted, reactive, watch } from 'vue';
 import { useArtSelectionStore } from '@/stores/art-selection-store';
 import { storeToRefs } from 'pinia';
 
+const emit = defineEmits(['addtag']);
 const state = reactive({
     arter: [] as artType[]
 });
@@ -68,5 +68,11 @@ watch(() => state.arter, (newValue) => {
 
 function arterSorteret(art: artType[]) {
     return art.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
+}
+
+function addTag(tagText: string) {
+    api.get("tag/" + tagText).then(response => {
+        artSelectionStore.addTag(response.data);
+    });
 }
 </script>
