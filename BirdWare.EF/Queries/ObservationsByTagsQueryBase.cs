@@ -13,7 +13,7 @@ namespace BirdWare.EF.Queries
         
         public List<T> GetByTags(List<Tag> tagList)
         {
-            IQueryable<Observation> observations = GetData(tagList);
+            var observations = GetData(tagList);
             return GenerateResultSet(observations);
         }
 

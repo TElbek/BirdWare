@@ -1,6 +1,7 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
@@ -12,7 +13,7 @@ namespace BirdWare.EF.Queries
         {
             var resultSet = (from o in observations
                              where o.Fugletur.Lokalitet.RegionId > 0
-                             join a in birdWareContext.Art on o.ArtId equals a.Id
+                             join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
                              select a).Distinct();
 
             return [.. from v in resultSet select new VArt {
