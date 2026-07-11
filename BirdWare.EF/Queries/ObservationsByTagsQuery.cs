@@ -23,7 +23,7 @@ namespace BirdWare.EF.Queries
                 orderby tur.Dato descending
                 select new { obs, tur, lok, kom, reg, art, grp, fam };
 
-                return [.. query.Take(200).AsEnumerable()
+                return [.. query.Take(200)
                                 .Select(x => VObs.MapToVObs(x.obs, x.tur, x.lok, x.kom, x.reg, x.art, x.grp, x.fam))];
         }        
     }
