@@ -18,10 +18,10 @@ namespace BirdWare.Test.Queries
         { 
             var aaretsGangQuery = GetAaretsGangQuery();
             var aaretsGang = aaretsGangQuery.GetAaretsGang();
-            Assert.Equal(3, aaretsGang.Count);
-            Assert.Equal("Sortspætte", aaretsGang[0].ArtNavn);
-            Assert.Equal("Himalayasanger", aaretsGang[1].ArtNavn);
-            Assert.Equal("Rørdrum", aaretsGang[2].ArtNavn);
+            Assert.Equal(3, aaretsGang.ToList().Count);
+            Assert.Equal("Sortspætte", aaretsGang.ToList()[0].ArtNavn);
+            Assert.Equal("Himalayasanger", aaretsGang.ToList()[1].ArtNavn);
+            Assert.Equal("Rørdrum", aaretsGang.ToList()[2].ArtNavn);
         }
 
         private AaretsGangQuery GetAaretsGangQuery()

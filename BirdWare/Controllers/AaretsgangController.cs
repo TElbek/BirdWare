@@ -9,7 +9,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/aaretsgang")]
-        public List<AaretsGang> GetAaretsGang()
+        public IEnumerable<AaretsGang> GetAaretsGang()
         { 
             return aaretsGangQuery.GetAaretsGang();
         }
