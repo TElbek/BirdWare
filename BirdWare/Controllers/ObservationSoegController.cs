@@ -10,7 +10,7 @@ namespace BirdWare.Controllers
     public class ObservationSoegController(IObservationsByTagsQuery observationsByTagsQuery) : ControllerBase
     {
         [Route("api/observationer/get/tags")]
-        public List<VObs> GetObservationsByTags([FromQuery] string tagListAsJson)
+        public IEnumerable<VObs> GetObservationsByTags([FromQuery] string tagListAsJson)
         {
             var tagListAsJSONValidator = new TagListAsJSONValidator();
             var tagListValidator = new TagListValidator();

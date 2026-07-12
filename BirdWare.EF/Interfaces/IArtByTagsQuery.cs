@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IArtByTagsQuery
     {
-        List<VArt> GetByTags(List<Tag> TagList);
+        IEnumerable<VArt> GetByTags(List<Tag> TagList);
     }
 }

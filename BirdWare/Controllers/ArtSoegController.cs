@@ -9,7 +9,7 @@ namespace BirdWare.Controllers
     public class ArtSoegController(IArtByTagsQuery speciesByTagsQuery) : ControllerBase
     {
         [Route("api/arter/get/tags")]
-        public List<VArt> GetSpeciesByTags([FromQuery] string tagListAsJson)
+        public IEnumerable<VArt> GetSpeciesByTags([FromQuery] string tagListAsJson)
         {
             var tagListAsJSONValidator = new TagListAsJSONValidator();
             var tagListValidator = new TagListValidator();

@@ -9,7 +9,7 @@ namespace BirdWare.EF.Queries
                     BirdWareContext birdWareContext, IServiceProvider serviceProvider) :
                     ObservationsByTagsQueryBase<VObs>(birdWareContext, serviceProvider), IObservationsByTagsQuery
     {
-        protected override List<VObs> GenerateResultSet(IQueryable<Observation> observations)
+        protected override IEnumerable<VObs> GenerateResultSet(IQueryable<Observation> observations)
         {
             var query = from obs in observations
                 join tur in birdWareContext.Fugletur.AsNoTracking() on obs.FugleturId equals tur.Id

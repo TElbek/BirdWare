@@ -9,7 +9,7 @@ namespace BirdWare.EF.Queries
                     BirdWareContext birdWareContext, IServiceProvider serviceProvider) :
                     ObservationsByTagsQueryBase<VArt>(birdWareContext, serviceProvider), IArtByTagsQuery
     {
-        protected override List<VArt> GenerateResultSet(IQueryable<Observation> observations)
+        protected override IEnumerable<VArt> GenerateResultSet(IQueryable<Observation> observations)
         {
             var resultSet = (from o in observations
                              where o.Fugletur.Lokalitet.RegionId > 0

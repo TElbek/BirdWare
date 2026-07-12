@@ -11,7 +11,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/fugletur/{fugleturId}/analyse")]
-        public List<TripAnalysisResult> AnalyserFugletur(long fugleturId)
+        public IEnumerable<TripAnalysisResult> AnalyserFugletur(long fugleturId)
         {
             var validator = new GreaterThanZeroValidator();
             if(!validator.Validate(fugleturId).IsValid)

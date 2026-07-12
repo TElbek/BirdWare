@@ -9,9 +9,9 @@ namespace BirdWare.EF.Queries
                     BirdWareContext birdWareContext, IServiceProvider serviceProvider) :
                     BaseByTagsQuery(birdWareContext, serviceProvider) where T : class
     {
-        protected abstract List<T> GenerateResultSet(IQueryable<Observation> observations);
+        protected abstract IEnumerable<T> GenerateResultSet(IQueryable<Observation> observations);
         
-        public List<T> GetByTags(List<Tag> tagList)
+        public IEnumerable<T> GetByTags(List<Tag> tagList)
         {
             var observations = GetData(tagList);
             return GenerateResultSet(observations);
