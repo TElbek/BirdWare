@@ -5,7 +5,7 @@ namespace BirdWare.EF.Queries
 {
     public class ForskelQueries(BirdWareContext birdWareContext, IArterAarQueries arterAarQueries) : ContextBase(birdWareContext), IForskelQueries
     {
-        public List<Forskel> GetForskelIAar()
+        public IEnumerable<Forskel> GetForskelIAar()
         {
             var speciesThisYear = arterAarQueries.GetArterIAar();
             var speciesLastYear = arterAarQueries.GetArterSidsteAarSammePeriode();
@@ -13,7 +13,7 @@ namespace BirdWare.EF.Queries
             return Populate(speciesThisYear, speciesLastYear);
         }
 
-        public List<Forskel> GetForskelSidsteAar()
+        public IEnumerable<Forskel> GetForskelSidsteAar()
         {
             var speciesThisYear = arterAarQueries.GetArterIAar();
             var speciesLastYear = arterAarQueries.GetArterSidsteAarSammePeriode();
@@ -21,9 +21,9 @@ namespace BirdWare.EF.Queries
             return Populate(speciesLastYear, speciesThisYear);
         }
 
-        private List<Forskel> Populate(IQueryable<ArterAar> currentYear, IQueryable<ArterAar> compareYear)
+        private IEnumerable<Forskel> Populate(IQueryable<ArterAar> currentYear, IQueryable<ArterAar> compareYear)
         {
-            return [.. (from cy in currentYear
+            return (from cy in currentYear
                     where compareYear.All(t => t.ArtId != cy.ArtId)
                     join fcy in birdWareContext.Fugletur on cy.FugleturId equals fcy.Id
                     join lcy in birdWareContext.Lokalitet on fcy.LokalitetId equals lcy.Id
@@ -40,7 +40,7 @@ namespace BirdWare.EF.Queries
                         Speciel = cy.Speciel,
                         LokalitetId = lcy.Id,
                         LokalitetNavn = lcy.Navn
-                    }).OrderByDescending(o => o.Dato)];
+                    }).OrderByDescending(o => o.Dato);
         }
     }
 }

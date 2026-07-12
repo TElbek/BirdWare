@@ -9,14 +9,14 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/forskel/iaar")]
-        public List<Forskel> ForskelIAar()
+        public IEnumerable<Forskel> ForskelIAar()
         { 
             return forskelQueries.GetForskelIAar();
         }
 
         [HttpGet]
         [Route("api/forskel/sidsteaar")]
-        public List<Forskel> ForskelSidsteAar()
+        public IEnumerable<Forskel> ForskelSidsteAar()
         {
             return forskelQueries.GetForskelSidsteAar();
         }
