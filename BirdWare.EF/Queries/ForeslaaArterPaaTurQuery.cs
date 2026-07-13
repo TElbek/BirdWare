@@ -7,7 +7,7 @@ namespace BirdWare.EF.Queries
 {
     public class ForeslaaArterPaaTurQuery(BirdWareContext birdWareContext) : IForeslaaArterPaaTurQuery
     {
-        public List<ArtForslag> ForeslaaArterSenesteTur()
+        public IEnumerable<ArtForslag> ForeslaaArterSenesteTur()
         {
             var fugleTurId = GetSenesteFugleTurId();
 
@@ -40,7 +40,7 @@ namespace BirdWare.EF.Queries
                            })
                           .Take(40);
 
-            return [.. artList];
+            return artList;
         }
 
         private IQueryable<FugleturAarMaaned> GetWithMaaned(long maanedStart, long maanedSlut) => 

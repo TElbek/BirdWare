@@ -10,7 +10,7 @@ namespace BirdWare.EF.Queries
         private readonly IAnkomtsDagSubQuery ankomtsDagSubQuery = ankomtsDagSubQuery;
         private readonly IAnkomstDagIAarQuery ankomstDagIAarQuery = ankomstDagIAarQuery;
 
-        public async Task<List<AnkomstDag>> GetAnkomtsDage(long familieId)
+        public async Task<IEnumerable<AnkomstDag>> GetAnkomtsDage(long familieId)
         {
             var ankomtsDage = new List<AnkomstDag>();
 
@@ -32,16 +32,16 @@ namespace BirdWare.EF.Queries
                     SetIaarDato = ankomstDatoIAar.HasValue ? new DateTime(DateTime.Now.Year, 1, 1).AddDays(ankomstDatoIAar.Value) : null,
                 });
 
-            return [.. ankomtsDage.OrderBy(o => o.ArtNavn)];
+            return ankomtsDage.OrderBy(o => o.ArtNavn);
         }
 
-        private static double GetAnkomstDatoGennemsnit(List<AnkomstDagBeregning> ankomstDagQuery, long artId)
+        private static double GetAnkomstDatoGennemsnit(IEnumerable<AnkomstDagBeregning> ankomstDagQuery, long artId)
         {
             var match = ankomstDagQuery.Where(x => x.ArtId == artId);
             return match != null ? match.Average(a => a.GnsAnkomstDag) - 1 : 0;
         }
 
-        private static double? GetAnkomstDatoIAar(List<AnkomstDagBeregning> iAarQuery, long artId)
+        private static double? GetAnkomstDatoIAar(IEnumerable<AnkomstDagBeregning> iAarQuery, long artId)
         {
             var match = iAarQuery.FirstOrDefault(x => x.ArtId == artId);
             return match != null && match.SetIaarDag.HasValue ? match.SetIaarDag.Value - 1 : (double?)null;

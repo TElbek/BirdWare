@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IForeslaaArterPaaTurQuery
     {
-        List<ArtForslag> ForeslaaArterSenesteTur();
+        IEnumerable<ArtForslag> ForeslaaArterSenesteTur();
     }
 }

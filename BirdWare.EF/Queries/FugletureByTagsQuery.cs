@@ -9,7 +9,7 @@ namespace BirdWare.EF.Queries
                     BirdWareContext birdWareContext, IServiceProvider serviceProvider) : 
                     BaseByTagsQuery(birdWareContext, serviceProvider), IFugletureByTagsQuery
     {        
-        public List<VTur> GetFugletureByTags(List<Tag> tagList)
+        public IEnumerable<VTur> GetFugletureByTags(IEnumerable<Tag> tagList)
         {
             var fugleture = birdWareContext.Fugletur.AsNoTracking();
 
@@ -26,7 +26,7 @@ namespace BirdWare.EF.Queries
             return GenerateResultSet(fugleture);
         }
 
-        private static List<VTur> GenerateResultSet(IQueryable<Fugletur> fugleture)
+        private static IEnumerable<VTur> GenerateResultSet(IQueryable<Fugletur> fugleture)
         {
             var listeAfFugleture = fugleture
                     .Include(i => i.Lokalitet)
@@ -36,7 +36,7 @@ namespace BirdWare.EF.Queries
                     .Take(30)
                     .ToList();
 
-            return [.. listeAfFugleture.Select(s => VTur.MapFromFugletur(s))];
+            return listeAfFugleture.Select(VTur.MapFromFugletur);
         }
     }
 }

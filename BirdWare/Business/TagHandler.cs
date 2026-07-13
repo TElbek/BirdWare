@@ -9,34 +9,34 @@ namespace BirdWare.Business
 {
     internal class TagHandler(ITagQuery tagQuery, ITagMemoryCache tagMemoryCache) : ITagHandler
     {
-        public List<TagGroup> GetTagList(string query)
+        public IEnumerable<TagGroup> GetTagList(string query)
         {
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
             var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
             return GroupTagsByTypeName(result);
         }
 
-        public List<TagGroup> GetTagListArter(string query)
+        public IEnumerable<TagGroup> GetTagListArter(string query)
         {
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagListSpecies, "TagListArter");
             var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
             return GroupTagsByTypeName(result);
         }
 
-        public List<TagGroup> GetTagListFugletur(string query)
+        public IEnumerable<TagGroup> GetTagListFugletur(string query)
         {
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagListFugletur, "TagListFugletur");
             var result = cacheEntry.Where(q => q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
             return GroupTagsByTypeName(result);
         }
 
-        public List<Tag> GetTagListArt(string query)
+        public IEnumerable<Tag> GetTagListArt(string query)
         {
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-            return [.. cacheEntry
+            return cacheEntry
                 .Where(t => t.TagType == TagTypes.Art &&
                        t.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)
-                .OrderBy(t => t.Name)];
+                .OrderBy(t => t.Name);
         }
 
         public Tag GetTag(string query)
@@ -48,11 +48,11 @@ namespace BirdWare.Business
                 .FirstOrDefault() ?? new Tag();
         }
 
-        public List<Tag> GetFamilieTagsBySearchValue([FromQuery] string query)
+        public IEnumerable<Tag> GetFamilieTagsBySearchValue([FromQuery] string query)
         {
             var cacheEntry = tagMemoryCache.GetOrCreate(tagQuery.GetTagList, "TagList");
-            return [.. cacheEntry.Where(q => q.TagType == TagTypes.Familie &&
-                                             q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1)];
+            return cacheEntry.Where(q => q.TagType == TagTypes.Familie &&
+                                             q.Name.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) > -1);
         }
 
         public string GetTagsFromNamesAsJSON([FromQuery] string tagNamesAsJson)
@@ -64,16 +64,16 @@ namespace BirdWare.Business
             return JsonSerializer.Serialize(tagList);
         }
 
-        private static List<TagGroup> GroupTagsByTypeName(IEnumerable<Tag> tags)
+        private static IEnumerable<TagGroup> GroupTagsByTypeName(IEnumerable<Tag> tags)
         {
-            return [.. tags
+            return tags
                 .GroupBy(t => t.TypeName)
                 .Select(g => new TagGroup
                 {
                     Name = g.Key.ToString(),
                     Tags = [.. g.OrderBy(t => t.Name)]
                 })
-                .OrderBy(g => g.Name)];
+                .OrderBy(g => g.Name);
         }
     }
 }

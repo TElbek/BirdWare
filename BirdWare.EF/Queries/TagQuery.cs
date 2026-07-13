@@ -8,7 +8,7 @@ namespace BirdWare.EF.Queries
 {
     public class TagQuery(BirdWareContext birdWareContext) : ITagQuery
     {
-        public List<Tag> GetTagList()
+        public IEnumerable<Tag> GetTagList()
         {
             var tagList = TagListFactory();
             PopulateAarstal(tagList);
@@ -27,7 +27,7 @@ namespace BirdWare.EF.Queries
             return SortByName(tagList);
         }
 
-        public List<Tag> GetTagListFugletur()
+        public IEnumerable<Tag> GetTagListFugletur()
         {
             var tagList = TagListFactory();
             PopulateAarstal(tagList);
@@ -43,7 +43,7 @@ namespace BirdWare.EF.Queries
             return SortByName(tagList);
         }
 
-        public List<Tag> GetTagListSpecies()
+        public IEnumerable<Tag> GetTagListSpecies()
         {
             var tagList = TagListFactory();
             PopulateFamilier(tagList);

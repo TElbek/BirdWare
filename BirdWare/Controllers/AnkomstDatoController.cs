@@ -1,7 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using BirdWare.Validation;
-using FluentValidation.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
@@ -11,7 +10,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/ankomstdato/familie/{familieId}")]
-        public async Task<List<AnkomstDag>> AnkomstDagFamilie(long familieId)
+        public async Task<IEnumerable<AnkomstDag>> AnkomstDagFamilie(long familieId)
         {
             var validator = new GreaterThanZeroValidator();
             var validationResult = await validator.ValidateAsync(familieId);

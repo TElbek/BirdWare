@@ -28,8 +28,8 @@ namespace BirdWare.Test.Controllers
         {
             var result = fugleturAnalyseController.GetAnalyseTypeListe();
             Assert.NotNull(result);
-            Assert.IsType<List<AnalyseTypeModel>>(result);
-            Assert.Equal(Enum.GetNames(typeof(AnalyseTyper)).Length, result.Count);
+            Assert.IsType<List<AnalyseTypeModel>>(result.ToList());
+            Assert.Equal(Enum.GetNames(typeof(AnalyseTyper)).Length, result.ToList().Count);
         }
     }
 }

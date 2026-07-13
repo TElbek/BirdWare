@@ -14,7 +14,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/fugletur/{id}/observationer")]
-        public List<VObs> GetFugleturObservationer(long id)
+        public IEnumerable<VObs> GetFugleturObservationer(long id)
         {
             var validator = new GreaterThanZeroValidator();
             if (!validator.Validate(id).IsValid)
@@ -26,7 +26,7 @@ namespace BirdWare.Controllers
 
         [HttpGet]
         [Route("api/fugletur/seneste/observationer")]
-        public List<VObs> GetSenesteFugleturObservationer()
+        public IEnumerable<VObs> GetSenesteFugleturObservationer()
         {
             var fugleturId = fugleturQuery.GetSenesteFugletur();
             return fugleturObservationQuery.GetObservationer(fugleturId);

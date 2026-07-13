@@ -10,7 +10,7 @@ namespace BirdWare.Controllers
 
         [HttpGet]
         [Route("api/BedsteMaanedForFamilie")]
-        public List<BedsteMaanedForFamilie> BedsteMaanedForFamilie()
+        public IEnumerable<BedsteMaanedForFamilie> BedsteMaanedForFamilie()
         {
             return bedsteMaanedForFamilieQuery.GetBedsteMaanedForFamilie();
         }

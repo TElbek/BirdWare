@@ -24,7 +24,7 @@ namespace BirdWare.Controllers
 
         [HttpGet]
         [Route("api/analyse/typer")]
-        public List<AnalyseTypeModel> GetAnalyseTypeListe()
+        public IEnumerable<AnalyseTypeModel> GetAnalyseTypeListe()
         { 
             return [.. Enum.GetValues<AnalyseTyper>().Select(s => new AnalyseTypeModel {AnalyseType = s})];
         }

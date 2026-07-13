@@ -2,7 +2,7 @@
 {
     public static class SaesonMaaneder
     {
-        public static Dictionary<TagTypes, List<long>> Liste { get; set; } = new Dictionary<TagTypes, List<long>>
+        public static Dictionary<TagTypes, IEnumerable<long>> Liste { get; set; } = new Dictionary<TagTypes, IEnumerable<long>>
         {
             { TagTypes.SaesonForaar, [3, 4, 5] },
             { TagTypes.SaesonSommer, [6, 7, 8] },

@@ -9,7 +9,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/fugletur/foreslaaArter")]
-        public List<ArtForslag> ForeslaaArter()
+        public IEnumerable<ArtForslag> ForeslaaArter()
         { 
             return foreslaaArterPaaTurQuery.ForeslaaArterSenesteTur();
         }

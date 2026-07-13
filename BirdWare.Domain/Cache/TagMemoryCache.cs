@@ -21,7 +21,7 @@ namespace BirdWare.Domain.Cache
         private readonly bool enableCache = true;
         private readonly IMemoryCache? memoryCache;
 
-        public List<Tag> GetOrCreate(Func<List<Tag>> getTagListMethod, string cachedEntryName)
+        public IEnumerable<Tag> GetOrCreate(Func<IEnumerable<Tag>> getTagListMethod, string cachedEntryName)
         {
             if (enableCache)
             {

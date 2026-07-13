@@ -19,25 +19,25 @@ namespace BirdWare.Test.Queries
 
             var observationer = fugleturObservationQuery.GetObservationer(1);
             
-            Assert.Equal(2, observationer.Count);
+            Assert.Equal(2, observationer.Count());
 
-            Assert.Equal(1, observationer[0].ObservationId);
-            Assert.Equal("Art1", observationer[0].ArtNavn);
-            Assert.Equal("Beskrivelse1", observationer[0].Bem);
-            Assert.Equal(1, observationer[0].FamilieId);
-            Assert.Equal("Familie1", observationer[0].FamilieNavn);
-            Assert.Equal(1, observationer[0].FugleturId);
-            Assert.Equal(1, observationer[0].GruppeId);
-            Assert.False(observationer[0].SU);
+            Assert.Equal(1, observationer.ToList()[0].ObservationId);
+            Assert.Equal("Art1", observationer.ToList()[0].ArtNavn);
+            Assert.Equal("Beskrivelse1", observationer.ToList()[0].Bem);
+            Assert.Equal(1, observationer.ToList()[0].FamilieId);
+            Assert.Equal("Familie1", observationer.ToList()[0].FamilieNavn);
+            Assert.Equal(1, observationer.ToList()[0].FugleturId);
+            Assert.Equal(1, observationer.ToList()[0].GruppeId);
+            Assert.False(observationer.ToList()[0].SU);
 
-            Assert.Equal(2, observationer[1].ObservationId);
-            Assert.Equal("Art2", observationer[1].ArtNavn);
-            Assert.Equal("Beskrivelse2", observationer[1].Bem);
-            Assert.Equal(2, observationer[1].FamilieId);
-            Assert.Equal("Familie2", observationer[1].FamilieNavn);
-            Assert.Equal(1, observationer[1].FugleturId);
-            Assert.Equal(2, observationer[1].GruppeId);
-            Assert.True(observationer[1].SU);
+            Assert.Equal(2, observationer.ToList()[1].ObservationId);
+            Assert.Equal("Art2", observationer.ToList()[1].ArtNavn);
+            Assert.Equal("Beskrivelse2", observationer.ToList()[1].Bem);
+            Assert.Equal(2, observationer.ToList()[1].FamilieId);
+            Assert.Equal("Familie2", observationer.ToList()[1].FamilieNavn);
+            Assert.Equal(1, observationer.ToList()[1].FugleturId);
+            Assert.Equal(2, observationer.ToList()[1].GruppeId);
+            Assert.True(observationer.ToList()[1].SU);
         }
 
         [Fact]

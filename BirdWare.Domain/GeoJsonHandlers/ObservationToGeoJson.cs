@@ -5,7 +5,7 @@ namespace BirdWare.Domain.GeoJsonHandlers
 {
     public class ObservationToGeoJson
     {
-        public static GeoJson MapObservationsToGeoJson(List<VObs> observationsByTags)
+        public static GeoJson MapObservationsToGeoJson(IEnumerable<VObs> observationsByTags)
         {
             var geoJSON = new GeoJson();
 

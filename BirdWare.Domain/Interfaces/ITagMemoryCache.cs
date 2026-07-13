@@ -4,6 +4,6 @@ namespace BirdWare.Domain.Interfaces
 {
     public interface ITagMemoryCache
     {
-        List<Tag> GetOrCreate(Func<List<Tag>> getTagListMethod, string cachedEntryName);
+        IEnumerable<Tag> GetOrCreate(Func<IEnumerable<Tag>> getTagListMethod, string cachedEntryName);
     }
 }

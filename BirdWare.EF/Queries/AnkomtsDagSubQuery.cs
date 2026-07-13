@@ -8,7 +8,7 @@ namespace BirdWare.EF.Queries
     {
         private readonly IDbContextFactory<BirdWareContext> dbContextFactory = dbContextFactory;
 
-        public async Task<List<AnkomstDagBeregning>> GetAnkomstDagQuery(long familieId)
+        public async Task<IEnumerable<AnkomstDagBeregning>> GetAnkomstDagQuery(long familieId)
         {
             var birdWareContext = await dbContextFactory.CreateDbContextAsync();
 

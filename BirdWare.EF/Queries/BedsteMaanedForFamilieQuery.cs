@@ -5,7 +5,7 @@ namespace BirdWare.EF.Queries
 {
     public class BedsteMaanedForFamilieQuery(BirdWareContext birdWareContext) : ContextBase(birdWareContext), IBedsteMaanedForFamilieQuery
     {
-        public List<BedsteMaanedForFamilie> GetBedsteMaanedForFamilie()
+        public IEnumerable<BedsteMaanedForFamilie> GetBedsteMaanedForFamilie()
         {
             var perMonth = birdWareContext.Observation
                 .Where(o => o.Fugletur != null && 

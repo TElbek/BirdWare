@@ -6,9 +6,9 @@ namespace BirdWare.EF.Queries
 {
     public class FugleturObservationQuery(BirdWareContext birdWareContext) : IFugleturObservationQuery
     {
-        public List<VObs> GetObservationer(long FugleturId)
+        public IEnumerable<VObs> GetObservationer(long FugleturId)
         {
-            var list = from o in birdWareContext.Observation.AsNoTracking() join
+            return from o in birdWareContext.Observation.AsNoTracking() join
                             a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id join
                             g in birdWareContext.Gruppe.AsNoTracking() on a.GruppeId equals g.Id join
                             f in birdWareContext.Familie.AsNoTracking() on g.FamilieId equals f.Id
@@ -27,8 +27,6 @@ namespace BirdWare.EF.Queries
                            SU = a.SU,
                            Speciel = a.Speciel
                        };
-                            
-            return [.. list];
         }        
     }
 }

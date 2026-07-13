@@ -5,11 +5,11 @@ namespace BirdWare.Interfaces
 {
     public interface ITagHandler
     {
-        List<TagGroup> GetTagList(string query);
-        List<TagGroup> GetTagListFugletur(string query);
-        List<TagGroup> GetTagListArter(string query);
-        List<Tag> GetTagListArt(string query);
-        List<Tag> GetFamilieTagsBySearchValue([FromQuery] string query);
+        IEnumerable<TagGroup> GetTagList(string query);
+        IEnumerable<TagGroup> GetTagListFugletur(string query);
+        IEnumerable<TagGroup> GetTagListArter(string query);
+        IEnumerable<Tag> GetTagListArt(string query);
+        IEnumerable<Tag> GetFamilieTagsBySearchValue([FromQuery] string query);
         string GetTagsFromNamesAsJSON([FromQuery] string tagNamesAsJson);
         Tag GetTag(string query);
     }

@@ -12,7 +12,7 @@ namespace BirdWare.Controllers
         IFugleturQuery fugleturQuery) : ControllerBase
     {
         [Route("api/fugleture/get/tags")]
-        public List<VTur> GetFugletureByTags([FromQuery] string tagListAsJson)
+        public IEnumerable<VTur> GetFugletureByTags([FromQuery] string tagListAsJson)
         {
             var validator = new TagListAsJSONValidator();
             if (!validator.Validate(tagListAsJson).IsValid)

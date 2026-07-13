@@ -9,7 +9,7 @@ namespace BirdWare.Business
                                              IFugleturQuery fugleturQuery,
                                              IFugleturObservationQuery fugleturObservationQuery) : ISoegArtIkkeSetPaaTurHandler
     {
-        public List<Tag> GetTags([FromQuery] string query)
+        public IEnumerable<Tag> GetTags([FromQuery] string query)
         {
             var tagList = tagHandler.GetTagListArt(query);
 
@@ -17,9 +17,9 @@ namespace BirdWare.Business
             var observedArtTagIds = fugleturObservationQuery.GetObservationer(latestFugleturId)
                 .Select(t => t.ArtId);
 
-            return [.. tagList
+            return tagList
                     .Where(q => !observedArtTagIds.Contains(q.Id))
-                    .OrderBy(o => o.Name)];
+                    .OrderBy(o => o.Name);
         }
     }
 }

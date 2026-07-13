@@ -9,7 +9,7 @@ namespace BirdWare.Controllers
     public class ObservationLatitudeLongitudeController(IObservationsByLatLongQuery observationsByLatLongQuery) : ControllerBase
     {
         [Route("api/observationer/get/latitude/longitude")]
-        public List<ByLatitudeLongitude> GetObservationsByTags([FromQuery] string tagListAsJson)
+        public IEnumerable<ByLatitudeLongitude> GetObservationsByTags([FromQuery] string tagListAsJson)
         {
             var tagList = JsonOperations<Tag>.GetListFromJSON(tagListAsJson);
             return observationsByLatLongQuery.GetObservationsByLatLong(tagList ?? []);

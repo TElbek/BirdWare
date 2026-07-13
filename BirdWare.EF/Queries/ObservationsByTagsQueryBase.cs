@@ -11,13 +11,13 @@ namespace BirdWare.EF.Queries
     {
         protected abstract IEnumerable<T> GenerateResultSet(IQueryable<Observation> observations);
         
-        public IEnumerable<T> GetByTags(List<Tag> tagList)
+        public IEnumerable<T> GetByTags(IEnumerable<Tag> tagList)
         {
             var observations = GetData(tagList);
             return GenerateResultSet(observations);
         }
 
-        private IQueryable<Observation> GetData(List<Tag> tagList)
+        private IQueryable<Observation> GetData(IEnumerable<Tag> tagList)
         {
             var observations = birdWareContext.Observation.AsNoTracking();
 

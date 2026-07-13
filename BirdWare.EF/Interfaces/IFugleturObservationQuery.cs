@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IFugleturObservationQuery
     {
-        List<VObs> GetObservationer(long FugleturId);
+        IEnumerable<VObs> GetObservationer(long FugleturId);
     }
 }

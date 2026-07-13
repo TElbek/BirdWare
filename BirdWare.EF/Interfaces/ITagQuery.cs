@@ -4,8 +4,8 @@ namespace BirdWare.EF.Interfaces
 {
     public interface ITagQuery
     {
-        List<Tag> GetTagList();
-        List<Tag> GetTagListFugletur();
-        List<Tag> GetTagListSpecies();
+        IEnumerable<Tag> GetTagList();
+        IEnumerable<Tag> GetTagListFugletur();
+        IEnumerable<Tag> GetTagListSpecies();
     }
 }

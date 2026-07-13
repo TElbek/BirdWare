@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IBedsteMaanedForFamilieQuery
     {
-        List<BedsteMaanedForFamilie> GetBedsteMaanedForFamilie();
+        IEnumerable<BedsteMaanedForFamilie> GetBedsteMaanedForFamilie();
     }
 }

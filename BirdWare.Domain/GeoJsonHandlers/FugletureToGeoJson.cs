@@ -5,7 +5,7 @@ namespace BirdWare.Domain.GeoJsonHandlers
 {
     public class FugletureToGeoJson
     {
-        public static GeoJson MapFugletureToGeoJson(List<VTur> fugleture)
+        public static GeoJson MapFugletureToGeoJson(IEnumerable<VTur> fugleture)
         {
             var geoJSON = new GeoJson();
 
