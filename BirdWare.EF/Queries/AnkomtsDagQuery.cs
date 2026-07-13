@@ -5,7 +5,7 @@ namespace BirdWare.EF.Queries
 {
     internal class AnkomtsDagQuery(BirdWareContext birdWareContext) : ContextBase(birdWareContext), IAnkomtsDagQuery
     {
-        public ILookup<long, AnkomstDagBeregning> GetAnkomstFamilie(long familieId)
+        public ILookup<long, AnkomstDagBasis> GetAnkomstData(long familieId)
         {
             return (from obs in birdWareContext.Observation
                     join art in birdWareContext.Art on obs.ArtId equals art.Id
@@ -17,7 +17,6 @@ namespace BirdWare.EF.Queries
                     where familier.Id == familieId &&
                                   art.SetIDK == true &&
                                   art.SU == false &&
-                                  fugletur.Dato.HasValue &&
                                   region.Id > 0
                     group obs by new
                     {
@@ -26,12 +25,13 @@ namespace BirdWare.EF.Queries
                         Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year
                     }
                    into g
-                    select new AnkomstDagBeregning
+                    select new AnkomstDagBasis
                     {
                         ArtId = g.Key.Id,
                         ArtNavn = g.Key.Navn,
                         Aarstal = g.Key.Aarstal,
-                        AnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 0),
+                        AnkomstDag = g.Where(o => o.Fugletur.Dato.HasValue)
+                                      .Min(o => o.Fugletur.Dato.Value.DayOfYear),
                     }).ToLookup(x => x.ArtId);
         }
     }

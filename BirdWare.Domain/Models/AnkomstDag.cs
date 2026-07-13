@@ -15,25 +15,13 @@
         private static readonly string empty = string.Empty;
         #endregion
         #region methods
-        private int GetMaaned()
-        {
-            return SetIaarDato.HasValue ? SetIaarDato.Value.Month : GnsAnkomstDato.Month;
-        }
+        private int GetMaaned() => SetIaarDato.HasValue ? SetIaarDato.Value.Month : GnsAnkomstDato.Month;
 
-        private bool GetErSetIaar()
-        {
-            return SetIaarDato.HasValue;
-        }
+        private bool GetErSetIaar() => SetIaarDato.HasValue;
 
-        private bool SetTidligereIAar()
-        {
-            return SetIaarDato.HasValue && GnsAnkomstDato >= SetIaarDato.Value;
-        }
+        private bool SetTidligereIAar() => SetIaarDato.HasValue && GnsAnkomstDato >= SetIaarDato.Value;
 
-        private double GetForskel()
-        {
-            return ErSetIaar ? Math.Round((GnsAnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
-        }
+        private double GetForskel() => ErSetIaar ? Math.Round((GnsAnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
 
         #endregion
     }

@@ -1,6 +1,6 @@
 ﻿namespace BirdWare.Domain.Models
 {
-    public class AnkomstDagBeregning
+    public class AnkomstDagBasis
     {
         public long ArtId { get; set; }
         public string ArtNavn { get; set; } = string.Empty;

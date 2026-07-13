@@ -7,7 +7,7 @@ namespace BirdWare.Business
     {
         public IEnumerable<AnkomstDag> Handle(long familieId)
         {
-            var ankomstArtLookup = ankomtsDagQuery.GetAnkomstFamilie(familieId);
+            var ankomstArtLookup = ankomtsDagQuery.GetAnkomstData(familieId);
 
             foreach (var artId in ankomstArtLookup.Select(x => x.Key))
             {
@@ -27,16 +27,16 @@ namespace BirdWare.Business
         private static DateTime? GetSetIaarDato(double? iAarDag) => 
             iAarDag != null && iAarDag.HasValue ? new DateTime(DateTime.Now.Year, 1, 1).AddDays(iAarDag.Value) : null;
 
-        private static DateTime GetGnsAnkomstDato(IEnumerable<AnkomstDagBeregning> ankomstDageArt) => 
+        private static DateTime GetGnsAnkomstDato(IEnumerable<AnkomstDagBasis> ankomstDageArt) => 
             new DateTime(DateTime.Now.Year, 1, 1).AddDays(GetAnkomstDatoGennemsnit(ankomstDageArt));
 
-        private static string GetArtNavn(IEnumerable<AnkomstDagBeregning> ankomstDageArt) => 
+        private static string GetArtNavn(IEnumerable<AnkomstDagBasis> ankomstDageArt) => 
             ankomstDageArt.FirstOrDefault()?.ArtNavn ?? string.Empty;
 
-        private static double? GetAnkomstDagIAar(IEnumerable<AnkomstDagBeregning> ankomstDageArt) => 
+        private static double? GetAnkomstDagIAar(IEnumerable<AnkomstDagBasis> ankomstDageArt) => 
             ankomstDageArt.FirstOrDefault(x => x.Aarstal == DateTime.Now.Year)?.AnkomstDag;
 
-        private static double GetAnkomstDatoGennemsnit(IEnumerable<AnkomstDagBeregning> ankomstDageArt) => 
+        private static double GetAnkomstDatoGennemsnit(IEnumerable<AnkomstDagBasis> ankomstDageArt) => 
             ankomstDageArt.Any() ? ankomstDageArt.Average(a => a.AnkomstDag) - 1 : 0;
     }
 }
