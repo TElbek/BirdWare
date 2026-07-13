@@ -46,7 +46,7 @@ namespace BirdWare.Test.Controllers
                 return new Tag();
             });
 
-            soegArtIkkeSetPaaTurHandlerMock.Setup(x => x.GetTags(It.IsAny<string>())).Returns((string query) =>
+            soegArtIkkeSetPaaTurHandlerMock.Setup(x => x.Handle(It.IsAny<string>())).Returns((string query) =>
             {
                 if (query == "Musvåge") { return [new Tag { Id = 1, Name = "Musvåge", TagType = TagTypes.Art }]; }
                 return [];
@@ -129,7 +129,7 @@ namespace BirdWare.Test.Controllers
         public void GetTagsArterTest()
         {
             tagController.GetTagsArterIkkeSetPaaTur("Musvåge");
-            soegArtIkkeSetPaaTurHandlerMock.Verify(x => x.GetTags(It.IsAny<string>()), Times.Once);
+            soegArtIkkeSetPaaTurHandlerMock.Verify(x => x.Handle(It.IsAny<string>()), Times.Once);
         }
 
         [Fact]

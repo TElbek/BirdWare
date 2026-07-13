@@ -3,48 +3,36 @@ using BirdWare.EF.Interfaces;
 
 namespace BirdWare.EF.Queries
 {
-    public class AnkomtsDagQuery(
-        IAnkomtsDagSubQuery ankomtsDagSubQuery,
-        IAnkomstDagIAarQuery ankomstDagIAarQuery) : IAnkomtsDagQuery
+    internal class AnkomtsDagQuery(BirdWareContext birdWareContext) : ContextBase(birdWareContext), IAnkomtsDagQuery
     {
-        private readonly IAnkomtsDagSubQuery ankomtsDagSubQuery = ankomtsDagSubQuery;
-        private readonly IAnkomstDagIAarQuery ankomstDagIAarQuery = ankomstDagIAarQuery;
-
-        public async Task<IEnumerable<AnkomstDag>> GetAnkomtsDage(long familieId)
+        public ILookup<long, AnkomstDagBeregning> GetAnkomstFamilie(long familieId)
         {
-            var ankomtsDage = new List<AnkomstDag>();
-
-            var iAarQueryTask = ankomstDagIAarQuery.GetIAarQuery(familieId);
-            var ankomstDagQueryTask = ankomtsDagSubQuery.GetAnkomstDagQuery(familieId);
-
-            await Task.WhenAll(iAarQueryTask, ankomstDagQueryTask);
-
-            var iAarQuery = iAarQueryTask.Result;
-            var ankomstDagQuery = ankomstDagQueryTask.Result;
-
-            ankomtsDage.AddRange(from item in ankomstDagQuery.Select(s => new { s.ArtId, s.ArtNavn }).Distinct()
-                let ankomstDatoIAar = GetAnkomstDatoIAar(iAarQuery, item.ArtId)
-                select new AnkomstDag
-                {
-                    ArtId = item.ArtId,
-                    ArtNavn = item.ArtNavn,
-                    GnsAnkomstDato = new DateTime(DateTime.Now.Year, 1, 1).AddDays(GetAnkomstDatoGennemsnit(ankomstDagQuery, item.ArtId)),
-                    SetIaarDato = ankomstDatoIAar.HasValue ? new DateTime(DateTime.Now.Year, 1, 1).AddDays(ankomstDatoIAar.Value) : null,
-                });
-
-            return ankomtsDage.OrderBy(o => o.ArtNavn);
+            return (from obs in birdWareContext.Observation
+                    join art in birdWareContext.Art on obs.ArtId equals art.Id
+                    join grupper in birdWareContext.Gruppe on art.GruppeId equals grupper.Id
+                    join familier in birdWareContext.Familie on grupper.FamilieId equals familier.Id
+                    join fugletur in birdWareContext.Fugletur on obs.FugleturId equals fugletur.Id
+                    join lokalitet in birdWareContext.Lokalitet on fugletur.LokalitetId equals lokalitet.Id
+                    join region in birdWareContext.Region on lokalitet.RegionId equals region.Id
+                    where familier.Id == familieId &&
+                                  art.SetIDK == true &&
+                                  art.SU == false &&
+                                  fugletur.Dato.HasValue &&
+                                  region.Id > 0
+                    group obs by new
+                    {
+                        art.Id,
+                        art.Navn,
+                        Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year
+                    }
+                   into g
+                    select new AnkomstDagBeregning
+                    {
+                        ArtId = g.Key.Id,
+                        ArtNavn = g.Key.Navn,
+                        Aarstal = g.Key.Aarstal,
+                        AnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 0),
+                    }).ToLookup(x => x.ArtId);
         }
-
-        private static double GetAnkomstDatoGennemsnit(IEnumerable<AnkomstDagBeregning> ankomstDagQuery, long artId)
-        {
-            var match = ankomstDagQuery.Where(x => x.ArtId == artId);
-            return match != null ? match.Average(a => a.GnsAnkomstDag) - 1 : 0;
-        }
-
-        private static double? GetAnkomstDatoIAar(IEnumerable<AnkomstDagBeregning> iAarQuery, long artId)
-        {
-            var match = iAarQuery.FirstOrDefault(x => x.ArtId == artId);
-            return match != null && match.SetIaarDag.HasValue ? match.SetIaarDag.Value - 1 : (double?)null;
-        }        
     }
 }

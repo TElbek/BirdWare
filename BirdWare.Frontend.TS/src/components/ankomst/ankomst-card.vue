@@ -7,7 +7,7 @@
             </div>
         </tw-card-header-slot>
         <div class="mb-1 mt-1">
-            <template v-for="art in ankomstList" :key="art.artId">
+            <template v-for="art in sortArtList(ankomstList)" :key="art.artId">
                 <div class="grid grid-cols-[auto_1fr_auto] gap-x-2">
                     <div :class="getIndicatorClass(art)"></div>
                     <art-navn :artId="art.artId" :artNavn="art.artNavn" :speciel="false" :su="false"></art-navn>
@@ -40,5 +40,9 @@ function getIndicatorClass(art: ankomstDatoType) {
     } else {
         return 'w-3 h-3 rounded-full bg-gray-300 relative top-1.5';
     }
+}
+
+function sortArtList(artList: ankomstDatoType[]) {
+    return artList.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
 }
 </script>

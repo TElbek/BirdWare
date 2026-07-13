@@ -9,7 +9,7 @@ namespace BirdWare.Business
                                              IFugleturQuery fugleturQuery,
                                              IFugleturObservationQuery fugleturObservationQuery) : ISoegArtIkkeSetPaaTurHandler
     {
-        public IEnumerable<Tag> GetTags([FromQuery] string query)
+        public IEnumerable<Tag> Handle([FromQuery] string query)
         {
             var tagList = tagHandler.GetTagListArt(query);
 

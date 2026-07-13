@@ -41,7 +41,7 @@ namespace BirdWare.Controllers
         [Route("api/tags/arter/ikke-set-paa-tur")]
         public IEnumerable<Tag> GetTagsArterIkkeSetPaaTur([FromQuery] string query)
         {
-            return soegArtIkkeSetPaaTurHandler.GetTags(query);
+            return soegArtIkkeSetPaaTurHandler.Handle(query);
         }
 
         [Route("api/tag/art/{Id}")]

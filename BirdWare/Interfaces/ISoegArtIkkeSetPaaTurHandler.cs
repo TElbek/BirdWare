@@ -5,6 +5,6 @@ namespace BirdWare.Interfaces
 {
     public interface ISoegArtIkkeSetPaaTurHandler
     {
-        IEnumerable<Tag> GetTags([FromQuery] string query);
+        IEnumerable<Tag> Handle([FromQuery] string query);
     }
 }
