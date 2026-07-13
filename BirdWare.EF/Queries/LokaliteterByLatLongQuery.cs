@@ -8,7 +8,7 @@ namespace BirdWare.EF.Queries
     {
         private const int twenty = 20;
 
-        public List<LokaliteterByLatLong> FindLokaliteterLatLong(double latitude, double longitude)
+        public IEnumerable<LokaliteterByLatLong> FindLokaliteterLatLong(double latitude, double longitude)
         {
             var currentPoint = GeographyPoint.GetPointFromLatLong(latitude, longitude);
 

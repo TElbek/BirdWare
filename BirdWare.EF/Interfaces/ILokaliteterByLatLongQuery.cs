@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface ILokaliteterByLatLongQuery
     {
-        List<LokaliteterByLatLong> FindLokaliteterLatLong(double latitude, double longitude);
+        IEnumerable<LokaliteterByLatLong> FindLokaliteterLatLong(double latitude, double longitude);
     }
 }

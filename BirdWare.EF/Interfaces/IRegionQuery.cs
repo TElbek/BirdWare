@@ -4,6 +4,6 @@ namespace BirdWare.EF.Interfaces
 {
     public interface IRegionQuery
     {
-        List<Region> GetList(bool inklUdland = false);
+        IEnumerable<Region> GetList(bool inklUdland = false);
     }
 }

@@ -5,11 +5,11 @@ namespace BirdWare.EF.Queries
 {
     public class RegionQuery(BirdWareContext birdWareContext) : ContextBase(birdWareContext), IRegionQuery
     {
-        public List<Region> GetList(bool inklUdland = false)
+        public IEnumerable<Region> GetList(bool inklUdland = false)
         {
-            return [.. birdWareContext.Region
+            return birdWareContext.Region
                         .Where(q => inklUdland || q.Id > 0)
-                        .OrderBy(o => o.Navn)];
+                        .OrderBy(o => o.Navn);
         }
     }
 }

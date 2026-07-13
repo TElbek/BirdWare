@@ -6,9 +6,9 @@ namespace BirdWare.EF.Queries
 {
     public class HvorKanJegFindeQuery(BirdWareContext birdWareContext) : IHvorKanJegFindeQuery
     {
-        public List<spHvorKanJegFindeResult> GetHvorKanJegFinde()
+        public IEnumerable<spHvorKanJegFindeResult> GetHvorKanJegFinde()
         {
-            return [.. birdWareContext.SpHvorKanJegFindeResult.FromSqlRaw("spHvorKanJegFinde")];
+            return birdWareContext.SpHvorKanJegFindeResult.FromSqlRaw("spHvorKanJegFinde");
         }
     }
 }

@@ -9,14 +9,14 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/regioner")]
-        public List<Region> GetList()
+        public IEnumerable<Region> GetList()
         {
             return regionQuery.GetList();
         }
 
         [HttpGet]
         [Route("api/regioner/inkludland")]
-        public List<Region> GetListinkludland()
+        public IEnumerable<Region> GetListinkludland()
         {
             return regionQuery.GetList(inklUdland: true);
         }

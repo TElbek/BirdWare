@@ -7,12 +7,12 @@ namespace BirdWare.EF.Queries
 {
     public class FugleturQuery(BirdWareContext birdWareContext) : IFugleturQuery
     {
-        public List<VTur> GetFugleTureAarMaaned(long aarstal, long maaned)
+        public IEnumerable<VTur> GetFugleTureAarMaaned(long aarstal, long maaned)
         {
             var withMaaned = birdWareContext.Fugletur.GetAarMaaned()
                             .Where(q => q.Aarstal == aarstal && q.Maaned == maaned);
 
-            return [.. (from f in birdWareContext.Fugletur.AsNoTracking() join
+            return from f in birdWareContext.Fugletur.AsNoTracking() join
                              l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id join
                              r in birdWareContext.Region.AsNoTracking() on l.RegionId equals r.Id
                     where withMaaned.Any(s => s.FugleturId == f.Id)
@@ -26,7 +26,7 @@ namespace BirdWare.EF.Queries
                         LokalitetNavn = l.Navn ?? string.Empty,
                         RegionId = r.Id,
                         RegionNavn = r.Navn ?? string.Empty
-                    })];
+                    };
         }
 
         public VTur GetFugletur(long id)

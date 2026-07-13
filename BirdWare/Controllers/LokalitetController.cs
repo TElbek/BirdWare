@@ -11,7 +11,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/lokalitet/{latitude}/{longitude}")]
-        public List<LokaliteterByLatLong> FindLokaliteterLatLong(double latitude, double longitude)
+        public IEnumerable<LokaliteterByLatLong> FindLokaliteterLatLong(double latitude, double longitude)
         { 
             var validator = new LatitudeLongitudeValidator();
             if (!validator.Validate((latitude, longitude)).IsValid)

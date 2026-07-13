@@ -31,7 +31,7 @@ namespace BirdWare.Controllers
         }     
 
         [Route("api/fugleture/aar/maaned")]
-        public List<VTur> GetFugletureAarMaaned([FromQuery] long aarstal, long maaned)
+        public IEnumerable<VTur> GetFugletureAarMaaned([FromQuery] long aarstal, long maaned)
         {
             var validator = new AarMaanedValidator();
             if(!validator.Validate((aarstal, maaned)).IsValid)

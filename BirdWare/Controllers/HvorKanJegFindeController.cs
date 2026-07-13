@@ -9,7 +9,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/hvorkanjegfinde")]
-        public List<spHvorKanJegFindeResult> HvorKanJegFinde()
+        public IEnumerable<spHvorKanJegFindeResult> HvorKanJegFinde()
         { 
             return hvorKanJegFindeQuery.GetHvorKanJegFinde();
         }

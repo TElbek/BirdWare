@@ -5,7 +5,7 @@ namespace BirdWare.EF.Interfaces
     public interface IFugleturQuery
     {
         VTur GetFugletur(long id);
-        List<VTur> GetFugleTureAarMaaned(long aarstal, long maaned);
+        IEnumerable<VTur> GetFugleTureAarMaaned(long aarstal, long maaned);
         long GetSenesteFugletur();
     }
 }
