@@ -1,8 +1,8 @@
 <template>
-    <div class="flex flex-col gap-y-3">
+    <div class="flex flex-col gap-y-1.5">
         <div class="flex flex-row justify-between">
             <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
-            <ankomst-count :ankomstList="state.ankomst"></ankomst-count>
+            <ankomst-count class="mt-1.5" :ankomstList="state.ankomst"></ankomst-count>
         </div>
         <ankomst-selection></ankomst-selection>
         <tw-grid-cols-five :count="groupedByMaaned.size">

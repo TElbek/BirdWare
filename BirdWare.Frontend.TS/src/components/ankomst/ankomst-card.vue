@@ -11,8 +11,7 @@
                 <template v-for="art in sortArtList(ankomstList)" :key="art.artId">
                     <div :class="getIndicatorClass(art)"></div>
                     <art-navn :artId="art.artId" :artNavn="art.artNavn" :speciel="false" :su="false"></art-navn>
-                    <span v-if="art.erSetIaar"
-                        :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500 dark:text-white']">
+                    <span class="text-end" :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500 dark:text-white']">
                         {{ Math.abs(art.forskel) }} dage
                     </span>
                 </template>
@@ -20,8 +19,6 @@
         </div>
     </tw-card>
 </template>
-
-<!-- text-gray-900 dark:text-white -->
 
 <script setup lang="ts">
 import { type ankomstDatoType } from '@/types/ankomstDatoType';
