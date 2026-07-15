@@ -1,5 +1,6 @@
 ﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
@@ -7,32 +8,34 @@ namespace BirdWare.EF.Queries
     {
         public ILookup<long, AnkomstDagBasis> GetAnkomstData(long familieId)
         {
-            return (from obs in birdWareContext.Observation
-                    join art in birdWareContext.Art on obs.ArtId equals art.Id
-                    join grupper in birdWareContext.Gruppe on art.GruppeId equals grupper.Id
-                    join familier in birdWareContext.Familie on grupper.FamilieId equals familier.Id
-                    join fugletur in birdWareContext.Fugletur on obs.FugleturId equals fugletur.Id
-                    join lokalitet in birdWareContext.Lokalitet on fugletur.LokalitetId equals lokalitet.Id
-                    join region in birdWareContext.Region on lokalitet.RegionId equals region.Id
-                    where familier.Id == familieId &&
-                                  fugletur.Dato != null &&
-                                  art.SetIDK == true &&
-                                  art.SU == false &&
-                                  region.Id > 0
-                    group obs by new
-                    {
-                        art.Id,
-                        art.Navn,
-                        Aarstal = fugletur.Dato.HasValue ? fugletur.Dato.Value.Year : DateTime.MinValue.Year
-                    }
-                   into g
-                    select new AnkomstDagBasis
-                    {
-                        ArtId = g.Key.Id,
-                        ArtNavn = g.Key.Navn,
-                        Aarstal = g.Key.Aarstal,
-                        AnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 1),
-                    }).ToLookup(x => x.ArtId);
+            var rows = birdWareContext.Observation
+                .AsNoTracking()
+                .Where(o =>
+                    o.Art.Gruppe.Familie.Id == familieId &&
+                    o.Fugletur.Dato != null &&
+                    o.Art.SetIDK &&
+                   !o.Art.SU &&
+                    o.Fugletur.Lokalitet.RegionId > 0)
+                .GroupBy(o => new { o.Art.Id, o.Art.Navn, Aarstal = o.Fugletur.Dato!.Value.Year })
+                .Select(g => new
+                {
+                    g.Key.Id,
+                    g.Key.Navn,
+                    g.Key.Aarstal,
+                    MinDato = g.Min(x => x.Fugletur.Dato)
+                }).AsEnumerable();
+
+            var result = rows
+                .Select(r => new AnkomstDagBasis
+                {
+                    ArtId = r.Id,
+                    ArtNavn = r.Navn ?? string.Empty,
+                    Aarstal = r.Aarstal,
+                    AnkomstDag = r.MinDato.HasValue ? r.MinDato.Value.DayOfYear : 0
+                })
+                .ToLookup(x => x.ArtId);
+
+            return result;
         }
     }
 }
