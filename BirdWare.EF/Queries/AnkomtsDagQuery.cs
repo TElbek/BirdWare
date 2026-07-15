@@ -15,6 +15,7 @@ namespace BirdWare.EF.Queries
                     join lokalitet in birdWareContext.Lokalitet on fugletur.LokalitetId equals lokalitet.Id
                     join region in birdWareContext.Region on lokalitet.RegionId equals region.Id
                     where familier.Id == familieId &&
+                                  fugletur.Dato != null &&
                                   art.SetIDK == true &&
                                   art.SU == false &&
                                   region.Id > 0
@@ -30,8 +31,7 @@ namespace BirdWare.EF.Queries
                         ArtId = g.Key.Id,
                         ArtNavn = g.Key.Navn,
                         Aarstal = g.Key.Aarstal,
-                        AnkomstDag = g.Where(o => o.Fugletur.Dato.HasValue)
-                                      .Min(o => o.Fugletur.Dato.Value.DayOfYear),
+                        AnkomstDag = g.Min(o => o.Fugletur.Dato.HasValue ? o.Fugletur.Dato.Value.DayOfYear : 1),
                     }).ToLookup(x => x.ArtId);
         }
     }

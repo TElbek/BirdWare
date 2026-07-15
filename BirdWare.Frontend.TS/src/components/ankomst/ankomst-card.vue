@@ -7,15 +7,16 @@
             </div>
         </tw-card-header-slot>
         <div class="mb-1 mt-1">
-            <template v-for="art in sortArtList(ankomstList)" :key="art.artId">
-                <div class="grid grid-cols-[auto_1fr_auto] gap-x-2">
+            <div class="grid grid-cols-[auto_1fr_auto] gap-x-2">
+                <template v-for="art in sortArtList(ankomstList)" :key="art.artId">
                     <div :class="getIndicatorClass(art)"></div>
                     <art-navn :artId="art.artId" :artNavn="art.artNavn" :speciel="false" :su="false"></art-navn>
-                    <span v-if="art.erSetIaar" :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500 dark:text-white']">
+                    <span v-if="art.erSetIaar"
+                        :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500 dark:text-white']">
                         {{ Math.abs(art.forskel) }} dage
                     </span>
-                </div>
-            </template>
+                </template>
+            </div>
         </div>
     </tw-card>
 </template>
@@ -33,9 +34,9 @@ const props = defineProps<{
 }>();
 
 function getIndicatorClass(art: ankomstDatoType) {
-    if(art.tidligereIAar) {
+    if (art.tidligereIAar) {
         return 'w-3 h-3 rounded-full bg-green-500 relative top-1.5';
-    } else if(art.tidligereIAar === false && art.erSetIaar) {
+    } else if (art.tidligereIAar === false && art.erSetIaar) {
         return 'w-3 h-3 rounded-full bg-red-500 relative top-1.5';
     } else {
         return 'w-3 h-3 rounded-full bg-gray-300 relative top-1.5';
