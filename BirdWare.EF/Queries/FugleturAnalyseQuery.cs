@@ -7,42 +7,42 @@ namespace BirdWare.EF.Queries
 {
     public class FugleturAnalyseQuery(BirdWareContext birdWareContext) : IFugleturAnalyseQuery
     {
-        public IEnumerable<TripAnalysisResult> Analyser(long fugleturId)
+        public async Task<IEnumerable<TripAnalysisResult>> Analyser(long fugleturId)
         {
-            var vTur = FindFugletur(fugleturId);
-            var artListe = HentArtListe(fugleturId);
-            var vObsLookUp = FindAnalyseData(vTur, artListe);
+            var vTur = await FindFugletur(fugleturId);
+            var artListe = await HentArtListe(fugleturId);
+            var vObsLookUp = await FindAnalyseData(vTur, artListe);
 
             var tripAnalysisResult = new List<TripAnalysisResult>();
 
             tripAnalysisResult.AddRange(artListe
-                .Where(a => FoersteObsIDatabasen(vObsLookUp[a.Id]))
+                .Where(a => FoersteObsIDatabasen(vObsLookUp[a.Id]).Result)
                 .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIDatabasen))));
 
             tripAnalysisResult.AddRange(artListe
-                .Where(a => FoersteObsIRegion(vTur, vObsLookUp[a.Id]))
+                .Where(a => FoersteObsIRegion(vTur, vObsLookUp[a.Id]).Result)
                 .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIRegion))));
 
             tripAnalysisResult.AddRange(artListe
-                .Where(a => FoersteObsForLokalitet(vTur, vObsLookUp[a.Id]))
+                .Where(a => FoersteObsForLokalitet(vTur, vObsLookUp[a.Id]).Result)
                 .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsForLokalitet))));
 
             if(vTur.RegionId > 0)
             {
                 tripAnalysisResult.AddRange(artListe
-                    .Where(a => FoersteObsIDK(vObsLookUp[a.Id]))
+                    .Where(a => FoersteObsIDK(vObsLookUp[a.Id]).Result)
                     .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIDK))));
 
                 tripAnalysisResult.AddRange(artListe
-                    .Where(a => FoersteObsForKommune(vTur, vObsLookUp[a.Id]))
+                    .Where(a => FoersteObsForKommune(vTur, vObsLookUp[a.Id]).Result)
                     .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsForKommune))));
 
                 tripAnalysisResult.AddRange(artListe
-                    .Where(a => FoersteObsIAar(vTur, vObsLookUp[a.Id]))
+                    .Where(a => FoersteObsIAar(vTur, vObsLookUp[a.Id]).Result)
                     .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIAar))));
 
                 tripAnalysisResult.AddRange(artListe
-                    .Where(a => FoersteObsIMaaned(vTur, vObsLookUp[a.Id]))
+                    .Where(a => FoersteObsIMaaned(vTur, vObsLookUp[a.Id]).Result)
                     .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIMaaned))));
             }
 
@@ -58,14 +58,16 @@ namespace BirdWare.EF.Queries
             return analyseResultat;
         }
 
-        private IEnumerable<Art> HentArtListe(long fugleturId)
+        private async Task<IEnumerable<Art>> HentArtListe(long fugleturId)
         {
-            return birdWareContext.Observation.AsNoTracking()
+            return await birdWareContext.Observation.AsNoTracking()
                         .Where(o => o.FugleturId == fugleturId)
-                        .Select(o => o.Art);
+                        .Select(o => o.Art)
+                        .Distinct()
+                        .ToListAsync();
         }
 
-        private VTur FindFugletur(long fugleturId)
+        private async Task<VTur> FindFugletur(long fugleturId)
         {
             if (birdWareContext.Fugletur.Any(q => q.Id == fugleturId))
             {
@@ -85,7 +87,7 @@ namespace BirdWare.EF.Queries
             return new VTur();
         }
 
-        private ILookup<long, VObs> FindAnalyseData(VTur vTur, IEnumerable<Art> artList)
+        private async Task<ILookup<long, VObs>> FindAnalyseData(VTur vTur, IEnumerable<Art> artList)
         {
             return birdWareContext.Observation.AsNoTracking()
                 .Where(o => o.FugleturId < vTur.Id && artList.Select(s => s.Id).Contains(o.ArtId))
@@ -100,26 +102,40 @@ namespace BirdWare.EF.Queries
                 }).Distinct().ToLookup(l => l.ArtId);
         }
 
-        private static bool FoersteObsIDatabasen(IEnumerable<VObs> analyseDataArt) =>
-            !analyseDataArt.Any();
+        private static async Task<bool> FoersteObsIDatabasen(IEnumerable<VObs> analyseDataArt)
+        {
+            return !await Task.FromResult(analyseDataArt.Any());
+        }
 
-        private static bool FoersteObsIDK(IEnumerable<VObs> analyseDataArt) => 
-            !analyseDataArt .Any(q => q.RegionId > 0);
+        private static async Task<bool> FoersteObsIDK(IEnumerable<VObs> analyseDataArt)
+        {
+            return !await Task.FromResult(analyseDataArt.Any(q => q.RegionId > 0));
+        }
 
-        private static bool FoersteObsIRegion(VTur vTur, IEnumerable<VObs> analyseDataArt) => 
-            !analyseDataArt.Any(q => q.RegionId == vTur.RegionId);
+        private static async Task<bool> FoersteObsIRegion(VTur vTur, IEnumerable<VObs> analyseDataArt)
+        {
+            return !await Task.FromResult(analyseDataArt.Any(q => q.RegionId == vTur.RegionId));
+        }
 
-        private static bool FoersteObsForKommune(VTur vTur, IEnumerable<VObs> analyseDataArt) => 
-            !analyseDataArt.Any(q => q.KommuneId == vTur.KommuneId && vTur.KommuneId > 0);
+        private static async Task<bool> FoersteObsForKommune(VTur vTur, IEnumerable<VObs> analyseDataArt)
+        {
+            return !await Task.FromResult(analyseDataArt.Any(q => q.KommuneId == vTur.KommuneId && vTur.KommuneId > 0));
+        }
 
-        private static bool FoersteObsForLokalitet(VTur vTur, IEnumerable<VObs> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.LokalitetId == vTur.LokalitetId);
+        private static async Task<bool> FoersteObsForLokalitet(VTur vTur, IEnumerable<VObs> analyseDataArt)
+        {
+            return !await Task.FromResult(analyseDataArt.Any(q => q.LokalitetId == vTur.LokalitetId));
+        }
 
-        private static bool FoersteObsIAar(VTur vTur, IEnumerable<VObs> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.Aarstal == vTur.Aarstal && q.RegionId > 0);
+        private static async Task<bool> FoersteObsIAar(VTur vTur, IEnumerable<VObs> analyseDataArt)
+        {
+            return !await Task.FromResult(analyseDataArt.Any(q => q.Aarstal == vTur.Aarstal && q.RegionId > 0));
+        }
 
-        private static bool FoersteObsIMaaned(VTur vTur, IEnumerable<VObs> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.Maaned == vTur.Maaned && q.RegionId > 0);
+        private static async Task<bool> FoersteObsIMaaned(VTur vTur, IEnumerable<VObs> analyseDataArt)
+        {
+            return !await Task.FromResult(analyseDataArt.Any(q => q.Maaned == vTur.Maaned && q.RegionId > 0));
+        }
 
         private static TripAnalysisResult TripAnalysisResultFactory(Art art, AnalyseTyper analyseType)
         {

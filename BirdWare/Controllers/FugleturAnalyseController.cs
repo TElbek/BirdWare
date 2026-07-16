@@ -11,7 +11,7 @@ namespace BirdWare.Controllers
     {
         [HttpGet]
         [Route("api/fugletur/{fugleturId}/analyse")]
-        public IEnumerable<TripAnalysisResult> AnalyserFugletur(long fugleturId)
+        public async Task<IEnumerable<TripAnalysisResult>> AnalyserFugletur(long fugleturId)
         {
             var validator = new GreaterThanZeroValidator();
             if(!validator.Validate(fugleturId).IsValid)
@@ -19,7 +19,7 @@ namespace BirdWare.Controllers
                 return [];
             }
 
-            return fugleturAnalyseQuery.Analyser(fugleturId);
+            return await fugleturAnalyseQuery.Analyser(fugleturId);
         }
 
         [HttpGet]
