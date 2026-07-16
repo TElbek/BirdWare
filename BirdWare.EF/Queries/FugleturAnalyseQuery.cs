@@ -13,32 +13,40 @@ namespace BirdWare.EF.Queries
             var artListe = HentArtListe(fugleturId);
             var vObsLookUp = FindAnalyseData(vTur, artListe);
 
-            foreach (var art in artListe)
+            var tripAnalysisResult = new List<TripAnalysisResult>();
+
+            tripAnalysisResult.AddRange(artListe
+                .Where(a => FoersteObsIDatabasen(vObsLookUp[a.Id]))
+                .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIDatabasen))));
+
+            tripAnalysisResult.AddRange(artListe
+                .Where(a => FoersteObsIRegion(vTur, vObsLookUp[a.Id]))
+                .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIRegion))));
+
+            tripAnalysisResult.AddRange(artListe
+                .Where(a => FoersteObsForLokalitet(vTur, vObsLookUp[a.Id]))
+                .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsForLokalitet))));
+
+            if(vTur.RegionId > 0)
             {
-                if (FoersteObsIDatabasen(vObsLookUp, art))
-                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDatabasen));
+                tripAnalysisResult.AddRange(artListe
+                    .Where(a => FoersteObsIDK(vObsLookUp[a.Id]))
+                    .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIDK))));
 
-                if (FoersteObsIRegion(vTur, vObsLookUp, art)) 
-                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIRegion));
+                tripAnalysisResult.AddRange(artListe
+                    .Where(a => FoersteObsForKommune(vTur, vObsLookUp[a.Id]))
+                    .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsForKommune))));
 
-                if (FoersteObsForLokalitet(vTur, vObsLookUp, art)) 
-                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForLokalitet));
+                tripAnalysisResult.AddRange(artListe
+                    .Where(a => FoersteObsIAar(vTur, vObsLookUp[a.Id]))
+                    .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIAar))));
 
-                if (vTur.RegionId > 0)
-                {
-                    if (FoersteObsIDK(vObsLookUp, art))
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDK));
-
-                    if(FoersteObsForKommune(vTur, vObsLookUp, art))
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForKommune));
-
-                    if (FoersteObsIAar(vTur, vObsLookUp, art))
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIAar));
-
-                    if (FoersteObsIMaaned(vTur, vObsLookUp, art))
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIMaaned));
-                }
+                tripAnalysisResult.AddRange(artListe
+                    .Where(a => FoersteObsIMaaned(vTur, vObsLookUp[a.Id]))
+                    .Select(a => PopulateArtInfo(artListe, TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIMaaned))));
             }
+
+            return tripAnalysisResult;
         }
 
         private static TripAnalysisResult PopulateArtInfo(IEnumerable<Art> artListe, TripAnalysisResult analyseResultat)
@@ -52,72 +60,66 @@ namespace BirdWare.EF.Queries
 
         private IEnumerable<Art> HentArtListe(long fugleturId)
         {
-            return [.. (from o in birdWareContext.Observation.AsNoTracking()
-                    join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
-                    where o.FugleturId == fugleturId
-                    select a)];
+            return birdWareContext.Observation.AsNoTracking()
+                        .Where(o => o.FugleturId == fugleturId)
+                        .Select(o => o.Art);
         }
 
         private VTur FindFugletur(long fugleturId)
         {
             if (birdWareContext.Fugletur.Any(q => q.Id == fugleturId))
             {
-                return (from f in birdWareContext.Fugletur.AsNoTracking()
-                        join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
-                        where f.Id == fugleturId
-                        select new VTur
-                        {
-                            Aarstal = f.Aarstal,
-                            Maaned = f.Maaned,
-                            Dato = f.Dato,
-                            Id = f.Id,
-                            LokalitetId = l.Id,
-                            KommuneId = l.KommuneId,
-                            RegionId = l.RegionId,
-                        }).First();
+                return birdWareContext.Fugletur.AsNoTracking()
+                    .Where(f => f.Id == fugleturId)
+                    .Select(f => new VTur
+                    {
+                        Aarstal = f.Aarstal,
+                        Maaned = f.Maaned,
+                        Dato = f.Dato,
+                        Id = f.Id,
+                        LokalitetId = f.LokalitetId,
+                        KommuneId = f.Lokalitet.KommuneId,
+                        RegionId = f.Lokalitet.RegionId,
+                    }).First();
             }
             return new VTur();
         }
 
         private ILookup<long, VObs> FindAnalyseData(VTur vTur, IEnumerable<Art> artList)
         {
-            return (from f in birdWareContext.Fugletur.AsNoTracking()
-                    join l in birdWareContext.Lokalitet.AsNoTracking() on f.LokalitetId equals l.Id
-                       join o in birdWareContext.Observation.AsNoTracking() on f.Id equals o.FugleturId
-                       join a in birdWareContext.Art.AsNoTracking() on o.ArtId equals a.Id
-                       where f.Id < vTur.Id && artList.Select(s => s.Id).Contains(a.Id)
-                       select new VObs
-                       {
-                           ArtId = a.Id,
-                           LokalitetId = l.Id,
-                           KommuneId = l.KommuneId,
-                           RegionId = l.RegionId,
-                           Aarstal = f.Aarstal,
-                           Maaned = f.Maaned,
-                       }).Distinct()
-                         .ToLookup(l => l.ArtId);
+            return birdWareContext.Observation.AsNoTracking()
+                .Where(o => o.FugleturId < vTur.Id && artList.Select(s => s.Id).Contains(o.ArtId))
+                .Select(o => new VObs
+                {
+                    ArtId = o.ArtId,
+                    LokalitetId = o.Fugletur.LokalitetId,
+                    KommuneId = o.Fugletur.Lokalitet.KommuneId,
+                    RegionId = o.Fugletur.Lokalitet.RegionId,
+                    Aarstal = o.Fugletur.Aarstal,
+                    Maaned = o.Fugletur.Maaned,
+                }).Distinct().ToLookup(l => l.ArtId);
         }
 
-        private static bool FoersteObsIDatabasen(ILookup<long,VObs> vObsLookup, Art art) =>
-            !vObsLookup[art.Id].Any();
+        private static bool FoersteObsIDatabasen(IEnumerable<VObs> analyseDataArt) =>
+            !analyseDataArt.Any();
 
-        private static bool FoersteObsIDK(ILookup<long, VObs> vObsLookup, Art art) => 
-            !vObsLookup[art.Id].Any(q => q.RegionId > 0);
+        private static bool FoersteObsIDK(IEnumerable<VObs> analyseDataArt) => 
+            !analyseDataArt .Any(q => q.RegionId > 0);
 
-        private static bool FoersteObsIRegion(VTur vTur, ILookup<long, VObs> vObsLookup, Art art) => 
-            !vObsLookup[art.Id].Any(q => q.RegionId == vTur.RegionId);
+        private static bool FoersteObsIRegion(VTur vTur, IEnumerable<VObs> analyseDataArt) => 
+            !analyseDataArt.Any(q => q.RegionId == vTur.RegionId);
 
-        private bool FoersteObsForKommune(VTur vTur, ILookup<long, VObs> vObsLookUp, Art art) => 
-            !vObsLookUp[art.Id].Any(q => q.KommuneId == vTur.KommuneId && vTur.KommuneId > 0);
+        private static bool FoersteObsForKommune(VTur vTur, IEnumerable<VObs> analyseDataArt) => 
+            !analyseDataArt.Any(q => q.KommuneId == vTur.KommuneId && vTur.KommuneId > 0);
 
-        private static bool FoersteObsForLokalitet(VTur vTur, ILookup<long, VObs> vObsLookup, Art art) =>
-            !vObsLookup[art.Id].Any(q => q.LokalitetId == vTur.LokalitetId);
+        private static bool FoersteObsForLokalitet(VTur vTur, IEnumerable<VObs> analyseDataArt) =>
+            !analyseDataArt.Any(q => q.LokalitetId == vTur.LokalitetId);
 
-        private static bool FoersteObsIAar(VTur vTur, ILookup<long, VObs> vObsLookup, Art art) =>
-            !vObsLookup[art.Id].Any(q => q.Aarstal == vTur.Aarstal && q.RegionId > 0);
+        private static bool FoersteObsIAar(VTur vTur, IEnumerable<VObs> analyseDataArt) =>
+            !analyseDataArt.Any(q => q.Aarstal == vTur.Aarstal && q.RegionId > 0);
 
-        private static bool FoersteObsIMaaned(VTur vTur, ILookup<long, VObs> vObsLookup, Art art) =>
-            !vObsLookup[art.Id].Any(q => q.Maaned == vTur.Maaned && q.RegionId > 0);
+        private static bool FoersteObsIMaaned(VTur vTur, IEnumerable<VObs> analyseDataArt) =>
+            !analyseDataArt.Any(q => q.Maaned == vTur.Maaned && q.RegionId > 0);
 
         private static TripAnalysisResult TripAnalysisResultFactory(Art art, AnalyseTyper analyseType)
         {
