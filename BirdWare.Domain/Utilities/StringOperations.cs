@@ -1,11 +1,11 @@
-﻿namespace BirdWare.Domain.Utilities
+﻿using System.Reflection;
+
+namespace BirdWare.Domain.Utilities
 {
-    internal class StringOperations
+    public class StringOperations
     {
-        public static string ToTitleCase(string value)
-        {
-            var textInfo = CultureProvider.GetCulture().TextInfo;
-            return textInfo.ToTitleCase(value);
-        }
+        public static string ToTitleCase(string value) => CultureProvider.GetCulture().TextInfo.ToTitleCase(value);
+
+        public static string ClassAndMethodName(Type type, MethodBase method) => $"{type.Name}.{method.Name}";
     }
 }

@@ -1,16 +1,17 @@
-using BirdWare.Domain.Cache;
+using BirdWare.Business;
 using BirdWare.Domain;
-using BirdWare.EF;
+using BirdWare.Domain.Cache;
 using BirdWare.Domain.Interfaces;
+using BirdWare.EF;
+using BirdWare.Interfaces;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
-using BirdWare.Business;
-using BirdWare.Interfaces;
 
 namespace BirdWare
 {
@@ -49,8 +50,14 @@ namespace BirdWare
             builder.Services.AddControllers();
             
             builder.Services.AddDbContextFactory<BirdWareContext>
-                (options => options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn"), 
-                            x => x.UseNetTopologySuite()));
+                (options =>
+                {
+                    options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn"),
+                                x => x.UseNetTopologySuite());
+                                      //.LogTo(Console.WriteLine, 
+                                      //       LogLevel.Information,
+                                      //       DbContextLoggerOptions.None);
+                });
 
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
 

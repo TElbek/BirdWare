@@ -1,6 +1,8 @@
 ﻿using BirdWare.Domain.Models;
+using BirdWare.Domain.Utilities;
 using BirdWare.EF.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace BirdWare.EF.Queries
 {
@@ -9,10 +11,12 @@ namespace BirdWare.EF.Queries
         public ILookup<long, AnkomstDagBasis> GetAnkomstData(long familieId)
         {
             var rows = birdWareContext.Observation
+                .TagWith(StringOperations.ClassAndMethodName(GetType(), MethodBase.GetCurrentMethod()!))
                 .AsNoTracking()
                 .Where(o =>
                     o.Art.Gruppe.Familie.Id == familieId &&
                     o.Fugletur.Dato != null &&
+                    o.Fugletur.Dato.Value.Year >= DateTime.Now.Year - 10 &&
                     o.Art.SetIDK &&
                    !o.Art.SU &&
                     o.Fugletur.Lokalitet.RegionId > 0)
