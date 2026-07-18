@@ -19,7 +19,7 @@ namespace BirdWare.Controllers
                 return [];
             }
 
-            return await fugleturAnalyseQuery.Analyser(fugleturId);
+            return fugleturAnalyseQuery.Analyser(fugleturId);
         }
 
         [HttpGet]
