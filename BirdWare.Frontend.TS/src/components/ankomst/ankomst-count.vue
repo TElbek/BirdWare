@@ -1,5 +1,8 @@
 <template>
-    <div class="gradient shadow-sm shadow-gray-600 rounded" :title="`${setFoerTid.length} før tid, ${setForsinket.length} forsinket, ${ikkeSetEndnu.length} ikke set`">
+    <div class="flex flex-row gap-2 w-50 justify-end ms-2">
+        <div v-if="setFoerTid.length > 0" class="bar foertid text-center text-sm text-white shadow-sm shadow-gray-400">{{ setFoerTid.length }}</div>
+        <div v-if="setForsinket.length > 0"class="bar forsinket text-center text-sm text-white shadow-sm shadow-gray-400">{{ setForsinket.length }}</div>
+        <div v-if="ikkeSetEndnu.length > 0"class="bar ikkeset text-center text-sm text-black shadow-sm shadow-gray-400">{{ ikkeSetEndnu.length }}</div>        
     </div>
 </template>
 
@@ -14,8 +17,8 @@ const props = defineProps<{
 const sum = computed(() => ikkeSetEndnu.value.length + setFoerTid.value.length + setForsinket.value.length);
 
 const setFoerTidSlut = computed(() => setFoerTid.value.length / sum.value * 100 + '%');
-const setForsinketSlut = computed(() => (setFoerTid.value.length + setForsinket.value.length) / sum.value * 100 + '%');
-const ikkeSetSlut = computed(() => (setFoerTid.value.length + setForsinket.value.length + ikkeSetEndnu.value.length) / sum.value * 100 + '%');
+const setForsinketSlut = computed(() => setForsinket.value.length / sum.value * 100 + '%');
+const ikkeSetSlut = computed(() => (ikkeSetEndnu.value.length) / sum.value * 100 + '%');
 
 const ikkeSetEndnu = computed(() => {
     return props.ankomstList.filter((one) => !one.erSetIaar);
@@ -31,15 +34,25 @@ const setForsinket = computed(() => {
 </script>
 
 <style scoped>
-.gradient {
-    height: 20px;
-    width: 100px;
-    background-image: linear-gradient(to right,
-            var(--color-green-500),
-            var(--color-green-500) v-bind(setFoerTidSlut),
-            var(--color-red-500) v-bind(setFoerTidSlut),
-            var(--color-red-500) v-bind(setForsinketSlut),
-            var(--color-gray-300) v-bind(setForsinketSlut),
-            var(--color-gray-300) v-bind(ikkeSetSlut));
+.bar {
+    display: inline-block;
+    height: 22px;
+    border-radius: var(--radius-xs);
 }
+
+.foertid {
+    background-color: var(--color-green-500);
+    width: v-bind(setFoerTidSlut);
+}
+
+.forsinket {
+    background-color: var(--color-red-500);
+    width: v-bind(setForsinketSlut);
+}
+
+.ikkeset {
+    background-color: var(--color-gray-300);
+    width: v-bind(ikkeSetSlut);
+}
+
 </style>
