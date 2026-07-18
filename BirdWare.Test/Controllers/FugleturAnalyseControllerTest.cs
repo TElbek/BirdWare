@@ -1,26 +1,26 @@
 ﻿using BirdWare.Controllers;
 using BirdWare.Domain.Models;
-using BirdWare.EF.Interfaces;
+using BirdWare.Interfaces;
 using Moq;
 
 namespace BirdWare.Test.Controllers
 {
     public class FugleturAnalyseControllerTest
     {
-        private readonly Mock<IFugleturAnalyseQuery> fugleturAnalyseQuery = new();
+        private readonly Mock<IFugleturAnalyseHandler> fugleturAnalyseHandler = new();
         private readonly FugleturAnalyseController fugleturAnalyseController;
 
         public FugleturAnalyseControllerTest()
         {
-            fugleturAnalyseQuery.Setup(x => x.Analyser(It.IsAny<long>())).Returns([]);
-            fugleturAnalyseController = new FugleturAnalyseController(fugleturAnalyseQuery.Object);
+            fugleturAnalyseHandler.Setup(x => x.Analyser(It.IsAny<long>())).Returns([]);
+            fugleturAnalyseController = new FugleturAnalyseController(fugleturAnalyseHandler.Object);
         }
 
         [Fact]
         public void AnalyserFugleturTest()
         {
             fugleturAnalyseController.AnalyserFugletur(1);
-            fugleturAnalyseQuery.Verify(x => x.Analyser(It.IsAny<long>()), Times.Once);
+            fugleturAnalyseHandler.Verify(x => x.Analyser(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]

@@ -1,9 +1,12 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 
 namespace BirdWare.EF.Interfaces
 {
     public interface IFugleturAnalyseQuery
     {
-        IEnumerable<TripAnalysisResult> Analyser(long fugleturId);
+        List<Art> HentArtListe(long fugleturId);
+        VTur FindFugletur(long fugleturId);
+        ILookup<long, FugleturAnalyseData> FindAnalyseData(Fugletur fugletur, IEnumerable<long> artList);
     }
 }

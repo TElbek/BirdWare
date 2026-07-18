@@ -65,6 +65,7 @@ namespace BirdWare
             builder.Services.AddTransient<ITagHandler, TagHandler>();
             builder.Services.AddTransient<ISoegArtIkkeSetPaaTurHandler, SoegArtIkkeSetPaaTurHandler>();
             builder.Services.AddTransient<IAnkomtsDagHandler, AnkomtsDagHandler>();
+            builder.Services.AddTransient<IFugleturAnalyseHandler, FugleturAnalyseHandler>();
 
             builder.Services.RegisterEF();
             builder.Services.RegisterDomain();
