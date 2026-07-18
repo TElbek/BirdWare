@@ -1,40 +1,45 @@
 <template>
-    <div class="flex flex-row gap-x-1 font-semibold text-xs">
-        <div v-if="setFoerTidAny" class="w-6 h-6 shadow rounded-full border-3 border-green-500 text-center text-black dark:text-white">{{ setFoerTid.length }}</div>
-        <div v-if="setForsinketAny" class="w-6 h-6 shadow rounded-full border-3 border-red-500 text-center text-black dark:text-white">{{ setForsinket.length }}</div>
-        <div v-if="ikkeSetEndnuAny" class="w-6 h-6 shadow rounded-full border-3 border-gray-300 text-center text-black dark:text-white">{{ ikkeSetEndnu.length }}</div>
+    <div class="gradient shadow-sm shadow-gray-600 rounded" :title="`${setFoerTid.length} før tid, ${setForsinket.length} forsinket, ${ikkeSetEndnu.length} ikke set`">
     </div>
 </template>
 
 <script setup lang="ts">
-    import type { ankomstDatoType } from '@/types/ankomstDatoType';
+import type { ankomstDatoType } from '@/types/ankomstDatoType';
 import { computed } from 'vue';
 
-    const props = defineProps<{
-        ankomstList: ankomstDatoType[];
-    }>();
+const props = defineProps<{
+    ankomstList: ankomstDatoType[];
+}>();
 
-    const ikkeSetEndnu = computed(() => {
-        return props.ankomstList.filter((one) => !one.erSetIaar);
-    });
+const sum = computed(() => ikkeSetEndnu.value.length + setFoerTid.value.length + setForsinket.value.length);
 
-    const setFoerTid = computed(() => {
-        return props.ankomstList.filter((one) => one.erSetIaar && one.forskel >= 0);
-    });
+const setFoerTidSlut = computed(() => setFoerTid.value.length / sum.value * 100 + '%');
+const setForsinketSlut = computed(() => (setFoerTid.value.length + setForsinket.value.length) / sum.value * 100 + '%');
+const ikkeSetSlut = computed(() => (setFoerTid.value.length + setForsinket.value.length + ikkeSetEndnu.value.length) / sum.value * 100 + '%');
 
-    const setForsinket = computed(() => {
-        return props.ankomstList.filter((one) => one.erSetIaar && one.forskel < 0);
-    });
+const ikkeSetEndnu = computed(() => {
+    return props.ankomstList.filter((one) => !one.erSetIaar);
+});
 
-    const ikkeSetEndnuAny = computed(() => {
-        return ikkeSetEndnu.value.length > 0;
-    });
+const setFoerTid = computed(() => {
+    return props.ankomstList.filter((one) => one.erSetIaar && one.forskel >= 0);
+});
 
-    const setFoerTidAny = computed(() => {
-        return setFoerTid.value.length > 0;
-    });
-
-    const setForsinketAny = computed(() => {
-        return setForsinket.value.length > 0;
-    });
+const setForsinket = computed(() => {
+    return props.ankomstList.filter((one) => one.erSetIaar && one.forskel < 0);
+});
 </script>
+
+<style scoped>
+.gradient {
+    height: 20px;
+    width: 100px;
+    background-image: linear-gradient(to right,
+            var(--color-green-500),
+            var(--color-green-500) v-bind(setFoerTidSlut),
+            var(--color-red-500) v-bind(setFoerTidSlut),
+            var(--color-red-500) v-bind(setForsinketSlut),
+            var(--color-gray-300) v-bind(setForsinketSlut),
+            var(--color-gray-300) v-bind(ikkeSetSlut));
+}
+</style>
