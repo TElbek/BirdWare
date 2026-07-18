@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row gap-2 w-50 justify-end ms-2">
+    <div class="flex flex-row gap-x-2 w-50 justify-end ms-2">
         <div v-if="setFoerTid.length > 0" class="bar foertid text-center text-sm text-white shadow-sm shadow-gray-400">{{ setFoerTid.length }}</div>
         <div v-if="setForsinket.length > 0"class="bar forsinket text-center text-sm text-white shadow-sm shadow-gray-400">{{ setForsinket.length }}</div>
         <div v-if="ikkeSetEndnu.length > 0"class="bar ikkeset text-center text-sm text-black shadow-sm shadow-gray-400">{{ ikkeSetEndnu.length }}</div>        
@@ -37,7 +37,7 @@ const setForsinket = computed(() => {
 .bar {
     display: inline-block;
     height: 22px;
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-md);
 }
 
 .foertid {
