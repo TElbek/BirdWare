@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-y-2">
         <fugletur-selection></fugletur-selection>
-        <tw-grid-cols-five :count="groupedData?.size" :offset="5">
+        <tw-grid-cols-generic :itemsPerRow=5 :count="groupedData?.size" :offset="5">
             <div v-for="[key, value] in groupedData">
                 <tw-card>
                     <tw-card-header :caption="key" :count="value.length" :showCount="true">
@@ -15,7 +15,7 @@
                     </div>
                 </tw-card>
             </div>
-        </tw-grid-cols-five>
+        </tw-grid-cols-generic>
     </div>
 </template>
 

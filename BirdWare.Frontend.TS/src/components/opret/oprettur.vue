@@ -3,7 +3,7 @@
         <tw-text-sizeable>Tilføj Tur</tw-text-sizeable>
         <input class="p-2 border border-gray-200 rounded dark:text-white" type="search" placeholder="Søg..." v-model="state.searchValue" />
     </div>
-    <tw-grid-cols-five :count="byDistance.size" class="mt-4 max-h-160 xl:max-h-180 overflow-auto">
+    <tw-grid-cols-generic :itemsPerRow=5 :count="byDistance.size" class="mt-4 max-h-160 xl:max-h-180 overflow-auto">
         <div v-for="[key, value] in byDistance">
             <tw-card>
                 <tw-card-header :caption="key + ' km.'" :show-count="false"></tw-card-header>
@@ -14,7 +14,7 @@
                 </div>
             </tw-card>
         </div>
-    </tw-grid-cols-five>
+    </tw-grid-cols-generic>
 </template>
 
 <script setup lang="ts">

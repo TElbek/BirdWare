@@ -1,5 +1,5 @@
 <template>
-    <tw-grid-cols-three :count="props.groupedData?.size" :offset="5">
+    <tw-grid-cols-generic :itemsPerRow=3 :count="props.groupedData?.size" :offset="5">
         <div v-for="[key, value] in props.groupedData">
             <tw-card>
                 <tw-card-header :caption="obsSelectionStore.isGropingByMonth && valueIsNumber(key) ? getNameOfMonth(key) : key"
@@ -15,7 +15,7 @@
                 </div>
             </tw-card>
         </div>
-    </tw-grid-cols-three>
+    </tw-grid-cols-generic>
 </template>
 
 <script setup lang="ts">

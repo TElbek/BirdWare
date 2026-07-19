@@ -4,7 +4,7 @@
             <tw-text-sizeable >{{ route.meta.title }}: {{ state.aaretsGang.length }} Arter</tw-text-sizeable>
             <aaretsgang-selection :is-by-trip="isByTrip" @switch-is-by-trip="swtichIsByTrip"></aaretsgang-selection>
         </div>
-        <tw-grid-cols-five :count="listOfItems.size">
+        <tw-grid-cols-generic :itemsPerRow=5 :count="listOfItems.size">
             <div v-for="([key, value], index) in listOfItems">
                 <tw-card v-if="index < 30 && isByTrip || !isByTrip">
                     <tw-card-header :caption="key" :count="value.length" :show-count="true"></tw-card-header>
@@ -13,7 +13,7 @@
                     </tw-flex>
                 </tw-card>
             </div>
-        </tw-grid-cols-five>
+        </tw-grid-cols-generic>
     </div>
 </template>
 

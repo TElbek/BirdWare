@@ -7,7 +7,7 @@
                 <tw-button :caption="'Lokalitet'" :isSelected="isByLokalitet" @click="toggleGrouping()"></tw-button>
             </tw-action-bar>
         </div>
-        <tw-grid-cols-three :count="byResult.value.size">
+        <tw-grid-cols-generic :itemsPerRow=3 :count="byResult.value.size">
             <div v-for="[key, value] in byResult.value">
                 <tw-card>
                     <tw-card-header v-if="isByLokalitet" :caption="`${key} ${Math.round(value[0].distance)} km`"
@@ -43,7 +43,7 @@
                     </div>
                 </tw-card>
             </div>
-        </tw-grid-cols-three>
+        </tw-grid-cols-generic>
     </div>
 </template>
 

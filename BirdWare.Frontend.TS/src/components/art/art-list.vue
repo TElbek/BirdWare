@@ -1,5 +1,5 @@
 <template>
-    <tw-grid-cols-five :count="groupedData.size">
+    <tw-grid-cols-generic :itemsPerRow=5 :count="groupedData.size">
         <div v-for="[groupName, arts] in groupedData" :key="groupName">
             <tw-card>
                 <tw-card-header :caption="groupName" :count="arts.length" :showCount="true" @click="addTag(groupName)"></tw-card-header>
@@ -11,7 +11,7 @@
                 </tw-flex>
             </tw-card>
         </div>
-    </tw-grid-cols-five>
+    </tw-grid-cols-generic>
 </template>
 
 <script setup lang="ts">

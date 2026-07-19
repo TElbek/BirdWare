@@ -1,13 +1,13 @@
 <template>
     <div class="scrollbar-hide overflow-auto" :style="{ height: vh + 'vh' }">
-        <div :class="getRowColClasses(props.count)">
+        <div :class="getRowColClassesFive(props.count)">
             <slot></slot>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { getRowColClasses } from '@/ts/rowcols';
+import { getRowColClassesFive } from '@/ts/rowcols';
 import { computed } from 'vue';
 
 const props = defineProps({

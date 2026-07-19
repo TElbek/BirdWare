@@ -5,11 +5,11 @@
             <ankomst-count class="mt-1.5" :ankomstList="state.ankomst"></ankomst-count>
         </div>
         <ankomst-selection></ankomst-selection>
-        <tw-grid-cols-five :count="groupedByMaaned.size">
+        <tw-grid-cols-generic :itemsPerRow=4 :count="groupedByMaaned.size">
             <template v-for="[key, value] in groupedByMaaned" :key="key">
                 <ankomst-card :ankomstList="value" :caption="getNameOfMonth(key)"></ankomst-card>
             </template>
-        </tw-grid-cols-five>
+        </tw-grid-cols-generic>
     </div>
 </template>
 

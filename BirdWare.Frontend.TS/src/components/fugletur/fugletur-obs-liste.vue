@@ -1,5 +1,5 @@
 <template>
-    <tw-grid-cols-three :count="byFamilie.size">
+    <tw-grid-cols-generic :itemsPerRow=3 :count="byFamilie.size">
         <div v-for="[key, value] in byFamilie">
             <tw-card>
                 <tw-card-header :caption="key" :count="value.length" :showCount="true"></tw-card-header>
@@ -11,7 +11,7 @@
                 </div>
             </tw-card>
         </div>
-    </tw-grid-cols-three>
+    </tw-grid-cols-generic>
 </template>
 
 <script setup lang="ts">

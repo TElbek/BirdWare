@@ -3,7 +3,7 @@
         <div class="flex justify-between">
             <tw-text-sizeable>{{ route.meta.title }}</tw-text-sizeable>
         </div>
-        <tw-grid-cols-five :count="state.liste.length">
+        <tw-grid-cols-generic :itemsPerRow=5 :count="state.liste.length">
             <div v-for="[key, value] in byMaaned">
                 <tw-card>
                     <tw-card-header :caption="getNameOfMonth(key)" :show-count="false"></tw-card-header>
@@ -14,7 +14,7 @@
                     </tw-flex>
                 </tw-card>
             </div>
-        </tw-grid-cols-five>
+        </tw-grid-cols-generic>
     </div>
 </template>
 

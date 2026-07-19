@@ -52,8 +52,7 @@ function registerTailWindComponents() {
     app.component('tw-card-header', defineAsyncComponent(() => import('./components/main/tailwind/tw-card-header.vue')));
     app.component('tw-card-header-slot', defineAsyncComponent(() => import('./components/main/tailwind/tw-card-header-slot.vue')));
     app.component('tw-flex', defineAsyncComponent(() => import('./components/main/tailwind/tw-flex.vue')));
-    app.component('tw-grid-cols-five', defineAsyncComponent(() => import('./components/main/tailwind/tw-grid-cols-five.vue')));
-    app.component('tw-grid-cols-three', defineAsyncComponent(() => import('./components/main/tailwind/tw-grid-cols-three.vue')));
+    app.component('tw-grid-cols-generic', defineAsyncComponent(() => import('./components/main/tailwind/tw-grid-cols-generic.vue')));
     app.component('tw-input', defineAsyncComponent(() => import('./components/main/tailwind/tw-input.vue')));
     app.component('tw-input-select', defineAsyncComponent(() => import('./components/main/tailwind/tw-input-select.vue')));
     app.component('tw-label', defineAsyncComponent(() => import('./components/main/tailwind/tw-label.vue')));
