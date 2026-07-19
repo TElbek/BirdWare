@@ -3,7 +3,7 @@
         <a @click="emit('click', props.caption)" class="cursor-pointer">
             <span class="capitalize">{{ props.caption }}</span>
         </a>
-        <span v-if="showCount" class="text-right">{{ props.count }}</span>
+        <tw-badge-simple :count="props.count"></tw-badge-simple>
     </div>
 </template>
 

@@ -44,6 +44,8 @@ function registerComponents() {
 
 function registerTailWindComponents() {
     app.component('tw-action-bar', defineAsyncComponent(() => import('./components/main/tailwind/tw-action-bar.vue')));
+    app.component('tw-badge', defineAsyncComponent(() => import('./components/main/tailwind/tw-badge.vue')));
+    app.component('tw-badge-simple', defineAsyncComponent(() => import('./components/main/tailwind/tw-badge-simple.vue')));
     app.component('tw-button', defineAsyncComponent(() => import('./components/main/tailwind/tw-button.vue')));
     app.component('tw-button-dropdown', defineAsyncComponent(() => import('./components/main/tailwind/tw-button-dropdown.vue')));
     app.component('tw-button-responsive', defineAsyncComponent(() => import('./components/main/tailwind/tw-button-responsive.vue')));
