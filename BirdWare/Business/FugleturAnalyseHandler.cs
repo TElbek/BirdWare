@@ -21,7 +21,7 @@ namespace BirdWare.Business
                     yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDatabasen));
 
                 if (FoersteObsIRegion(vTur, obsListe)) 
-                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForKommune));
+                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIRegion));
 
                 if (FoersteObsForLokalitet(vTur, obsListe)) 
                     yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForLokalitet));

@@ -12,7 +12,7 @@
                     <div :class="getIndicatorClass(art)"></div>
                     <art-navn :artId="art.artId" :artNavn="art.artNavn" :speciel="false" :su="false"></art-navn>
                     <div class="text-end" :class="[art.forskel < 0 ? 'text-red-500' : 'text-gray-500 dark:text-white']">
-                        <span v-if="art.erSetIaar">{{ Math.abs(art.forskel) }} dage</span>
+                        <span v-if="art.erSetIaar">{{ Math.trunc(Math.abs(art.forskel)) }} dage</span>
                     </div>
                 </template>
             </div>

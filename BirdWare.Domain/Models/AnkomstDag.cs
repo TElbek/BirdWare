@@ -19,9 +19,9 @@
 
         private bool GetErSetIaar() => SetIaarDato.HasValue;
 
-        private bool SetTidligereIAar() => SetIaarDato.HasValue && GnsAnkomstDato >= SetIaarDato.Value;
+        private bool SetTidligereIAar() => SetIaarDato.HasValue && GnsAnkomstDato.Date >= SetIaarDato.Value.Date;
 
-        private double GetForskel() => ErSetIaar ? Math.Round((GnsAnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays) : 0;
+        private double GetForskel() => ErSetIaar ? Math.Round((GnsAnkomstDato - SetIaarDato.GetValueOrDefault()).TotalDays,1) : 0;
 
         #endregion
     }
