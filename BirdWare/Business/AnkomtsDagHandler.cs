@@ -9,18 +9,22 @@ namespace BirdWare.Business
         {
             var ankomstArtLookup = ankomtsDagQuery.GetAnkomstData(familieId);
 
-            foreach (var ankomstDageArt in ankomstArtLookup)
+            var ankomstDagList = new List<AnkomstDag>();
+
+            Parallel.ForEach(ankomstArtLookup, ankomstDageArt => 
             {
                 var ankomstDagIaarForArt = GetAnkomstDagIAar(ankomstDageArt);
 
-                yield return new AnkomstDag
+                ankomstDagList.Add(new AnkomstDag
                 {
                     ArtId = ankomstDageArt.Key,
                     ArtNavn = GetArtNavn(ankomstDageArt),
                     GnsAnkomstDato = GetGnsAnkomstDato(ankomstDageArt),
                     SetIaarDato = GetSetIaarDato(ankomstDagIaarForArt),
-                };
-            }
+                });
+            });
+
+            return ankomstDagList;
         }
 
         private static DateTime? GetSetIaarDato(double? iAarDag) => 
