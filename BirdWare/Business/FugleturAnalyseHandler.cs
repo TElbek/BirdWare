@@ -11,7 +11,7 @@ namespace BirdWare.Business
         {
             var vTur = analyseQuery.FindFugletur(fugleturId);
             var artListe = analyseQuery.HentArtListe(fugleturId);
-            var vObsLookUp = analyseQuery.FindAnalyseData(new Fugletur {Id = fugleturId}, artListe.Select(s => s.Id));
+            var vObsLookUp = analyseQuery.FindAnalyseData(fugleturId);
 
             foreach (var art in artListe)
             {

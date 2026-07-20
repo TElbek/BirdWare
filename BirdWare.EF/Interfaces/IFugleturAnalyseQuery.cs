@@ -7,6 +7,6 @@ namespace BirdWare.EF.Interfaces
     {
         List<Art> HentArtListe(long fugleturId);
         VTur FindFugletur(long fugleturId);
-        ILookup<long, FugleturAnalyseData> FindAnalyseData(Fugletur fugletur, IEnumerable<long> artList);
+        ILookup<long, FugleturAnalyseData> FindAnalyseData(long fugleturId);
     }
 }
