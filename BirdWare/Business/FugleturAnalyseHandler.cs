@@ -13,34 +13,38 @@ namespace BirdWare.Business
             var artListe = analyseQuery.HentArtListe(fugleturId);
             var vObsLookUp = analyseQuery.FindAnalyseData(fugleturId);
 
-            foreach (var art in artListe)
+            var resultList = new List<TripAnalysisResult>();
+
+            Parallel.ForEach(artListe, art =>
             {
                 var obsListe = vObsLookUp[art.Id];
 
-                if (FoersteObsIDatabasen(obsListe)) 
-                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDatabasen));
+                if (FoersteObsIDatabasen(obsListe))
+                    resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDatabasen)));
 
-                if (FoersteObsIRegion(vTur, obsListe)) 
-                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIRegion));
+                if (FoersteObsIRegion(vTur, obsListe))
+                    resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIRegion)));
 
-                if (FoersteObsForLokalitet(vTur, obsListe)) 
-                    yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForLokalitet));
+                if (FoersteObsForLokalitet(vTur, obsListe))
+                    resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForLokalitet)));
 
                 if (vTur.RegionId > 0)
                 {
-                    if (FoersteObsIDK(obsListe)) 
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDK));
+                    if (FoersteObsIDK(obsListe))
+                        resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDK)));
 
-                    if (FoersteObsForKommune(vTur, obsListe)) 
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForKommune));
+                    if (FoersteObsForKommune(vTur, obsListe))
+                        resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForKommune)));
 
-                    if (FoersteObsIMaaned(vTur, obsListe)) 
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIMaaned));
+                    if (FoersteObsIMaaned(vTur, obsListe))
+                        resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIMaaned)));
 
-                    if (FoersteObsIAar(vTur, obsListe)) 
-                        yield return PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIAar));
+                    if (FoersteObsIAar(vTur, obsListe))
+                        resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIAar)));
                 }
-            }
+            });
+
+            return resultList;
         }
 
         private static TripAnalysisResult PopulateArtInfo(IEnumerable<Art> artListe, TripAnalysisResult analyseResultat)
