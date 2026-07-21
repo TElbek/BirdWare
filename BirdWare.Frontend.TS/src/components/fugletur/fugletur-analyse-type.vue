@@ -1,8 +1,7 @@
 <template>
-    <tw-card v-if="state.hasData && state.hasAnalyseTyper && state.hasFugletur">        
-        <tw-card-header 
-            v-if="state.hasAnalyseTyper"
-            :caption="getAnalyseTypeTekst(props.analysetype.analyseType)" :count="state.analyseListe.length" :show-count="true"></tw-card-header>
+    <tw-card v-if="state.hasData && state.hasAnalyseTyper && state.hasFugletur">
+        <tw-card-header v-if="state.hasAnalyseTyper" :caption="getAnalyseTypeTekst(props.analysetype.analyseType)"
+            :count="state.analyseListe.length" :show-count="true"></tw-card-header>
         <tw-flex>
             <art-navn v-for="item in arterSorteret(state.analyseListe)" :art-navn="item.artNavn" :art-id="item.artId"
                 :speciel="item.speciel" :su="item.su"></art-navn>
@@ -21,6 +20,7 @@ import { useFugleturStore } from '@/stores/fugletur-store';
 import { getNameOfMonth } from '@/ts/dateandtime';
 
 const fugleturStore = useFugleturStore();
+const emit = defineEmits(['dataFound']);
 
 const state = reactive({
     analyseListe: [] as analyseType[],
@@ -46,8 +46,15 @@ onMounted(() => {
 function getAnalyseListe() {
     api.get('fugletur/' + fugleturStore.chosenFugleturId + '/analyse/' + props.analysetype.analyseType).then((response) => {
         state.analyseListe = response.data;
-        state.hasData = state.analyseListe.length > 0;
+        updateStateAndEmit();
     });
+}
+
+function updateStateAndEmit() {
+    if (state.analyseListe.length > 0) {
+        state.hasData = true;
+        emit('dataFound');
+    }
 }
 
 function getAnalyseTyper() {
@@ -86,7 +93,7 @@ function getAnalyseTypeTekst(analyseType: number) {
     if (analyseType == 7) {
         return analyseTypeTekst?.replaceAll('[Maaned]', getNameOfMonth(state.fugletur.maaned));
     }
-    
+
     return analyseTypeTekst;
 }
 </script>

@@ -27,7 +27,7 @@ const props = defineProps({
 })
 
 function getRowColClassesGeneric() {
-    if(props.itemsPerRow == 2) return getRowColClassesTwo(props.count);
+    if(props.itemsPerRow <= 2) return getRowColClassesTwo(props.count);
     if(props.itemsPerRow == 3) return getRowColClassesThree(props.count);
     if(props.itemsPerRow == 4) return getRowColClassesFour(props.count);
     else return getRowColClassesFive(props.count);
