@@ -4,6 +4,6 @@ namespace BirdWare.Interfaces
 {
     public interface IFugleturAnalyseHandler
     {
-        IEnumerable<TripAnalysisResult> Analyser(long fugleturId);
+        IEnumerable<TripAnalysisResult> Analyser(long fugleturId, AnalyseTyper analyseType);
     }
 }

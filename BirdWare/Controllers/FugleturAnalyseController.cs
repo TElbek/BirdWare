@@ -10,9 +10,9 @@ namespace BirdWare.Controllers
     public class FugleturAnalyseController(IFugleturAnalyseHandler fugleturAnalyseHandler) : ControllerBase
     {
         [HttpGet]
-        [Route("api/fugletur/{fugleturId}/analyse")]
-        public IEnumerable<TripAnalysisResult> AnalyserFugletur(long fugleturId) => 
-               IsValid(fugleturId) ? fugleturAnalyseHandler.Analyser(fugleturId) : [];
+        [Route("api/fugletur/{fugleturId}/analyse/{analyseType}")]
+        public IEnumerable<TripAnalysisResult> AnalyserFugletur(long fugleturId, AnalyseTyper analyseType) => 
+               IsValid(fugleturId) ? fugleturAnalyseHandler.Analyser(fugleturId, analyseType) : [];
 
         [HttpGet]
         [Route("api/analyse/typer")]
