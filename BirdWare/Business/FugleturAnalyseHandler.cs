@@ -11,35 +11,31 @@ namespace BirdWare.Business
         {
             var vTur = analyseQuery.FindFugletur(fugleturId);
             var artListe = analyseQuery.HentArtListe(fugleturId);
-            var vObsLookUp = analyseQuery.FindAnalyseData(fugleturId);
-
             var resultList = new List<TripAnalysisResult>();
 
             Parallel.ForEach(artListe, art =>
             {
-                var obsListe = vObsLookUp[art.Id];
-
-                if (FoersteObsIDatabasen(obsListe))
+                if (FoersteObsIDatabasen(fugleturId, art.Id))
                     resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDatabasen)));
 
-                if (FoersteObsIRegion(vTur, obsListe))
+                if (FoersteObsIRegion(vTur, art.Id))
                     resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIRegion)));
 
-                if (FoersteObsForLokalitet(vTur, obsListe))
+                if (FoersteObsForLokalitet(vTur, art.Id))
                     resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForLokalitet)));
 
                 if (vTur.RegionId > 0)
                 {
-                    if (FoersteObsIDK(obsListe))
+                    if (FoersteObsIDK(fugleturId, art.Id))
                         resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIDK)));
 
-                    if (FoersteObsForKommune(vTur, obsListe))
+                    if (FoersteObsForKommune(vTur, art.Id))
                         resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsForKommune)));
 
-                    if (FoersteObsIMaaned(vTur, obsListe))
+                    if (FoersteObsIMaaned(vTur, art.Id))
                         resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIMaaned)));
 
-                    if (FoersteObsIAar(vTur, obsListe))
+                    if (FoersteObsIAar(vTur, art.Id))
                         resultList.Add(PopulateArtInfo(artListe, TripAnalysisResultFactory(art, AnalyseTyper.FoersteObsIAar)));
                 }
             });
@@ -56,26 +52,26 @@ namespace BirdWare.Business
             return analyseResultat;
         }
 
-        private static bool FoersteObsIDatabasen(IEnumerable<FugleturAnalyseData> analyseDataArt) =>
-            !analyseDataArt.Any();
+        private bool FoersteObsIDatabasen(long fugleturId, long artId) =>
+            !analyseQuery.AnalyseData(fugleturId, artId).Any();
 
-        private static bool FoersteObsIDK(IEnumerable<FugleturAnalyseData> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.RegionId > 0);
+        private bool FoersteObsIDK(long fugleturId, long artId) =>
+            !analyseQuery.AnalyseData(fugleturId, artId).Any(q => q.RegionId > 0);
 
-        private static bool FoersteObsIRegion(VTur vTur, IEnumerable<FugleturAnalyseData> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.RegionId == vTur.RegionId);
+        private bool FoersteObsIRegion(VTur vTur, long artId) =>
+            !analyseQuery.AnalyseData(vTur.Id, artId).Any(q => q.RegionId == vTur.RegionId);
 
-        private static bool FoersteObsForKommune(VTur vTur, IEnumerable<FugleturAnalyseData> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.KommuneId == vTur.KommuneId && vTur.KommuneId > 0);
+        private bool FoersteObsForKommune(VTur vTur, long artId) =>
+            !analyseQuery.AnalyseData(vTur.Id, artId).Any(q => q.KommuneId == vTur.KommuneId && vTur.KommuneId > 0);
 
-        private static bool FoersteObsForLokalitet(VTur vTur, IEnumerable<FugleturAnalyseData> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.LokalitetId == vTur.LokalitetId);
+        private bool FoersteObsForLokalitet(VTur vTur, long artId) =>
+            !analyseQuery.AnalyseData(vTur.Id, artId).Any(q => q.LokalitetId == vTur.LokalitetId);
 
-        private static bool FoersteObsIAar(VTur vTur, IEnumerable<FugleturAnalyseData> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.Aarstal == vTur.Aarstal);
+        private bool FoersteObsIAar(VTur vTur, long artId) =>
+            !analyseQuery.AnalyseData(vTur.Id, artId).Any(q => q.Dato.HasValue && q.Dato.Value.Year == vTur.Aarstal);
 
-        private static bool FoersteObsIMaaned(VTur vTur, IEnumerable<FugleturAnalyseData> analyseDataArt) =>
-            !analyseDataArt.Any(q => q.Maaned == vTur.Maaned);
+        private bool FoersteObsIMaaned(VTur vTur, long artId) =>
+            !analyseQuery.AnalyseData(vTur.Id, artId).Any(q => q.Dato.HasValue && q.Dato.Value.Month == vTur.Maaned);
 
         private static TripAnalysisResult TripAnalysisResultFactory(Art art, AnalyseTyper analyseType) =>
             new() { AnalyseType = analyseType, ArtId = art.Id };

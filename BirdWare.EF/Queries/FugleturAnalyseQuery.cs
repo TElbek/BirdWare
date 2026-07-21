@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
-    public class FugleturAnalyseQuery(BirdWareContext birdWareContext) : IFugleturAnalyseQuery
+    public class FugleturAnalyseQuery(IDbContextFactory<BirdWareContext> dbContextFactory) : IFugleturAnalyseQuery
     {
         public List<Art> HentArtListe(long fugleturId)
         {
+            var birdWareContext = dbContextFactory.CreateDbContext();
+
             return [.. birdWareContext.Observation
                 .AsNoTracking()
                 .Where(o => o.FugleturId == fugleturId)
@@ -17,6 +19,8 @@ namespace BirdWare.EF.Queries
 
         public VTur FindFugletur(long fugleturId)
         {
+            var birdWareContext = dbContextFactory.CreateDbContext();
+
             if (!birdWareContext.Fugletur.Any(q => q.Id == fugleturId)) return new VTur(); 
             
             return birdWareContext.Fugletur.AsNoTracking()
@@ -33,25 +37,21 @@ namespace BirdWare.EF.Queries
                     }).First();
         }
 
-        public ILookup<long, FugleturAnalyseData> FindAnalyseData(long fugleturId)
+        public IQueryable<FugleturAnalyseData> AnalyseData(long fugleturId, long artId)
         {
-            var artIdList = birdWareContext.Observation
-                                .Where(q => q.FugleturId == fugleturId)
-                                .Select(s => s.ArtId);
+            var birdWareContext = dbContextFactory.CreateDbContext();
 
             return birdWareContext.Observation.AsNoTracking()
-                .Where(o => o.FugleturId < fugleturId && artIdList.Contains(o.ArtId))
+                .Where(o => o.FugleturId < fugleturId && o.ArtId == artId)
                 .Select(o => new FugleturAnalyseData
                 {
                     ArtId = o.ArtId,
                     LokalitetId = o.Fugletur.LokalitetId,
                     KommuneId = o.Fugletur.Lokalitet.KommuneId,
                     RegionId = o.Fugletur.Lokalitet.RegionId,
-                    Aarstal = o.Fugletur.Aarstal,
-                    Maaned = o.Fugletur.Maaned
+                    Dato = o.Fugletur.Dato
                 })
-                .Distinct()
-                .ToLookup(l => l.ArtId);
+                .Distinct();
         }
     }
 }
