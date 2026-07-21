@@ -1,6 +1,6 @@
 <template>
-    <tw-card v-if="state.hasData && state.hasAnalyseTyper && state.hasFugletur">
-        <tw-card-header v-if="state.hasAnalyseTyper" :caption="getAnalyseTypeTekst(props.analysetype.analyseType)"
+    <tw-card v-if="state.hasData">
+        <tw-card-header :caption="getAnalyseTypeTekst(props.analysetype.analyseType)"
             :count="state.analyseListe.length" :show-count="true"></tw-card-header>
         <tw-flex>
             <art-navn v-for="item in arterSorteret(state.analyseListe)" :art-navn="item.artNavn" :art-id="item.artId"
@@ -24,22 +24,17 @@ const emit = defineEmits(['dataFound']);
 
 const state = reactive({
     analyseListe: [] as analyseType[],
-    analyseTyper: [] as analyseTypeType[],
-    fugletur: {} as fugleturType,
     hasData: false as boolean,
-    hasFugletur: false as boolean,
-    hasAnalyseTyper: false as boolean
 });
 
 interface fugleturAnalyseProps {
     analysetype: analyseTypeType,
+    fugletur: fugleturType
 }
 
 const props = defineProps<fugleturAnalyseProps>();
 
 onMounted(() => {
-    getAnalyseTyper();
-    getFugletur();
     getAnalyseListe();
 });
 
@@ -57,41 +52,27 @@ function updateStateAndEmit() {
     }
 }
 
-function getAnalyseTyper() {
-    api.get('analyse/typer').then((response) => {
-        state.analyseTyper = response.data;
-        state.hasAnalyseTyper = true;
-    });
-}
-
-function getFugletur() {
-    api.get('fugletur/' + fugleturStore.chosenFugleturId).then((response) => {
-        state.fugletur = response.data;
-        state.hasFugletur = true;
-    });
-}
-
 function arterSorteret(value: analyseType[]) {
     return value.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
 }
 
 function getAnalyseTypeTekst(analyseType: number) {
-    var analyseTypeTekst = state.analyseTyper.find((item) => item.analyseType == analyseType)?.analyseTypeTekst ?? '';
+    var analyseTypeTekst = props.analysetype.analyseTypeTekst;
 
     if (analyseType == 3) {
-        return analyseTypeTekst?.replaceAll('[Region]', state.fugletur.regionNavn);
+        return analyseTypeTekst?.replaceAll('[Region]', props.fugletur.regionNavn);
     }
     if (analyseType == 4) {
-        return analyseTypeTekst?.replaceAll('[Kommune]', state.fugletur.kommuneNavn + ' Kommune');
+        return analyseTypeTekst?.replaceAll('[Kommune]', props.fugletur.kommuneNavn + ' Kommune');
     }
     if (analyseType == 5) {
-        return analyseTypeTekst?.replaceAll('[Lokalitet]', state.fugletur.lokalitetNavn);
+        return analyseTypeTekst?.replaceAll('[Lokalitet]', props.fugletur.lokalitetNavn);
     }
     if (analyseType == 6) {
-        return analyseTypeTekst?.replaceAll('[Aar]', state.fugletur.aarstal.toString());
+        return analyseTypeTekst?.replaceAll('[Aar]', props.fugletur.aarstal.toString());
     }
     if (analyseType == 7) {
-        return analyseTypeTekst?.replaceAll('[Maaned]', getNameOfMonth(state.fugletur.maaned));
+        return analyseTypeTekst?.replaceAll('[Maaned]', getNameOfMonth(props.fugletur.maaned));
     }
 
     return analyseTypeTekst;
