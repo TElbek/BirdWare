@@ -71,7 +71,6 @@ namespace BirdWare.Business
             !analyseQuery.AnalyseData(vTur.Id, artId).Any(q => q.Dato.HasValue && 
                                                                q.Dato.Value.Year == vTur.Aarstal && 
                                                                q.RegionId > 0);
-
         private bool FoersteObsIMaaned(VTur vTur, long artId) =>
             !analyseQuery.AnalyseData(vTur.Id, artId).Any(q => q.Dato.HasValue && q.Dato.Value.Month == vTur.Maaned);
 

@@ -1,5 +1,4 @@
-﻿using BirdWare.Domain.Entities;
-using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using BirdWare.Validation;
 using Microsoft.AspNetCore.Mvc;

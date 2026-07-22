@@ -50,8 +50,7 @@ namespace BirdWare.EF.Queries
                     KommuneId = o.Fugletur.Lokalitet.KommuneId,
                     RegionId = o.Fugletur.Lokalitet.RegionId,
                     Dato = o.Fugletur.Dato
-                })
-                .Distinct();
+                });
         }
     }
 }
