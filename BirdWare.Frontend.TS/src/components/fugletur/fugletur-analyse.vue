@@ -1,6 +1,6 @@
 <template>
     <div v-if="state.hasData">
-        <span v-if="state.itemsWithData == 0">Ingen Analyse...</span>
+        <span v-if="state.isNoDataVisible && state.itemsWithData == 0">Ingen Analyse...</span>
         <tw-grid-cols-generic :itemsPerRow=itemsPerRow :count="itemsPerRow">
             <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
                 <fugleturAnalyseType :fugletur="state.fugletur" :analysetype="analyseType" @dataFound="increment()">
@@ -25,6 +25,7 @@ const state = reactive({
     fugletur: {} as fugleturType,
     hasFugletur: false,
     hasData: false,
+    isNoDataVisible: false,
     itemsWithData: 0 as number
 });
 
@@ -34,7 +35,12 @@ onMounted(() => {
     getFugletur();
 });
 
+setTimeout(setIsNoDataVisible, 1000);
 const itemsPerRow = computed(() => Math.min(state.itemsWithData, 4))
+
+function setIsNoDataVisible() {
+    state.isNoDataVisible = true;
+}
 
 function getAnalyseTyper() {
     api.get('analyse/typer').then((response) => {
