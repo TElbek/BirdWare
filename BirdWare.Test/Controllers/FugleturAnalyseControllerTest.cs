@@ -12,15 +12,15 @@ namespace BirdWare.Test.Controllers
 
         public FugleturAnalyseControllerTest()
         {
-            fugleturAnalyseHandler.Setup(x => x.Analyser(It.IsAny<long>())).Returns([]);
+            fugleturAnalyseHandler.Setup(x => x.Analyser(It.IsAny<long>(), It.IsAny<AnalyseTyper>())).Returns([]);
             fugleturAnalyseController = new FugleturAnalyseController(fugleturAnalyseHandler.Object);
         }
 
         [Fact]
         public void AnalyserFugleturTest()
         {
-            fugleturAnalyseController.AnalyserFugletur(1);
-            fugleturAnalyseHandler.Verify(x => x.Analyser(It.IsAny<long>()), Times.Once);
+            fugleturAnalyseController.AnalyserFugletur(1, AnalyseTyper.FoersteObsIDatabasen);
+            fugleturAnalyseHandler.Verify(x => x.Analyser(It.IsAny<long>(), It.IsAny<AnalyseTyper>()), Times.Once);
         }
 
         [Fact]
