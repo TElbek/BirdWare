@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 interface twCardHeaderProps {
-    caption: string,
+    caption: string | number,
     count: number,
     showCount: boolean
 }
