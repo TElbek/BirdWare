@@ -21,7 +21,7 @@
                                 <div class="text-birdware dark:text-birdware-bright">{{ keyFamilie }}</div>
                                 <div class="flex gap-x-2 flex-wrap">
                                     <a v-for="item in valueArter" @click="navigateToObs(item)">
-                                        {{ item.artNavn }}
+                                        <span class="dark:text-white">{{ item.artNavn }}</span>
                                     </a>
                                 </div>
                             </template>
