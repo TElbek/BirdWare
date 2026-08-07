@@ -15,11 +15,11 @@ const fugleturStore = useFugleturStore();
 const currentRoute = useRoute();
 const router = useRouter();
 
-function navigate(routeName: RouteRecordNameGeneric) {
-    router.replace({ name: routeName });
-}
-
 const availableRoutes = computed(() => {
     return currentRoute.matched[0].children.filter((item) => item.meta?.requireId && fugleturStore.hasId || !item.meta?.requireId);
 });
+
+function navigate(routeName: RouteRecordNameGeneric): void {
+    router.replace({ name: routeName });
+}
 </script>

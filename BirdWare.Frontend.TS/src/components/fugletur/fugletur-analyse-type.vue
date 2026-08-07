@@ -12,15 +12,15 @@
 <script setup lang="ts">
 import api from '@/api';
 import artNavn from '@/components/main/artNavn.vue';
-import type { analyseType } from '@/types/analyseType.ts';
-import type { analyseTypeType } from '@/types/analyseTypeType.ts';
+import { type analyseType } from '@/types/analyseType.ts';
+import { type analyseTypeType } from '@/types/analyseTypeType.ts';
 import { type fugleturType } from '@/types/fugleturType';
 import { onMounted, reactive } from 'vue';
 import { useFugleturStore } from '@/stores/fugletur-store';
 import { getNameOfMonth } from '@/ts/dateandtime';
 
 const fugleturStore = useFugleturStore();
-const emit = defineEmits(['dataFound']);
+const emit = defineEmits(['dataFound','finished']);
 
 const state = reactive({
     analyseListe: [] as analyseType[],
@@ -38,25 +38,26 @@ onMounted(() => {
     getAnalyseListe();
 });
 
-function getAnalyseListe() {
+function getAnalyseListe(): void {
     api.get('fugletur/' + fugleturStore.chosenFugleturId + '/analyse/' + props.analysetype.analyseType).then((response) => {
         state.analyseListe = response.data;
         updateStateAndEmit();
     });
 }
 
-function updateStateAndEmit() {
+function updateStateAndEmit(): void {
     if (state.analyseListe.length > 0) {
         state.hasData = true;
         emit('dataFound');
     }
+    emit('finished');
 }
 
-function arterSorteret(value: analyseType[]) {
+function arterSorteret(value: analyseType[]): analyseType[] {
     return value.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
 }
 
-function getAnalyseTypeTekst(analyseType: number) {
+function getAnalyseTypeTekst(analyseType: number): string | undefined {
     var analyseTypeTekst = props.analysetype.analyseTypeTekst;
 
     if (analyseType == 3) {

@@ -55,7 +55,7 @@ watch(() => selectedTags.value, () => {
     getFugleture();
 });
 
-function getFugleture() {
+function getFugleture(): void {
     api.get("fugleture/get/tags?tagListAsJson=" + queryString.value).then(response => {
         state.fugleture = response.data;
     });

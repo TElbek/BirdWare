@@ -26,11 +26,11 @@ onMounted(() => {
         navigateFugleturOversigt();
 });
 
-function navigateFugleturObservationer() {
+function navigateFugleturObservationer(): void {
     router.replace({ name: 'fugletur-obs' });
 }
 
-function navigateFugleturOversigt() {
+function navigateFugleturOversigt(): void {
     router.replace({ name: 'fugletur-oversigt' });
 }
 </script>

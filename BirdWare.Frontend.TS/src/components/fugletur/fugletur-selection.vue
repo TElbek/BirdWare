@@ -18,7 +18,7 @@ const state = reactive({
     tagList: [] as tagGroupType[]
 });
 
-function getTagList(query: string) {
+function getTagList(query: string): void {
     if ((query != undefined) && (query.length >= 3)) {
         api.get('tags/fugletur?query=' + query).then(response => {
             state.tagList = response.data;

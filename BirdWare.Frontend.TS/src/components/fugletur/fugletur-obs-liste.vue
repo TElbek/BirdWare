@@ -31,7 +31,6 @@ const state = reactive({
 });
 
 const byFamilie = computed(() => { return Map.groupBy(state.obsListe, (one: observationType) => one.familieNavn) });
-const byFamilieCount = computed(() => [...new Set(state.obsListe.map(item => item.familieId))].length);
 
 onMounted(() => {
     if (fugleturStore.hasId) {
@@ -39,14 +38,10 @@ onMounted(() => {
     }
 });
 
-function getObservationer() {
+function getObservationer(): void {
     api.get('fugletur/' + fugleturStore.chosenFugleturId + '/observationer').then((response => {
         state.obsListe = response.data;
     }));
-}
-
-function obsSorted(value: observationType[]) {
-    return value.sort((a, b) => a.artNavn.localeCompare(b.artNavn));
 }
 
 watch(() => chosenFugleturId, (newValue) => {

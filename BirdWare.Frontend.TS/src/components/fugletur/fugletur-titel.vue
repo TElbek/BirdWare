@@ -38,11 +38,11 @@ onMounted(() => {
     }
 });
 
-function getFugletur() {
-    api.get('fugletur/' + props.fugleturId).then((response => {
+function getFugletur(): void {
+    api.get('fugletur/' + props.fugleturId).then((response) => {
         state.fugletur = response.data;
         state.hasdata = true;
-    }));
+    });
 }
 
 watch(() => props.fugleturId, (newValue) => {
