@@ -1,13 +1,12 @@
 <template>
-    <div v-if="state.hasData" :class="[isVisible ? 'visible' : 'hidden']">
-        <span class="text-semibold text-lg" v-if="isVisible && state.itemsWithData == 0">Ingen analyse</span>
+    <div v-if="state.hasData">
         <tw-grid-cols-generic :itemsPerRow=itemsPerRow :count="itemsPerRow">
-            <template v-for="analyseType in state.analyseTyper.slice().reverse()" :key="analyseType.analyseType">
+            <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
                 <fugleturAnalyseType :fugletur="state.fugletur" :analysetype="analyseType" 
-                        @dataFound="incrementItemsWithData()" 
-                        @finished="incrementFinished()">
+                        @dataFound="incrementItemsWithData()">
                 </fugleturAnalyseType>
             </template>
+            <Fugletur-analyse-statistik></Fugletur-analyse-statistik>
         </tw-grid-cols-generic>
     </div>
 </template>
@@ -19,6 +18,7 @@ import fugleturAnalyseType from '@/components/fugletur/fugletur-analyse-type.vue
 import { type analyseTypeType } from '@/types/analyseTypeType.ts';
 import { type fugleturType } from '@/types/fugleturType';
 import { useFugleturStore } from '@/stores/fugletur-store';
+import FugleturAnalyseStatistik from './fugletur-analyse-statistik.vue';
 
 const fugleturStore = useFugleturStore();
 
@@ -28,19 +28,15 @@ const state = reactive({
     hasFugletur: false as boolean,
     hasData: false as boolean,
     itemsWithData: 0 as number,
-    finishedCount: 0 as number
 });
 
 onMounted(() => {
     state.itemsWithData = 0;
-    state.finishedCount = 0;
     getAnalyseTyper();
     getFugletur();
 });
 
-const itemsPerRow = computed(() => Math.min(state.itemsWithData, 4))
-
-const isVisible = computed(() => state.hasData && state.finishedCount == state.analyseTyper.length);
+const itemsPerRow = computed(() => Math.min(state.itemsWithData + 1, 4))
 
 function getAnalyseTyper(): void {
     api.get('analyse/typer').then((response) => {
@@ -58,9 +54,5 @@ function getFugletur(): void {
 
 function incrementItemsWithData(): void {
     state.itemsWithData++;
-}
-
-function incrementFinished(): void {
-    state.finishedCount++;
 }
 </script>

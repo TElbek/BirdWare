@@ -20,7 +20,7 @@ import { useFugleturStore } from '@/stores/fugletur-store';
 import { getNameOfMonth } from '@/ts/dateandtime';
 
 const fugleturStore = useFugleturStore();
-const emit = defineEmits(['dataFound','finished']);
+const emit = defineEmits(['dataFound']);
 
 const state = reactive({
     analyseListe: [] as analyseType[],
@@ -50,7 +50,6 @@ function updateStateAndEmit(): void {
         state.hasData = true;
         emit('dataFound');
     }
-    emit('finished');
 }
 
 function arterSorteret(value: analyseType[]): analyseType[] {
