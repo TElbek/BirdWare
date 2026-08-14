@@ -52,7 +52,12 @@ onMounted(() => {
 });
 
 watch(() => selectedTags.value, () => {
-    getFugleture();
+    if(selectedTags.value.length > 0) {
+        getFugleture();
+    }
+    else {
+        state.fugleture = [];
+    }
 });
 
 function getFugleture(): void {
