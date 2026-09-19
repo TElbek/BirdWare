@@ -1,12 +1,18 @@
-﻿using BirdWare.Domain.Entities;
-using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Models;
 
 namespace BirdWare.EF.Interfaces
 {
     public interface IFugleturAnalyseQuery
     {
-        List<Art> HentArtListe(long fugleturId);
+        IQueryable<long> HentArtListe(long fugleturId);
         VTur FindFugletur(long fugleturId);
-        IQueryable<FugleturAnalyseData> AnalyseData(long fugleturId, long artId);
+
+        IQueryable<TripAnalysisResult>  FoersteObsIDatabasen(VTur vTur,IQueryable<long> arterForTuren);
+        IQueryable<TripAnalysisResult> FoersteObsIDK(VTur vTur,IQueryable<long> arterForTuren);
+        IQueryable<TripAnalysisResult> FoersteObsIRegion(VTur vTur,IQueryable<long> arterForTuren);
+        IQueryable<TripAnalysisResult> FoersteObsForKommune(VTur vTur,IQueryable<long> arterForTuren);
+        IQueryable<TripAnalysisResult> FoersteObsForLokalitet(VTur vTur,IQueryable<long> arterForTuren);
+        IQueryable<TripAnalysisResult> FoersteObsIAar(VTur vTur,IQueryable<long> arterForTuren);
+        IQueryable<TripAnalysisResult> FoersteObsIMaaned(VTur vTur,IQueryable<long> arterForTuren);
     }
 }

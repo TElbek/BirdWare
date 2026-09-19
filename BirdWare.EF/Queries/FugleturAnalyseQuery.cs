@@ -5,22 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.Queries
 {
-    public class FugleturAnalyseQuery(IDbContextFactory<BirdWareContext> dbContextFactory) : IFugleturAnalyseQuery
+    public class FugleturAnalyseQuery(BirdWareContext birdWareContext) : IFugleturAnalyseQuery
     {
-        public List<Art> HentArtListe(long fugleturId)
+        public IQueryable<long> HentArtListe(long fugleturId)
         {
-            var birdWareContext = dbContextFactory.CreateDbContext();
-
-            return [.. birdWareContext.Observation
+            return birdWareContext.Observation
                 .AsNoTracking()
                 .Where(o => o.FugleturId == fugleturId)
-                .Select(o => new Art { Id = o.ArtId, Navn = o.Art.Navn, Speciel = o.Art.Speciel, SU = o.Art.SU })];
+                .Select(o => o.ArtId);
         }
 
         public VTur FindFugletur(long fugleturId)
         {
-            var birdWareContext = dbContextFactory.CreateDbContext();
-
             if (!birdWareContext.Fugletur.Any(q => q.Id == fugleturId)) return new VTur(); 
             
             return birdWareContext.Fugletur.AsNoTracking()
@@ -37,20 +33,116 @@ namespace BirdWare.EF.Queries
                     }).First();
         }
 
-        public IQueryable<FugleturAnalyseData> AnalyseData(long fugleturId, long artId)
+        public IQueryable<TripAnalysisResult> FoersteObsIDatabasen(
+            VTur vTur,
+            IQueryable<long> arterForTuren)
         {
-            var birdWareContext = dbContextFactory.CreateDbContext();
-
-            return birdWareContext.Observation.AsNoTracking()
-                .Where(o => o.FugleturId < fugleturId && o.ArtId == artId)
-                .Select(o => new FugleturAnalyseData
-                {
-                    ArtId = o.ArtId,
-                    LokalitetId = o.Fugletur.LokalitetId,
-                    KommuneId = o.Fugletur.Lokalitet.KommuneId,
-                    RegionId = o.Fugletur.Lokalitet.RegionId,
-                    Dato = o.Fugletur.Dato
-                });
+            return birdWareContext.Art.AsNoTracking()
+                .Where(a =>
+                    arterForTuren.Contains(a.Id)
+                    && !birdWareContext.Observation.AsNoTracking().Any(o =>
+                        o.ArtId == a.Id
+                        && o.FugleturId < vTur.Id))
+                .Select(a => TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIDatabasen));
         }
+
+        public IQueryable<TripAnalysisResult> FoersteObsIDK(
+                    VTur vTur,
+                    IQueryable<long> arterForTuren)
+        {
+            return birdWareContext.Art.AsNoTracking()
+                .Where(a =>
+                    arterForTuren.Contains(a.Id)
+                    && !birdWareContext.Observation.AsNoTracking().Any(o =>
+                        o.ArtId == a.Id
+                        && o.FugleturId < vTur.Id
+                        && o.Fugletur.Lokalitet.RegionId > 0))
+                .Select(a => TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIDK));
+        }
+
+        public IQueryable<TripAnalysisResult> FoersteObsIRegion(
+            VTur vTur,
+            IQueryable<long> arterForTuren)
+        {
+            return birdWareContext.Art.AsNoTracking()
+                .Where(a =>
+                    arterForTuren.Contains(a.Id)
+                    && !birdWareContext.Observation.AsNoTracking().Any(o =>
+                        o.ArtId == a.Id
+                        && o.FugleturId < vTur.Id
+                        && o.Fugletur.Lokalitet.RegionId == vTur.RegionId))
+                .Select(a => TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIRegion));
+        }
+
+        public IQueryable<TripAnalysisResult> FoersteObsForKommune(
+            VTur vTur,
+            IQueryable<long> arterForTuren)
+        {
+            return birdWareContext.Art.AsNoTracking()
+                .Where(a =>
+                    arterForTuren.Contains(a.Id)
+                    && !birdWareContext.Observation.AsNoTracking().Any(o =>
+                        o.ArtId == a.Id
+                        && o.FugleturId < vTur.Id
+                        && o.Fugletur.Lokalitet.RegionId == vTur.RegionId
+                        && o.Fugletur.Lokalitet.KommuneId == vTur.KommuneId))
+                .Select(a => TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsForKommune));
+        }
+
+        public IQueryable<TripAnalysisResult> FoersteObsForLokalitet(
+            VTur vTur,
+            IQueryable<long> arterForTuren)
+        {
+            return birdWareContext.Art.AsNoTracking()
+                .Where(a =>
+                    arterForTuren.Contains(a.Id)
+                    && !birdWareContext.Observation.AsNoTracking().Any(o =>
+                        o.ArtId == a.Id
+                        && o.FugleturId < vTur.Id
+                        && o.Fugletur.Lokalitet.RegionId == vTur.RegionId
+                        && o.Fugletur.LokalitetId == vTur.LokalitetId))
+                .Select(a => TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsForLokalitet));
+        }
+
+        public IQueryable<TripAnalysisResult> FoersteObsIAar(
+                    VTur vTur,
+                    IQueryable<long> arterForTuren)
+        {
+            return birdWareContext.Art.AsNoTracking()
+                .Where(a =>
+                    arterForTuren.Contains(a.Id)
+                    && !birdWareContext.Observation.AsNoTracking().Any(o =>
+                        o.ArtId == a.Id
+                        && o.FugleturId < vTur.Id
+                        && o.Fugletur.Dato.HasValue
+                        && o.Fugletur.Dato.Value.Year == vTur.Aarstal
+                        && o.Fugletur.Lokalitet.RegionId > 0))
+                .Select(a => TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIAar));
+        }
+
+        public IQueryable<TripAnalysisResult> FoersteObsIMaaned(
+            VTur vTur,
+            IQueryable<long> arterForTuren)
+        {
+            return birdWareContext.Art.AsNoTracking()
+                .Where(a =>
+                    arterForTuren.Contains(a.Id)
+                    && !birdWareContext.Observation.AsNoTracking().Any(o =>
+                        o.ArtId == a.Id
+                        && o.FugleturId < vTur.Id
+                        && o.Fugletur.Dato.HasValue
+                        && o.Fugletur.Dato.Value.Month == vTur.Maaned
+                        && o.Fugletur.Lokalitet.RegionId > 0))
+                .Select(a => TripAnalysisResultFactory(a, AnalyseTyper.FoersteObsIMaaned));
+        }
+
+        private static TripAnalysisResult TripAnalysisResultFactory(Art art, AnalyseTyper analyseType) =>
+            new() { 
+                AnalyseType = analyseType, 
+                ArtId = art.Id,
+                ArtNavn = art.Navn ?? string.Empty,
+                Speciel = art.Speciel,
+                SU = art.SU
+            };
     }
 }

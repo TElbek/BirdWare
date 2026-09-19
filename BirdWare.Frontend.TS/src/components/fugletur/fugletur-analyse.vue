@@ -6,7 +6,6 @@
                         @dataFound="incrementItemsWithData()">
                 </fugleturAnalyseType>
             </template>
-            <Fugletur-analyse-statistik></Fugletur-analyse-statistik>
         </tw-grid-cols-generic>
     </div>
 </template>
