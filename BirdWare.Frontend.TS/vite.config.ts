@@ -8,7 +8,7 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue(), 
+    vue(),
     VitePWA({
       strategies: 'generateSW',
       registerType: 'autoUpdate',
@@ -26,6 +26,19 @@ export default defineConfig({
             },
             cacheableResponse: {
               statuses: [0, 200]
+            }
+          }
+        },
+        {
+          urlPattern: /^https:\/\/birdware\.dk\/api\/opretobs\//,
+          handler: "NetworkOnly",
+          method: 'POST',
+          options: {
+            backgroundSync: {
+              name: 'api-post-queue',
+              options: {
+                maxRetentionTime: 24 * 60
+              }
             }
           }
         }]
@@ -55,7 +68,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    port:8080
+    port: 8080
   },
   resolve: {
     alias: {

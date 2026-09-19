@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-16ad23c7'], (function (workbox) { 'use strict';
+define(['./workbox-cca7c83d'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -81,7 +81,7 @@ define(['./workbox-16ad23c7'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.4k45e5kh17o"
+    "revision": "0.5qb0pfr5gdo"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
@@ -96,5 +96,10 @@ define(['./workbox-16ad23c7'], (function (workbox) { 'use strict';
       statuses: [0, 200]
     })]
   }), 'GET');
+  workbox.registerRoute(/^https:\/\/birdware\.dk\/api\/opretobs\//, new workbox.NetworkOnly({
+    plugins: [new workbox.BackgroundSyncPlugin("api-post-queue", {
+      maxRetentionTime: 1440
+    })]
+  }), 'POST');
 
 }));
