@@ -5,8 +5,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
-// const toBeCachedUrls = [{}]
-
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -19,7 +17,7 @@ export default defineConfig({
         runtimeCaching: [
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/api/ankomstdato'),
-            handler: "StaleWhileRevalidate",
+            handler: "NetworkFirst",
             method: 'GET',
             options: {
               cacheName: "api-cache",
@@ -27,7 +25,7 @@ export default defineConfig({
           },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/api/arter'),
-            handler: "StaleWhileRevalidate",
+            handler: "NetworkFirst",
             method: 'GET',
             options: {
               cacheName: "api-cache",
@@ -35,7 +33,7 @@ export default defineConfig({
           },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/api/forskel'),
-            handler: "StaleWhileRevalidate",
+            handler: "NetworkFirst",
             method: 'GET',
             options: {
               cacheName: "api-cache",
@@ -43,7 +41,7 @@ export default defineConfig({
           },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/api/hvorkanjegfinde'),
-            handler: "StaleWhileRevalidate",
+            handler: "NetworkFirst",
             method: 'GET',
             options: {
               cacheName: "api-cache",
@@ -51,7 +49,7 @@ export default defineConfig({
           },
           {
             urlPattern: ({ url }) => url.pathname.startsWith('/api/aaretsgang'),
-            handler: "StaleWhileRevalidate",
+            handler: "NetworkFirst",
             method: 'GET',
             options: {
               cacheName: "api-cache",
