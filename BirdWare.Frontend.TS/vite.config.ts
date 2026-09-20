@@ -5,6 +5,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 
+// const toBeCachedUrls = [{}]
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
@@ -14,34 +16,60 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       workbox: {
-        runtimeCaching: [{
-          urlPattern: /^https:\/\/birdware\.dk\/api\//,
-          handler: "StaleWhileRevalidate",
-          method: 'GET',
-          options: {
-            cacheName: "api-cache",
-            expiration: {
-              maxEntries: 30,
-              maxAgeSeconds: 60 * 60 * 24
-            },
-            cacheableResponse: {
-              statuses: [0, 200]
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/api/ankomstdato'),
+            handler: "StaleWhileRevalidate",
+            method: 'GET',
+            options: {
+              cacheName: "api-cache",
             }
-          }
-        },
-        {
-          urlPattern: /^https:\/\/birdware\.dk\/api\/opretobs\//,
-          handler: "NetworkOnly",
-          method: 'POST',
-          options: {
-            backgroundSync: {
-              name: 'api-post-queue',
-              options: {
-                maxRetentionTime: 24 * 60
+          },
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/api/arter'),
+            handler: "StaleWhileRevalidate",
+            method: 'GET',
+            options: {
+              cacheName: "api-cache",
+            }
+          },
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/api/forskel'),
+            handler: "StaleWhileRevalidate",
+            method: 'GET',
+            options: {
+              cacheName: "api-cache",
+            }
+          },
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/api/hvorkanjegfinde'),
+            handler: "StaleWhileRevalidate",
+            method: 'GET',
+            options: {
+              cacheName: "api-cache",
+            }
+          },
+          {
+            urlPattern: ({ url }) => url.pathname.startsWith('/api/aaretsgang'),
+            handler: "StaleWhileRevalidate",
+            method: 'GET',
+            options: {
+              cacheName: "api-cache",
+            }
+          },
+          {
+            urlPattern: /^https:\/\/birdware\.dk\/api\/opretobs\//,
+            handler: "NetworkOnly",
+            method: 'POST',
+            options: {
+              backgroundSync: {
+                name: 'api-post-queue',
+                options: {
+                  maxRetentionTime: 24 * 60
+                }
               }
             }
-          }
-        }]
+          }]
       },
       devOptions: {
         enabled: true
