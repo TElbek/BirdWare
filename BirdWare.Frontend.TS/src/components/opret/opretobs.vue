@@ -5,6 +5,7 @@
             <tw-action-bar>
                 <tw-button :caption="'Liste'" :isSelected="!state.isForslagMode" @click="setShowForslag"></tw-button>
                 <tw-button :caption="'Forslag'" :isSelected="state.isForslagMode" @click="setShowForslag"></tw-button>
+                <span v-if="state.pendingCount > 0" class="text-white bg-red-500 font-semibold px-1">{{ state.pendingCount }}</span>
             </tw-action-bar>
         </div>
         <RouterView></RouterView>
@@ -12,17 +13,19 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, ref } from 'vue';
 import api from '@/api';
 import fugleturTitel from '@/components/fugletur/fugletur-titel.vue';
 import { useRoute, useRouter } from 'vue-router';
+import { getPendingPostCount} from '@/composables/pendingPostCount.ts'
 
 const router = useRouter();
 const route = useRoute();
 
 const state = reactive({
     fugleturId: 0 as number,
-    isForslagMode: false as boolean
+    isForslagMode: false as boolean,
+    pendingCount: 0 as number
 });
 
 onMounted(() => {
@@ -32,11 +35,19 @@ onMounted(() => {
 
 function setShowForslag() {
     state.isForslagMode = !state.isForslagMode;
-    router.replace({ name: (state.isForslagMode ? 'addobs-forslag' : 'addobs-liste') })
+    router.replace({ name: (state.isForslagMode ? 'addobs-forslag' : 'addobs-liste') });
+    refreshQueueCount();
 }
 
 function getSenesteFugleturId() {
     api.get("fugletur/seneste/id")
         .then((response) => { state.fugleturId = response.data });
 }
+
+
+async function refreshQueueCount() {
+  state.pendingCount = await getPendingPostCount()
+}
+
+//window.addEventListener('online', refreshQueueCount)
 </script>

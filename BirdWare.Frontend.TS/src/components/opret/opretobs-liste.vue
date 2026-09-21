@@ -61,7 +61,7 @@ function getTagList(query: string) {
 }
 
 watch(() => state.selectedTag, (newValue) => {
-    api.post("observation/opretobs/", {artId: newValue}).then(() => {
+    api.post("observation/opretobs/", {artId: newValue.id}).then(() => {
         getObservationer();
     });
 });

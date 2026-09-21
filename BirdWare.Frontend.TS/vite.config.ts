@@ -56,14 +56,23 @@ export default defineConfig({
             }
           },
           {
-            urlPattern: /^https:\/\/birdware\.dk\/api\observation\opretobs\//,
+            urlPattern: ({ url }) => url.pathname.startsWith('/api/fugletur/seneste/observationer'),
+            handler: "NetworkFirst",
+            method: 'GET',
+            options: {
+              cacheName: "api-cache",
+            }
+          },
+          //https://birdware.dk/api/fugletur/seneste/observationer
+          {
+            urlPattern: /^https:\/\/birdware\.dk\/api\/observation\/opretobs\//,
             handler: "NetworkOnly",
             method: 'POST',
             options: {
               backgroundSync: {
                 name: 'api-post-queue',
                 options: {
-                  maxRetentionTime: 24 * 60
+                  maxRetentionTime: 24 * 60,
                 }
               }
             }
