@@ -56,7 +56,7 @@ export default defineConfig({
             }
           },
           {
-            urlPattern: /^https:\/\/birdware\.dk\/api\/opretobs\//,
+            urlPattern: /^https:\/\/birdware\.dk\/api\observation\opretobs\//,
             handler: "NetworkOnly",
             method: 'POST',
             options: {

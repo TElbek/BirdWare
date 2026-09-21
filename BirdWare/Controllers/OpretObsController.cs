@@ -1,4 +1,5 @@
-﻿using BirdWare.Domain.Models;
+﻿using BirdWare.Domain.Entities;
+using BirdWare.Domain.Models;
 using BirdWare.EF.Interfaces;
 using BirdWare.Validation;
 using Microsoft.AspNetCore.Authorization;
@@ -11,17 +12,17 @@ namespace BirdWare.Controllers
                                     IOpdaterObsCommand opdaterObsCommand) : ControllerBase
     {
         [Authorize]
-        [Route("api/observation/opretobs/{artId}")]
+        [Route("api/observation/opretobs/")]
         [HttpPost]
-        public HttpResponseMessage OpretObs([FromBody] long artId)
+        public HttpResponseMessage OpretObs([FromBody] Observation observation)
         {
             var validator = new GreaterThanZeroValidator();
-            if (!validator.Validate(artId).IsValid)
+            if (!validator.Validate(observation.ArtId).IsValid)
             {
                 return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
             }
 
-            return (artId > 0 && opretObsCommand.OpretObsPåFugletur(artId)) ?
+            return (observation.ArtId > 0 && opretObsCommand.OpretObsPåFugletur(observation.ArtId)) ?
                 new HttpResponseMessage(System.Net.HttpStatusCode.OK) : 
                 new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
         }

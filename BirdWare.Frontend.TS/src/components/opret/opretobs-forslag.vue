@@ -44,7 +44,7 @@ function artSorted(value: opretObsForslagType[]) {
 }
 
 function addObs(artId: number) {
-    api.post("observation/opretobs/", artId).then((response) => {
+    api.post("observation/opretobs/", {artId: artId}).then((response) => {
         getForslag();
     });
 }
