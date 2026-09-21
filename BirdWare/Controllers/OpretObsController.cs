@@ -13,7 +13,7 @@ namespace BirdWare.Controllers
         [Authorize]
         [Route("api/observation/opretobs/{artId}")]
         [HttpPost]
-        public HttpResponseMessage OpretObs(long artId)
+        public HttpResponseMessage OpretObs([FromBody] long artId)
         {
             var validator = new GreaterThanZeroValidator();
             if (!validator.Validate(artId).IsValid)
