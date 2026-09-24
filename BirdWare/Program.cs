@@ -6,8 +6,8 @@ using BirdWare.EF;
 using BirdWare.Interfaces;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics.CodeAnalysis;
@@ -18,6 +18,9 @@ namespace BirdWare
     [ExcludeFromCodeCoverage]
     public class Program
     {
+        private const int PermitLimit = 10;
+        private const int QueueLimit = 30;
+
         static readonly string corsPolicyName = "CorsPolicy";
 
         public static void Main(string[] args)
@@ -27,6 +30,7 @@ namespace BirdWare
             var builder = WebApplication.CreateBuilder(args);
 
             AddCors(builder);
+            AddRateLimiter(builder);
             AddAuthentication(builder);
             AddServices(builder);
 
@@ -100,6 +104,18 @@ namespace BirdWare
                                     .SetIsOriginAllowed((host) => true)
                                     .AllowAnyMethod();
                         });
+            });
+        }
+
+        private static void AddRateLimiter(WebApplicationBuilder builder)
+        {
+            builder.Services.AddRateLimiter(options =>
+            {
+                options.AddConcurrencyLimiter("global", limiterOptions =>
+                {
+                    limiterOptions.PermitLimit = PermitLimit;
+                    limiterOptions.QueueLimit = QueueLimit;
+                });
             });
         }
     }

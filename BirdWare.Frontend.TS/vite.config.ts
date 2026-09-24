@@ -63,7 +63,6 @@ export default defineConfig({
               cacheName: "api-cache",
             }
           },
-          //https://birdware.dk/api/fugletur/seneste/observationer
           {
             urlPattern: /^https:\/\/birdware\.dk\/api\/observation\/opretobs\//,
             handler: "NetworkOnly",

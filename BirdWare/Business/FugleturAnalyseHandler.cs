@@ -34,7 +34,7 @@ namespace BirdWare.Business
                 AnalyseTyper.FoersteObsIMaaned when vTur.RegionId > 0 => 
                     [.. analyseQuery.FoersteObsIMaaned(vTur, artsListe)],
 
-                _ => throw new NotImplementedException()
+                _ => new List<TripAnalysisResult>()
             };
         }
     }
