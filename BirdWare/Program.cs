@@ -71,6 +71,7 @@ namespace BirdWare
             builder.Services.AddTransient<IAnkomtsDagHandler, AnkomtsDagHandler>();
             builder.Services.AddTransient<IFugleturAnalyseHandler, FugleturAnalyseHandler>();
 
+            builder.Services.AddMemoryCache();
             builder.Services.RegisterEF();
             builder.Services.RegisterDomain();
         }
