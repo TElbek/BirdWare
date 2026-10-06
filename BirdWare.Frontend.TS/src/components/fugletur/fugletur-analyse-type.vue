@@ -34,18 +34,17 @@ interface fugleturAnalyseProps {
 
 const props = defineProps<fugleturAnalyseProps>();
 
-onMounted(() => {
-    getAnalyseListe();
+onMounted(async () => {
+    await getAnalyseListe();    
 });
 
-function getAnalyseListe(): void {
-    api.get('fugletur/' + fugleturStore.chosenFugleturId + '/analyse/' + props.analysetype.analyseType).then((response) => {
-        state.analyseListe = response.data;
-        updateStateAndEmit();
-    });
+async function getAnalyseListe() {
+    const response = await api.get('fugletur/' + fugleturStore.chosenFugleturId + '/analyse/' + props.analysetype.analyseType);
+    state.analyseListe = response.data;
+    await updateStateAndEmit();
 }
 
-function updateStateAndEmit(): void {
+async function updateStateAndEmit() {
     if (state.analyseListe.length > 0) {
         state.hasData = true;
         emit('dataFound');

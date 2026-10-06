@@ -1,11 +1,9 @@
 <template>
     <div v-if="state.hasData">
-        <tw-grid-cols-generic :itemsPerRow=itemsPerRow :count="itemsPerRow">
-            <template v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType">
-                <fugleturAnalyseType :fugletur="state.fugletur" :analysetype="analyseType" 
-                        @dataFound="incrementItemsWithData()">
-                </fugleturAnalyseType>
-            </template>
+        <tw-grid-cols-generic :itemsPerRow=itemsPerRow :count="state.itemsWithData">
+            <fugleturAnalyseType v-for="analyseType in state.analyseTyper" :key="analyseType.analyseType"
+                :fugletur="state.fugletur" :analysetype="analyseType" @dataFound="incrementItemsWithData()">
+            </fugleturAnalyseType>
         </tw-grid-cols-generic>
     </div>
 </template>
@@ -13,12 +11,11 @@
 <script setup lang="ts">
 import api from '@/api';
 import { reactive, onMounted, computed } from 'vue';
-import fugleturAnalyseType from '@/components/fugletur/fugletur-analyse-type.vue';
 import { type analyseTypeType } from '@/types/analyseTypeType.ts';
 import { type fugleturType } from '@/types/fugleturType';
 import { useFugleturStore } from '@/stores/fugletur-store';
-import FugleturAnalyseStatistik from './fugletur-analyse-statistik.vue';
 
+import fugleturAnalyseType from '@/components/fugletur/fugletur-analyse-type.vue';
 const fugleturStore = useFugleturStore();
 
 const state = reactive({

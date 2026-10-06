@@ -81,20 +81,15 @@ export default defineConfig({
         enabled: true
       },
       manifest: {
-        name: 'Vue PWA Tutorial',
-        short_name: 'VuePWA',
-        description: 'A tutorial on building a resilient PWA with Vue and Vite',
+        name: 'Birdware PWA',
+        short_name: 'BirdwarePWA',
+        description: 'Birdware PWA with Vue and Vite',
         theme_color: '#ffffff',
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'favicon.ico',
             sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png'
+            type: 'image/x-icon'
           }
         ]
       }
