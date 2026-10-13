@@ -32,7 +32,7 @@ namespace BirdWare.Test.Controllers
         public void OpretObs_VerifyAuthorizeAttribute()
         {
             var type = opretObsController.GetType();
-            var methodInfo = type.GetMethod("OpretObs", [typeof(long)]);
+            var methodInfo = type.GetMethod("OpretObs", [typeof(Domain.Entities.Observation)]);
             var attributes = methodInfo?.GetCustomAttributes(typeof(AuthorizeAttribute), true);
             Assert.NotNull(attributes);
             Assert.NotEmpty(attributes);
@@ -41,7 +41,7 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void OpretObs_WithArtIdGreaterThanZero_ReturnsOk()
         {
-            var result = opretObsController.OpretObs(1);
+            var result = opretObsController.OpretObs(new Domain.Entities.Observation { ArtId = 1 });
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
             opretObsCommandMock.Verify(x => x.OpretObsPåFugletur(It.IsAny<long>()), Times.Once);
         }
@@ -52,7 +52,7 @@ namespace BirdWare.Test.Controllers
             opretObsCommandMock.Setup(x => x.OpretObsPåFugletur(It.IsAny<long>())).Returns(false);
             opretObsController = new OpretObsController(opretObsCommandMock.Object, opdaterObsCommandMock.Object);
 
-            var result = opretObsController.OpretObs(1);
+            var result = opretObsController.OpretObs(new Domain.Entities.Observation { ArtId = 1 });
             Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
             opretObsCommandMock.Verify(x => x.OpretObsPåFugletur(It.IsAny<long>()), Times.Once);
         }
@@ -60,7 +60,7 @@ namespace BirdWare.Test.Controllers
         [Fact]
         public void OpretObs_WithArtIdEqualZero_ReturnsBadRequest()
         {
-            var result = opretObsController.OpretObs(-1);
+            var result = opretObsController.OpretObs(new Domain.Entities.Observation { ArtId = 0 });
             Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
             opretObsCommandMock.Verify(x => x.OpretObsPåFugletur(It.IsAny<long>()), Times.Never);
         }
