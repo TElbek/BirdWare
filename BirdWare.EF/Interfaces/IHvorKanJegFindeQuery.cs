@@ -1,9 +1,12 @@
 ﻿using BirdWare.Domain.Models;
+using NetTopologySuite.Geometries;
 
 namespace BirdWare.EF.Interfaces
 {
     public interface IHvorKanJegFindeQuery
     {
-        IEnumerable<spHvorKanJegFindeResult> GetHvorKanJegFinde();
+        IQueryable<long> GetArterJegIkkeHarSetIAar(DateTime nytaarsDagIAar);
+        List<ObsTidligereAar> GetObsTidligereAar(int startDag, int slutdag, Point vsopPOI, IQueryable<long> arterJegIkkeHarSetIAar);
+        Point GetVSOPPOI();
     }
 }

@@ -55,9 +55,6 @@ namespace BirdWare.EF
                 entity.HasOne(r => r.Region)
                 .WithMany(t => t.Lokaliteter)
                 .HasForeignKey(r => r.RegionId));
-
-            modelBuilder.Entity<spHvorKanJegFindeResult>().HasNoKey();
-
         }
 
         public virtual DbSet<Familie> Familie { get; set; }
@@ -68,7 +65,6 @@ namespace BirdWare.EF
         public virtual DbSet<Lokalitet> Lokalitet {get; set;}
         public virtual DbSet<Kommune> Kommune {get; set;}
         public virtual DbSet<Region> Region {get; set;}
-        public virtual DbSet<spHvorKanJegFindeResult> SpHvorKanJegFindeResult { get; set;}
         public virtual DbSet<Bruger> Bruger { get; set; }
     }
 }

@@ -1,17 +1,17 @@
 ﻿using BirdWare.Domain.Models;
-using BirdWare.EF.Interfaces;
+using BirdWare.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BirdWare.Controllers
 {
     [ApiController]
-    public class HvorKanJegFindeController(IHvorKanJegFindeQuery hvorKanJegFindeQuery) : ControllerBase
+    public class HvorKanJegFindeController(IHvorKanJegFindeHandler hvorKanJegFindeHandler) : ControllerBase
     {
         [HttpGet]
         [Route("api/hvorkanjegfinde")]
-        public IEnumerable<spHvorKanJegFindeResult> HvorKanJegFinde()
-        { 
-            return hvorKanJegFindeQuery.GetHvorKanJegFinde();
+        public IEnumerable<HvorKanJegFindeResponse> HvorKanJegFinde()
+        {
+            return hvorKanJegFindeHandler.GetHvorKanJegFinde();
         }
     }
 }
