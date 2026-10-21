@@ -10,13 +10,7 @@ namespace BirdWare.Business
 
         public List<HvorKanJegFindeResponse> GetHvorKanJegFinde()
         {
-            var nytaarsDagIAar = GetNytaarsDagIAar();
-            var startDag = GetRelativDagIAaret(-30);
-            var slutdag = GetRelativDagIAaret(30);
-
-            var vsopPOI = hvorKanJegFindeQuery.GetVSOPPOI();
-            var arterJegIkkeHarSetIAar = hvorKanJegFindeQuery.GetArterJegIkkeHarSetIAar(nytaarsDagIAar);
-            var obsTidligereAar = hvorKanJegFindeQuery.GetObsTidligereAar(startDag, slutdag, vsopPOI, arterJegIkkeHarSetIAar);
+            var obsTidligereAar = hvorKanJegFindeQuery.GetObsTidligereAar();
 
             var hvorKanJegFindeList = new List<HvorKanJegFindeResponse>();
 
@@ -64,16 +58,6 @@ namespace BirdWare.Business
                 LokalitetId = item.LokalitetId,
                 LokalitetNavn = item.LokalitetNavn,
             };
-        }
-
-        private static int GetRelativDagIAaret(int days)
-        {
-            return DateTime.Now.AddDays(days).DayOfYear;
-        }
-
-        private static DateTime GetNytaarsDagIAar()
-        {
-            return new DateTime(DateTime.Now.Year, 1, 1);
         }
 
         private static bool ErTaetterePaa(ObsTidligereAar obs, int antalObs, HvorKanJegFindeResponse existing)
