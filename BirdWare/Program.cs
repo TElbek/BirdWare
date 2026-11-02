@@ -22,6 +22,7 @@ namespace BirdWare
         private const int QueueLimit = 30;
 
         static readonly string corsPolicyName = "CorsPolicy";
+        static readonly bool enableMCP = false;
 
         public static void Main(string[] args)
         {
@@ -33,11 +34,19 @@ namespace BirdWare
             AddRateLimiter(builder);
             AddAuthentication(builder);
             AddServices(builder);
+            if(enableMCP)
+            {
+                AddMCP(builder);
+            }
 
             var app = builder.Build();
             app.UseAuthorization();
             app.MapControllers();
             app.UseCors(corsPolicyName);
+            if (enableMCP)
+            {
+                app.MapMcp();
+            }
 
             if (Directory.Exists("wwwroot"))
             {
@@ -52,15 +61,15 @@ namespace BirdWare
         {
             builder.Services.AddAuthorization();
             builder.Services.AddControllers();
-            
+
             builder.Services.AddDbContextFactory<BirdWareContext>
                 (options =>
                 {
                     options.UseSqlServer(Environment.GetEnvironmentVariable("BirdWareConn"),
                                 x => x.UseNetTopologySuite());
-                                      //.LogTo(Console.WriteLine, 
-                                      //       LogLevel.Information,
-                                      //       DbContextLoggerOptions.None);
+                    //.LogTo(Console.WriteLine, 
+                    //       LogLevel.Information,
+                    //       DbContextLoggerOptions.None);
                 });
 
             builder.Services.AddSingleton<ITagMemoryCache, TagMemoryCache>();
@@ -75,6 +84,14 @@ namespace BirdWare
             builder.Services.AddMemoryCache();
             builder.Services.RegisterEF();
             builder.Services.RegisterDomain();
+        }
+
+        private static void AddMCP(WebApplicationBuilder builder)
+        {
+            builder.Services
+                .AddMcpServer()
+                .WithHttpTransport()
+                .WithToolsFromAssembly();
         }
 
         private static void AddAuthentication(WebApplicationBuilder builder)
