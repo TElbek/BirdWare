@@ -41,7 +41,7 @@ namespace BirdWare.EF.Queries
             return birdWareContext.Art.AsNoTracking()
                     .Where(a => !birdWareContext.Observation.AsNoTracking()
                     .Any(o => o.ArtId == a.Id && o.Fugletur.Dato >= GetNytaarsDagIAar()))
-                    .Where(q => q.SU == false && q.Speciel == false)
+                    .Where(q => q.SU == false)
                     .Select(a => a.Id);
         }
 
