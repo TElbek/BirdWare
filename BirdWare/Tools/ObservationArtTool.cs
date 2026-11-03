@@ -11,7 +11,7 @@ namespace BirdWare.Tools
     {
         [McpServerTool]
         [Description("Hent observationer baseret på art.")]
-        public static List<VObs> GetOrderStatus(
+        public static List<VObs> GetObservationerAfArt(
                 ITagHandler tagHandler,
                 IObservationsByTagsQuery observationsByTagsQuery,
                 [Description("Artnavn, e.g. Solsort")] string artNavn)

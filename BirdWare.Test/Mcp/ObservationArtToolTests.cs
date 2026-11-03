@@ -47,7 +47,7 @@ namespace BirdWare.Test.Mcp
                 .Returns(expectedObservations);
 
             // Act
-            var result = ObservationArtTool.GetOrderStatus(
+            var result = ObservationArtTool.GetObservationerAfArt(
                 tagHandler.Object,
                 observationsQuery.Object,
                 speciesName);
