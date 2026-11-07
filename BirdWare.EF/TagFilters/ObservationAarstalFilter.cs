@@ -1,5 +1,6 @@
 ﻿using BirdWare.Domain.Entities;
 using BirdWare.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BirdWare.EF.TagFilters
 {
@@ -8,7 +9,11 @@ namespace BirdWare.EF.TagFilters
         public override IQueryable<Observation> Filter(List<Tag> tagList, IQueryable<Observation> queryable)
         {
             var tagIdList = GetTagIds(tagList);
-            var withAarstal = birdWareContext.Fugletur.GetAarMaaned().Where(y => tagIdList.Contains(y.Aarstal));
+            var withAarstal = birdWareContext.Fugletur
+                                                .AsNoTracking()
+                                                .GetAarMaaned()
+                                                .Where(y => tagIdList.Contains(y.Aarstal));
+
             return queryable.Where(o => withAarstal.Any(a => a.FugleturId == o.FugleturId));
         }
     }

@@ -22,7 +22,6 @@ namespace BirdWare
         private const int QueueLimit = 30;
 
         static readonly string corsPolicyName = "CorsPolicy";
-        static readonly bool enableMCP = false;
 
         public static void Main(string[] args)
         {
@@ -34,7 +33,7 @@ namespace BirdWare
             AddRateLimiter(builder);
             AddAuthentication(builder);
             AddServices(builder);
-            if(enableMCP)
+            if(EnableMCP)
             {
                 AddMCP(builder);
             }
@@ -43,7 +42,7 @@ namespace BirdWare
             app.UseAuthorization();
             app.MapControllers();
             app.UseCors(corsPolicyName);
-            if (enableMCP)
+            if (EnableMCP)
             {
                 app.MapMcp();
             }
@@ -125,6 +124,8 @@ namespace BirdWare
                         });
             });
         }
+
+        private static readonly bool EnableMCP = bool.Parse(Environment.GetEnvironmentVariable("enableMCP") ?? "false");
 
         private static void AddRateLimiter(WebApplicationBuilder builder)
         {

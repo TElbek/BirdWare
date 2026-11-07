@@ -1,0 +1,8 @@
+{
+	"mcpServers": {
+		"birdware-mcp": {
+			"url": "https://birdware.dk/",
+			"type": "http"
+		}
+	}
+}
