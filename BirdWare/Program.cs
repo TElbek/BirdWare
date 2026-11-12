@@ -23,6 +23,8 @@ namespace BirdWare
 
         static readonly string corsPolicyName = "CorsPolicy";
 
+        private static readonly bool EnableMCP = bool.Parse(Environment.GetEnvironmentVariable("enableMCP") ?? "false");
+
         public static void Main(string[] args)
         {
             Env.Load();
@@ -124,8 +126,6 @@ namespace BirdWare
                         });
             });
         }
-
-        private static readonly bool EnableMCP = bool.Parse(Environment.GetEnvironmentVariable("enableMCP") ?? "false");
 
         private static void AddRateLimiter(WebApplicationBuilder builder)
         {

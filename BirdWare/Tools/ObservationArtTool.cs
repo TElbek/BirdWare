@@ -17,9 +17,9 @@ namespace BirdWare.Tools
                 [Description("Artnavn, e.g. Solsort")] string artNavn)
         {
             var artTag = tagHandler.GetTag(artNavn);
-            var aarstaltag = tagHandler.GetTag(DateTime.Now.Year.ToString());
+            var aarstaltag = tagHandler.GetTag("Seneste 5 år");
 
-            return artTag.TagType == TagTypes.Art && aarstaltag.TagType == TagTypes.Aarstal ?
+            return artTag.TagType == TagTypes.Art && aarstaltag.TagType == TagTypes.SenesteNÅr ?
                    [.. observationsByTagsQuery.GetByTags([artTag, aarstaltag])] : [];
         }
     }
